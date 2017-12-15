@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+	http://www.springframework.org/schema/beans/spring-beans.xsd        
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd  
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+	http://code.alibabatech.com/schema/dubbo        
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<!-- 容许多次加载属性文件 -->
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+					<value>classpath:/dubbo.properties</value>
+			</list>
+		</property>
+	</bean>
+	<context:annotation-config />
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="demo-web" />
+
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
+
+	<dubbo:consumer timeout="60000" cluster="failfast" retries="0"></dubbo:consumer>
+	<!-- 调用服务 -->
+	<dubbo:reference id="loginService" interface="com.dobbu.login.api.LoginService" />
+
+</beans>

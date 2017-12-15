@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>   
+<!DOCTYPE generatorConfiguration   
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<!-- <classPathEntry location="/Users/hbm/.m2/repository/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar" 
+		/> -->
+
+	<context id="_MySqlTables" targetRuntime="MyBatis3">
+		<property name="javaFileEncoding" value="UTF-8"/>
+		<property name="useActualColumnNames" value="true"/>
+		<!-- 插件 -->
+		<plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
+		<plugin type="tools.mybatis.gen.SelectReturnIdPlug"></plugin>
+
+		<!-- 关闭注解信息 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/ibase4j?characterEncoding=UTF-8" userId="root"
+			password="123456">
+		</jdbcConnection>
+
+
+		<!-- model的配置 -->
+		<javaModelGenerator targetPackage="com.demo.dal.gen.model"
+			targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- mybatis的xml的配置 -->
+		<sqlMapGenerator targetPackage="com.demo.dal.gen.dao"
+			targetProject="./src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- mapper的配置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.demo.dal.gen.dao" targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		
+		<table tableName="占位符" domainObjectName="占位符" />
+
+
+	</context>
+</generatorConfiguration> 

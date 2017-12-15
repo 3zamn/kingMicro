@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans        
+	http://www.springframework.org/schema/beans/spring-beans.xsd   
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd        
+	http://code.alibabatech.com/schema/dubbo        
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<description>cup-app</description>
+	<!-- 配置数据库持久层-->
+<!-- 	<import resource="spring-data.xml"/> -->
+
+	
+	<!-- 配置服务实现类 -->
+	<bean id="loginService" class="com.demo.services.spi.LoginServiceImpl" />	
+	
+	
+
+</beans>
