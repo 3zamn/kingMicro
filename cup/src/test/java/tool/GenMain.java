@@ -12,7 +12,7 @@ public class GenMain {
 	public static void main(String[] args) {
 		String configFile = "/generatorConfig.xml";
 		try {
-			String[] tableNames = new String[] {"sys_news"};
+			String[] tableNames = new String[] {"sys_user_role"};
 			GenMybatisFiles.gen(configFile, tableNames);
 		} catch (Exception e) {
 			e.printStackTrace();

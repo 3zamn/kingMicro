@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.demo</groupId>
-	<artifactId>cup</artifactId>
+	<groupId>com.king</groupId>
+	<artifactId>smp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -108,17 +108,17 @@
 			<version>2.5</version>
 		</dependency>
 	<!-- 	接口 -->
-		<dependency>
-			<groupId>com.demo</groupId>
+		 <dependency>
+			<groupId>com.king</groupId>
 			<artifactId>interface-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- 公共类 -->
-		<dependency>
-			<groupId>com.demo</groupId>
+		<!-- <dependency>
+			<groupId>com.king</groupId>
 			<artifactId>common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>

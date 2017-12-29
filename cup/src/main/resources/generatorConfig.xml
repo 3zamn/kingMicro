@@ -24,27 +24,27 @@
 		</commentGenerator>
 
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/ibase4j?characterEncoding=UTF-8" userId="root"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/king_smp?characterEncoding=UTF-8" userId="root"
 			password="123456">
 		</jdbcConnection>
 
 
 		<!-- model的配置 -->
-		<javaModelGenerator targetPackage="com.demo.dal.gen.model"
+		<javaModelGenerator targetPackage="com.king.dal.gen.model"
 			targetProject="./src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<!-- mybatis的xml的配置 -->
-		<sqlMapGenerator targetPackage="com.demo.dal.gen.dao"
+		<sqlMapGenerator targetPackage="com.king.dal.gen.dao"
 			targetProject="./src/main/resources">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- mapper的配置 -->
 		<javaClientGenerator type="XMLMAPPER"
-			targetPackage="com.demo.dal.gen.dao" targetProject="./src/main/java">
+			targetPackage="com.king.dal.gen.dao" targetProject="./src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		
