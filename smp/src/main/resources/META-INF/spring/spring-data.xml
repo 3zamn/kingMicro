@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd   
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd   
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd   
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<description>user center platform</description>
+
+	<!-- 加载properties -->
+	<bean id="propertyConfigurer"
+		class="com.dtsjy.mdboss.common.spring.ext.PropertyPlaceholderConfigurerExt">
+		<property name="location">
+			<value>classpath:/setting/settings.properties</value>
+		</property>
+		<!-- 容许多次加载属性文件 -->
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+	</bean>
+
+	<!-- 数据源配置 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${ucp.jdbc.driverClass}" />
+		<property name="url" value="${ucp.jdbc.jdbcUrl}" />
+		<property name="username" value="${ucp.jdbc.user}" />
+		<property name="password" value="${ucp.jdbc.password}" />
+		 <!--maxActive: 最大连接数量-->    
+        <property name="maxActive" value="50"/>  
+        <!--minIdle: 最小空闲连接-->    
+        <property name="minIdle" value="10"/>  
+        <!--maxIdle: 最大空闲连接-->    
+        <property name="maxIdle" value="20"/>  
+        <!--initialSize: 初始化连接-->    
+        <property name="initialSize" value="20"/>  
+        <!-- 连接被泄露时是否打印 -->  
+        <property name="logAbandoned" value="true"/>  
+        <!--removeAbandoned: 是否自动回收超时连接-->    
+        <property name="removeAbandoned"  value="true"/>  
+        <!--removeAbandonedTimeout: 超时时间(以秒数为单位)-->    
+        <property name="removeAbandonedTimeout" value="30"/>  
+        <!--maxWait: 超时等待时间以毫秒为单位-->  
+        <property name="maxWait" value="60000"/>  
+        <!-- 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位. -->  
+        <property name="timeBetweenEvictionRunsMillis" value="10000"/>  
+        <!--  在每次空闲连接回收器线程(如果有)运行时检查的连接数量 -->  
+        <property name="numTestsPerEvictionRun" value="10"/>  
+        <!-- 1000 * 60 * 30  连接在池中保持空闲而不被空闲连接回收器线程-->  
+        <property name="minEvictableIdleTimeMillis" value="10000"/>  
+    	<property name="validationQuery" value="SELECT 1"/>  
+	</bean>
+
+	<!-- 事务配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 没有必要在 Spring 的 XML 配置文件中注册所有的映射器。相反,你可以使用一个 MapperScannerConfigurer 
+		, 它 将 会 查 找 类 路 径 下 的 映 射 器 并 自 动 将 它 们 创 建 成 MapperFactoryBean。 如果你使 用了一个 
+		以上的 DataSource ,那 么自动 装配可 能会失效 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="com.dtsjy.mdboss.ucp.dal.gen.dao,com.dtsjy.mdboss.ucp.dal.ext.dao,com.dtsjy.mdboss.common.dal.gen.dao,com.dtsjy.mdboss.common.dal.ext.dao" />
+	</bean>
+</beans>
