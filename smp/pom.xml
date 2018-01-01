@@ -9,7 +9,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<springframework.version>4.0.5.RELEASE</springframework.version>
+		<springframework.version>4.3.11.RELEASE</springframework.version>
 		<!-- Logging -->
 		<slf4j.version>1.7.5</slf4j.version>
 		<slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
@@ -33,7 +33,7 @@
 			<version>${log4j.version}</version>
 		</dependency>
 		<!-- SPRING -->
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${springframework.version}</version>
@@ -67,7 +67,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${springframework.version}</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
