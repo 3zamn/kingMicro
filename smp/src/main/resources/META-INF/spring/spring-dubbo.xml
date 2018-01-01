@@ -17,7 +17,7 @@
 		</property>
 	</bean>
 	<!-- 提供方应用信息，用于计算依赖关系 -->
-	<dubbo:application name="ucp-app" />
+	<dubbo:application name="smp-app" />
 
 	<!-- 	使用simple或zookeeper注册中心 -->
 	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
@@ -30,10 +30,10 @@
 	
 	
 	
-	<!-- 声明需要暴露的服务接口（interface是全路径名，不能自定义）group分组 group="ucp-${hostname}"-->
+	<!-- 声明需要暴露的服务接口（interface是全路径名，不能自定义）group分组 group="smp-${hostname}"-->
 	<dubbo:service   interface="com.king.api.smp.ScheduleJobLogService" ref="scheduleJobLogService" />
-	<dubbo:service   interface="com.king.api.smp.ScheduleJobService" ref="scheduleJobService" />
-	<dubbo:service   interface="com.king.api.smp.SysConfigService" ref="sysConfigService" />
+	<dubbo:service   interface="com.king.api.smp.ScheduleJobService" ref="scheduleJobService" /> 
+	<!-- <dubbo:service   interface="com.king.api.smp.SysConfigService" ref="sysConfigService" /> -->
 	<dubbo:service   interface="com.king.api.smp.SysDeptService" ref="sysDeptService" />
 	<dubbo:service   interface="com.king.api.smp.SysLogService" ref="sysLogService" />
 	<dubbo:service   interface="com.king.api.smp.SysMenuService" ref="sysMenuService" />

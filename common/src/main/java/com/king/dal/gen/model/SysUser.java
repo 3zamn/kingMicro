@@ -3,8 +3,8 @@ package com.king.dal.gen.model;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
-import common.validator.group.AddGroup;
-import common.validator.group.UpdateGroup;
+import com.king.common.validator.group.AddGroup;
+import com.king.common.validator.group.UpdateGroup;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;

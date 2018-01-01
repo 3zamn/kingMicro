@@ -1,4 +1,4 @@
-package common.validator.group;
+package com.king.common.validator.group;
 
 import javax.validation.GroupSequence;
 

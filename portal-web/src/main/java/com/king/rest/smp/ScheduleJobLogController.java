@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.ScheduleJobLogService;
+import com.king.common.utils.PageUtils;
+import com.king.common.utils.R;
 import com.king.dal.gen.model.ScheduleJobLog;
 import com.king.utils.Query;
-
-import common.utils.PageUtils;
-import common.utils.R;
 
 /**
  * 定时任务日志

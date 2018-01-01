@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ScheduleJobService;
+import com.king.common.utils.Constant;
 import com.king.dal.gen.model.ScheduleJob;
 import com.king.dao.ScheduleJobDao;
 import com.king.utils.ScheduleUtils;
-
-import common.utils.Constant;
 
 @Service("scheduleJobService")
 public class ScheduleJobServiceImpl implements ScheduleJobService {
@@ -30,7 +29,7 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 	/**
 	 * 项目启动时，初始化定时器
 	 */
-	@PostConstruct
+//	@PostConstruct
 	public void init(){
 		List<ScheduleJob> scheduleJobList = schedulerJobDao.queryList(new HashMap<String, Object>());
 		for(ScheduleJob scheduleJob : scheduleJobList){

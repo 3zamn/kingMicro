@@ -16,13 +16,12 @@ import com.king.annotation.Log;
 import com.king.api.smp.SysRoleDeptService;
 import com.king.api.smp.SysRoleMenuService;
 import com.king.api.smp.SysRoleService;
+import com.king.common.utils.Constant;
+import com.king.common.utils.PageUtils;
+import com.king.common.utils.R;
+import com.king.common.validator.ValidatorUtils;
 import com.king.dal.gen.model.SysRole;
 import com.king.utils.Query;
-
-import common.utils.Constant;
-import common.utils.PageUtils;
-import common.utils.R;
-import common.validator.ValidatorUtils;
 
 /**
  * @author King chen

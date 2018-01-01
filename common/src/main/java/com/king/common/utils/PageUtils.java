@@ -1,4 +1,4 @@
-package common.utils;
+package com.king.common.utils;
 
 import java.io.Serializable;
 import java.util.List;

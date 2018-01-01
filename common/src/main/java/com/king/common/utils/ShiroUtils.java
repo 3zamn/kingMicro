@@ -1,13 +1,12 @@
-package common.utils;
+package com.king.common.utils;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
+import com.king.common.exception.RRException;
 import com.king.dal.gen.model.SysUser;
-
-import common.exception.RRException;
 
 
 /**

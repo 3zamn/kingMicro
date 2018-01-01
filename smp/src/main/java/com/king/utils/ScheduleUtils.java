@@ -11,10 +11,9 @@ import org.quartz.SchedulerException;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 
+import com.king.common.exception.RRException;
+import com.king.common.utils.Constant;
 import com.king.dal.gen.model.ScheduleJob;
-
-import common.exception.RRException;
-import common.utils.Constant;
 
 /**
  * 定时任务工具类

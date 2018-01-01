@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import common.exception.RRException;
+import com.king.common.exception.RRException;
 
 /**
  * Redis切面处理类

@@ -1,4 +1,4 @@
-package common.validator.group;
+package com.king.common.validator.group;
 
 /**
  * 腾讯云

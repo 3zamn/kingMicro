@@ -27,10 +27,9 @@ import org.springframework.stereotype.Component;
 
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysUserService;
+import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.SysMenu;
 import com.king.dal.gen.model.SysUser;
-
-import common.utils.ShiroUtils;
 
 
 /**

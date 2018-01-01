@@ -23,9 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-
-import common.utils.R;
-import common.utils.ShiroUtils;
+import com.king.common.utils.R;
+import com.king.common.utils.ShiroUtils;
 
 /**
  * 登录相关

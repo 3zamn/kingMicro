@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysDeptService;
+import com.king.common.utils.Constant;
+import com.king.common.utils.R;
 import com.king.dal.gen.model.SysDept;
-
-import common.utils.Constant;
-import common.utils.R;
 
 
 /**

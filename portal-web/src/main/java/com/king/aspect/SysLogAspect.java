@@ -3,11 +3,10 @@ package com.king.aspect;
 import com.google.gson.Gson;
 import com.king.annotation.Log;
 import com.king.api.smp.SysLogService;
+import com.king.common.utils.IPUtils;
 import com.king.dal.gen.model.SysLog;
 import com.king.dal.gen.model.SysUser;
 import com.king.utils.HttpContextUtils;
-
-import common.utils.IPUtils;
 
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.ProceedingJoinPoint;

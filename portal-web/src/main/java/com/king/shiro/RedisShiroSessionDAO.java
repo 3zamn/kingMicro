@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import common.utils.RedisKeys;
+import com.king.common.utils.RedisKeys;
 
 /**
  * shiro session dao

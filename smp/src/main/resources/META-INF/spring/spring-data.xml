@@ -7,25 +7,16 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd   
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
-	<description>user center platform</description>
-
-	<!-- 加载properties -->
-	<bean id="propertyConfigurer"
-		class="com.dtsjy.mdboss.common.spring.ext.PropertyPlaceholderConfigurerExt">
-		<property name="location">
-			<value>classpath:/setting/settings.properties</value>
-		</property>
-		<!-- 容许多次加载属性文件 -->
-		<property name="ignoreUnresolvablePlaceholders" value="true" />
-	</bean>
+	<description>system center platform</description>
+ 	<context:component-scan base-package="com.king" />
 
 	<!-- 数据源配置 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="${ucp.jdbc.driverClass}" />
-		<property name="url" value="${ucp.jdbc.jdbcUrl}" />
-		<property name="username" value="${ucp.jdbc.user}" />
-		<property name="password" value="${ucp.jdbc.password}" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/kingMicro"/>
+		<property name="username" value="root" />
+		<property name="password" value="password" />
 		 <!--maxActive: 最大连接数量-->    
         <property name="maxActive" value="50"/>  
         <!--minIdle: 最小空闲连接-->    
@@ -59,15 +50,25 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+	</bean> -->
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- <property name="configLocation" value="classpath:mybatis.xml" /> -->
+		<property name="mapperLocations" value="classpath:mapper/**/*.xml" /> 
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.king.dao" />
 	</bean>
 
 	<!-- 没有必要在 Spring 的 XML 配置文件中注册所有的映射器。相反,你可以使用一个 MapperScannerConfigurer 
 		, 它 将 会 查 找 类 路 径 下 的 映 射 器 并 自 动 将 它 们 创 建 成 MapperFactoryBean。 如果你使 用了一个 
 		以上的 DataSource ,那 么自动 装配可 能会失效 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage"
-			value="com.dtsjy.mdboss.ucp.dal.gen.dao,com.dtsjy.mdboss.ucp.dal.ext.dao,com.dtsjy.mdboss.common.dal.gen.dao,com.dtsjy.mdboss.common.dal.ext.dao" />
-	</bean>
+			value="com.king.dao" />
+	</bean> -->
 </beans>

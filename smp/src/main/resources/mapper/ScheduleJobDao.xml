@@ -4,7 +4,7 @@
 <mapper namespace="com.king.dao.ScheduleJobDao">
 	<select id="queryObject" resultType="com.king.dal.gen.model.ScheduleJob" >
 		select * from schedule_job where job_id = #{value}
-	</select> 
+	</select>  
 
 	<select id="queryList" resultType="com.king.dal.gen.model.ScheduleJob" >
 		select * from schedule_job

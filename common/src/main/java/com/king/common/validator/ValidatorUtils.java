@@ -1,4 +1,4 @@
-package common.validator;
+package com.king.common.validator;
 
 
 import java.util.Set;
@@ -7,7 +7,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
-import common.exception.RRException;
+import com.king.common.exception.RRException;
 
 /**
  * hibernate-validator校验工具类

@@ -14,11 +14,10 @@ import org.springframework.stereotype.Component;
 
 import com.king.annotation.DataFilter;
 import com.king.api.smp.SysDeptService;
+import com.king.common.exception.RRException;
+import com.king.common.utils.Constant;
+import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.SysUser;
-
-import common.exception.RRException;
-import common.utils.Constant;
-import common.utils.ShiroUtils;
 
 
 /**

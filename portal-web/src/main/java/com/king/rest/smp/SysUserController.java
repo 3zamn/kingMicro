@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.king.annotation.Log;
 import com.king.api.smp.SysUserRoleService;
 import com.king.api.smp.SysUserService;
+import com.king.common.utils.PageUtils;
+import com.king.common.utils.R;
+import com.king.common.utils.ShiroUtils;
+import com.king.common.validator.Assert;
+import com.king.common.validator.ValidatorUtils;
+import com.king.common.validator.group.AddGroup;
+import com.king.common.validator.group.UpdateGroup;
 import com.king.dal.gen.model.SysUser;
 import com.king.utils.Query;
-
-import common.utils.PageUtils;
-import common.utils.R;
-import common.utils.ShiroUtils;
-import common.validator.Assert;
-import common.validator.ValidatorUtils;
-import common.validator.group.AddGroup;
-import common.validator.group.UpdateGroup;
 
 /**
  * 系统用户

@@ -10,13 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.king.api.smp.SysConfigService;
+import com.king.common.exception.RRException;
+import com.king.common.utils.SysConfigRedis;
 import com.king.dal.gen.model.SysConfig;
 import com.king.dao.SysConfigDao;
 
-import common.exception.RRException;
-import common.utils.SysConfigRedis;
-
-@Service("sysConfigService")
+//@Service("sysConfigService")
 public class SysConfigServiceImpl implements SysConfigService {
 	@Autowired
 	private SysConfigDao sysConfigDao;

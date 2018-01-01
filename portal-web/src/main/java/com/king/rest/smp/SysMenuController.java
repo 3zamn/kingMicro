@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.king.annotation.Log;
 import com.king.api.smp.SysMenuService;
+import com.king.common.exception.RRException;
+import com.king.common.utils.Constant;
+import com.king.common.utils.R;
 import com.king.dal.gen.model.SysMenu;
-
-import common.exception.RRException;
-import common.utils.Constant;
-import common.utils.R;
 
 /**
  * 系统菜单

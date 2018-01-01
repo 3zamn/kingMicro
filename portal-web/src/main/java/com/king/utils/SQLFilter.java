@@ -3,7 +3,7 @@ package com.king.utils;
 
 import org.apache.commons.lang.StringUtils;
 
-import common.exception.RRException;
+import com.king.common.exception.RRException;
 
 /**
  * SQL过滤

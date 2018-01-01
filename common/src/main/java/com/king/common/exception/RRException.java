@@ -1,4 +1,4 @@
-package common.exception;
+package com.king.common.exception;
 
 /**
  * 自定义异常

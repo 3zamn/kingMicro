@@ -14,11 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.SysUserRoleService;
 import com.king.api.smp.SysUserService;
+import com.king.common.annotation.DataFilter;
+import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.SysUser;
 import com.king.dao.SysUserDao;
-
-import common.annotation.DataFilter;
-import common.utils.ShiroUtils;
 
 
 

@@ -7,8 +7,8 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import common.exception.RRException;
-import common.utils.R;
+import com.king.common.exception.RRException;
+import com.king.common.utils.R;
 
 /**
  * 异常处理器

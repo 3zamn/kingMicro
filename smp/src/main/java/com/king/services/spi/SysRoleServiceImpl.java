@@ -11,10 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.king.api.smp.SysRoleDeptService;
 import com.king.api.smp.SysRoleMenuService;
 import com.king.api.smp.SysRoleService;
+import com.king.common.annotation.DataFilter;
 import com.king.dal.gen.model.SysRole;
 import com.king.dao.SysRoleDao;
-
-import common.annotation.DataFilter;
 
 
 /**

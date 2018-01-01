@@ -1,4 +1,4 @@
-package common.utils;
+package com.king.common.utils;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
