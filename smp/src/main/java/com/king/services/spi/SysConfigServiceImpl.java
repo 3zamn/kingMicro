@@ -15,7 +15,7 @@ import com.king.common.utils.SysConfigRedis;
 import com.king.dal.gen.model.SysConfig;
 import com.king.dao.SysConfigDao;
 
-//@Service("sysConfigService")
+@Service("sysConfigService")
 public class SysConfigServiceImpl implements SysConfigService {
 	@Autowired
 	private SysConfigDao sysConfigDao;
