@@ -20,10 +20,10 @@ import com.king.common.exception.RRException;
 public class RedisAspect {
     private Logger logger = LoggerFactory.getLogger(getClass());
     //是否开启redis缓存  true开启   false关闭
-    @Value("${renren.redis.open: false}")
+    @Value("${king.redis.open: false}")
     private boolean open;
 
-    @Around("execution(* io.renren.common.utils.RedisUtils.*(..))")
+    @Around("execution(* com.king.common.utils.RedisUtils.*(..))")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         Object result = null;
         if(open){

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.king.annotation.Log;
 import com.king.api.smp.SysRoleDeptService;
 import com.king.api.smp.SysRoleMenuService;
 import com.king.api.smp.SysRoleService;
+import com.king.common.annotation.Log;
 import com.king.common.utils.Constant;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.R;

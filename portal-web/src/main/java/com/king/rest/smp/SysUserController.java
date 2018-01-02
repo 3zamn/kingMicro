@@ -3,6 +3,7 @@ package com.king.rest.smp;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.king.annotation.Log;
 import com.king.api.smp.SysUserRoleService;
 import com.king.api.smp.SysUserService;
+import com.king.common.annotation.Log;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.R;
 import com.king.common.utils.ShiroUtils;

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.king.annotation.Log;
 import com.king.api.smp.SysMenuService;
+import com.king.common.annotation.Log;
 import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
 import com.king.common.utils.R;

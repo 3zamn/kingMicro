@@ -1,12 +1,9 @@
 package com.king.aspect;
 
-import com.google.gson.Gson;
-import com.king.annotation.Log;
-import com.king.api.smp.SysLogService;
-import com.king.common.utils.IPUtils;
-import com.king.dal.gen.model.SysLog;
-import com.king.dal.gen.model.SysUser;
-import com.king.utils.HttpContextUtils;
+import java.lang.reflect.Method;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -17,9 +14,12 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.util.Date;
+import com.google.gson.Gson;
+import com.king.api.smp.SysLogService;
+import com.king.common.utils.IPUtils;
+import com.king.dal.gen.model.SysLog;
+import com.king.dal.gen.model.SysUser;
+import com.king.utils.HttpContextUtils;
 
 
 /**
@@ -34,7 +34,7 @@ public class SysLogAspect {
 	@Autowired
 	private SysLogService sysLogService;
 	
-	@Pointcut("@annotation(io.renren.common.annotation.SysLog)")
+	@Pointcut("@annotation(com.king.common.annotation.SysLog)")
 	public void logPointCut() { 
 		
 	}
@@ -58,7 +58,7 @@ public class SysLogAspect {
 		Method method = signature.getMethod();
 
 		SysLog sysLog = new SysLog();
-		Log log = method.getAnnotation(Log.class);
+		com.king.common.annotation.Log log = method.getAnnotation(com.king.common.annotation.Log.class);
 		if(log != null){
 			//注解上的描述
 			sysLog.setOperation(log.value());

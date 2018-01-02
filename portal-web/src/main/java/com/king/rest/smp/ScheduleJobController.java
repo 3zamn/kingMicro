@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.king.annotation.Log;
 import com.king.api.smp.ScheduleJobService;
+import com.king.common.annotation.Log;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.R;
 import com.king.common.validator.ValidatorUtils;

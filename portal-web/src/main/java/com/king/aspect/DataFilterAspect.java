@@ -12,7 +12,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.king.annotation.DataFilter;
 import com.king.api.smp.SysDeptService;
 import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
@@ -31,7 +30,7 @@ public class DataFilterAspect {
     @Autowired
     private SysDeptService sysDeptService;
 
-    @Pointcut("@annotation(io.renren.common.annotation.DataFilter)")
+    @Pointcut("@annotation(com.king.common.annotation.DataFilter)")
     public void dataFilterCut() {
 
     }
@@ -59,7 +58,7 @@ public class DataFilterAspect {
      */
     private String getFilterSQL(SysUser user, JoinPoint point){
         MethodSignature signature = (MethodSignature) point.getSignature();
-        DataFilter dataFilter = signature.getMethod().getAnnotation(DataFilter.class);
+        com.king.common.annotation.DataFilter dataFilter = signature.getMethod().getAnnotation(com.king.common.annotation.DataFilter.class);
         //获取表的别名
         String tableAlias = dataFilter.tableAlias();
         if(StringUtils.isNotBlank(tableAlias)){

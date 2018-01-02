@@ -22,7 +22,7 @@ public  class  ApplicationInitializedListener {
 		//spring 启动后加载
 	//	HashMap<String, List<HashMap<String,String>>> result = GenEnttyMapper.generateEnttyMapper(); 
 	//	mapper =result;
-	//	System.out.println("加载实体映射解析完毕"+result);
+		System.out.println("spring容器启动完毕");
 		
 		
 	}
