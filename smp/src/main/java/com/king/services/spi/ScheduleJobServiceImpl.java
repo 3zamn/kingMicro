@@ -29,7 +29,7 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 	/**
 	 * 项目启动时，初始化定时器
 	 */
-//	@PostConstruct
+	@PostConstruct
 	public void init(){
 		List<ScheduleJob> scheduleJobList = schedulerJobDao.queryList(new HashMap<String, Object>());
 		for(ScheduleJob scheduleJob : scheduleJobList){
