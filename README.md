@@ -23,7 +23,7 @@ portal-web：部署在web容器、例如tomcat
 
 portal-html:用nginx代理即可
 
-smp:打包成jar（建议用fat插件打包）、在java环境运行jar包即可。开发环境用dubbo的main方法启动spring容器、运行app类main方法即可。
+smp:打包成jar（建议用maven打包）、在java环境运行jar包即可。开发环境用dubbo的main方法启动spring容器、运行app类main方法即可。
 开发其他子系统或模块同smp子系统一样单独jar包部署、、、、
 
 架构选型：
@@ -78,6 +78,8 @@ app端：API模块用swt的token做安全校验
 
 10.引入Hibernate Validator校验框架，轻松实现后端校验
 
-11.引入云存储服务，已支持：七牛云、阿里云、腾讯云及本地分布式文件存储fastdhf等
+11.引入云存储服务，已支持：七牛云、阿里云、腾讯云及本地分布式文件存储fastdfs、fastdhf等
 
 12.引入springfox+swagger2支持API接口生成、管理
+  
+     生命有限！少写重复代码！
