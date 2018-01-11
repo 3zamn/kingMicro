@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.king.api.smp.SysLogService;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.R;
-import com.king.dal.gen.model.SysLog;
+import com.king.dal.gen.model.smp.SysLog;
 import com.king.utils.Query;
 
 /**

@@ -4,7 +4,7 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
-import com.king.dal.gen.model.SysMenu;
+import com.king.dal.gen.model.smp.SysMenu;
 
 /**
  * 菜单管理

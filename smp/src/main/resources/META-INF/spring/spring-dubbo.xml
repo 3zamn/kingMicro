@@ -42,6 +42,8 @@
 	<dubbo:service   interface="com.king.api.smp.SysRoleService" ref="sysRoleService" />
 	<dubbo:service   interface="com.king.api.smp.SysUserRoleService" ref="sysUserRoleService" />
 	<dubbo:service   interface="com.king.api.smp.SysUserService" ref="sysUserService" />
+	<dubbo:service   interface="com.king.api.smp.ShiroService" ref="shiroService" />
+	<dubbo:service   interface="com.king.api.smp.SysUserTokenService" ref="sysUserTokenService" />
 	<!-- 生成远程服务代理，可以和本地bean一样使用loginService -->
 	<!-- <dubbo:reference id="loginService" interface="com.dobbu.login.api.LoginService" /> -->
 

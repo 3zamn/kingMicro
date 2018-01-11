@@ -20,7 +20,7 @@ import com.king.common.utils.Constant;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.R;
 import com.king.common.validator.ValidatorUtils;
-import com.king.dal.gen.model.SysRole;
+import com.king.dal.gen.model.smp.SysRole;
 import com.king.utils.Query;
 
 /**

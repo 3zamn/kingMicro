@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.king.api.smp.SysConfigService;
 import com.king.common.exception.RRException;
 import com.king.common.utils.SysConfigRedis;
-import com.king.dal.gen.model.SysConfig;
+import com.king.dal.gen.model.smp.SysConfig;
 import com.king.dao.SysConfigDao;
 
 @Service("sysConfigService")

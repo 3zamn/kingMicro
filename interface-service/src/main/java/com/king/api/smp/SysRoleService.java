@@ -3,7 +3,7 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
-import com.king.dal.gen.model.SysRole;
+import com.king.dal.gen.model.smp.SysRole;
 
 /**
  * 角色

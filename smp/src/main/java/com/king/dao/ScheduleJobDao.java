@@ -4,7 +4,7 @@ package com.king.dao;
 import java.util.Map;
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.ScheduleJob;
+import com.king.dal.gen.model.smp.ScheduleJob;
 
 /**
  * 定时任务

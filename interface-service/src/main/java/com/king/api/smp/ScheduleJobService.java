@@ -3,7 +3,7 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
-import com.king.dal.gen.model.ScheduleJob;
+import com.king.dal.gen.model.smp.ScheduleJob;
 
 /**
  * 定时任务

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.king.api.smp.SysUserService;
-import com.king.dal.gen.model.SysUser;
+import com.king.dal.gen.model.smp.SysUser;
 
 
 @Component("testTask")

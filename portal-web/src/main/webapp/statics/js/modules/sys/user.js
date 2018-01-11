@@ -5,15 +5,14 @@ $(function () {
         colModel: [			
 			{ label: '用户ID', name: 'userId', index: "user_id", width: 45, key: true },
 			{ label: '用户名', name: 'username', width: 75 },
-            { label: '所属部门', name: 'deptName', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
 			{ label: '手机号', name: 'mobile', width: 100 },
-			{ label: '状态', name: 'status', width: 60, formatter: function(value, options, row){
+			{ label: '状态', name: 'status', width: 80, formatter: function(value, options, row){
 				return value === 0 ? 
 					'<span class="label label-danger">禁用</span>' : 
 					'<span class="label label-success">正常</span>';
 			}},
-			{ label: '创建时间', name: 'createTime', index: "create_time", width: 85}
+			{ label: '创建时间', name: 'createTime', index: "create_time", width: 80}
         ],
 		viewrecords: true,
         height: 385,
@@ -41,160 +40,132 @@ $(function () {
         }
     });
 });
-var setting = {
-    data: {
-        simpleData: {
-            enable: true,
-            idKey: "deptId",
-            pIdKey: "parentId",
-            rootPId: -1
-        },
-        key: {
-            url:"nourl"
-        }
-    }
-};
-var ztree;
 
 var vm = new Vue({
-    el:'#rrapp',
-    data:{
-        q:{
-            username: null
-        },
-        showList: true,
-        title:null,
-        roleList:{},
-        user:{
-            status:1,
-            deptId:null,
-            deptName:null,
-            roleIdList:[]
-        }
-    },
-    methods: {
-        query: function () {
-            vm.reload();
-        },
-        add: function(){
-            vm.showList = false;
-            vm.title = "新增";
-            vm.roleList = {};
-            vm.user = {deptName:null, deptId:null, status:1, roleIdList:[]};
-
-            //获取角色信息
-            this.getRoleList();
-
-            vm.getDept();
-        },
-        getDept: function(){
-            //加载部门树
-            $.get(baseURL + "sys/dept/list", function(r){
-                ztree = $.fn.zTree.init($("#deptTree"), setting, r);
-                var node = ztree.getNodeByParam("deptId", vm.user.deptId);
-                if(node != null){
-                    ztree.selectNode(node);
-
-                    vm.user.deptName = node.name;
-                }
-            })
-        },
-        update: function () {
-            var userId = getSelectedRow();
-            if(userId == null){
-                return ;
-            }
-
-            vm.showList = false;
+	el:'#rrapp',
+	data:{
+		q:{
+			username: null
+		},
+		showList: true,
+		title:null,
+		roleList:{},
+		user:{
+			status:1,
+			roleIdList:[]
+		}
+	},
+	methods: {
+		query: function () {
+			vm.reload();
+		},
+		add: function(){
+			vm.showList = false;
+			vm.title = "新增";
+			vm.roleList = {};
+			vm.user = {status:1,roleIdList:[]};
+			
+			//获取角色信息
+			this.getRoleList();
+		},
+		update: function () {
+			var userId = getSelectedRow();
+			if(userId == null){
+				return ;
+			}
+			
+			vm.showList = false;
             vm.title = "修改";
-
-            vm.getUser(userId);
-            //获取角色信息
-            this.getRoleList();
-        },
-        del: function () {
-            var userIds = getSelectedRows();
-            if(userIds == null){
+			
+			vm.getUser(userId);
+			//获取角色信息
+			this.getRoleList();
+		},
+		del: function () {
+			var userIds = getSelectedRows();
+			if(userIds == null){
+				return ;
+			}
+			
+			confirm('确定要删除选中的记录？', function(){
+				$.ajax({
+					type: "POST",
+				    url: baseURL + "sys/user/delete",
+                    contentType: "application/json",
+				    data: JSON.stringify(userIds),
+				    success: function(r){
+						if(r.code == 0){
+							alert('操作成功', function(){
+                                vm.reload();
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			});
+		},
+		saveOrUpdate: function () {
+            if(vm.validator()){
                 return ;
             }
 
-            confirm('确定要删除选中的记录？', function(){
-                $.ajax({
-                    type: "POST",
-                    url: baseURL + "sys/user/delete",
-                    contentType: "application/json",
-                    data: JSON.stringify(userIds),
-                    success: function(r){
-                        if(r.code == 0){
-                            alert('操作成功', function(){
-                                vm.reload();
-                            });
-                        }else{
-                            alert(r.msg);
-                        }
-                    }
-                });
-            });
-        },
-        saveOrUpdate: function () {
-            var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
-            $.ajax({
-                type: "POST",
-                url: baseURL + url,
+			var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
+			$.ajax({
+				type: "POST",
+			    url: baseURL + url,
                 contentType: "application/json",
-                data: JSON.stringify(vm.user),
-                success: function(r){
-                    if(r.code === 0){
-                        alert('操作成功', function(){
-                            vm.reload();
-                        });
-                    }else{
-                        alert(r.msg);
-                    }
-                }
-            });
-        },
-        getUser: function(userId){
-            $.get(baseURL + "sys/user/info/"+userId, function(r){
-                vm.user = r.user;
-                vm.user.password = null;
-
-                vm.getDept();
-            });
-        },
-        getRoleList: function(){
-            $.get(baseURL + "sys/role/select", function(r){
-                vm.roleList = r.list;
-            });
-        },
-        deptTree: function(){
-            layer.open({
-                type: 1,
-                offset: '50px',
-                skin: 'layui-layer-molv',
-                title: "选择部门",
-                area: ['300px', '450px'],
-                shade: 0,
-                shadeClose: false,
-                content: jQuery("#deptLayer"),
-                btn: ['确定', '取消'],
-                btn1: function (index) {
-                    var node = ztree.getSelectedNodes();
-                    //选择上级部门
-                    vm.user.deptId = node[0].deptId;
-                    vm.user.deptName = node[0].name;
-
-                    layer.close(index);
-                }
-            });
-        },
-        reload: function () {
-            vm.showList = true;
-            var page = $("#jqGrid").jqGrid('getGridParam','page');
-            $("#jqGrid").jqGrid('setGridParam',{
+			    data: JSON.stringify(vm.user),
+			    success: function(r){
+			    	if(r.code === 0){
+						alert('操作成功', function(){
+							vm.reload();
+						});
+					}else{
+						alert(r.msg);
+					}
+				}
+			});
+		},
+		getUser: function(userId){
+			$.get(baseURL + "sys/user/info/"+userId, function(r){
+				vm.user = r.user;
+				vm.user.password = null;
+			});
+		},
+		getRoleList: function(){
+			$.get(baseURL + "sys/role/select", function(r){
+				vm.roleList = r.list;
+			});
+		},
+		reload: function () {
+			vm.showList = true;
+			var page = $("#jqGrid").jqGrid('getGridParam','page');
+			$("#jqGrid").jqGrid('setGridParam',{ 
                 postData:{'username': vm.q.username},
                 page:page
             }).trigger("reloadGrid");
+		},
+        validator: function () {
+            if(isBlank(vm.user.username)){
+                alert("用户名不能为空");
+                return true;
+            }
+
+            if(vm.user.userId == null && isBlank(vm.user.password)){
+                alert("密码不能为空");
+                return true;
+            }
+
+            if(isBlank(vm.user.email)){
+                alert("邮箱不能为空");
+                return true;
+            }
+
+            if(!validator.isEmail(vm.user.email)){
+                alert("邮箱格式不正确");
+                return true;
+			}
         }
-    }
+	}
 });

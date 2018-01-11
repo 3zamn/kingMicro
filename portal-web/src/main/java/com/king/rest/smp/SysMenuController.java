@@ -16,7 +16,7 @@ import com.king.common.annotation.Log;
 import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
 import com.king.common.utils.R;
-import com.king.dal.gen.model.SysMenu;
+import com.king.dal.gen.model.smp.SysMenu;
 
 /**
  * 系统菜单

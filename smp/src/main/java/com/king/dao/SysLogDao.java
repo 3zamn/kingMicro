@@ -2,7 +2,7 @@ package com.king.dao;
 
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.SysLog;
+import com.king.dal.gen.model.smp.SysLog;
 
 /**
  * 系统日志

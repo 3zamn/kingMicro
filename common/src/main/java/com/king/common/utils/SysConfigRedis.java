@@ -5,7 +5,7 @@ package com.king.common.utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.king.dal.gen.model.SysConfig;
+import com.king.dal.gen.model.smp.SysConfig;
 
 
 /**

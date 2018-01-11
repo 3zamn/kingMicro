@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">    
 <mapper namespace="com.king.dao.SysConfigDao">
-	<select id="queryObject" resultType="com.king.dal.gen.model.SysConfig">
+	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysConfig">
 		select * from sys_config where id = #{id}
 	</select>
 	
-	<select id="queryList" parameterType="map" resultType="com.king.dal.gen.model.SysConfig">
+	<select id="queryList" parameterType="map" resultType="com.king.dal.gen.model.smp.SysConfig">
 		select * from sys_config where status = 1 
 		<if test="key != null and key.trim() != ''">
 			and `key` like concat('%',#{key},'%') 
@@ -22,12 +22,12 @@
 		</if>
 	</select>
 	
-	<insert id="save" parameterType="com.king.dal.gen.model.SysConfig">
+	<insert id="save" parameterType="com.king.dal.gen.model.smp.SysConfig">
 		insert into sys_config(`key`, `value`, remark)
 			values(#{key},#{value},#{remark})
 	</insert>
 	
-	<update id="update" parameterType="com.king.dal.gen.model.SysConfig">
+	<update id="update" parameterType="com.king.dal.gen.model.smp.SysConfig">
 		update sys_config set `key` = #{key}, `value` = #{value}, remark = #{remark} 
 			 where id = #{id}
 	</update>
@@ -38,7 +38,7 @@
 	</update>
 
 	<!-- 根据key，查询value -->
-	<select id="queryByKey" parameterType="string" resultType="com.king.dal.gen.model.SysConfig">
+	<select id="queryByKey" parameterType="string" resultType="com.king.dal.gen.model.smp.SysConfig">
 		select * from sys_config where `key` = #{key}
 	</select>
 	

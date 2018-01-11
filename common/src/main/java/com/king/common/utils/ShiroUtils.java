@@ -6,7 +6,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 import com.king.common.exception.RRException;
-import com.king.dal.gen.model.SysUser;
+import com.king.dal.gen.model.smp.SysUser;
 
 
 /**

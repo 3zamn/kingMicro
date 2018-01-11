@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Fast Dev Platform</title>
+  <title>人人快速开发平台</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="${request.contextPath}/statics/css/bootstrap.min.css">
-  <link rel="stylesheet" href="${request.contextPath}/statics/css/font-awesome.min.css">
-  <link rel="stylesheet" href="${request.contextPath}/statics/css/AdminLTE.min.css">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="${request.contextPath}/statics/css/all-skins.min.css">
-  <link rel="stylesheet" href="${request.contextPath}/statics/css/main.css">
+  <link rel="stylesheet" href="css/all-skins.min.css">
+  <link rel="stylesheet" href="css/main.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -25,11 +26,11 @@
 <!-- Site wrapper -->
 <div class="wrapper" id="rrapp" v-cloak>
   <header class="main-header">
-    <a href="javascript:void(0);" class="logo">
+    <a href="javascript:;" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b></b></span>
+      <span class="logo-mini"><b>人人</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Fast Dev Platform</b></span>
+      <span class="logo-lg"><b>人人快速开发平台</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -40,10 +41,10 @@
 	  <div style="float:left;color:#fff;padding:15px 10px;">欢迎 {{user.username}}</div>
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-       <!--    <li><a href="javascript:;" @click="donate"><i class="fa fa-jpy"></i> &nbsp;捐赠作者</a></li>
-          <li><a href="http://www.renren.io" target="_blank"><i class="fa fa-home"></i> &nbsp;编程教程</a></li> -->
+          <li><a href="javascript:;" @click="donate"><i class="fa fa-jpy"></i> &nbsp;捐赠作者</a></li>
+          <li><a href="http://www.renren.io" target="_blank"><i class="fa fa-home"></i> &nbsp;编程教程</a></li>
 		  <li><a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
-          <li><a href="logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
+          <li><a href="javascript:;" @click="logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
 		</ul>
       </div>
     </nav>
@@ -61,7 +62,7 @@
         <li class="header">导航菜单</li>
         
         <!-- vue生成的菜单 -->
-		<menu-item :item="item" v-for="item in menuList"></menu-item>
+		<menu-item :item="item" :index="index" v-for="(item, index) in menuList"></menu-item>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -85,12 +86,12 @@
   </div>
   <!-- /.content-wrapper -->
 
- <!--  <footer class="main-footer">
+  <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      Version 3.0.0
+      Version 1.2.0
     </div>
     Copyright &copy; 2017 <a href="http://www.renren.io" target="_blank">renren.io</a> All Rights Reserved
-  </footer> -->
+  </footer>
 
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
@@ -124,13 +125,14 @@
 <!-- ./wrapper -->
 
 
-
-<script src="${request.contextPath}/statics/libs/jquery.min.js"></script>
-<script src="${request.contextPath}/statics/libs/vue.min.js"></script>
-<script src="${request.contextPath}/statics/libs/router.js"></script>
-<script src="${request.contextPath}/statics/libs/bootstrap.min.js"></script>
-<script src="${request.contextPath}/statics/libs/app.js"></script>
-<script src="${request.contextPath}/statics/plugins/layer/layer.js"></script>
-<script src="${request.contextPath}/statics/js/index.js"></script>
+<script src="libs/jquery.min.js"></script>
+<script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="libs/vue.min.js"></script>
+<script src="libs/router.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<script src="libs/app.js"></script>
+<script src="plugins/layer/layer.js"></script>
+<script src="js/common.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>

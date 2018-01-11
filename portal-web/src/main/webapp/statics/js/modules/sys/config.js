@@ -66,7 +66,7 @@ var vm = new Vue({
                 vm.config = r.config;
             });
 		},
-		del: function (event) {
+		del: function () {
 			var ids = getSelectedRows();
 			if(ids == null){
 				return ;
@@ -80,7 +80,7 @@ var vm = new Vue({
 				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
-							alert('操作成功', function(index){
+							alert('操作成功', function(){
 								vm.reload();
 							});
 						}else{
@@ -90,7 +90,11 @@ var vm = new Vue({
 				});
 			});
 		},
-		saveOrUpdate: function (event) {
+		saveOrUpdate: function () {
+            if(vm.validator()){
+				return ;
+			}
+
 			var url = vm.config.id == null ? "sys/config/save" : "sys/config/update";
 			$.ajax({
 				type: "POST",
@@ -99,7 +103,7 @@ var vm = new Vue({
 			    data: JSON.stringify(vm.config),
 			    success: function(r){
 			    	if(r.code === 0){
-						alert('操作成功', function(index){
+						alert('操作成功', function(){
 							vm.reload();
 						});
 					}else{
@@ -108,13 +112,24 @@ var vm = new Vue({
 				}
 			});
 		},
-		reload: function (event) {
+		reload: function () {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 postData:{'key': vm.q.key},
                 page:page
             }).trigger("reloadGrid");
-		}
+		},
+		validator: function () {
+			if(isBlank(vm.config.key)){
+				alert("参数名不能为空");
+				return true;
+			}
+
+            if(isBlank(vm.config.value)){
+                alert("参数值不能为空");
+                return true;
+            }
+        }
 	}
 });

@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.king.dao.ScheduleJobLogDao">
-	<select id="queryObject" resultType="com.king.dal.gen.model.ScheduleJobLog" >
+	<select id="queryObject" resultType="com.king.dal.gen.model.smp.ScheduleJobLog" >
 		select * from schedule_job_log where log_id = #{value}
 	</select> 
 
-	<select id="queryList" resultType="com.king.dal.gen.model.ScheduleJobLog" >
+	<select id="queryList" resultType="com.king.dal.gen.model.smp.ScheduleJobLog" >
 		select * from schedule_job_log 
 		<where>
 			<if test="jobId != null">
@@ -28,7 +28,7 @@
 		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.king.dal.gen.model.ScheduleJobLog">
+	<insert id="save" parameterType="com.king.dal.gen.model.smp.ScheduleJobLog">
 		insert into schedule_job_log
 		(
 			`job_id`, 

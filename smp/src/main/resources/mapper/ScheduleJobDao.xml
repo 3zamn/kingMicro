@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.king.dao.ScheduleJobDao">
-	<select id="queryObject" resultType="com.king.dal.gen.model.ScheduleJob" >
+	<select id="queryObject" resultType="com.king.dal.gen.model.smp.ScheduleJob" >
 		select * from schedule_job where job_id = #{value}
 	</select>  
 
-	<select id="queryList" resultType="com.king.dal.gen.model.ScheduleJob" >
+	<select id="queryList" resultType="com.king.dal.gen.model.smp.ScheduleJob" >
 		select * from schedule_job
 		<where>
 			<if test="beanName != null and beanName.trim() != ''">
@@ -27,7 +27,7 @@
 		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.king.dal.gen.model.ScheduleJob" useGeneratedKeys="true" keyProperty="jobId">
+	<insert id="save" parameterType="com.king.dal.gen.model.smp.ScheduleJob" useGeneratedKeys="true" keyProperty="jobId">
 		insert into schedule_job
 		(
 			`bean_name`, 
@@ -50,7 +50,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.king.dal.gen.model.ScheduleJob">
+	<update id="update" parameterType="com.king.dal.gen.model.smp.ScheduleJob">
 		update schedule_job 
 		<set> 
 			<if test="beanName != null">`bean_name` = #{beanName}, </if>

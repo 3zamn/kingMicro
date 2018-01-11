@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.SysUser;
+import com.king.dal.gen.model.smp.SysUser;
 
 /**
  * 系统用户

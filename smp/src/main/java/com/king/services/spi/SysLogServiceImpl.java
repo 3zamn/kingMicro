@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.king.api.smp.SysLogService;
-import com.king.dal.gen.model.SysLog;
+import com.king.dal.gen.model.smp.SysLog;
 import com.king.dao.SysLogDao;
 
 

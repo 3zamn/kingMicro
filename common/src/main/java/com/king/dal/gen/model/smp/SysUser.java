@@ -1,4 +1,4 @@
-package com.king.dal.gen.model;
+package com.king.dal.gen.model.smp;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.king.dal.gen.model;
+package com.king.dal.gen.model.smp;
 
 import java.io.Serializable;
 import java.util.List;

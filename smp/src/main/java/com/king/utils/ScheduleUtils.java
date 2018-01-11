@@ -13,7 +13,7 @@ import org.quartz.TriggerKey;
 
 import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
-import com.king.dal.gen.model.ScheduleJob;
+import com.king.dal.gen.model.smp.ScheduleJob;
 
 /**
  * 定时任务工具类

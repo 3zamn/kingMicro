@@ -2,7 +2,7 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
-import com.king.dal.gen.model.SysUser;
+import com.king.dal.gen.model.smp.SysUser;
 
 
 /**

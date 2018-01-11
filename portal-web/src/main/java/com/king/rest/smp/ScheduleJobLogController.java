@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.king.api.smp.ScheduleJobLogService;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.R;
-import com.king.dal.gen.model.ScheduleJobLog;
+import com.king.dal.gen.model.smp.ScheduleJobLog;
 import com.king.utils.Query;
 
 /**

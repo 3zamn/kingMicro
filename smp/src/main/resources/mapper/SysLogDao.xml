@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.king.dao.SysLogDao">
- <resultMap type="com.king.dal.gen.model.SysLog" id="BaseResultMap">
+ <resultMap type="com.king.dal.gen.model.smp.SysLog" id="BaseResultMap">
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="operation" column="operation"/>
@@ -14,11 +14,11 @@
     </resultMap>
 
 
-	<select id="queryObject" resultType="com.king.dal.gen.model.SysLog">
+	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysLog">
 		select * from sys_log where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.king.dal.gen.model.SysLog">
+	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysLog">
 		select * from sys_log 
 		<where>
 			<if test="searchKey != null and searchKey.trim() != ''">
@@ -41,7 +41,7 @@
 		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.king.dal.gen.model.SysLog" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" parameterType="com.king.dal.gen.model.smp.SysLog" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_log
 		(
 			`username`, 
@@ -64,7 +64,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.king.dal.gen.model.SysLog">
+	<update id="update" parameterType="com.king.dal.gen.model.smp.SysLog">
 		update sys_log 
 		<set>
 			<if test="username != null">`username` = #{username}, </if>

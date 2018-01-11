@@ -2,7 +2,7 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
-import com.king.dal.gen.model.SysConfig;
+import com.king.dal.gen.model.smp.SysConfig;
 
 /**
  * 系统配置信息

@@ -73,7 +73,11 @@ var vm = new Vue({
 				vm.schedule = r.schedule;
 			});
 		},
-		saveOrUpdate: function (event) {
+		saveOrUpdate: function () {
+            if(vm.validator()){
+                return ;
+            }
+
 			var url = vm.schedule.jobId == null ? "sys/schedule/save" : "sys/schedule/update";
 			$.ajax({
 				type: "POST",
@@ -82,7 +86,7 @@ var vm = new Vue({
 			    data: JSON.stringify(vm.schedule),
 			    success: function(r){
 			    	if(r.code === 0){
-						alert('操作成功', function(index){
+						alert('操作成功', function(){
 							vm.reload();
 						});
 					}else{
@@ -91,7 +95,7 @@ var vm = new Vue({
 				}
 			});
 		},
-		del: function (event) {
+		del: function () {
 			var jobIds = getSelectedRows();
 			if(jobIds == null){
 				return ;
@@ -105,7 +109,7 @@ var vm = new Vue({
 				    data: JSON.stringify(jobIds),
 				    success: function(r){
 						if(r.code == 0){
-							alert('操作成功', function(index){
+							alert('操作成功', function(){
 								vm.reload();
 							});
 						}else{
@@ -115,7 +119,7 @@ var vm = new Vue({
 				});
 			});
 		},
-		pause: function (event) {
+		pause: function () {
 			var jobIds = getSelectedRows();
 			if(jobIds == null){
 				return ;
@@ -129,7 +133,7 @@ var vm = new Vue({
 				    data: JSON.stringify(jobIds),
 				    success: function(r){
 						if(r.code == 0){
-							alert('操作成功', function(index){
+							alert('操作成功', function(){
 								vm.reload();
 							});
 						}else{
@@ -139,7 +143,7 @@ var vm = new Vue({
 				});
 			});
 		},
-		resume: function (event) {
+		resume: function () {
 			var jobIds = getSelectedRows();
 			if(jobIds == null){
 				return ;
@@ -153,7 +157,7 @@ var vm = new Vue({
 				    data: JSON.stringify(jobIds),
 				    success: function(r){
 						if(r.code == 0){
-							alert('操作成功', function(index){
+							alert('操作成功', function(){
 								vm.reload();
 							});
 						}else{
@@ -163,7 +167,7 @@ var vm = new Vue({
 				});
 			});
 		},
-		runOnce: function (event) {
+		runOnce: function () {
 			var jobIds = getSelectedRows();
 			if(jobIds == null){
 				return ;
@@ -177,7 +181,7 @@ var vm = new Vue({
 				    data: JSON.stringify(jobIds),
 				    success: function(r){
 						if(r.code == 0){
-							alert('操作成功', function(index){
+							alert('操作成功', function(){
 								vm.reload();
 							});
 						}else{
@@ -194,6 +198,22 @@ var vm = new Vue({
                 postData:{'beanName': vm.q.beanName},
                 page:page 
             }).trigger("reloadGrid");
-		}
+		},
+        validator: function () {
+            if(isBlank(vm.schedule.beanName)){
+                alert("bean名称不能为空");
+                return true;
+            }
+
+            if(isBlank(vm.schedule.methodName)){
+                alert("方法名称不能为空");
+                return true;
+            }
+
+            if(isBlank(vm.schedule.cronExpression)){
+                alert("cron表达式不能为空");
+                return true;
+            }
+        }
 	}
 });

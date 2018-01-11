@@ -3,7 +3,7 @@ package com.king.dao;
 import java.util.List;
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.SysDept;
+import com.king.dal.gen.model.smp.SysDept;
 
 /**
  * 部门管理

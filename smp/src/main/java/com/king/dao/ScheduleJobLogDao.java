@@ -1,7 +1,7 @@
 package com.king.dao;
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.ScheduleJobLog;
+import com.king.dal.gen.model.smp.ScheduleJobLog;
 
 /**
  * 定时任务日志

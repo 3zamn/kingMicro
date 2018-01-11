@@ -3,7 +3,7 @@
 
 <mapper namespace="com.king.dao.SysUserRoleDao">
 
-	<select id="queryList" resultType="com.king.dal.gen.model.SysUserRole">
+	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysUserRole">
 		select * from sys_user_role 
 		<where>
 			<if test="userId != null">

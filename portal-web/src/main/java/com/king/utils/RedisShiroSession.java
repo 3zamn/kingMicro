@@ -1,4 +1,4 @@
-package com.king.shiro;
+package com.king.utils;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
@@ -18,7 +18,7 @@ import com.king.common.utils.RedisKeys;
  * @date 2017年12月29日
  */
 @Component
-public class RedisShiroSessionDAO extends EnterpriseCacheSessionDAO {
+public class RedisShiroSession extends EnterpriseCacheSessionDAO {
     @Autowired
     private RedisTemplate redisTemplate;
 

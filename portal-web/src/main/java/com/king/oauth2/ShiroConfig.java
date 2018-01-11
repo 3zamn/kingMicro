@@ -1,4 +1,10 @@
-package com.king.shiro;
+package com.king.oauth2;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.servlet.Filter;
 
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -8,24 +14,22 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.king.utils.RedisShiroSession;
 
 /**
- * Shiro的配置文件
+ * Shiro配置
  * @author King chen
- * @email 396885563@qq.com
- * @date 2017年12月29日
+ * @emai 396885563@qq.com
+ * @data2018年1月11日
  */
 @Configuration
 public class ShiroConfig {
 
-    @Bean("sessionManager")
-    public SessionManager sessionManager(RedisShiroSessionDAO redisShiroSessionDAO   ){
+	@Bean("sessionManager")
+    public SessionManager sessionManager(RedisShiroSession redisShiroSessionDAO   ){
     	//临时设置
     	boolean redisOpen=false;
     	boolean shiroRedis=false;
@@ -42,31 +46,43 @@ public class ShiroConfig {
         return sessionManager;
     }
 
-    @Bean("securityManager")
-    public SecurityManager securityManager(UserRealm userRealm, SessionManager sessionManager) {
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(userRealm);
-        securityManager.setSessionManager(sessionManager);
+	@Bean("securityManager")
+	public SecurityManager securityManager(OAuth2Realm oAuth2Realm, SessionManager sessionManager) {
+		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+		securityManager.setRealm(oAuth2Realm);
+		securityManager.setSessionManager(sessionManager);
 
-        return securityManager;
-    }
-
+		return securityManager;
+	}
 
     @Bean("shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-        shiroFilter.setLoginUrl("/login.html");
-        shiroFilter.setUnauthorizedUrl("/");
+
+        //oauth过滤
+        Map<String, Filter> filters = new HashMap<>();
+        filters.put("oauth2", new OAuth2Filter());
+        shiroFilter.setFilters(filters);
 
         Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/statics/**", "anon");
-        filterMap.put("/swagger/**", "anon");
-        filterMap.put("/login.html", "anon");
+        filterMap.put("/webjars/**", "anon");
+        filterMap.put("/druid/**", "anon");
+        filterMap.put("/app/**", "anon");
         filterMap.put("/sys/login", "anon");
+        filterMap.put("/**/*.css", "anon");
+        filterMap.put("/**/*.js", "anon");
+        filterMap.put("/**/*.html", "anon");
+        filterMap.put("/fonts/**", "anon");
+        filterMap.put("/plugins/**", "anon");
+        filterMap.put("/swagger/**", "anon");
+        filterMap.put("/v2/api-docs", "anon");
+        filterMap.put("/swagger-ui.html", "anon");
+        filterMap.put("/swagger-resources/**", "anon");
         filterMap.put("/favicon.ico", "anon");
         filterMap.put("/captcha.jpg", "anon");
-        filterMap.put("/**", "authc");
+        filterMap.put("/", "anon");
+        filterMap.put("/**", "oauth2");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilter;
@@ -90,4 +106,5 @@ public class ShiroConfig {
         advisor.setSecurityManager(securityManager);
         return advisor;
     }
+
 }

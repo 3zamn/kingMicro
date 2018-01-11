@@ -15,8 +15,8 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import com.king.api.smp.ScheduleJobLogService;
 import com.king.common.utils.ScheduleRunnable;
 import com.king.common.utils.SpringContextUtils;
-import com.king.dal.gen.model.ScheduleJob;
-import com.king.dal.gen.model.ScheduleJobLog;
+import com.king.dal.gen.model.smp.ScheduleJob;
+import com.king.dal.gen.model.smp.ScheduleJobLog;
 
 /**
  *  定时任务

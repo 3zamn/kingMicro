@@ -1,13 +1,20 @@
 swagger: '2.0'
 info:
-  description: 是一套轻量级权限管理系统，极低门槛，拿来即用。设计之初，就非常注重安全性，为企业系统保驾护航，让一切都变得如此简单。
-  version: 3.0.0
-  title: portal-web
+  description: renren-fast是一个轻量级的Java快速开发平台，能快速开发项目并交付【接私活利器】
+  version: 1.0.0
+  title: 人人快速开发平台
 
-basePath: /portal-web
+basePath: /renren-fast
 
 schemes:
   - http
+
+#认证
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "token"
+    in: "header"
 
 #定义接口数据
 paths:
@@ -44,22 +51,7 @@ paths:
       responses:
         '200':
           schema:
-            type: object
-            properties:
-              code:
-                description: 状态码 0：成功  非0：失败
-                type: integer
-                format: int32
-              token:
-                description: token
-                type: string
-              expire:
-                description: 过期时长
-                type: integer
-                format: int32
-              msg:
-                description: 失败原因
-                type: string
+            $ref: '#/definitions/Login'
 
   /sys/user/list:
     get:
@@ -95,7 +87,7 @@ paths:
         '200':
           description: 返回管理员列表
           schema:
-            $ref: '#/definitions/SysUserEntity'
+            $ref: '#/definitions/SysUserEntityList'
   /sys/user/info:
     get:
       tags:
@@ -107,7 +99,14 @@ paths:
         '200':
           description: 返回当前管理员信息
           schema:
-            $ref: '#/definitions/SysUserEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              user:
+                $ref: '#/definitions/SysUserEntity'
   /sys/user/info/{userId}:
     get:
       tags:
@@ -125,7 +124,14 @@ paths:
         '200':
           description: 返回管理员信息
           schema:
-            $ref: '#/definitions/SysUserEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              user:
+                $ref: '#/definitions/SysUserEntity'
   /sys/user/password:
     post:
       tags:
@@ -208,133 +214,6 @@ paths:
           schema:
             $ref: '#/definitions/R'
 
-  /sys/dept/list:
-    get:
-      tags:
-        - 部门管理
-      summary: 部门列表
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: 返回部门列表
-          schema:
-            $ref: '#/definitions/SysDeptEntity'
-  /sys/dept/select:
-    get:
-      tags:
-        - 部门管理
-      summary: 选择部门
-      description: 添加、修改部门的时候，选择上级部门接口
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: 返回部门列表
-          schema:
-            $ref: '#/definitions/SysDeptEntity'
-  /sys/dept/info:
-    get:
-      tags:
-        - 部门管理
-      summary: 获取上级部门Id(管理员则为0)
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: 返回部门信息
-          schema:
-            type: object
-            properties:
-              code:
-                description: 状态码 0：成功  非0：失败
-                type: integer
-                format: int32
-              deptId:
-                description: 上级部门ID
-                type: integer
-                format: int64
-              msg:
-                description: 失败原因
-                type: string
-  /sys/dept/info/{deptId}:
-    get:
-      tags:
-        - 部门管理
-      summary: 获取部门信息
-      produces:
-        - application/json
-      parameters:
-        - name: deptId
-          description: 部门ID
-          in: path
-          type: integer
-          required: true
-      responses:
-        '200':
-          description: 返回部门信息
-          schema:
-            $ref: '#/definitions/SysDeptEntity'
-  /sys/dept/save:
-    post:
-      tags:
-        - 部门管理
-      summary: 添加部门
-      produces:
-        - application/json
-      parameters:
-        - name: body
-          description: 部门对象
-          in: body
-          type: string
-          schema:
-            $ref: '#/definitions/SysDeptEntityEdit'
-          required: true
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/R'
-  /sys/dept/update:
-    post:
-      tags:
-        - 部门管理
-      summary: 修改部门
-      produces:
-        - application/json
-      parameters:
-        - name: body
-          description: 部门对象
-          in: body
-          type: string
-          schema:
-            $ref: '#/definitions/SysDeptEntityEdit'
-          required: true
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/R'
-  /sys/dept/delete:
-    post:
-      tags:
-        - 部门管理
-      summary: 删除部门
-      produces:
-        - application/json
-      parameters:
-        - name: body
-          description: 部门ID列表
-          in: body
-          type: array
-          items:
-            type: integer
-            format: int64
-            default: 0
-          required: true
-      responses:
-        '200':
-          schema:
-            $ref: '#/definitions/R'
-
   /sys/role/list:
     get:
       tags:
@@ -367,9 +246,9 @@ paths:
           type: string
       responses:
         '200':
-          description: 返回管理员列表
+          description: 返回角色列表
           schema:
-            $ref: '#/definitions/SysRoleEntity'
+            $ref: '#/definitions/SysRoleEntityList'
   /sys/role/select:
     get:
       tags:
@@ -380,9 +259,18 @@ paths:
         - application/json
       responses:
         '200':
-          description: 返回管理员列表
+          description: 返回角色列表
           schema:
-            $ref: '#/definitions/SysRoleEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              list:
+                type: array
+                items:
+                  $ref: '#/definitions/SysRoleEntity'
   /sys/role/info/{roleId}:
     get:
       tags:
@@ -400,7 +288,14 @@ paths:
         '200':
           description: 返回角色信息
           schema:
-            $ref: '#/definitions/SysRoleEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              role:
+                $ref: '#/definitions/SysRoleEntity'
   /sys/role/save:
     post:
       tags:
@@ -461,18 +356,6 @@ paths:
           schema:
             $ref: '#/definitions/R'
 
-  /sys/menu/list:
-    get:
-      tags:
-        - 菜单管理
-      summary: 菜单列表
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: 返回菜单列表
-          schema:
-            $ref: '#/definitions/SysMenuEntity'
   /sys/menu/nav:
     get:
       tags:
@@ -484,7 +367,36 @@ paths:
         '200':
           description: 返回导航菜单列表
           schema:
-            $ref: '#/definitions/SysMenuEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              menuList:
+                description: 菜单列表
+                type: array
+                items:
+                  $ref: '#/definitions/SysMenuEntity'
+              permissions:
+                description: 权限列表
+                type: array
+                items:
+                  type: string
+  /sys/menu/list:
+    get:
+      tags:
+        - 菜单管理
+      summary: 菜单列表
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: 返回菜单列表
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SysMenuEntity'
   /sys/menu/select:
     get:
       tags:
@@ -497,7 +409,17 @@ paths:
         '200':
           description: 返回菜单列表
           schema:
-            $ref: '#/definitions/SysMenuEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              menuList:
+                description: 菜单列表
+                type: array
+                items:
+                  $ref: '#/definitions/SysMenuEntity'
   /sys/menu/info/{menuId}:
     get:
       tags:
@@ -515,7 +437,15 @@ paths:
         '200':
           description: 返回菜单信息
           schema:
-            $ref: '#/definitions/SysRoleEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              menu:
+                description: 菜单信息
+                $ref: '#/definitions/SysMenuEntity'
   /sys/menu/save:
     post:
       tags:
@@ -610,7 +540,7 @@ paths:
         '200':
           description: 返回日志列表
           schema:
-            $ref: '#/definitions/SysLogEntity'
+            $ref: '#/definitions/SysLogEntityList'
 
   /sys/config/list:
     get:
@@ -646,7 +576,7 @@ paths:
         '200':
           description: 返回参数列表
           schema:
-            $ref: '#/definitions/SysConfigEntity'
+            $ref: '#/definitions/SysConfigEntityList'
   /sys/config/info/{id}:
     get:
       tags:
@@ -664,7 +594,15 @@ paths:
         '200':
           description: 返回参数信息
           schema:
-            $ref: '#/definitions/SysConfigEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              config:
+                description: 返回参数信息
+                $ref: '#/definitions/SysConfigEntity'
   /sys/config/save:
     post:
       tags:
@@ -755,7 +693,7 @@ paths:
         '200':
           description: 返回文件列表
           schema:
-            $ref: '#/definitions/SysOssEntity'
+            $ref: '#/definitions/SysOssEntityList'
   /sys/oss/config:
     get:
       tags:
@@ -767,7 +705,15 @@ paths:
         '200':
           description: 返回云存储配置信息
           schema:
-            $ref: '#/definitions/SysCloudStorageEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              config:
+                description: 云存储配置信息
+                $ref: '#/definitions/SysCloudStorageEntity'
   /sys/oss/saveConfig:
     post:
       tags:
@@ -806,18 +752,7 @@ paths:
         '200':
           description: 返回文件列表
           schema:
-            type: object
-            properties:
-              code:
-                description: 状态码 0：成功  非0：失败
-                type: integer
-                format: int32
-              url:
-                description: 文件URL地址
-                type: string
-              msg:
-                description: 失败原因
-                type: string
+            $ref: '#/definitions/FileUpload'
   /sys/oss/delete:
     post:
       tags:
@@ -874,8 +809,8 @@ paths:
         '200':
           description: 返回定时任务列表
           schema:
-            $ref: '#/definitions/ScheduleJobEntity'
-  /sys/schedule/info/{id}:
+            $ref: '#/definitions/ScheduleJobEntityList'
+  /sys/schedule/info/{jobId}:
     get:
       tags:
         - 定时任务
@@ -892,7 +827,15 @@ paths:
         '200':
           description: 返回定时任务信息
           schema:
-            $ref: '#/definitions/ScheduleJobEntity'
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              schedule:
+                description: 定时任务信息
+                $ref: '#/definitions/ScheduleJobEntity'
   /sys/schedule/save:
     post:
       tags:
@@ -1016,6 +959,68 @@ paths:
           schema:
             $ref: '#/definitions/R'
 
+  /sys/scheduleLog/list:
+    get:
+      tags:
+        - 定时任务
+      summary: 定时任务日志列表
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          description: 页码
+          in: query
+          type: integer
+          required: true
+        - name: limit
+          description: 每页条数
+          in: query
+          type: integer
+          required: true
+        - name: sidx
+          description: 排序字段
+          in: query
+          type: string
+        - name: order
+          description: 排序方式，如：asc、desc
+          in: query
+          type: string
+        - name: beanName
+          description: spring bean名称
+          in: query
+          type: string
+      responses:
+        '200':
+          description: 返回定时任务日志列表
+          schema:
+            $ref: '#/definitions/ScheduleJobLogEntityList'
+  /sys/scheduleLog/info/{logId}:
+    get:
+      tags:
+        - 定时任务
+      summary: 获取定时任务日志信息
+      produces:
+        - application/json
+      parameters:
+        - name: logId
+          description: 日志ID
+          in: path
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: 返回定时任务日志信息
+          schema:
+            type: object
+            properties:
+              code:
+                description: 状态码 0：成功  非0：失败
+                type: integer
+                format: int32
+              schedule:
+                description: 定时任务日志信息
+                $ref: '#/definitions/ScheduleJobLogEntity'
+
 #定义数据模型
 definitions:
   R:
@@ -1028,6 +1033,24 @@ definitions:
         msg:
           description: 失败原因
           type: string
+  Login:
+      type: object
+      properties:
+        code:
+          description: 状态码 0：成功  非0：失败
+          type: integer
+          format: int32
+        token:
+          description: token
+          type: string
+        expire:
+          description: 过期时长
+          type: integer
+          format: int32
+        msg:
+          description: 失败原因
+          type: string
+
   SysUserEntity:
     type: object
     properties:
@@ -1037,13 +1060,6 @@ definitions:
         format: int64
       username:
         description: 用户名
-        type: string
-      deptId:
-        description: 部门ID
-        type: integer
-        format: int64
-      deptName:
-        description: 部门名称
         type: string
       password:
         description: 密码
@@ -1072,6 +1088,36 @@ definitions:
         description: 创建时间
         type: string
         format: date-time
+  SysUserEntityList:
+    type: object
+    properties:
+      code:
+        description: 状态码 0：成功  非0：失败
+        type: integer
+        format: int32
+      page:
+        type: object
+        properties:
+          totalCount:
+            description: 总记录数
+            type: integer
+            format: int32
+          pageSize:
+            description: 每页记录数
+            type: integer
+            format: int32
+          totalPage:
+            description: 总页数
+            type: integer
+            format: int32
+          currPage:
+            description: 当前页数
+            type: integer
+            format: int32
+          list:
+            type: array
+            items:
+              $ref: '#/definitions/SysUserEntity'
   SysUserEntityEdit:
       type: object
       properties:
@@ -1082,10 +1128,6 @@ definitions:
         username:
           description: 用户名
           type: string
-        deptId:
-          description: 部门ID
-          type: integer
-          format: int64
         password:
           description: 密码
           type: string
@@ -1105,45 +1147,7 @@ definitions:
           items:
             type: integer
             format: int32
-  SysDeptEntity:
-    type: object
-    properties:
-      deptId:
-        description: 部门ID
-        type: integer
-        format: int64
-      name:
-        description: 部门名称
-        type: string
-      parentId:
-        description: 上级部门ID，一级部门为0
-        type: integer
-        format: int64
-      parentName:
-        description: 上级部门名称
-        type: string
-      orderNum:
-        description: 排序
-        type: integer
-        format: int32
-      open:
-        description: 是否展开   true：展开   false：不展开
-        type: boolean
-        format: int32
-  SysDeptEntityEdit:
-    type: object
-    properties:
-      name:
-        description: 部门名称
-        type: string
-      parentId:
-        description: 上级部门ID，一级部门为0
-        type: integer
-        format: int64
-      orderNum:
-        description: 排序
-        type: integer
-        format: int32
+
   SysRoleEntity:
     type: object
     properties:
@@ -1153,13 +1157,6 @@ definitions:
         format: int64
       roleName:
         description: 角色名称
-        type: string
-      deptId:
-        description: 部门ID
-        type: integer
-        format: int64
-      deptName:
-        description: 部门名称
         type: string
       remark:
         description: 备注
@@ -1178,6 +1175,36 @@ definitions:
         description: 创建时间
         type: string
         format: date-time
+  SysRoleEntityList:
+    type: object
+    properties:
+      code:
+        description: 状态码 0：成功  非0：失败
+        type: integer
+        format: int32
+      page:
+        type: object
+        properties:
+          totalCount:
+            description: 总记录数
+            type: integer
+            format: int32
+          pageSize:
+            description: 每页记录数
+            type: integer
+            format: int32
+          totalPage:
+            description: 总页数
+            type: integer
+            format: int32
+          currPage:
+            description: 当前页数
+            type: integer
+            format: int32
+          list:
+            type: array
+            items:
+              $ref: '#/definitions/SysRoleEntity'
   SysRoleEntityEdit:
     type: object
     properties:
@@ -1188,10 +1215,6 @@ definitions:
       roleName:
         description: 角色名称
         type: string
-      deptId:
-        description: 部门ID
-        type: integer
-        format: int64
       remark:
         description: 备注
         type: string
@@ -1201,6 +1224,7 @@ definitions:
         items:
           type: integer
           format: int64
+
   SysMenuEntity:
     type: object
     properties:
@@ -1270,6 +1294,7 @@ definitions:
         description: 排序
         type: integer
         format: int32
+
   SysLogEntity:
     type: object
     properties:
@@ -1300,6 +1325,37 @@ definitions:
         description: 创建时间
         type: string
         format: date-time
+  SysLogEntityList:
+    type: object
+    properties:
+      code:
+        description: 状态码 0：成功  非0：失败
+        type: integer
+        format: int32
+      page:
+        type: object
+        properties:
+          totalCount:
+            description: 总记录数
+            type: integer
+            format: int32
+          pageSize:
+            description: 每页记录数
+            type: integer
+            format: int32
+          totalPage:
+            description: 总页数
+            type: integer
+            format: int32
+          currPage:
+            description: 当前页数
+            type: integer
+            format: int32
+          list:
+            type: array
+            items:
+              $ref: '#/definitions/SysLogEntity'
+
   SysConfigEntity:
     type: object
     properties:
@@ -1316,6 +1372,37 @@ definitions:
       remark:
         description: 备注
         type: string
+  SysConfigEntityList:
+    type: object
+    properties:
+      code:
+        description: 状态码 0：成功  非0：失败
+        type: integer
+        format: int32
+      page:
+        type: object
+        properties:
+          totalCount:
+            description: 总记录数
+            type: integer
+            format: int32
+          pageSize:
+            description: 每页记录数
+            type: integer
+            format: int32
+          totalPage:
+            description: 总页数
+            type: integer
+            format: int32
+          currPage:
+            description: 当前页数
+            type: integer
+            format: int32
+          list:
+            type: array
+            items:
+              $ref: '#/definitions/SysConfigEntity'
+
   SysOssEntity:
     type: object
     properties:
@@ -1330,6 +1417,36 @@ definitions:
         description: 创建时间
         type: string
         format: date-time
+  SysOssEntityList:
+    type: object
+    properties:
+      code:
+        description: 状态码 0：成功  非0：失败
+        type: integer
+        format: int32
+      page:
+        type: object
+        properties:
+          totalCount:
+            description: 总记录数
+            type: integer
+            format: int32
+          pageSize:
+            description: 每页记录数
+            type: integer
+            format: int32
+          totalPage:
+            description: 总页数
+            type: integer
+            format: int32
+          currPage:
+            description: 当前页数
+            type: integer
+            format: int32
+          list:
+            type: array
+            items:
+              $ref: '#/definitions/SysOssEntity'
   SysCloudStorageEntity:
     type: object
     properties:
@@ -1391,6 +1508,20 @@ definitions:
       qcloudRegion:
         description: 腾讯云COS所属地区
         type: string
+  FileUpload:
+      type: object
+      properties:
+        code:
+          description: 状态码 0：成功  非0：失败
+          type: integer
+          format: int32
+        url:
+          description: 文件URL地址
+          type: string
+        msg:
+          description: 失败原因
+          type: string
+
   ScheduleJobEntity:
     type: object
     properties:
@@ -1421,4 +1552,99 @@ definitions:
         description: 创建时间
         type: string
         format: date-time
+  ScheduleJobEntityList:
+    type: object
+    properties:
+      code:
+        description: 状态码 0：成功  非0：失败
+        type: integer
+        format: int32
+      page:
+        type: object
+        properties:
+          totalCount:
+            description: 总记录数
+            type: integer
+            format: int32
+          pageSize:
+            description: 每页记录数
+            type: integer
+            format: int32
+          totalPage:
+            description: 总页数
+            type: integer
+            format: int32
+          currPage:
+            description: 当前页数
+            type: integer
+            format: int32
+          list:
+            type: array
+            items:
+              $ref: '#/definitions/ScheduleJobEntity'
 
+  ScheduleJobLogEntity:
+    type: object
+    properties:
+      logId:
+        description: 日志id
+        type: integer
+        format: int64
+      jobId:
+        description: 任务id
+        type: integer
+        format: int64
+      beanName:
+        description: spring bean名称
+        type: string
+      methodName:
+        description: 方法名
+        type: string
+      params:
+        description: 参数
+        type: string
+      status:
+        description: 任务状态    0：成功    1：失败
+        type: integer
+        format: int32
+      error:
+        description: 失败信息
+        type: string
+      times:
+        description: 耗时(单位：毫秒)
+        type: integer
+        format: int32
+      createTime:
+        description: 创建时间
+        type: string
+        format: date-time
+  ScheduleJobLogEntityList:
+    type: object
+    properties:
+      code:
+        description: 状态码 0：成功  非0：失败
+        type: integer
+        format: int32
+      page:
+        type: object
+        properties:
+          totalCount:
+            description: 总记录数
+            type: integer
+            format: int32
+          pageSize:
+            description: 每页记录数
+            type: integer
+            format: int32
+          totalPage:
+            description: 总页数
+            type: integer
+            format: int32
+          currPage:
+            description: 当前页数
+            type: integer
+            format: int32
+          list:
+            type: array
+            items:
+              $ref: '#/definitions/ScheduleJobLogEntity'

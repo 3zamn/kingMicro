@@ -1,7 +1,7 @@
 package com.king.dao;
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.SysRole;
+import com.king.dal.gen.model.smp.SysRole;
 
 /**
  * 角色管理

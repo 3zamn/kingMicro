@@ -1,26 +1,23 @@
 //生成菜单
 var menuItem = Vue.extend({
-	name: 'menu-item',
-	props:{item:{}},
-	template:[
-		'<li>',
-		'	<a v-if="item.type === 0" href="javascript:;">',
-		'		<i v-if="item.icon != null" :class="item.icon"></i>',
-		'		<span>{{item.name}}</span>',
-		'		<i class="fa fa-angle-left pull-right"></i>',
-		'	</a>',
-		'	<ul v-if="item.type === 0" class="treeview-menu">',
-		'		<menu-item :item="item" v-for="item in item.list"></menu-item>',
-		'	</ul>',
-		
-		'	<a v-if="item.type === 1 && item.parentId === 0" :href="\'#\'+item.url">',
-        '		<i v-if="item.icon != null" :class="item.icon"></i>',
-        '		<span>{{item.name}}</span>',
-        '	</a>',
-
-		'	<a v-if="item.type === 1 && item.parentId != 0" :href="\'#\'+item.url"><i v-if="item.icon != null" :class="item.icon"></i><i v-else class="fa fa-circle-o"></i> {{item.name}}</a>',
-		'</li>'
-	].join('')
+    name: 'menu-item',
+    props:{item:{},index:0},
+    template:[
+        '<li :class="{active: (item.type===0 && index === 0)}">',
+        '<a v-if="item.type === 0" href="javascript:;">',
+        '<i v-if="item.icon != null" :class="item.icon"></i>',
+        '<span>{{item.name}}</span>',
+        '<i class="fa fa-angle-left pull-right"></i>',
+        '</a>',
+        '<ul v-if="item.type === 0" class="treeview-menu">',
+        '<menu-item :item="item" :index="index" v-for="(item, index) in item.list"></menu-item>',
+        '</ul>',
+        '<a v-if="item.type === 1" :href="\'#\'+item.url">' +
+        '<i v-if="item.icon != null" :class="item.icon"></i>' +
+        '<i v-else class="fa fa-circle-o"></i> {{item.name}}' +
+        '</a>',
+        '</li>'
+    ].join('')
 });
 
 //iframe自适应
@@ -43,16 +40,18 @@ var vm = new Vue({
 		main:"main.html",
 		password:'',
 		newPassword:'',
-        navTitle:"控制台"
+        navTitle:"欢迎页"
 	},
 	methods: {
-		getMenuList: function (event) {
-			$.getJSON("sys/menu/nav?_"+$.now(), function(r){
+		getMenuList: function () {
+			$.getJSON(baseURL + "sys/menu/nav", function(r){
 				vm.menuList = r.menuList;
+				debugger
+                window.permissions = r.permissions;
 			});
 		},
 		getUser: function(){
-			$.getJSON("sys/user/info?_"+$.now(), function(r){
+			$.getJSON(baseURL + "sys/user/info", function(r){
 				vm.user = r.user;
 			});
 		},
@@ -69,23 +68,36 @@ var vm = new Vue({
 					var data = "password="+vm.password+"&newPassword="+vm.newPassword;
 					$.ajax({
 						type: "POST",
-					    url: "sys/user/password",
+					    url: baseURL + "sys/user/password",
 					    data: data,
 					    dataType: "json",
-					    success: function(result){
-							if(result.code == 0){
+					    success: function(r){
+							if(r.code == 0){
 								layer.close(index);
-								layer.alert('修改成功', function(index){
+								layer.alert('修改成功', function(){
 									location.reload();
 								});
 							}else{
-								layer.alert(result.msg);
+								layer.alert(r.msg);
 							}
 						}
 					});
 	            }
 			});
 		},
+        logout: function () {
+            $.ajax({
+                type: "POST",
+                url: baseURL + "sys/logout",
+                dataType: "json",
+                success: function(r){
+                    //删除本地token
+                    localStorage.removeItem("token");
+                    //跳转到登录页面
+                    location.href = baseURL + 'login.html';
+                }
+            });
+        },
         donate: function () {
             layer.open({
                 type: 2,
@@ -93,7 +105,7 @@ var vm = new Vue({
                 area: ['806px', '467px'],
                 closeBtn: 1,
                 shadeClose: false,
-                content: ['http://cdn.renren.io/donate.jpg', 'no']
+                content: ['https://github.com/3zamn/kingMicro', 'no']
             });
         }
 	},
@@ -125,6 +137,7 @@ function routerList(router, menuList){
 			    
 			    //导航菜单展开
 			    $(".treeview-menu li").removeClass("active");
+                $(".sidebar-menu li").removeClass("active");
 			    $("a[href='"+url+"']").parents("li").addClass("active");
 			    
 			    vm.navTitle = $("a[href='"+url+"']").text();

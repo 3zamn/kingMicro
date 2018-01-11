@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.king.api.smp.ScheduleJobLogService;
-import com.king.dal.gen.model.ScheduleJobLog;
+import com.king.dal.gen.model.smp.ScheduleJobLog;
 import com.king.dao.ScheduleJobLogDao;
 
 @SuppressWarnings("rawtypes")

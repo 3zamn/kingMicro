@@ -4,7 +4,7 @@ package com.king.dao;
 import org.apache.ibatis.annotations.Param;
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.SysConfig;
+import com.king.dal.gen.model.smp.SysConfig;
 
 /**
  * 系统配置信息

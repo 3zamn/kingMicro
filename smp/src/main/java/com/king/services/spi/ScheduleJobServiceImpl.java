@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ScheduleJobService;
 import com.king.common.utils.Constant;
-import com.king.dal.gen.model.ScheduleJob;
+import com.king.dal.gen.model.smp.ScheduleJob;
 import com.king.dao.ScheduleJobDao;
 import com.king.utils.ScheduleUtils;
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.king.api.smp.SysDeptService;
 import com.king.common.annotation.DataFilter;
-import com.king.dal.gen.model.SysDept;
+import com.king.dal.gen.model.smp.SysDept;
 import com.king.dao.SysDeptDao;
 
 

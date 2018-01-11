@@ -3,7 +3,7 @@ package com.king.dao;
 import java.util.List;
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.SysRoleDept;
+import com.king.dal.gen.model.smp.SysRoleDept;
 
 /**
  * 角色与部门对应关系

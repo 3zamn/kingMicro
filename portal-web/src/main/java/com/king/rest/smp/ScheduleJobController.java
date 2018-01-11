@@ -16,7 +16,7 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.R;
 import com.king.common.validator.ValidatorUtils;
-import com.king.dal.gen.model.ScheduleJob;
+import com.king.dal.gen.model.smp.ScheduleJob;
 import com.king.utils.Query;
 
 /**

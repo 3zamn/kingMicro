@@ -16,7 +16,7 @@ import com.king.api.smp.SysUserRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.DataFilter;
 import com.king.common.utils.ShiroUtils;
-import com.king.dal.gen.model.SysUser;
+import com.king.dal.gen.model.smp.SysUser;
 import com.king.dao.SysUserDao;
 
 

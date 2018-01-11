@@ -23,7 +23,7 @@ import com.king.common.validator.Assert;
 import com.king.common.validator.ValidatorUtils;
 import com.king.common.validator.group.AddGroup;
 import com.king.common.validator.group.UpdateGroup;
-import com.king.dal.gen.model.SysUser;
+import com.king.dal.gen.model.smp.SysUser;
 import com.king.utils.Query;
 
 /**

@@ -1,15 +1,15 @@
-package com.king.dal.gen.model;
+package com.king.dal.gen.model.smp;
 
 
 import java.io.Serializable;
 
 /**
- * 角色与菜单对应关系
+ * 角色与部门对应关系
  * @author King chen
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public class SysRoleMenu implements Serializable {
+public class SysRoleDept implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
@@ -20,9 +20,9 @@ public class SysRoleMenu implements Serializable {
 	private Long roleId;
 
 	/**
-	 * 菜单ID
+	 * 部门ID
 	 */
-	private Long menuId;
+	private Long deptId;
 
 	/**
 	 * 设置：
@@ -57,19 +57,19 @@ public class SysRoleMenu implements Serializable {
 	}
 	
 	/**
-	 * 设置：菜单ID
-	 * @param menuId 菜单ID
+	 * 设置：部门ID
+	 * @param deptId 部门ID
 	 */
-	public void setMenuId(Long menuId) {
-		this.menuId = menuId;
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
 	}
 
 	/**
-	 * 获取：菜单ID
+	 * 获取：部门ID
 	 * @return Long
 	 */
-	public Long getMenuId() {
-		return menuId;
+	public Long getDeptId() {
+		return deptId;
 	}
 	
 }

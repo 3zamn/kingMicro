@@ -3,11 +3,11 @@
 
 <mapper namespace="com.king.dao.SysRoleDao">
 
-	<select id="queryObject" resultType="com.king.dal.gen.model.SysRole">
+	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysRole">
 		select * from sys_role where role_id = #{value}
 	</select>
 	
-	<select id="queryList" resultType="com.king.dal.gen.model.SysRole">
+	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysRole">
 		select r.*, (select d.name from sys_dept d where d.dept_id = r.dept_id) deptName from sys_role r
 		<where>
 			<if test="roleName != null and roleName.trim() != ''">
@@ -42,7 +42,7 @@
 		</where>
 	</select>
 	
-	<insert id="save" parameterType="com.king.dal.gen.model.SysRole" useGeneratedKeys="true" keyProperty="roleId">
+	<insert id="save" parameterType="com.king.dal.gen.model.smp.SysRole" useGeneratedKeys="true" keyProperty="roleId">
 		insert into sys_role
 		(
 			`role_id`, 
@@ -61,7 +61,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.king.dal.gen.model.SysRole">
+	<update id="update" parameterType="com.king.dal.gen.model.smp.SysRole">
 		update sys_role 
 		<set> 
 			<if test="roleName != null">`role_name` = #{roleName}, </if>

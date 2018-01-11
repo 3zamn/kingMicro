@@ -17,7 +17,7 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.R;
 import com.king.common.validator.ValidatorUtils;
-import com.king.dal.gen.model.SysConfig;
+import com.king.dal.gen.model.smp.SysConfig;
 import com.king.utils.Query;
 
 

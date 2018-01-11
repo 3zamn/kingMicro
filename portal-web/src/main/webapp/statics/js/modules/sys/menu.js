@@ -26,7 +26,7 @@ var vm = new Vue({
         }
     },
     methods: {
-        getMenu: function(menuId){
+        getMenu: function(){
             //加载菜单树
             $.get(baseURL + "sys/menu/select", function(r){
                 ztree = $.fn.zTree.init($("#menuTree"), setting, r.menuList);
@@ -87,7 +87,7 @@ var vm = new Vue({
             var url = vm.menu.menuId == null ? "sys/menu/save" : "sys/menu/update";
             $.ajax({
                 type: "POST",
-                url:  baseURL + url,
+                url: baseURL + url,
                 contentType: "application/json",
                 data: JSON.stringify(vm.menu),
                 success: function(r){

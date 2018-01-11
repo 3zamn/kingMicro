@@ -3,7 +3,7 @@ package com.king.dao;
 import java.util.List;
 
 import com.king.dal.gen.dao.BaseDao;
-import com.king.dal.gen.model.SysRoleMenu;
+import com.king.dal.gen.model.smp.SysRoleMenu;
 
 /**
  * 角色与菜单对应关系
