@@ -15,7 +15,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class RedisUtils {
-    @Autowired
+    @SuppressWarnings("rawtypes")
+	@Autowired
     private RedisTemplate redisTemplate;
     @Resource(name="redisTemplate")
     private ValueOperations<String, String> valueOperations;

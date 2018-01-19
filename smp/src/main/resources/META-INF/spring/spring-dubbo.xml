@@ -5,17 +5,7 @@
 	 http://www.springframework.org/schema/beans/spring-beans.xsd        
 	 http://code.alibabatech.com/schema/dubbo        
 	 http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-	<!-- 引入property -->
-	 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-		<!-- 容许多次加载属性文件 -->
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="locations">
-			<list>
-					<value>classpath:/dubbo.properties</value>
-			</list>
-		</property>
-	</bean>
+	
 	<!-- 提供方应用信息，用于计算依赖关系 -->
 	<dubbo:application name="smp-app" />
 
@@ -23,7 +13,7 @@
 	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
 
 	<!-- 用dubbo协议在30880端口暴露服务 -->
-	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}" />
+	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}"  threads="${dubbo.threads}"/>
 
 	<!-- 设置超时控制 -->
 	<dubbo:provider timeout="${dubbo.provider.timeout}"></dubbo:provider> 

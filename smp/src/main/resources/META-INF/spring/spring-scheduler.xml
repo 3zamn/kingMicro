@@ -9,7 +9,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="quartzProperties">
             <props>
-                <prop key="org.quartz.scheduler.instanceName">KingScheduler</prop>
+                <prop key="org.quartz.scheduler.instanceName">kingScheduler</prop>
                 <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
                 <!-- 线程池配置 -->
                 <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
@@ -28,7 +28,7 @@
             </props>
         </property>
 
-        <property name="schedulerName" value="KingScheduler" />
+        <property name="schedulerName" value="kingScheduler" />
 
         <!--延时启动 -->
         <property name="startupDelay" value="30" />

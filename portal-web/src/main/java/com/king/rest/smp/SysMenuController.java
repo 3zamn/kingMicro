@@ -2,6 +2,7 @@ package com.king.rest.smp;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.king.api.smp.ShiroService;
 import com.king.api.smp.SysMenuService;
 import com.king.common.annotation.Log;
 import com.king.common.exception.RRException;
@@ -29,14 +31,16 @@ import com.king.dal.gen.model.smp.SysMenu;
 public class SysMenuController extends AbstractController {
 	@Autowired
 	private SysMenuService sysMenuService;
-
+	@Autowired
+	private ShiroService shiroService;
 	/**
 	 * 导航菜单
 	 */
 	@RequestMapping("/nav")
 	public R nav(){
 		List<SysMenu> menuList = sysMenuService.getUserMenuList(getUserId());
-		return R.ok().put("menuList", menuList);
+		Set<String> permissions = shiroService.getUserPermissions(getUserId());
+		return R.ok().put("menuList", menuList).put("permissions", permissions);
 	}
 	
 	/**

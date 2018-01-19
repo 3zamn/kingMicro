@@ -13,37 +13,60 @@
 		http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<description>system center platform</description>
  	<context:component-scan base-package="com.king" />
+<!-- 引入property -->
+	 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<!-- 容许多次加载属性文件 -->
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+					<value>classpath:/settings.properties</value>
+			</list>
+		</property>
+	</bean>
 
-	<!-- 数据源配置 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/king_smp"/>
-		<property name="username" value="root" />
-		<property name="password" value="123456" />
-		 <!--maxActive: 最大连接数量-->    
-        <property name="maxActive" value="50"/>  
-        <!--minIdle: 最小空闲连接-->    
-        <property name="minIdle" value="10"/>  
-        <!--maxIdle: 最大空闲连接-->    
-        <property name="maxIdle" value="20"/>  
-        <!--initialSize: 初始化连接-->    
-        <property name="initialSize" value="20"/>  
-        <!-- 连接被泄露时是否打印 -->  
-        <property name="logAbandoned" value="true"/>  
-        <!--removeAbandoned: 是否自动回收超时连接-->    
-        <property name="removeAbandoned"  value="true"/>  
-        <!--removeAbandonedTimeout: 超时时间(以秒数为单位)-->    
-        <property name="removeAbandonedTimeout" value="30"/>  
-        <!--maxWait: 超时等待时间以毫秒为单位-->  
-        <property name="maxWait" value="60000"/>  
-        <!-- 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位. -->  
-        <property name="timeBetweenEvictionRunsMillis" value="10000"/>  
-        <!--  在每次空闲连接回收器线程(如果有)运行时检查的连接数量 -->  
-        <property name="numTestsPerEvictionRun" value="10"/>  
-        <!-- 1000 * 60 * 30  连接在池中保持空闲而不被空闲连接回收器线程-->  
-        <property name="minEvictableIdleTimeMillis" value="10000"/>  
-    	<property name="validationQuery" value="SELECT 1"/>  
+	<!-- druid数据源配置 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="name" value="${hostname}" />
+		<property name="url" value="${smp.jdbc.jdbcUrl}" />
+		<property name="driverClassName" value="${smp.jdbc.driverClass}" />
+		<property name="username" value="${smp.jdbc.user}" />
+		<property name="password" value="${smp.jdbc.password}" />
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${smp.druid.initialSize}" />
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${smp.druid.minIdle}" />
+		<!-- 连接池最大使用连接数量 -->
+		<property name="maxActive" value="${smp.druid.maxActive}" />
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="${smp.druid.maxWait}" />
+		<!-- <property name="poolPreparedStatements" value="true" /> <property 
+			name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
+		<property name="validationQuery" value="SELECT 1" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="testWhileIdle" value="true" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="25200000" />
+
+		<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 180秒，也就是3分钟 -->
+		<property name="removeAbandonedTimeout" value="180" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true" />
+		<!-- 开启Druid的监控统计功能 -->
+		<property name="filters" value="stat" />
+		<!--<property name="filters" value="mergeStat" /> -->
+		<!-- Oracle连接是获取字段注释 -->
+		<property name="connectProperties">
+			<props>
+				<prop key="remarksReporting">true</prop>
+			</props>
+		</property>
 	</bean>
 
 	<!-- 事务配置 -->
@@ -53,10 +76,6 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
-	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-	</bean> -->
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis.xml" /> 
