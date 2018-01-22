@@ -17,6 +17,7 @@ import com.king.api.smp.SysUserRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.PageUtils;
+import com.king.common.utils.Query;
 import com.king.common.utils.R;
 import com.king.common.utils.ShiroUtils;
 import com.king.common.validator.Assert;
@@ -24,7 +25,6 @@ import com.king.common.validator.ValidatorUtils;
 import com.king.common.validator.group.AddGroup;
 import com.king.common.validator.group.UpdateGroup;
 import com.king.dal.gen.model.smp.SysUser;
-import com.king.utils.Query;
 
 /**
  * 系统用户

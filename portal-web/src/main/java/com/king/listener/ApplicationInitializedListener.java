@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
  * @author king chen
  *
  */
-@Component
+//@Component
 public  class  ApplicationInitializedListener {
 	
 	public static HashMap<String, List<HashMap<String,String>>> mapper=null;
-	@PostConstruct
+//	@PostConstruct
 	public static void loadEnttyMapper(){
 	//	new GenEnttyMapper();
 		//spring 启动后加载

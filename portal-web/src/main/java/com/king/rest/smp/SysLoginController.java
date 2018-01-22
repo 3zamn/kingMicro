@@ -84,7 +84,8 @@ public class SysLoginController extends AbstractController {
 		SysUser user = sysUserService.queryByUserName(username);
 
 		//账号不存在、密码错误
-		if(user == null || !user.getPassword().equals(new Sha256Hash(password, user.getSalt()).toHex())) {
+		String PW =ShiroUtils.sha256(password, user.getSalt());
+		if(user == null || !user.getPassword().equals(PW)) {
 			return R.error("账号或密码不正确");
 		}
 
