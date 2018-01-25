@@ -35,7 +35,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
             .apiInfo(apiInfo())
             .select()
             .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))           //加了ApiOperation注解的方法，生成接口文档
-            //.apis(RequestHandlerSelectors.basePackage("io.renren.modules.job.controller"))  //包下的类，生成接口文档
+            .apis(RequestHandlerSelectors.basePackage("com.king.rest"))  //包下的类，生成接口文档
             .paths(PathSelectors.any())
             .build();
     }

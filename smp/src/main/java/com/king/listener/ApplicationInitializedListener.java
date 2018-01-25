@@ -1,4 +1,4 @@
-package com.king.common.aspect;
+package com.king.listener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.king.common.utils.GenEnttyMapper;
 public  class  ApplicationInitializedListener {
 	
 	public static HashMap<String, List<HashMap<String,String>>> mapper=null;
-//	@PostConstruct
+	@PostConstruct
 	public static void loadEnttyMapper(){
 		new GenEnttyMapper();
 		//spring 启动后加载

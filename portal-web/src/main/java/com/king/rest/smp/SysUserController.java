@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,14 +18,13 @@ import com.king.api.smp.SysUserRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.PageUtils;
-import com.king.common.utils.Query;
 import com.king.common.utils.R;
-import com.king.common.utils.ShiroUtils;
 import com.king.common.validator.Assert;
 import com.king.common.validator.ValidatorUtils;
 import com.king.common.validator.group.AddGroup;
 import com.king.common.validator.group.UpdateGroup;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.utils.Query;
 
 /**
  * 系统用户
@@ -73,9 +73,9 @@ public class SysUserController extends AbstractController {
 		Assert.isBlank(newPassword, "新密码不为能空");
 
 		//原密码
-		password = ShiroUtils.sha256(password, getUser().getSalt());
+		password = new Sha256Hash(password, getUser().getSalt()).toHex();
 		//新密码
-		newPassword = ShiroUtils.sha256(newPassword, getUser().getSalt());
+		newPassword = new Sha256Hash(newPassword, getUser().getSalt()).toHex();
 				
 		//更新密码
 		int count = sysUserService.updatePassword(getUserId(), password, newPassword);

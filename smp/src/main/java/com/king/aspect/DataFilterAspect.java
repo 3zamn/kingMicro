@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 import com.king.api.smp.SysDeptService;
 import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
-import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.utils.ShiroUtils;
 
 
 /**

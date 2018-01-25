@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.king.api.smp.SysUserRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.DataFilter;
-import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dao.SysUserDao;
 
@@ -73,7 +73,7 @@ public class SysUserServiceImpl implements SysUserService {
 		//sha256加密
 		String salt = RandomStringUtils.randomAlphanumeric(20);
 		user.setSalt(salt);
-		user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
+		user.setPassword(new Sha256Hash(user.getPassword(), user.getSalt()).toHex());
 		sysUserDao.save(user);
 		
 		//保存用户与角色关系
@@ -86,7 +86,7 @@ public class SysUserServiceImpl implements SysUserService {
 		if(StringUtils.isBlank(user.getPassword())){
 			user.setPassword(null);
 		}else{
-			user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
+			user.setPassword(new Sha256Hash(user.getPassword(), user.getSalt()).toHex());
 		}
 		sysUserDao.update(user);
 		

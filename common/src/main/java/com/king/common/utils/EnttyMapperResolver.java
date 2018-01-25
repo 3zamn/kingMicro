@@ -3,7 +3,6 @@ package com.king.common.utils;
 import java.util.HashMap;
 import java.util.List;
 
-import com.king.common.aspect.ApplicationInitializedListener;
 
 /**
  * 实体解析
@@ -21,7 +20,8 @@ public  class EnttyMapperResolver {
 	 */
 	public static String getColumn(String enttyName,String attribute){
 		String column =null;
-		HashMap<String, List<HashMap<String,String>>> mapper=ApplicationInitializedListener.mapper;
+//		HashMap<String, List<HashMap<String,String>>> mapper=ApplicationInitializedListener.mapper;
+		HashMap<String, List<HashMap<String,String>>> mapper=null;
 		if(mapper!=null){
 			 List<HashMap<String, String>> enttys=mapper.get(enttyName);
 		        for(HashMap<String, String> entty:enttys){
@@ -42,7 +42,8 @@ public  class EnttyMapperResolver {
 	 */
 	public static Boolean isExistAttribute(String enttyName,String attribute){
 		Boolean isExist =false;
-		HashMap<String, List<HashMap<String,String>>> mapper=ApplicationInitializedListener.mapper;
+//		HashMap<String, List<HashMap<String,String>>> mapper=ApplicationInitializedListener.mapper;
+		HashMap<String, List<HashMap<String,String>>> mapper=null;
 		if(mapper!=null){
 			 List<HashMap<String, String>> enttys=mapper.get(enttyName);
 			 if(enttys!=null){

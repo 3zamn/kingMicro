@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.king.dao.ScheduleJobLogDao">
+<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.king.dal.gen.model.smp.ScheduleJobLog" id="BaseResultMap">
+        <result property="logId" column="log_id"/>
+        <result property="jobId" column="job_id"/>
+        <result property="beanName" column="bean_name"/>
+        <result property="methodName" column="method_name"/>
+        <result property="params" column="params"/>
+        <result property="status" column="status"/>
+        <result property="error" column="error"/>
+        <result property="times" column="times"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.ScheduleJobLog" >
 		select * from schedule_job_log where log_id = #{value}
 	</select> 

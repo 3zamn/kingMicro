@@ -30,8 +30,9 @@ import com.google.code.kaptcha.Producer;
 import com.king.api.smp.SysUserService;
 import com.king.api.smp.SysUserTokenService;
 import com.king.common.utils.R;
-import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.utils.ShiroUtils;
+
 
 /**
  * 登录相关
@@ -82,9 +83,8 @@ public class SysLoginController extends AbstractController {
 
 		//用户信息
 		SysUser user = sysUserService.queryByUserName(username);
-
+		String PW=new Sha256Hash(password, user.getSalt()).toHex();
 		//账号不存在、密码错误
-		String PW =ShiroUtils.sha256(password, user.getSalt());
 		if(user == null || !user.getPassword().equals(PW)) {
 			return R.error("账号或密码不正确");
 		}

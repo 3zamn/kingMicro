@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.king.dao.SysRoleMenuDao">
+<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.king.dal.gen.model.smp.SysRoleMenu" id="BaseResultMap">
+        <result property="id" column="id"/>
+        <result property="roleId" column="role_id"/>
+        <result property="menuId" column="menu_id"/>
+    </resultMap>
 
 	<insert id="save">
 		insert into sys_role_menu
