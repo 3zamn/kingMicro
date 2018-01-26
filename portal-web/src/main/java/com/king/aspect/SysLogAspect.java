@@ -13,7 +13,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import com.king.common.annotation.Log;
 import com.google.gson.Gson;
 import com.king.api.smp.SysLogService;
 import com.king.common.utils.IPUtils;
@@ -34,7 +34,7 @@ public class SysLogAspect {
 	@Autowired
 	private SysLogService sysLogService;
 	
-	@Pointcut("@annotation(com.king.common.annotation.SysLog)")
+	@Pointcut("@annotation(com.king.common.annotation.Log)")
 	public void logPointCut() { 
 		
 	}

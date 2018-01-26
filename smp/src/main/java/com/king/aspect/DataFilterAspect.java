@@ -16,11 +16,10 @@ import com.king.api.smp.SysDeptService;
 import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
 import com.king.dal.gen.model.smp.SysUser;
-import com.king.utils.ShiroUtils;
 
 
 /**
- * 数据过滤，切面处理类
+ * 数据权限过滤，切面处理类
  * @author King chen
  * @date 2017年12月25日
  */
@@ -39,13 +38,18 @@ public class DataFilterAspect {
     public void dataFilter(JoinPoint point) throws Throwable {
         Object params = point.getArgs()[0];
         if(params != null && params instanceof Map){
-            SysUser user = ShiroUtils.getUserEntity();
-
-            //如果不是超级管理员，则只能查询本部门及子部门数据
-            if(user.getUserId() != Constant.SUPER_ADMIN){
-                Map map = (Map)params;
-                map.put("filterSql", getFilterSQL(user, point));
-            }
+       //     SysUser user = ShiroUtils.getUserEntity();
+        	@SuppressWarnings("rawtypes")
+			Object object = ((Map)params).get("user");
+        	if(object !=null && object instanceof SysUser){
+        		  //如果不是超级管理员，则只能查询本部门及子部门数据
+        		SysUser user = (SysUser)object;
+                if(user.getUserId() != Constant.SUPER_ADMIN){
+                    Map map = (Map)params;
+                    map.put("filterSql", getFilterSQL(user, point));
+                }
+        	}
+          
 
             return ;
         }

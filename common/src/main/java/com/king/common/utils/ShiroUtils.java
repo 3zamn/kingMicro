@@ -1,4 +1,4 @@
-package com.king.utils;
+package com.king.common.utils;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;

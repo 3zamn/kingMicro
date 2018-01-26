@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,23 +21,30 @@ import com.king.dao.SysUserRoleDao;
  */
 @Service("sysUserRoleService")
 public class SysUserRoleServiceImpl implements SysUserRoleService {
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private SysUserRoleDao sysUserRoleDao;
 
 	@Override
 	public void saveOrUpdate(Long userId, List<Long> roleIdList) {
-		if(roleIdList.size() == 0){
-			return ;
+		try {
+			if(roleIdList.size() == 0){
+				return ;
+			}
+			
+			//先删除用户与角色关系
+			sysUserRoleDao.delete(userId);
+			
+			//保存用户与角色关系
+			Map<String, Object> map = new HashMap<>();
+			map.put("userId", userId);
+			map.put("roleIdList", roleIdList);
+			sysUserRoleDao.save(map);
+			logger.info("角色修改成功");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
 		
-		//先删除用户与角色关系
-		sysUserRoleDao.delete(userId);
-		
-		//保存用户与角色关系
-		Map<String, Object> map = new HashMap<>();
-		map.put("userId", userId);
-		map.put("roleIdList", roleIdList);
-		sysUserRoleDao.save(map);
 	}
 
 	@Override

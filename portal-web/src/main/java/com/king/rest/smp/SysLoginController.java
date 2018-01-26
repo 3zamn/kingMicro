@@ -11,27 +11,20 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Sha256Hash;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.king.api.smp.SysUserService;
 import com.king.api.smp.SysUserTokenService;
+import com.king.common.annotation.Log;
 import com.king.common.utils.R;
+import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
-import com.king.utils.ShiroUtils;
 
 
 /**
@@ -72,6 +65,7 @@ public class SysLoginController extends AbstractController {
 	/**
 	 * 登录
 	 */
+	@Log("用户登录")
 	@RequestMapping(value = "/sys/login", method = RequestMethod.POST)
 	public Map<String, Object> login(String username, String password, String captcha)throws IOException {
 		//本项目已实现，前后端完全分离，但页面还是跟项目放在一起了，所以还是会依赖session
@@ -103,6 +97,7 @@ public class SysLoginController extends AbstractController {
 	/**
 	 * 退出
 	 */
+	@Log("退出登录")
 	@RequestMapping(value = "/sys/logout", method = RequestMethod.POST)
 	public R logout() {
 		sysUserTokenService.logout(getUserId());

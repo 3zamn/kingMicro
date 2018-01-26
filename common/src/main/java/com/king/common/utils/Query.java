@@ -1,7 +1,4 @@
-package com.king.utils;
-import com.king.common.utils.EnttyMapperResolver;
-import com.king.common.utils.SQLFilter;
-
+package com.king.common.utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -33,7 +30,9 @@ public class Query extends LinkedHashMap<String, Object> {
         this.put("offset", (page - 1) * limit);
         this.put("page", page);
         this.put("limit", limit);
-        this.put("user", ShiroUtils.getUserEntity());//用户token
+        if(SpringContextUtils.getBean("shiroFilter")!=null){
+            this.put("user", ShiroUtils.getUserEntity());//用户
+        }
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
         String sidx = params.get("sidx").toString();
         String order = params.get("order").toString();
