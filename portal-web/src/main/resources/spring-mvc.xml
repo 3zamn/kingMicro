@@ -15,7 +15,7 @@
 
 	<context:component-scan base-package="com.king" />
 	<context:annotation-config />
-	<mvc:default-servlet-handler />
+    <mvc:default-servlet-handler />
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
@@ -31,6 +31,9 @@
                         <value>WriteMapNullValue</value>
                         <value>QuoteFieldNames</value>
                         <value>WriteDateUseDateFormat</value>
+                        <value>WriteNullStringAsEmpty</value>
+                        <value>WriteNullBooleanAsFalse</value>
+                        
 						<!-- 禁用fastjson循环引用检测 -->
 						<value>DisableCircularReferenceDetect</value>
                     </list>
@@ -38,60 +41,12 @@
             </bean>
         </mvc:message-converters>
 	</mvc:annotation-driven>
-
-	<!-- FreeMarker视图解析器     默认视图 -->
-	<!--  <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
-		<property name="contentType" value="text/html; charset=utf-8"/>
-		<property name="requestContextAttribute" value="request"/>
-		<property name="cache" value="false"/>
-		<property name="viewNames" value="*.html" />
-		<property name="suffix" value=""/>
-		<property name="order" value="0"/>
-	</bean> -->
-
-<!-- 	<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath" value="/WEB-INF/views/"/>
-		<property name="freemarkerVariables">
-			<map>
-				<entry key="shiro" value-ref="shiroTag" />
-			</map>
-		</property>
-		<property name="freemarkerSettings">
-			<props>
-				<prop key="defaultEncoding">UTF-8</prop>
-				<prop key="numberFormat">0.##</prop>
-			</props>
-		</property>
-	</bean> -->
-	
-	<!-- JSP视图解析器  -->
-  <!--   <bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="viewNames" value="*.jsp" />
-        <property name="suffix" value=""/>
-        <property name="order" value="1"/>
-    </bean> -->
-	
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="1000000000" />
 	</bean>
-	
-	<!-- Kaptcha验证码生成器 -->
-	<bean name="producer" class="com.google.code.kaptcha.impl.DefaultKaptcha" scope="singleton">
-	    <property name="config">
-	        <bean class="com.google.code.kaptcha.util.Config">
-	            <constructor-arg>
-	                <props>
-	                    <prop key="kaptcha.border">no</prop>
-	                    <prop key="kaptcha.textproducer.font.color">black</prop>
-	                    <prop key="kaptcha.textproducer.char.space">5</prop>
-	                </props>
-	            </constructor-arg>
-	        </bean>
-	    </property>
-	</bean>
-	
+	<mvc:view-resolvers>
+	    <mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" />  
+	</mvc:view-resolvers>
+    <mvc:resources location="/" mapping="index.html"/>
 </beans>

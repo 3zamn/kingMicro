@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,9 @@ import com.king.common.utils.R;
 import com.king.common.validator.ValidatorUtils;
 import com.king.dal.gen.model.smp.SysConfig;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 
 /**
  * 系统配置信息
@@ -28,6 +33,7 @@ import com.king.dal.gen.model.smp.SysConfig;
  * @date 2017年12月29日
  */
 @RestController
+@Api(value = "系统配置", description = "系统配置")
 @RequestMapping("/sys/config")
 public class SysConfigController extends AbstractController {
 	@Autowired
@@ -36,7 +42,8 @@ public class SysConfigController extends AbstractController {
 	/**
 	 * 所有配置列表
 	 */
-	@RequestMapping("/list")
+	@ApiOperation(value = "配置列表")
+	@GetMapping("/list")
 	@RequiresPermissions("sys:config:list")
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
@@ -53,7 +60,8 @@ public class SysConfigController extends AbstractController {
 	/**
 	 * 配置信息
 	 */
-	@RequestMapping("/info/{id}")
+	@ApiOperation(value = "配置信息")
+	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
 	public R info(@PathVariable("id") Long id){
 		SysConfig config = sysConfigService.queryObject(id);
@@ -65,7 +73,8 @@ public class SysConfigController extends AbstractController {
 	 * 保存配置
 	 */
 	@Log("保存配置")
-	@RequestMapping("/save")
+	@ApiOperation(value = "保存配置")
+	@PostMapping("/save")
 	@RequiresPermissions("sys:config:save")
 	public R save(@RequestBody SysConfig config){
 		ValidatorUtils.validateEntity(config);
@@ -79,7 +88,8 @@ public class SysConfigController extends AbstractController {
 	 * 修改配置
 	 */
 	@Log("修改配置")
-	@RequestMapping("/update")
+	@ApiOperation(value = "修改配置")
+	@PostMapping("/update")
 	@RequiresPermissions("sys:config:update")
 	public R update(@RequestBody SysConfig config){
 		ValidatorUtils.validateEntity(config);
@@ -93,7 +103,8 @@ public class SysConfigController extends AbstractController {
 	 * 删除配置
 	 */
 	@Log("删除配置")
-	@RequestMapping("/delete")
+	@ApiOperation(value = "删除配置")
+	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
 	public R delete(@RequestBody Long[] ids){
 		sysConfigService.deleteBatch(ids);

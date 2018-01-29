@@ -17,6 +17,7 @@ import com.king.common.annotation.Log;
 import com.google.gson.Gson;
 import com.king.api.smp.SysLogService;
 import com.king.common.utils.IPUtils;
+import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysLog;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.utils.HttpContextUtils;
@@ -56,40 +57,38 @@ public class SysLogAspect {
 	private void saveSysLog(ProceedingJoinPoint joinPoint, long time) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
+		if (ShiroUtils.getSubject().getPrincipal() != null) {
+			SysLog sysLog = new SysLog();
+			com.king.common.annotation.Log log = method.getAnnotation(com.king.common.annotation.Log.class);
+			if (log != null) {
+				// 注解上的描述
+				sysLog.setOperation(log.value());
+			}
 
-		SysLog sysLog = new SysLog();
-		com.king.common.annotation.Log log = method.getAnnotation(com.king.common.annotation.Log.class);
-		if(log != null){
-			//注解上的描述
-			sysLog.setOperation(log.value());
+			// 请求的方法名
+			String className = joinPoint.getTarget().getClass().getName();
+			String methodName = signature.getName();
+			sysLog.setMethod(className + "." + methodName + "()");
+
+			// 请求的参数
+			Object[] args = joinPoint.getArgs();
+			try {
+				String params = new Gson().toJson(args[0]);
+				sysLog.setParams(params);
+			} catch (Exception e) {
+
+			}
+			// 获取request
+			HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+			// 设置IP地址
+			sysLog.setIp(IPUtils.getIpAddr(request));
+			// 用户名
+			String username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
+			sysLog.setUsername(username);
+			sysLog.setTime(time);
+			sysLog.setCreateDate(new Date());
+			// 保存系统日志
+			sysLogService.save(sysLog);
 		}
-
-		//请求的方法名
-		String className = joinPoint.getTarget().getClass().getName();
-		String methodName = signature.getName();
-		sysLog.setMethod(className + "." + methodName + "()");
-
-		//请求的参数
-		Object[] args = joinPoint.getArgs();
-		try{
-			String params = new Gson().toJson(args[0]);
-			sysLog.setParams(params);
-		}catch (Exception e){
-
-		}
-
-		//获取request
-		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
-		//设置IP地址
-		sysLog.setIp(IPUtils.getIpAddr(request));
-
-		//用户名
-		String username = ((SysUser) SecurityUtils.getSubject().getPrincipal()).getUsername();
-		sysLog.setUsername(username);
-
-		sysLog.setTime(time);
-		sysLog.setCreateDate(new Date());
-		//保存系统日志
-		sysLogService.save(sysLog);
 	}
 }

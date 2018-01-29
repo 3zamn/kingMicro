@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,9 @@ import com.king.common.utils.R;
 import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 
 /**
  * 登录相关
@@ -34,6 +39,7 @@ import com.king.dal.gen.model.smp.SysUser;
  * @date 2017年12月29日
  */
 @RestController
+@Api(value = "系统登录", description = "系统登录")
 public class SysLoginController extends AbstractController {
 	@Autowired
 	private Producer producer;
@@ -45,7 +51,8 @@ public class SysLoginController extends AbstractController {
 	/**
 	 * 验证码
 	 */
-	@RequestMapping("captcha.jpg")
+	@ApiOperation(value = "获取验证码")
+	@GetMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response)throws ServletException, IOException {
 		response.setHeader("Cache-Control", "no-store, no-cache");
 		response.setContentType("image/jpeg");
@@ -66,15 +73,13 @@ public class SysLoginController extends AbstractController {
 	 * 登录
 	 */
 	@Log("用户登录")
-	@RequestMapping(value = "/sys/login", method = RequestMethod.POST)
+	@ApiOperation(value = "用户登录")
+	@PostMapping("/sys/login")
 	public Map<String, Object> login(String username, String password, String captcha)throws IOException {
-		//本项目已实现，前后端完全分离，但页面还是跟项目放在一起了，所以还是会依赖session
-		//如果想把页面单独放到nginx里，实现前后端完全分离，则需要把验证码注释掉(因为不再依赖session了)
 		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
 		if(!captcha.equalsIgnoreCase(kaptcha)){
 			return R.error("验证码不正确");
 		}
-
 		//用户信息
 		SysUser user = sysUserService.queryByUserName(username);
 		String PW=new Sha256Hash(password, user.getSalt()).toHex();
@@ -98,7 +103,8 @@ public class SysLoginController extends AbstractController {
 	 * 退出
 	 */
 	@Log("退出登录")
-	@RequestMapping(value = "/sys/logout", method = RequestMethod.POST)
+	@ApiOperation(value = "退出登录")
+	@PostMapping("/sys/logout")
 	public R logout() {
 		sysUserTokenService.logout(getUserId());
 		return R.ok();

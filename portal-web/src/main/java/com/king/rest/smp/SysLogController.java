@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,9 @@ import com.king.common.utils.Query;
 import com.king.common.utils.R;
 import com.king.dal.gen.model.smp.SysLog;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  *  系统日志
  * @author King chen
@@ -24,16 +28,18 @@ import com.king.dal.gen.model.smp.SysLog;
  * @date 2017年12月29日
  */
 @Controller
+@Api(value = "系统日志", description = "系统日志")
 @RequestMapping("/sys/log")
 public class SysLogController {
 	@Autowired
 	private SysLogService sysLogService;
 	
 	/**
-	 * 列表
+	 * 日志列表
 	 */
+	@ApiOperation(value = "日志列表")
 	@ResponseBody
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	@RequiresPermissions("sys:log:list")
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
