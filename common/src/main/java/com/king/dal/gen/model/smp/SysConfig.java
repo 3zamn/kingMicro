@@ -1,6 +1,8 @@
 package com.king.dal.gen.model.smp;
 
 
+import java.io.Serializable;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -9,7 +11,11 @@ import org.hibernate.validator.constraints.NotBlank;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public class SysConfig {
+public class SysConfig implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	@NotBlank(message="参数名不能为空")
 	private String key;

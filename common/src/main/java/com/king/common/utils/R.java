@@ -43,7 +43,9 @@ public class R extends HashMap<String, Object> {
 	}
 	
 	public static R ok() {
-		return new R();
+		R r = new R();
+		r.put("msg", "success");
+		return r;
 	}
 
 	public R put(String key, Object value) {
