@@ -71,8 +71,16 @@
 <script src="static/plugins/jqgrid/jquery.jqGrid.min.js"></script>
 <script src="static/libs/vue.min.js"></script>
 <script src="static/libs/bootstrap.min.js"></script>
+<script src="static/libs/jquery.slimscroll.min.js"></script>
+<script src="static/libs/fastclick.min.js"></script>
 <script src="static/libs/app.js"></script>
 <script src="static/js/common.js"></script>
+<!-- <script src="static/libs/jquery.min.js"></script>
+<script src="static/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="static/libs/vue.min.js"></script>
+<script src="static/libs/bootstrap.min.js"></script>
+<script src="static/libs/app.js"></script> -->
+
 <script type="text/javascript">
     var vm = new Vue({
         el:'#rrapp',
@@ -103,7 +111,7 @@
                     success: function(r){
                         if(r.code == 0){//登录成功
                             localStorage.setItem("token", r.token);
-                            parent.location.href ='index.html';
+                            parent.location.href ='index1.html';
                         }else{
                             vm.error = true;
                             vm.errorMsg = r.msg;
