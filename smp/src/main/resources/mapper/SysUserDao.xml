@@ -16,7 +16,8 @@
     </resultMap>
 
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysUser">
-		select * from sys_user where user_id = #{value}
+		select u.*, (select d.name from sys_dept d where d.dept_id = u.dept_id) deptName from sys_user u where u.user_id = #{value}
+		<!-- select * from sys_user where user_id = #{value} -->
 	</select>
 	
 	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysUser">
