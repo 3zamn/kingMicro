@@ -16,7 +16,7 @@
 <body>
 <div class="layui-layout layui-layout-admin" id="layui_layout">
 	<!-- 顶部区域 -->
-	<div class="layui-header header header-demo">
+	<div class="layui-header header header-king">
 		<div class="layui-main">
 		    <!-- logo区域 -->
 			<div class="admin-logo-box">
@@ -26,24 +26,46 @@
 				</div>
 			</div>
             <!-- 顶级菜单区域 -->
-            <!-- <div class="layui-larry-menu">
-                 <ul class="layui-nav clearfix">
-                       <li class="layui-nav-item layui-this">
-                 	   	   <a href="javascirpt:;"><i class="iconfont icon-wangzhanguanli"></i>内容管理</a>
-                 	   </li>
-                 	   <li class="layui-nav-item">
-                 	   	   <a href="javascirpt:;"><i class="iconfont icon-weixin3"></i>微信公众</a>
-                 	   </li>
-                 	   <li class="layui-nav-item">
-                 	   	   <a href="javascirpt:;"><i class="iconfont icon-ht_expand"></i>扩展模块</a>
-                 	   </li>
-                 </ul>
+            <!--  <div class="layui-larry-menu">
+                 <ul class="layui-nav layui-layout-left">
+				      <li class="layui-nav-item"><a href="">控制台</a></li>
+				      <li class="layui-nav-item"><a href="">商品管理</a></li>
+				      <li class="layui-nav-item"><a href="">用户</a></li>
+				      <li class="layui-nav-item">
+				        <a href="javascript:;">其它系统</a>
+				        <dl class="layui-nav-child">
+				          <dd><a href="">邮件管理</a></dd>
+				          <dd><a href="">消息管理</a></dd>
+				          <dd><a href="">授权管理</a></dd>
+				        </dl>
+				      </li>
+				   </ul>
             </div> -->
             <!-- 右侧导航 -->
-            <ul class="layui-nav larry-header-item">
+				<ul class="layui-nav layui-layout-right">
+					<li class="layui-nav-item"><a href="javascript:;"> <img
+							src="http://t.cn/RCzsdCq"  style="width: 30px;height: 30px;margin-right: 10px;border-radius: 50%;"> {{user.username}}&nbsp;
+					</a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;" @click="personInfo">基本资料</a>
+							</dd>
+							<dd>
+								<a href="">安全设置</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" @click="updatePassword">修改密码</a>
+							</dd>
+							<dd>
+								<a href="javascript:;" @click="">主题切换</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item"><a  href="javascript:;" @click="logout">退出系统</a></li>
+				</ul>
+				<!-- <ul class="layui-nav larry-header-item">
 				<li class="layui-nav-item"><a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a></li>
        			<li class="layui-nav-item"><a href="javascript:;" @click="logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a></li>
-            </ul>
+            </ul> -->
 		</div>
 	</div>
 	<!-- 左侧侧边导航开始 -->
@@ -90,6 +112,29 @@
 		    		<input type="text" v-model="newPassword" placeholder="新密码" autocomplete="off" class="layui-input">
 		    	</div>
 			</div>
+		</form>
+	</div>
+	<!-- 基本资料 -->
+	<div id="personInfo" style="display: none;">
+	
+		<form class="layui-form" action="">
+			<div class="layui-form-item">
+		    	<label class="layui-form-label">用户名</label>
+		    	<label class="layui-form-label laber-account">{{user.username}}</label>
+			</div>
+			<div class="layui-form-item">
+		    	<label class="layui-form-label">所属部门</label>
+		    	<label class="layui-form-label laber-account">{{user.deptName}}</label>
+			</div>
+			<div class="layui-form-item">
+		    	<label class="layui-form-label">邮箱</label>
+		    		<label class="layui-form-label laber-account">{{user.email}}</label>
+			</div>
+			<div class="layui-form-item">
+		    	<label class="layui-form-label">手机号</label>
+		    		<label class="layui-form-label laber-account">{{user.mobile}}</label>
+			</div>
+			
 		</form>
 	</div>
 </div>
