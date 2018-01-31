@@ -995,7 +995,7 @@ a cite {
 
 .layui-table {
 	width: 100%;
-	margin: 10px 0;
+	margin: 10 0;
 	background-color: #fff
 }
 
@@ -1566,7 +1566,7 @@ a cite {
 }
 
 .layui-tab {
-	margin: 10px 0;
+	margin: 0 0;
 	overflow: hidden;
 	text-align: left !important
 }

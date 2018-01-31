@@ -190,26 +190,7 @@ var vm = new Vue({
 				area: ['550px', '310px'],
 				shadeClose: false,
 				content: jQuery("#personInfo"),
-				btn: ['修改','取消'],
-				btn1: function (index) {
-					var data = "password="+vm.password+"&newPassword="+vm.newPassword;
-					$.ajax({
-						type: "POST",
-					    url: baseURL + "sys/user/password",
-					    data: data,
-					    dataType: "json",
-					    success: function(r){
-							if(r.code == 0){
-								layer.close(index);
-								layer.alert('修改成功', function(){
-									location.reload();
-								});
-							}else{
-								layer.alert(r.msg);
-							}
-						}
-					});
-	            }
+				btn: ['关闭']
 			});
 		},
 	},

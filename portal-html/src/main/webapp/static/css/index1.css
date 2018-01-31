@@ -184,7 +184,7 @@
  	padding-left: 0px;
  }
  .layui-layout-admin .layui-body {
-    top: 45px;
+    top: 55px;
 }
 
 .larry-tab-menu{
@@ -200,6 +200,8 @@
 	display: none;
 }
 .larry-tab-box{
+	border: 0px;
+	 height:100%;
 	box-shadow:none;
 }
 /* layui-tab-title start */
@@ -233,6 +235,7 @@
 .layui-tab-content{
 	padding: 0px;
 	margin: 0px;
+	height: 100% !important;
 }
 .layui-tab-item{
 	padding: 10px 0 0 10px;
@@ -240,7 +243,7 @@
 
 }
 .layui-tab-content .layui-tab-item iframe{
-	width: 100%;
+	width: 99%;
 	border: 0;
 	height: 100%;
 }
