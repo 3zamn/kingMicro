@@ -84,10 +84,19 @@ app端：API模块用swt的token做安全校验
      
 开发计划：
 一：加入两种分布式事务解决方案：1.最大一致性（rocketmq异步事务）、最终一致性（TCC）
+
 二：完善代码生成模块一键生成
+
 三：加入系统字典管理功能、邮件管理模块、个人资料头像上传
+
 四：加入redis缓存，完善统一query封装、查询无需写java代码、仅仅前端添加参数即可
+
 五：加入api网关服务监控模块（kong、openresty）
+
 六：集成fastdhf分布式文件管理。
+
 七：优化封装的返回data，完善swagger的生成模拟model参数、响应码。
+
 八：优化token过期、提高用户体验。选用类session会话状态机制（每次请求刷新token过期时间。token放redis缓存中）
+
+九：添加docker支持
