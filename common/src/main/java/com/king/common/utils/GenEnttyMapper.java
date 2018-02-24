@@ -18,8 +18,10 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;  
   
 /**
+ * 表与实体映射解析
  * @author King chen
- *
+ * @emai 396885563@qq.com
+ * @data2018年1月11日
  */
 public class GenEnttyMapper implements EntityResolver{  
 	 @Override
@@ -32,7 +34,7 @@ public class GenEnttyMapper implements EntityResolver{
      * @param fileName 类对应的Mapper xml文件 
      * @param id  唯一的id 
      * <p> 
-     * 如：resultMap id="BaseResultMap" type="com.chinagas.org.beans.User" 中的id 
+     * 如：resultMap id="BaseResultMap" type="com.king.dal.gen.model.smp.SysUser" 中的id 
      * </p> 
      * @param property 属性名（对应的Java对象属性名） 
      * @return 
@@ -71,7 +73,7 @@ public class GenEnttyMapper implements EntityResolver{
      * @param fileName 类对应的Mapper xml文件 
      * @param id  唯一的id 
      * <p> 
-     * 如：resultMap id="BaseResultMap" type="com.chinagas.org.beans.User" 中的id 
+     * 如：resultMap id="BaseResultMap" type="com.king.dal.gen.model.smp.SysUser" 中的id 
      * </p> 
      * @return 
      */  

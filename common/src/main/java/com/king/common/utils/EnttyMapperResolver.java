@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * 实体解析
  * @author king chen
- *
+ * @emai 396885563@qq.com
+ * @data2018年1月11日
  */
 public  class EnttyMapperResolver {
 	

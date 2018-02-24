@@ -43,4 +43,10 @@ public class TokenGenerator {
             throw new RRException("生成Token失败", e);
         }
     }
+    
+    public static void tokenExpireRefresh(String param){
+    	
+   // 	RedisUtils.
+    	
+    }
 }

@@ -73,6 +73,29 @@ public class RedisUtils {
         redisTemplate.delete(key);
     }
 
+    public  void hset(String key,String hashKey, Object value, long expire){
+    	hashOperations.put(key, hashKey, toJson(value));
+        if(expire != NOT_EXPIRE){
+            redisTemplate.expire(key, expire, TimeUnit.SECONDS);
+        }
+    }
+
+    public void hset(String key,String hashKey,Object value){
+        hset(key, hashKey,value, DEFAULT_EXPIRE);
+    }
+    
+    public Object hget(String key,String hashKey, long expire) {
+        Object value = hashOperations.get(key, hashKey);
+        if(expire != NOT_EXPIRE){
+            redisTemplate.expire(key, expire, TimeUnit.SECONDS);
+        }
+        return value;
+    }
+
+    public Object hget(String key,String hashKey) {
+        return hget(key,hashKey, NOT_EXPIRE);
+    }
+    
     /**
      * Object转成JSON数据
      */
