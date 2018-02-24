@@ -9,8 +9,8 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 			<param-value>
-				classpath:/spring-dubbo.xml
 				classpath:/spring-mvc.xml
+				classpath:/spring-dubbo.xml	
 				classpath:/spring-redis.xml
 			</param-value>
 		

@@ -14,8 +14,11 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import com.king.utils.RedisShiroSession;
 
@@ -27,15 +30,22 @@ import com.king.utils.RedisShiroSession;
  */
 @Configuration
 public class ShiroConfig {
-
+	@Value("#{new Boolean('${king.redis.open}')}")
+//	@Value("${king.redis.open}") 
+	private Boolean redisOpen;
+	@Value("#{new Boolean('${king.shiro.redis}')}")
+ //   @Value("${king.shiro.redis}")
+    private	Boolean shiroRedis;
+	@Value("#{new Boolean('${king.swagger.status}')}")
+ //   @Value("${king.swagger.status}")
+    private	Boolean swagger;
+    
 	@Bean("sessionManager")
-    public SessionManager sessionManager(RedisShiroSession redisShiroSessionDAO   ){
-    	//临时设置
-    	boolean redisOpen=false;
-    	boolean shiroRedis=false;
+    public SessionManager sessionManager(RedisShiroSession redisShiroSessionDAO ){
+		
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //设置session过期时间为1小时(单位：毫秒)，默认为30分钟
-        sessionManager.setGlobalSessionTimeout(60 * 60 * 1000);
+        sessionManager.setGlobalSessionTimeout(5 * 60 * 1000);
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
 
@@ -82,7 +92,7 @@ public class ShiroConfig {
         filterMap.put("/favicon.ico", "anon");
         filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/", "anon");
-        filterMap.put("/index.html", "anon");
+     /*   filterMap.put("/index.html", "anon");*/
         filterMap.put("/**", "oauth2");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
@@ -90,7 +100,7 @@ public class ShiroConfig {
     }
 
     @Bean("lifecycleBeanPostProcessor")
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+    public static  LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
 

@@ -13,6 +13,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.king.api.smp.ShiroService;
@@ -27,6 +28,9 @@ import com.king.dal.gen.model.smp.SysUserToken;
  */
 @Component
 public class OAuth2Realm extends AuthorizingRealm {
+	@Value("#{new Boolean('${king.redis.open}')}")
+	private Boolean redisOpen;
+	
     @Autowired
     private ShiroService shiroService;
 

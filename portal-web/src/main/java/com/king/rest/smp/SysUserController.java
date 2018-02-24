@@ -54,7 +54,7 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:list")
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-		Query query = new Query(params);
+		Query query = new Query(params, SysUser.class.getSimpleName());
 		List<SysUser> userList = sysUserService.queryList(query);
 		int total = sysUserService.queryTotal(query);
 		
