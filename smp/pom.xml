@@ -168,7 +168,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>customer</finalName>
+		<finalName>smp</finalName>
 		<!-- 默认源代码和资源文件目录配置 -->
 		<sourceDirectory>src/main/java </sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>

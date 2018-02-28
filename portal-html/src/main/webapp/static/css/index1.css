@@ -24,6 +24,10 @@
 .header-king .layui-nav .layui-nav-item:hover{
 	border-bottom-color: #000;
 }
+.panel-king{
+	height:auto;
+	margin-bottom: 50px !important;
+}
 .header-king .layui-nav .layui-this{background-color: #000;/* #5FB878 */}
 .header-king .layui-nav .layui-nav-item a:hover, 
 .header-king .layui-nav .layui-this a{color: #ffffff;}

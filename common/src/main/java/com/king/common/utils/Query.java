@@ -5,12 +5,21 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.alibaba.fastjson.JSONObject;
+
 /**
- * 查询参数
- * @author king chen
- *
+ *  查询参数
+ * @author King chen
+ * @emai 396885563@qq.com
+ * @data2018年2月27日
  */
+
 public class Query extends LinkedHashMap<String, Object> {
+/*	@Autowired
+	private EnttyMapperResolver enttyMapperResolver;*/
 	private static final long serialVersionUID = 1L;
 	//当前页码
     private int page;
@@ -58,13 +67,14 @@ public class Query extends LinkedHashMap<String, Object> {
              		int i=0;
              		List<String> atts = new ArrayList<String>();
              		for(Object o:keyParam){
-             			if(EnttyMapperResolver.isExistAttribute(enttyName, o.toString())){
+             			if((SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).isExistAttribute(enttyName, o.toString())){
              				atts.add(o.toString());				
              			}		
              		}
              		for(String attr:atts){
      					i=i+1;
-             			String column = EnttyMapperResolver.getColumn(enttyName, attr);
+             			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).getColumn(enttyName, attr);
+             			String column = json.getString("column"); 
          				if(column!=null && column!=""){   	
                  			if(i<atts.size()){
                  				likeSql +=column +" like"+" '%"+params.get("searchKey")+"%'" +" or ";
@@ -81,14 +91,15 @@ public class Query extends LinkedHashMap<String, Object> {
 		Iterator<Map.Entry<String, Object>> it = params.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<String, Object> entry = it.next();
-			if(EnttyMapperResolver.isExistAttribute(enttyName, entry.getKey()))
+			if((SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).isExistAttribute(enttyName, entry.getKey()))
 				if(entry.getValue()!=null && !entry.getValue().toString().trim().equals(""))
 					attributes.add(entry.getKey());
 		}
 		int j=0;
 		for(String attribute:attributes){
 				j=j+1;
- 			String column = EnttyMapperResolver.getColumn(enttyName, attribute);
+				JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).getColumn(enttyName, attribute);
+				String column = json.getString("column");
 				if(column!=null && column!=""){   	
      			if(j<attributes.size()){
      				mutlSql +=column +" = "+"'"+params.get(attribute)+"'" +" and ";
@@ -109,7 +120,9 @@ public class Query extends LinkedHashMap<String, Object> {
         this.put("offset", (page - 1) * limit);
         this.put("page", page);
         this.put("limit", limit);
-
+        if(SpringContextUtils.getBean("shiroFilter")!=null){
+            this.put("user", ShiroUtils.getUserEntity());//用户
+        }
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
         String sidx = params.get("sidx").toString();
         String order = params.get("order").toString();
@@ -133,4 +146,17 @@ public class Query extends LinkedHashMap<String, Object> {
     public void setLimit(int limit) {
         this.limit = limit;
     }
+
+   
+    
+	/*public EnttyMapperResolver getEnttyMapperResolver() {
+		return enttyMapperResolver;
+	}
+
+	public void setEnttyMapperResolver(EnttyMapperResolver enttyMapperResolver) {
+		this.enttyMapperResolver = enttyMapperResolver;
+	}*/
+    
+    
+    
 }

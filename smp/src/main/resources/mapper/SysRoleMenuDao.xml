@@ -4,9 +4,9 @@
 <mapper namespace="com.king.dao.SysRoleMenuDao">
 <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.king.dal.gen.model.smp.SysRoleMenu" id="BaseResultMap">
-        <result property="id" column="id"/>
-        <result property="roleId" column="role_id"/>
-        <result property="menuId" column="menu_id"/>
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="roleId" column="role_id" jdbcType="BIGINT"/>
+        <result property="menuId" column="menu_id" jdbcType="BIGINT"/>
     </resultMap>
 
 	<insert id="save">

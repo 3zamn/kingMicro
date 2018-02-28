@@ -13,7 +13,7 @@
                 <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
                 <!-- 线程池配置 -->
                 <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
-                <prop key="org.quartz.threadPool.threadCount">20</prop>
+                <prop key="org.quartz.threadPool.threadCount">100</prop>
                 <prop key="org.quartz.threadPool.threadPriority">5</prop>
                 <!-- JobStore 配置 -->
                 <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>

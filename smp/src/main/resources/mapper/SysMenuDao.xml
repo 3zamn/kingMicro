@@ -4,14 +4,14 @@
 <mapper namespace="com.king.dao.SysMenuDao">
 <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.king.dal.gen.model.smp.SysMenu" id="BaseResultMap">
-        <result property="menuId" column="menu_id"/>
-        <result property="parentId" column="parent_id"/>
-        <result property="name" column="name"/>
-        <result property="url" column="url"/>
-        <result property="perms" column="perms"/>
-        <result property="type" column="type"/>
-        <result property="icon" column="icon"/>
-        <result property="orderNum" column="order_num"/>
+        <result property="menuId" column="menu_id" jdbcType="BIGINT"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="perms" column="perms" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
     </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysMenu">
 		select * from sys_menu where menu_id = #{value}

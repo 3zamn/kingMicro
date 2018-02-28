@@ -1,5 +1,9 @@
 package tool;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import junit.framework.Test;
 import tools.mybatis.gen.GenMybatisFiles;
 
 
@@ -9,6 +13,7 @@ import tools.mybatis.gen.GenMybatisFiles;
  *
  */
 public class GenMain {
+	
 	public static void main(String[] args) {
 		String configFile = "/generatorConfig.xml";
 		try {
@@ -17,6 +22,14 @@ public class GenMain {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		  ExecutorService fixedThreadPool = Executors.newFixedThreadPool(50);
+		  for(int i=0;i<50;i++){
+			  fixedThreadPool.execute(new Runnable() {
+				    public void run() {
+				     System.out.println(Thread.currentThread());
+				    }
+				   });	
+		  }
+		  fixedThreadPool.shutdown();
 	}
-
 }

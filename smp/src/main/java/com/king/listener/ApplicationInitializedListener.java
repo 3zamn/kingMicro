@@ -1,32 +1,38 @@
 package com.king.listener;
 
-import java.util.HashMap;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.king.common.utils.EnttyMapperRedis;
 import com.king.common.utils.GenEnttyMapper;
+import com.king.common.utils.SpringContextUtils;
 
 /**
- * spring 容器启动后加载@
+ * spring 容器启动后加载解析表与实体的映射
  * @author king chen
- *
+ * @emai 396885563@qq.com
+ * @data2018年1月11日
  */
 @Component
 public  class  ApplicationInitializedListener {
-	
-	public static HashMap<String, List<HashMap<String,String>>> mapper=null;
+	@Value("${king.redis.open}") 
+	private Boolean redisOpen;
+	@Autowired
+	private GenEnttyMapper genEnttyMapper;
+	//建议开启redis
 	@PostConstruct
-	public static void loadEnttyMapper(){
-		new GenEnttyMapper();
-		//spring 启动后加载
-		HashMap<String, List<HashMap<String,String>>> result = GenEnttyMapper.generateEnttyMapper(); 
-		mapper =result;
-		System.out.println("加载实体映射解析完毕"+result);
-		
-		
+	public  void loadEnttyMapper(){
+		if(redisOpen){
+			//spring 启动后加载
+			  genEnttyMapper.generateEnttyMapper(); 
+			/*  if(SpringContextUtils.getBean("enttyMapperRedis")!=null){
+	        	  System.out.println("aa");
+				}*/	
+
+		}
 	}
 
 }

@@ -2,9 +2,16 @@ package com.king.common.utils;
 
 
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.king.common.exception.RRException;
+import com.king.dal.gen.model.smp.SysConfig;
+import com.king.dal.gen.model.smp.SysUserToken;
 
 /**
  * 生成token
@@ -12,7 +19,10 @@ import com.king.common.exception.RRException;
  * @emai 396885563@qq.com
  * @data2018年1月11日
  */
+@Component
 public class TokenGenerator {
+	 @Autowired
+    private RedisUtils redisUtils;
 
     public static String generateValue() {
         return generateValue(UUID.randomUUID().toString());
@@ -45,8 +55,28 @@ public class TokenGenerator {
     }
     
     public static void tokenExpireRefresh(String param){
+    //	Object expireTime = RedisUtils.hget(key, hashKey, expire);
+    //	RedisUtils.hset(key, hashKey, value);
     	
-   // 	RedisUtils.
-    	
+    }
+    
+    public void saveOrUpdate(SysUserToken token) {
+        if(token == null){
+            return ;
+        }
+        String key = RedisKeys.getTokenKey(token.getToken()); 
+        Date expireTime = new Date(System.currentTimeMillis()+Constant.TOKEN_EXPIRE);    //半小时失效
+        token.setExpireTime(expireTime);
+        redisUtils.set(key, token,Constant.TOKEN_EXPIRE/1000);
+    }
+
+    public void delete(String tokenKey) {
+        String key = RedisKeys.getTokenKey(tokenKey);
+        redisUtils.delete(key);
+    }
+
+    public SysUserToken get(String tokenKey){
+        String key = RedisKeys.getTokenKey(tokenKey);
+        return redisUtils.get(key, SysUserToken.class);
     }
 }

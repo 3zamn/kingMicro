@@ -4,11 +4,11 @@
 <mapper namespace="com.king.dao.SysDeptDao">
 <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.king.dal.gen.model.smp.SysDept" id="BaseResultMap">
-        <result property="deptId" column="dept_id"/>
-        <result property="parentId" column="parent_id"/>
-        <result property="name" column="name"/>
-        <result property="orderNum" column="order_num"/>
-        <result property="delFlag" column="del_flag"/>
+       <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="TINYINT"/>
     </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysDept">
 		select * from sys_dept where dept_id = #{value} and del_flag = 0

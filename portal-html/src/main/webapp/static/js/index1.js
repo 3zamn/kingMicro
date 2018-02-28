@@ -3,7 +3,7 @@ layui.config({
 }).use(['navtab'],function(){
 	window.jQuery = window.$ = layui.jquery;
 	window.layer = layui.layer;
-    var element = layui.element(),
+    var element = layui.element,
 	navtab = layui.navtab({
 		elem: '.larry-tab-box'
 	});
@@ -61,7 +61,7 @@ layui.config({
 layui.use(['jquery','layer','element'],function(){
 	window.jQuery = window.$ = layui.jquery;
 	window.layer = layui.layer;
-	var element = layui.element();
+	var element = layui.element;
 
 	// larry-side-menu向左折叠
 	$('.larry-side-menu').click(function() {

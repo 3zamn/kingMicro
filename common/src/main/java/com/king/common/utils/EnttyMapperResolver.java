@@ -1,7 +1,9 @@
 package com.king.common.utils;
 
-import java.util.HashMap;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.alibaba.fastjson.JSONObject;
 
 
 /**
@@ -10,29 +12,23 @@ import java.util.List;
  * @emai 396885563@qq.com
  * @data2018年1月11日
  */
+@Component("enttyMapperResolver")
 public  class EnttyMapperResolver {
-	
-	
+	 @Autowired
+	    private  RedisUtils redisUtils;
 	/**
 	 * 根据实体、熟悉获取字段
 	 * @param enttyName
 	 * @param attribute
 	 * @return
 	 */
-	public static String getColumn(String enttyName,String attribute){
-		String column =null;
-//		HashMap<String, List<HashMap<String,String>>> mapper=ApplicationInitializedListener.mapper;
-		HashMap<String, List<HashMap<String,String>>> mapper=null;
-		if(mapper!=null){
-			 List<HashMap<String, String>> enttys=mapper.get(enttyName);
-		        for(HashMap<String, String> entty:enttys){
-		        	if(entty.get("property").equals(attribute)){
-		        		column=entty.get("column");
-		        	}
-		        	
-		        }
+	public  JSONObject getColumn(String enttyName,String attribute){
+		Object column = redisUtils.hget(RedisKeys.getEnttyKey(enttyName), attribute);
+		JSONObject column_json = new JSONObject();
+		if(column !=null){
+			column_json =JSONObject.parseObject(column.toString());
 		}
-		return column;
+		return column_json;
 	}
 	
 	/**
@@ -41,20 +37,12 @@ public  class EnttyMapperResolver {
 	 * @param attribute
 	 * @return
 	 */
-	public static Boolean isExistAttribute(String enttyName,String attribute){
+	public Boolean isExistAttribute(String enttyName,String attribute){
 		Boolean isExist =false;
-//		HashMap<String, List<HashMap<String,String>>> mapper=ApplicationInitializedListener.mapper;
-		HashMap<String, List<HashMap<String,String>>> mapper=null;
-		if(mapper!=null){
-			 List<HashMap<String, String>> enttys=mapper.get(enttyName);
-			 if(enttys!=null){
-				 for(HashMap<String, String> entty:enttys){
-			        	if(entty.get("property").equals(attribute)){
-			        		isExist =true;
-			        	}        	
-			        } 
-			 }
-		        
+		String key =RedisKeys.getEnttyKey(enttyName);
+		Object column = redisUtils.hget(key.trim(),attribute.trim());
+		if(column !=null){
+			isExist =true;  
 		}
 		return isExist;
 	}

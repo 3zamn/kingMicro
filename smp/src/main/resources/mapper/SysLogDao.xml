@@ -4,14 +4,14 @@
 <mapper namespace="com.king.dao.SysLogDao">
  <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.king.dal.gen.model.smp.SysLog" id="BaseResultMap">
-        <result property="id" column="id"/>
-        <result property="username" column="username"/>
-        <result property="operation" column="operation"/>
-        <result property="method" column="method"/>
-        <result property="params" column="params"/>
-        <result property="time" column="time"/>
-        <result property="ip" column="ip"/>
-        <result property="createDate" column="create_date"/>
+     	 <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="operation" column="operation" jdbcType="VARCHAR"/>
+        <result property="method" column="method" jdbcType="VARCHAR"/>
+        <result property="params" column="params" jdbcType="VARCHAR"/>
+        <result property="time" column="time" jdbcType="BIGINT"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="DATE"/>
     </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysLog">
 		select * from sys_log where id = #{value}

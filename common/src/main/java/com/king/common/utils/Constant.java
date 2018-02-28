@@ -9,6 +9,10 @@ public class Constant {
 	/** 超级管理员ID */
 	public static final int SUPER_ADMIN = 1;
 
+	/*token失效时长*/
+	public static final long TOKEN_EXPIRE =30 * 60 *1000;//半小时失效
+	
+	public static final long SHIRO_SESSION_EXPIRE =60 * 60 * 1000;//半小时
 	
     public enum MenuType {
         /**

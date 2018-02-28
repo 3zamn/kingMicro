@@ -191,8 +191,14 @@ var vm = new Vue({
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
-            $("#jqGrid").jqGrid('setGridParam',{
-                postData:{'username': vm.q.username},
+			var keyParam = new Array();
+		//	debugger
+			keyParam.push('username');
+			keyParam.push('email');
+			keyParam.push('mobile');
+			var jsonString = JSON.stringify(keyParam);
+			$("#jqGrid").jqGrid('setGridParam',{ 
+				postData:{'searchKey': vm.q.key,'keyParam':jsonString},
                 page:page
             }).trigger("reloadGrid");
         }

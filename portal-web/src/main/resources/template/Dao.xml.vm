@@ -6,7 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="${package}.entity.${className}Entity" id="BaseResultMap">
 #foreach($column in $columns)
-        <result property="${column.attrname}" column="${column.columnName}"/>
+        <result property="${column.attrname}" column="${column.columnName}" jdbcType="${column.dataType}"/>
 #end
     </resultMap>
 

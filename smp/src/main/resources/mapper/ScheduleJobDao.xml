@@ -3,14 +3,14 @@
 
 <mapper namespace="com.king.dao.ScheduleJobDao">
  <resultMap type="com.king.dal.gen.model.smp.ScheduleJob" id="BaseResultMap">
-         <result property="jobId" column="job_id"/>
-        <result property="beanName" column="bean_name"/>
-        <result property="methodName" column="method_name"/>
-        <result property="params" column="params"/>
-        <result property="cronExpression" column="cron_expression"/>
-        <result property="status" column="status"/>
-        <result property="remark" column="remark"/>
-        <result property="createTime" column="create_time"/>
+        <result property="jobId" column="job_id" jdbcType="BIGINT"/>
+        <result property="beanName" column="bean_name" jdbcType="VARCHAR"/>
+        <result property="methodName" column="method_name" jdbcType="VARCHAR"/>
+        <result property="params" column="params" jdbcType="VARCHAR"/>
+        <result property="cronExpression" column="cron_expression" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="DATE"/>
     </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.ScheduleJob" >
 		select * from schedule_job where job_id = #{value}

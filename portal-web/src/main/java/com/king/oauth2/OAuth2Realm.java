@@ -1,5 +1,6 @@
 package com.king.oauth2;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -17,6 +18,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.king.api.smp.ShiroService;
+import com.king.api.smp.SysUserTokenService;
+import com.king.common.utils.Constant;
+import com.king.common.utils.EnttyMapperResolver;
+import com.king.common.utils.RedisUtils;
+import com.king.common.utils.SpringContextUtils;
+import com.king.common.utils.TokenGenerator;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
 
@@ -31,8 +38,14 @@ public class OAuth2Realm extends AuthorizingRealm {
 	@Value("#{new Boolean('${king.redis.open}')}")
 	private Boolean redisOpen;
 	
+	@Autowired
+	private TokenGenerator tokenGenerator;
+	
     @Autowired
     private ShiroService shiroService;
+    
+    @Autowired
+    private SysUserTokenService sysUserTokenService;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -63,12 +76,34 @@ public class OAuth2Realm extends AuthorizingRealm {
         String accessToken = (String) token.getPrincipal();
 
         //根据accessToken，查询用户信息
-        SysUserToken userToken = shiroService.queryByToken(accessToken);
+        SysUserToken userToken = null;
         //token失效
-        if(userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()){
-            throw new IncorrectCredentialsException("token失效，请重新登录");
+      /*  RedisUtils redisUtils =(RedisUtils)SpringContextUtils.getBean("redisUtils");
+    	if(redisUtils !=null){
+    		if(((EnttyMapperResolver)SpringContextUtils.getBean("enttyMapperRedis")).isExistAttribute("00", "000")){
+ 				System.out.println("000");		
+ 			}	
+    		
+    	}*/
+        if(redisOpen){//是否开启redis
+        	userToken= tokenGenerator.get(accessToken);
+        	 if(userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()){
+                 throw new IncorrectCredentialsException("token失效，请重新登录");
+             }else{
+             	tokenGenerator.saveOrUpdate(userToken); 
+             }
+        }else{
+        	userToken=shiroService.queryByToken(accessToken); 
+        	 if(userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()){
+                 throw new IncorrectCredentialsException("token失效，请重新登录");
+             }else{
+            	 Date expireTime = new Date(userToken.getExpireTime().getTime()+Constant.TOKEN_EXPIRE);
+             	userToken.setExpireTime(expireTime);
+             	sysUserTokenService.update(userToken);
+             }
+        	
         }
-
+        
         //查询用户信息
         SysUser user = shiroService.queryUser(userToken.getUserId());
         //账号锁定

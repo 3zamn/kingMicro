@@ -3,11 +3,11 @@
 <mapper namespace="com.king.dao.SysConfigDao">
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.king.dal.gen.model.smp.SysConfig" id="BaseResultMap">
-        <result property="id" column="id"/>
-        <result property="key" column="key"/>
-        <result property="value" column="value"/>
-        <result property="status" column="status"/>
-        <result property="remark" column="remark"/>
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="key" column="key" jdbcType="VARCHAR"/>
+        <result property="value" column="value" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysConfig">
 		select * from sys_config where id = #{id}

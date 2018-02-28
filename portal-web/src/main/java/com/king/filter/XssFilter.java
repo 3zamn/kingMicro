@@ -1,7 +1,10 @@
-package com.king.utils;
+package com.king.filter;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+
+import com.king.utils.XssHttpServletRequestWrapper;
+
 import java.io.IOException;
 
 /**

@@ -18,4 +18,8 @@ public class RedisKeys {
     public static String getTokenKey(String key){
         return "token:" + key;
     }
+    
+    public static String getEnttyKey(String key){
+        return "entty:" + key;
+    }
 }

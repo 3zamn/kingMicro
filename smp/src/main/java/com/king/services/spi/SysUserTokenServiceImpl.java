@@ -1,9 +1,11 @@
 package com.king.services.spi;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.king.api.smp.SysUserTokenService;
+import com.king.common.utils.Constant;
 import com.king.common.utils.R;
 import com.king.common.utils.TokenGenerator;
 import com.king.dal.gen.model.smp.SysUserToken;
@@ -16,8 +18,11 @@ import java.util.Date;
 public class SysUserTokenServiceImpl implements SysUserTokenService {
 	@Autowired
 	private SysUserTokenDao sysUserTokenDao;
-	//12小时后过期
-	private final static int EXPIRE = 3600 * 12;
+	@Value("#{new Boolean('${king.redis.open}')}")
+	private Boolean reids_open;
+	@Autowired
+	private TokenGenerator tokenGenerator;
+
 
 	@Override
 	public SysUserToken queryByUserId(Long userId) {
@@ -42,7 +47,7 @@ public class SysUserTokenServiceImpl implements SysUserTokenService {
 		//当前时间
 		Date now = new Date();
 		//过期时间
-		Date expireTime = new Date(now.getTime() + EXPIRE * 1000);
+		Date expireTime = new Date(now.getTime() + Constant.TOKEN_EXPIRE);
 
 		//判断是否生成过token
 		SysUserToken tokenEntity = queryByUserId(userId);
@@ -54,7 +59,7 @@ public class SysUserTokenServiceImpl implements SysUserTokenService {
 			tokenEntity.setExpireTime(expireTime);
 
 			//保存token
-			save(tokenEntity);
+			save(tokenEntity);	
 		}else{
 			tokenEntity.setToken(token);
 			tokenEntity.setUpdateTime(now);
@@ -63,8 +68,11 @@ public class SysUserTokenServiceImpl implements SysUserTokenService {
 			//更新token
 			update(tokenEntity);
 		}
+		if(reids_open){
+			tokenGenerator.saveOrUpdate(tokenEntity);
+		}
 
-		R r = R.ok().put("token", token).put("expire", EXPIRE);
+		R r = R.ok().put("token", token).put("expire", Constant.TOKEN_EXPIRE/1000);
 
 		return r;
 	}
@@ -73,11 +81,15 @@ public class SysUserTokenServiceImpl implements SysUserTokenService {
 	public void logout(long userId) {
 		//生成一个token
 		String token = TokenGenerator.generateValue();
-
+		SysUserToken userToken =queryByUserId(userId);
 		//修改token
 		SysUserToken tokenEntity = new SysUserToken();
 		tokenEntity.setUserId(userId);
 		tokenEntity.setToken(token);
 		update(tokenEntity);
+		if(reids_open){
+			//删除redis中token
+			tokenGenerator.delete(userToken.getToken());
+		}
 	}
 }

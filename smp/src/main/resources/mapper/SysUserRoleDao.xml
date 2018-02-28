@@ -4,9 +4,9 @@
 <mapper namespace="com.king.dao.SysUserRoleDao">
 <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.king.dal.gen.model.smp.SysUserRole" id="BaseResultMap">
-        <result property="id" column="id"/>
-        <result property="userId" column="user_id"/>
-        <result property="roleId" column="role_id"/>
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="roleId" column="role_id" jdbcType="BIGINT"/>
     </resultMap>
 	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysUserRole">
 		select * from sys_user_role 

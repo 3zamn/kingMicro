@@ -24,6 +24,7 @@ import com.google.code.kaptcha.Producer;
 import com.king.api.smp.SysUserService;
 import com.king.api.smp.SysUserTokenService;
 import com.king.common.annotation.Log;
+import com.king.common.annotation.Redis;
 import com.king.common.utils.R;
 import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
@@ -95,6 +96,7 @@ public class SysLoginController extends AbstractController {
 
 		//生成token，并保存到数据库
 		R r = sysUserTokenService.createToken(user.getUserId());
+		
 		return r;
 	}
 

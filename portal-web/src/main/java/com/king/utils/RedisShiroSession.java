@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import com.king.common.utils.Constant;
 import com.king.common.utils.RedisKeys;
 
 /**
@@ -64,8 +65,7 @@ public class RedisShiroSession extends EnterpriseCacheSessionDAO {
 
     private void setShiroSession(String key, Session session){
         redisTemplate.opsForValue().set(key, session);
-        //60分钟过期
-        redisTemplate.expire(key, 60, TimeUnit.MINUTES);
+        redisTemplate.expire(key, Constant.SHIRO_SESSION_EXPIRE, TimeUnit.MINUTES);
     }
 
 }

@@ -17,11 +17,11 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
     @SuppressWarnings("rawtypes")
 	@Autowired
-    private RedisTemplate redisTemplate;
+    private  RedisTemplate redisTemplate;
     @Resource(name="redisTemplate")
     private ValueOperations<String, String> valueOperations;
     @Resource(name="redisTemplate")
-    private HashOperations<String, String, Object> hashOperations;
+    private  HashOperations<String, String, Object> hashOperations;
     @Resource(name="redisTemplate")
     private ListOperations<String, Object> listOperations;
     @Resource(name="redisTemplate")
@@ -80,11 +80,11 @@ public class RedisUtils {
         }
     }
 
-    public void hset(String key,String hashKey,Object value){
+    public  void hset(String key,String hashKey,Object value){
         hset(key, hashKey,value, DEFAULT_EXPIRE);
     }
     
-    public Object hget(String key,String hashKey, long expire) {
+    public  Object hget(String key,String hashKey, long expire) {
         Object value = hashOperations.get(key, hashKey);
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -99,7 +99,7 @@ public class RedisUtils {
     /**
      * Object转成JSON数据
      */
-    private String toJson(Object object){
+    private  String toJson(Object object){
         if(object instanceof Integer || object instanceof Long || object instanceof Float ||
                 object instanceof Double || object instanceof Boolean || object instanceof String){
             return String.valueOf(object);

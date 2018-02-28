@@ -20,6 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import com.king.common.utils.Constant;
 import com.king.utils.RedisShiroSession;
 
 /**
@@ -45,7 +46,7 @@ public class ShiroConfig {
 		
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //设置session过期时间为1小时(单位：毫秒)，默认为30分钟
-        sessionManager.setGlobalSessionTimeout(5 * 60 * 1000);
+        sessionManager.setGlobalSessionTimeout(Constant.SHIRO_SESSION_EXPIRE);
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
 
