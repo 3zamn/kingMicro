@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.king.api.smp.ScheduleJobLogService;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.Query;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 
 import io.swagger.annotations.Api;
@@ -39,7 +39,7 @@ public class ScheduleJobLogController {
 	@ApiOperation(value = "定时任务日志列表")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:log")
-	public R list(@RequestParam Map<String, Object> params){
+	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params);
 		List<ScheduleJobLog> jobList = scheduleJobLogService.queryList(query);
@@ -47,7 +47,7 @@ public class ScheduleJobLogController {
 		
 		PageUtils pageUtil = new PageUtils(jobList, total, query.getLimit(), query.getPage());
 		
-		return R.ok().put("page", pageUtil);
+		return JsonResponse.success().put("page", pageUtil);
 	}
 	
 	/**
@@ -55,9 +55,9 @@ public class ScheduleJobLogController {
 	 */
 	@ApiOperation(value = "定时任务日志信息")
 	@GetMapping("/info/{logId}")
-	public R info(@PathVariable("logId") Long logId){
+	public JsonResponse info(@PathVariable("logId") Long logId){
 		ScheduleJobLog log = scheduleJobLogService.queryObject(logId);
 		
-		return R.ok().put("log", log);
+		return JsonResponse.success().put("log", log);
 	}
 }

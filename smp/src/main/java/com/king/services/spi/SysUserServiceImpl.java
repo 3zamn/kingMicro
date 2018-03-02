@@ -1,6 +1,7 @@
 package com.king.services.spi;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +20,6 @@ import com.king.common.annotation.DataFilter;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dao.SysUserDao;
 
-
-
 /**
  * 系统用户
  * @author King chen
@@ -28,7 +27,11 @@ import com.king.dao.SysUserDao;
  * @date 2017年12月29日
  */
 @Service("sysUserService")
-public class SysUserServiceImpl implements SysUserService {
+public class SysUserServiceImpl  implements SysUserService ,Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8995594758102584976L;
 	@Autowired
 	private SysUserDao sysUserDao;
 	@Autowired
@@ -109,4 +112,7 @@ public class SysUserServiceImpl implements SysUserService {
 		return sysUserDao.updatePassword(map);
 	}
 
+	public String getTest(){	
+		return "00000000000000";	
+	}
 }

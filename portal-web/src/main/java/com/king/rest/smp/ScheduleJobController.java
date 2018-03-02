@@ -17,7 +17,7 @@ import com.king.api.smp.ScheduleJobService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.Query;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.common.validator.ValidatorUtils;
 import com.king.dal.gen.model.smp.ScheduleJob;
 
@@ -44,7 +44,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "定时任务列表")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:list")
-	public R list(@RequestParam Map<String, Object> params){
+	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params);
 		List<ScheduleJob> jobList = scheduleJobService.queryList(query);
@@ -52,7 +52,7 @@ public class ScheduleJobController {
 		
 		PageUtils pageUtil = new PageUtils(jobList, total, query.getLimit(), query.getPage());
 		
-		return R.ok().put("page", pageUtil);
+		return JsonResponse.success().put("page", pageUtil);
 	}
 	
 	/**
@@ -61,10 +61,10 @@ public class ScheduleJobController {
 	@ApiOperation(value = "定时任务详情")
 	@GetMapping("/info/{jobId}")
 	@RequiresPermissions("sys:schedule:info")
-	public R info(@PathVariable("jobId") Long jobId){
+	public JsonResponse info(@PathVariable("jobId") Long jobId){
 		ScheduleJob schedule = scheduleJobService.queryObject(jobId);
 		
-		return R.ok().put("schedule", schedule);
+		return JsonResponse.success().put("schedule", schedule);
 	}
 	
 	/**
@@ -74,12 +74,12 @@ public class ScheduleJobController {
 	@ApiOperation(value = "保存定时任务")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:schedule:save")
-	public R save(@RequestBody ScheduleJob scheduleJob){
+	public JsonResponse save(@RequestBody ScheduleJob scheduleJob){
 		ValidatorUtils.validateEntity(scheduleJob);
 		
 		scheduleJobService.save(scheduleJob);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -89,12 +89,12 @@ public class ScheduleJobController {
 	@ApiOperation(value = "修改定时任务")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:schedule:update")
-	public R update(@RequestBody ScheduleJob scheduleJob){
+	public JsonResponse update(@RequestBody ScheduleJob scheduleJob){
 		ValidatorUtils.validateEntity(scheduleJob);
 				
 		scheduleJobService.update(scheduleJob);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -104,10 +104,10 @@ public class ScheduleJobController {
 	@ApiOperation(value = "删除定时任务")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:schedule:delete")
-	public R delete(@RequestBody Long[] jobIds){
+	public JsonResponse delete(@RequestBody Long[] jobIds){
 		scheduleJobService.deleteBatch(jobIds);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -117,10 +117,10 @@ public class ScheduleJobController {
 	@ApiOperation(value = "立即执行任务")
 	@PostMapping("/run")
 	@RequiresPermissions("sys:schedule:run")
-	public R run(@RequestBody Long[] jobIds){
+	public JsonResponse run(@RequestBody Long[] jobIds){
 		scheduleJobService.run(jobIds);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -130,10 +130,10 @@ public class ScheduleJobController {
 	@ApiOperation(value = "暂停执行任务")
 	@PostMapping("/pause")
 	@RequiresPermissions("sys:schedule:pause")
-	public R pause(@RequestBody Long[] jobIds){
+	public JsonResponse pause(@RequestBody Long[] jobIds){
 		scheduleJobService.pause(jobIds);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -143,10 +143,10 @@ public class ScheduleJobController {
 	@ApiOperation(value = "恢复定时任务")
 	@PostMapping("/resume")
 	@RequiresPermissions("sys:schedule:resume")
-	public R resume(@RequestBody Long[] jobIds){
+	public JsonResponse resume(@RequestBody Long[] jobIds){
 		scheduleJobService.resume(jobIds);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 
 }

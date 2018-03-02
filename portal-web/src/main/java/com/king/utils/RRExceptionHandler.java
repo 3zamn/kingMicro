@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.king.common.exception.RRException;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 
 /**
  * 异常处理器
@@ -23,8 +23,8 @@ public class RRExceptionHandler {
 	 * 处理自定义异常
 	 */
 	@ExceptionHandler(RRException.class)
-	public R handleRRException(RRException e){
-		R r = new R();
+	public JsonResponse handleRRException(RRException e){
+		JsonResponse r = new JsonResponse();
 		r.put("code", e.getCode());
 		r.put("msg", e.getMessage());
 
@@ -32,20 +32,20 @@ public class RRExceptionHandler {
 	}
 
 	@ExceptionHandler(DuplicateKeyException.class)
-	public R handleDuplicateKeyException(DuplicateKeyException e){
+	public JsonResponse handleDuplicateKeyException(DuplicateKeyException e){
 		logger.error(e.getMessage(), e);
-		return R.error("数据库中已存在该记录");
+		return JsonResponse.error("数据库中已存在该记录");
 	}
 
 	@ExceptionHandler(AuthorizationException.class)
-	public R handleAuthorizationException(AuthorizationException e){
+	public JsonResponse handleAuthorizationException(AuthorizationException e){
 		logger.error(e.getMessage(), e);
-		return R.error("没有权限，请联系管理员授权");
+		return JsonResponse.error("没有权限，请联系管理员授权");
 	}
 
 	@ExceptionHandler(Exception.class)
-	public R handleException(Exception e){
+	public JsonResponse handleException(Exception e){
 		logger.error(e.getMessage(), e);
-		return R.error();
+		return JsonResponse.error();
 	}
 }

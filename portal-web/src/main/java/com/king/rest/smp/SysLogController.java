@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.king.api.smp.SysLogService;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.Query;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.dal.gen.model.smp.SysLog;
 
 import io.swagger.annotations.Api;
@@ -41,7 +41,7 @@ public class SysLogController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("sys:log:list")
-	public R list(@RequestParam Map<String, Object> params){
+	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params,SysLog.class.getSimpleName());
 		List<SysLog> sysLogList = sysLogService.queryList(query);
@@ -49,7 +49,7 @@ public class SysLogController {
 		
 		PageUtils pageUtil = new PageUtils(sysLogList, total, query.getLimit(), query.getPage());
 		
-		return R.ok().put("page", pageUtil);
+		return JsonResponse.success().put("page", pageUtil);
 	}
 	
 }

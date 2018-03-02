@@ -18,7 +18,7 @@ import com.king.api.smp.SysConfigService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.Query;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.common.validator.ValidatorUtils;
 import com.king.dal.gen.model.smp.SysConfig;
 
@@ -45,7 +45,7 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "配置列表")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:config:list")
-	public R list(@RequestParam Map<String, Object> params){
+	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params);
 		List<SysConfig> configList = sysConfigService.queryList(query);
@@ -53,7 +53,7 @@ public class SysConfigController extends AbstractController {
 		
 		PageUtils pageUtil = new PageUtils(configList, total, query.getLimit(), query.getPage());
 		
-		return R.ok().put("page", pageUtil);
+		return JsonResponse.success().put("page", pageUtil);
 	}
 	
 	
@@ -63,10 +63,10 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "配置信息")
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
-	public R info(@PathVariable("id") Long id){
+	public JsonResponse info(@PathVariable("id") Long id){
 		SysConfig config = sysConfigService.queryObject(id);
 		
-		return R.ok().put("config", config);
+		return JsonResponse.success().put("config", config);
 	}
 	
 	/**
@@ -76,12 +76,12 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "保存配置")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:config:save")
-	public R save(@RequestBody SysConfig config){
+	public JsonResponse save(@RequestBody SysConfig config){
 		ValidatorUtils.validateEntity(config);
 
 		sysConfigService.save(config);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -91,12 +91,12 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "修改配置")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:config:update")
-	public R update(@RequestBody SysConfig config){
+	public JsonResponse update(@RequestBody SysConfig config){
 		ValidatorUtils.validateEntity(config);
 		
 		sysConfigService.update(config);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -106,10 +106,10 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "删除配置")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
-	public R delete(@RequestBody Long[] ids){
+	public JsonResponse delete(@RequestBody Long[] ids){
 		sysConfigService.deleteBatch(ids);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 
 }

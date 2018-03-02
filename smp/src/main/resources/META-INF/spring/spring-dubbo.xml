@@ -8,19 +8,25 @@
 	
 	<!-- 提供方应用信息，用于计算依赖关系 -->
 	<dubbo:application name="smp-app" />
-
 	<!-- 	使用simple或zookeeper注册中心 -->
 	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
-
 	<!-- 用dubbo协议在30880端口暴露服务 -->
+<!-- 	<dubbo:protocol name="dubbo" port="9090" server="netty" client="netty" codec="dubbo" serialization="hessian2" charset="UTF-8" threadpool="fixed" threads="100" queues="0" iothreads="9" buffer="8192" accepts="1000" payload="8388608" />
+ -->	
 	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}"  threads="${dubbo.threads}"/>
-
+	<dubbo:protocol name="hessian" port="8082" />
+	<!--  <dubbo:protocol name="hessian" port="8082" /> --> <!-- 文件云盘传输使用hessian -->
+<!-- 	<dubbo:provider protocol="hessian"  timeout="${dubbo.provider.timeout}"/> -->
 	<!-- 设置超时控制 -->
 	<dubbo:provider timeout="${dubbo.provider.timeout}"></dubbo:provider> 
-	
-	
+	<!-- <dubbo:registry file="${user.home}/output/dubbo.cache" /> -->
+	<!-- <dubbo:service interface="com.alibaba.hello.api.HelloService" version="1.0.0" ref="hel loService" timeout="300" retry="2" loadbalance="random" actives="0" />
+	<dubbo:service interface="com.alibaba.hello.api.WorldService" version="1.0.0" ref="helloService" timeout="300" retry="2" loadbalance="random" actives="0" >
+    <dubbo:method name="findAllPerson" timeout="10000" retries="9" loadbalance="leastactive" actives="5" /> 
+	<dubbo:service/> -->
 	
 	<!-- 声明需要暴露的服务接口（interface是全路径名，不能自定义）group分组 group="smp-${hostname}"-->
+	
 	<dubbo:service   interface="com.king.api.smp.ScheduleJobLogService" ref="scheduleJobLogService" />
 	<dubbo:service   interface="com.king.api.smp.ScheduleJobService" ref="scheduleJobService" /> 
 	<dubbo:service   interface="com.king.api.smp.SysConfigService" ref="sysConfigService" /> 
@@ -31,9 +37,13 @@
 	<dubbo:service   interface="com.king.api.smp.SysRoleMenuService" ref="sysRoleMenuService" />
 	<dubbo:service   interface="com.king.api.smp.SysRoleService" ref="sysRoleService" />
 	<dubbo:service   interface="com.king.api.smp.SysUserRoleService" ref="sysUserRoleService" />
-	<dubbo:service   interface="com.king.api.smp.SysUserService" ref="sysUserService" />
+	<!-- protocol="hessian" --><!-- path="sysUserService" --> <!-- hessian协议测试  -->
+	<dubbo:service   interface="com.king.api.smp.SysUserService" ref="sysUserService"  protocol="hessian"/> 
 	<dubbo:service   interface="com.king.api.smp.ShiroService" ref="shiroService" />
-	<dubbo:service   interface="com.king.api.smp.SysUserTokenService" ref="sysUserTokenService" />
+	<dubbo:service   interface="com.king.api.smp.SysUserTokenService" ref="sysUserTokenService" /> 
+	<dubbo:annotation package="com.king" /><!-- 注解方式暴露接口 -->
+	<!-- 使用泛型GenericService实现暴露,动态匹配 --> <!-- path="smpGenericService"  --><!-- version="1.0"  -->
+	<dubbo:service   interface="com.king.api.smp.SmpGenericService" ref="smpGenericService" /> <!-- hessian协议测试.建议用在大数据传输  -->
 	<!-- 生成远程服务代理，可以和本地bean一样使用loginService -->
 	<!-- <dubbo:reference id="loginService" interface="com.dobbu.login.api.LoginService" /> -->
 

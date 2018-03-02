@@ -21,7 +21,7 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.Constant;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.Query;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.common.validator.ValidatorUtils;
 import com.king.dal.gen.model.smp.SysRole;
 
@@ -50,7 +50,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "角色列表")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:role:list")
-	public R list(@RequestParam Map<String, Object> params){
+	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//如果不是超级管理员，则只查询自己创建的角色列表
 		if(getUserId() != Constant.SUPER_ADMIN){
 			params.put("createUserId", getUserId());
@@ -63,7 +63,7 @@ public class SysRoleController extends AbstractController {
 		
 		PageUtils pageUtil = new PageUtils(list, total, query.getLimit(), query.getPage());
 		
-		return R.ok().put("page", pageUtil);
+		return JsonResponse.success().put("page", pageUtil);
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "角色选择")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:role:select")
-	public R select(){
+	public JsonResponse select(){
 		Map<String, Object> map = new HashMap<>();
 
 		//如果不是超级管理员，则只查询自己所拥有的角色列表
@@ -81,7 +81,7 @@ public class SysRoleController extends AbstractController {
 		}
 		List<SysRole> list = sysRoleService.queryList(map);
 		
-		return R.ok().put("list", list);
+		return JsonResponse.success().put("list", list);
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "角色信息")
 	@GetMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")
-	public R info(@PathVariable("roleId") Long roleId){
+	public JsonResponse info(@PathVariable("roleId") Long roleId){
 		SysRole role = sysRoleService.queryObject(roleId);
 		
 		//查询角色对应的菜单
@@ -101,7 +101,7 @@ public class SysRoleController extends AbstractController {
 		List<Long> deptIdList = sysRoleDeptService.queryDeptIdList(roleId);
 		role.setDeptIdList(deptIdList);
 		
-		return R.ok().put("role", role);
+		return JsonResponse.success().put("role", role);
 	}
 	
 	/**
@@ -111,12 +111,12 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "保存角色")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:role:save")
-	public R save(@RequestBody SysRole role){
+	public JsonResponse save(@RequestBody SysRole role){
 		ValidatorUtils.validateEntity(role);
 		
 		sysRoleService.save(role);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -126,12 +126,12 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "保存角色")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:role:update")
-	public R update(@RequestBody SysRole role){
+	public JsonResponse update(@RequestBody SysRole role){
 		ValidatorUtils.validateEntity(role);
 		
 		sysRoleService.update(role);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -141,9 +141,9 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "删除角色")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:role:delete")
-	public R delete(@RequestBody Long[] roleIds){
+	public JsonResponse delete(@RequestBody Long[] roleIds){
 		sysRoleService.deleteBatch(roleIds);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 }

@@ -25,7 +25,7 @@ import com.king.api.smp.SysUserService;
 import com.king.api.smp.SysUserTokenService;
 import com.king.common.annotation.Log;
 import com.king.common.annotation.Redis;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
 
@@ -79,23 +79,23 @@ public class SysLoginController extends AbstractController {
 	public Map<String, Object> login(String username, String password, String captcha)throws IOException {
 		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
 		if(!captcha.equalsIgnoreCase(kaptcha)){
-			return R.error("验证码不正确");
+			return JsonResponse.error("验证码不正确");
 		}
 		//用户信息
 		SysUser user = sysUserService.queryByUserName(username);
 		String PW=new Sha256Hash(password, user.getSalt()).toHex();
 		//账号不存在、密码错误
 		if(user == null || !user.getPassword().equals(PW)) {
-			return R.error("账号或密码不正确");
+			return JsonResponse.error("账号或密码不正确");
 		}
 
 		//账号锁定
 		if(user.getStatus() == 0){
-			return R.error("账号已被锁定,请联系管理员");
+			return JsonResponse.error("账号已被锁定,请联系管理员");
 		}
 
 		//生成token，并保存到数据库
-		R r = sysUserTokenService.createToken(user.getUserId());
+		JsonResponse r = sysUserTokenService.createToken(user.getUserId());
 		
 		return r;
 	}
@@ -107,9 +107,9 @@ public class SysLoginController extends AbstractController {
 	@Log("退出登录")
 	@ApiOperation(value = "退出登录")
 	@PostMapping("/sys/logout")
-	public R logout() {
+	public JsonResponse logout() {
 		sysUserTokenService.logout(getUserId());
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 }

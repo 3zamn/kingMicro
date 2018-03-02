@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.king.api.smp.SysUserTokenService;
 import com.king.common.utils.Constant;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.common.utils.TokenGenerator;
 import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.dao.SysUserTokenDao;
@@ -40,7 +40,7 @@ public class SysUserTokenServiceImpl implements SysUserTokenService {
 	}
 
 	@Override
-	public R createToken(long userId) {
+	public JsonResponse createToken(long userId) {
 		//生成一个token
 		String token = TokenGenerator.generateValue();
 
@@ -72,7 +72,7 @@ public class SysUserTokenServiceImpl implements SysUserTokenService {
 			tokenGenerator.saveOrUpdate(tokenEntity);
 		}
 
-		R r = R.ok().put("token", token).put("expire", Constant.TOKEN_EXPIRE/1000);
+		JsonResponse r = JsonResponse.success().put("token", token).put("expire", Constant.TOKEN_EXPIRE/1000);
 
 		return r;
 	}

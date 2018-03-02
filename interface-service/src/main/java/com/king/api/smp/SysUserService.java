@@ -1,4 +1,5 @@
 package com.king.api.smp;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import com.king.dal.gen.model.smp.SysUser;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public interface SysUserService {
+public interface SysUserService extends Serializable {
 
 	/**
 	 * 查询用户的所有权限
@@ -68,4 +69,7 @@ public interface SysUserService {
 	 * @param newPassword  新密码
 	 */
 	int updatePassword(Long userId, String password, String newPassword);
+	
+	String getTest();
+	
 }

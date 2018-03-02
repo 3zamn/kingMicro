@@ -19,7 +19,7 @@ import com.king.api.smp.SysMenuService;
 import com.king.common.annotation.Log;
 import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.dal.gen.model.smp.SysMenu;
 
 import io.swagger.annotations.Api;
@@ -45,10 +45,10 @@ public class SysMenuController extends AbstractController {
 	 */
 	@ApiOperation(value = "导航菜单")
 	@GetMapping("/nav")
-	public R nav(){
+	public JsonResponse nav(){
 		List<SysMenu> menuList = sysMenuService.getUserMenuList(getUserId());
 		Set<String> permissions = shiroService.getUserPermissions(getUserId());
-		return R.ok().put("menuList", menuList).put("permissions", permissions);
+		return JsonResponse.success().put("menuList", menuList).put("permissions", permissions);
 	}
 	
 	/**
@@ -69,7 +69,7 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "菜单选择")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:menu:select")
-	public R select(){
+	public JsonResponse select(){
 		//查询列表数据
 		List<SysMenu> menuList = sysMenuService.queryNotButtonList();
 		
@@ -81,7 +81,7 @@ public class SysMenuController extends AbstractController {
 		root.setOpen(true);
 		menuList.add(root);
 		
-		return R.ok().put("menuList", menuList);
+		return JsonResponse.success().put("menuList", menuList);
 	}
 	
 	/**
@@ -90,9 +90,9 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "菜单信息")
 	@GetMapping("/info/{menuId}")
 	@RequiresPermissions("sys:menu:info")
-	public R info(@PathVariable("menuId") Long menuId){
+	public JsonResponse info(@PathVariable("menuId") Long menuId){
 		SysMenu menu = sysMenuService.queryObject(menuId);
-		return R.ok().put("menu", menu);
+		return JsonResponse.success().put("menu", menu);
 	}
 	
 	/**
@@ -102,13 +102,13 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "保存菜单")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:menu:save")
-	public R save(@RequestBody SysMenu menu){
+	public JsonResponse save(@RequestBody SysMenu menu){
 		//数据校验
 		verifyForm(menu);
 		
 		sysMenuService.save(menu);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -118,13 +118,13 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "修改菜单")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:menu:update")
-	public R update(@RequestBody SysMenu menu){
+	public JsonResponse update(@RequestBody SysMenu menu){
 		//数据校验
 		verifyForm(menu);
 				
 		sysMenuService.update(menu);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -134,16 +134,16 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "删除菜单")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")
-	public R delete(long menuId){
+	public JsonResponse delete(long menuId){
 		//判断是否有子菜单或按钮
 		List<SysMenu> menuList = sysMenuService.queryListParentId(menuId);
 		if(menuList.size() > 0){
-			return R.error("请先删除子菜单或按钮");
+			return JsonResponse.error("请先删除子菜单或按钮");
 		}
 
 		sysMenuService.deleteBatch(new Long[]{menuId});
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**

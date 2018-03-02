@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysDeptService;
 import com.king.common.utils.Constant;
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.dal.gen.model.smp.SysDept;
 
 import io.swagger.annotations.Api;
@@ -52,7 +52,7 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "选择部门")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:dept:select")
-	public R select(){
+	public JsonResponse select(){
 		List<SysDept> deptList = sysDeptService.queryList(new HashMap<String, Object>());
 
 		//添加一级部门
@@ -65,7 +65,7 @@ public class SysDeptController extends AbstractController {
 			deptList.add(root);
 		}
 
-		return R.ok().put("deptList", deptList);
+		return JsonResponse.success().put("deptList", deptList);
 	}
 
 	/**
@@ -74,14 +74,14 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "部门树列表")
 	@GetMapping("/info")
 	@RequiresPermissions("sys:dept:list")
-	public R info(){
+	public JsonResponse info(){
 		long deptId = 0;
 		if(getUserId() != Constant.SUPER_ADMIN){
 			SysDept dept = sysDeptService.queryObject(getDeptId());
 			deptId = dept.getParentId();
 		}
 
-		return R.ok().put("deptId", deptId);
+		return JsonResponse.success().put("deptId", deptId);
 	}
 	
 	/**
@@ -90,10 +90,10 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "部门信息")
 	@GetMapping("/info/{deptId}")
 	@RequiresPermissions("sys:dept:info")
-	public R info(@PathVariable("deptId") Long deptId){
+	public JsonResponse info(@PathVariable("deptId") Long deptId){
 		SysDept dept = sysDeptService.queryObject(deptId);
 		
-		return R.ok().put("dept", dept);
+		return JsonResponse.success().put("dept", dept);
 	}
 	
 	/**
@@ -102,10 +102,10 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "保存部门")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dept:save")
-	public R save(@RequestBody SysDept dept){
+	public JsonResponse save(@RequestBody SysDept dept){
 		sysDeptService.save(dept);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -114,10 +114,10 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "修改部门")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:dept:update")
-	public R update(@RequestBody SysDept dept){
+	public JsonResponse update(@RequestBody SysDept dept){
 		sysDeptService.update(dept);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -126,16 +126,16 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "删除部门")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:dept:delete")
-	public R delete(long deptId){
+	public JsonResponse delete(long deptId){
 		//判断是否有子部门
 		List<Long> deptList = sysDeptService.queryDetpIdList(deptId);
 		if(deptList.size() > 0){
-			return R.error("请先删除子部门");
+			return JsonResponse.error("请先删除子部门");
 		}
 
 		sysDeptService.delete(deptId);
 		
-		return R.ok();
+		return JsonResponse.success();
 	}
 	
 }

@@ -1,6 +1,6 @@
 package com.king.api.smp;
 
-import com.king.common.utils.R;
+import com.king.common.utils.JsonResponse;
 import com.king.dal.gen.model.smp.SysUserToken;
 
 /**
@@ -21,7 +21,7 @@ public interface SysUserTokenService {
 	 * 生成token
 	 * @param userId  用户ID
 	 */
-	R createToken(long userId);
+	JsonResponse createToken(long userId);
 
 	/**
 	 * 退出，修改token值

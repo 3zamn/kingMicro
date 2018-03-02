@@ -1,6 +1,7 @@
 package com.king.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 import com.king.utils.XssHttpServletRequestWrapper;
@@ -12,6 +13,8 @@ import java.io.IOException;
  * @author King chen
  * @date 2017年12月25日
  */
+
+@WebFilter(filterName = "xssFilter", urlPatterns = "/*")
 public class XssFilter implements Filter {
 
 	@Override

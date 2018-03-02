@@ -72,7 +72,7 @@ var vm = new Vue({
 					    data: data,
 					    dataType: "json",
 					    success: function(r){
-							if(r.code == 0){
+							if(r.code == 200){
 								layer.close(index);
 								layer.alert('修改成功', function(){
 									location.reload();
