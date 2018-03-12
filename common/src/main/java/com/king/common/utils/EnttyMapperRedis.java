@@ -25,7 +25,7 @@ public class EnttyMapperRedis {
             return ;
         }
         String key = RedisKeys.getEnttyKey(entity);
-        redisUtils.hset(key.trim(), field.trim(),value);
+        redisUtils.hset(key.trim(), field.trim(),value,-1);
     }
 
     public <T> T get(Class<T> clazz){

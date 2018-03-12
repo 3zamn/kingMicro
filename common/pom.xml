@@ -307,7 +307,18 @@
 	        <artifactId>spring-data-mongodb</artifactId>
 	        <version>1.8.2.RELEASE</version>
 	    </dependency>
-	    
+	    <dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.5.7</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>common</finalName>

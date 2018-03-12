@@ -22,4 +22,8 @@ public class RedisKeys {
     public static String getEnttyKey(String key){
         return "entty:" + key;
     }
+    
+    public static String getKaptchaKey(String key){
+        return "kaptcha:" + key;
+    }
 }
