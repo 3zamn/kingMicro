@@ -3,7 +3,9 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
+import com.king.dal.gen.model.smp.SysMenu;
 import com.king.dal.gen.model.smp.SysRole;
+import com.king.dal.gen.service.BaseService;
 
 /**
  * 角色
@@ -11,18 +13,21 @@ import com.king.dal.gen.model.smp.SysRole;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public interface SysRoleService {
+public interface SysRoleService extends BaseService<SysRole>{
 	
-	SysRole queryObject(Long roleId);
+	/**
+	 * 保存或更新角色用户相关联
+	 */
+	void saveOrUpdate_R_U(Long userId, List<Long> roleIdList);
 	
-	List<SysRole> queryList(Map<String, Object> map);
+	/**
+	 * 根据用户ID，获取角色ID列表
+	 */
+	List<Long> queryRoleIdList(Long userId);
 	
-	int queryTotal(Map<String, Object> map);
-	
-	void save(SysRole role);
-	
-	void update(SysRole role);
-	
-	void deleteBatch(Long[] roleIds);
+	/**
+	 * 根据用户ID，删除角色用户关联
+	 */
+	void delete_R_U(Long userId);
 
 }

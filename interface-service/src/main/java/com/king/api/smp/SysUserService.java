@@ -1,9 +1,12 @@
 package com.king.api.smp;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import com.king.common.utils.JsonResponse;
+import com.king.dal.gen.model.smp.SysRole;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.dal.gen.model.smp.SysUserToken;
+import com.king.dal.gen.service.BaseService;
 
 
 /**
@@ -12,7 +15,7 @@ import com.king.dal.gen.model.smp.SysUser;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public interface SysUserService extends Serializable {
+public interface SysUserService extends BaseService<SysUser>{
 
 	/**
 	 * 查询用户的所有权限
@@ -31,38 +34,6 @@ public interface SysUserService extends Serializable {
 	SysUser queryByUserName(String username);
 	
 	/**
-	 * 根据用户ID，查询用户
-	 * @param userId
-	 * @return
-	 */
-	SysUser queryObject(Long userId);
-	
-	/**
-	 * 查询用户列表
-	 */
-	List<SysUser> queryList(Map<String, Object> map);
-	
-	/**
-	 * 查询总数
-	 */
-	int queryTotal(Map<String, Object> map);
-	
-	/**
-	 * 保存用户
-	 */
-	void save(SysUser user);
-	
-	/**
-	 * 修改用户
-	 */
-	void update(SysUser user);
-	
-	/**
-	 * 删除用户
-	 */
-	void deleteBatch(Long[] userIds);
-	
-	/**
 	 * 修改密码
 	 * @param userId       用户ID
 	 * @param password     原密码
@@ -70,6 +41,23 @@ public interface SysUserService extends Serializable {
 	 */
 	int updatePassword(Long userId, String password, String newPassword);
 	
-	String getTest();
+	SysUserToken queryByUserId(Long userId);
+
+	
+	void saveUserToken(SysUserToken token);
+	
+	void updateUserToken(SysUserToken token);
+
+	/**
+	 * 生成token
+	 * @param userId  用户ID
+	 */
+	JsonResponse createToken(long userId);
+
+	/**
+	 * 退出，修改token值
+	 * @param userId  用户ID
+	 */
+	void logout(long userId);
 	
 }

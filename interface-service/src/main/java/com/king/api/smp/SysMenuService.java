@@ -4,7 +4,9 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
+import com.king.dal.gen.model.smp.SysDept;
 import com.king.dal.gen.model.smp.SysMenu;
+import com.king.dal.gen.service.BaseService;
 
 /**
  * 菜单管理
@@ -12,7 +14,7 @@ import com.king.dal.gen.model.smp.SysMenu;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public interface SysMenuService {
+public interface SysMenuService extends BaseService<SysMenu>{
 	
 	/**
 	 * 根据父菜单，查询子菜单
@@ -38,37 +40,17 @@ public interface SysMenuService {
 	List<SysMenu> getUserMenuList(Long userId);
 	
 	/**
-	 * 查询菜单
-	 */
-	SysMenu queryObject(Long menuId);
-	
-	/**
-	 * 查询菜单列表
-	 */
-	List<SysMenu> queryList(Map<String, Object> map);
-	
-	/**
-	 * 查询总数
-	 */
-	int queryTotal(Map<String, Object> map);
-	
-	/**
-	 * 保存菜单
-	 */
-	void save(SysMenu menu);
-	
-	/**
-	 * 修改
-	 */
-	void update(SysMenu menu);
-	
-	/**
-	 * 删除
-	 */
-	void deleteBatch(Long[] menuIds);
-	
-	/**
 	 * 查询用户的权限列表
 	 */
 	List<SysMenu> queryUserList(Long userId);
+	
+	/**
+	 * 保存或更新角色菜单相关连
+	 */
+	void saveOrUpdate_R_M(Long roleId, List<Long> menuIdList);
+	
+	/**
+	 * 根据角色ID，获取菜单ID列表
+	 */
+	List<Long> queryMenuIdList(Long roleId);
 }

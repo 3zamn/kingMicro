@@ -4,7 +4,9 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
+import com.king.dal.gen.model.smp.ScheduleJob;
 import com.king.dal.gen.model.smp.SysDept;
+import com.king.dal.gen.service.BaseService;
 
 /**
  * 部门管理
@@ -12,17 +14,17 @@ import com.king.dal.gen.model.smp.SysDept;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public interface SysDeptService {
+public interface SysDeptService extends BaseService<SysDept>{
 	
-	SysDept queryObject(Long deptId);
+	/**
+	 * 保存或更新角色、部门相关联
+	 */
+	void saveOrUpdate_R_D(Long roleId, List<Long> deptIdList);
 	
-	List<SysDept> queryList(Map<String, Object> map);
-
-	void save(SysDept sysDept);
-	
-	void update(SysDept sysDept);
-	
-	void delete(Long deptId);
+	/**
+	 * 根据角色ID，获取部门ID列表
+	 */
+	List<Long> queryDeptIdList(Long roleId);
 
 	/**
 	 * 查询子部门ID列表

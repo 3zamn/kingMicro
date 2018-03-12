@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.king.dal.gen.model.smp.ScheduleJob;
+import com.king.dal.gen.model.smp.ScheduleJobLog;
+import com.king.dal.gen.service.BaseService;
 
 /**
  * 定时任务
@@ -11,22 +13,48 @@ import com.king.dal.gen.model.smp.ScheduleJob;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public interface ScheduleJobService {
+public interface ScheduleJobService extends BaseService<ScheduleJob>{
 
-	/**
-	 * 根据ID，查询定时任务
-	 */
-	ScheduleJob queryObject(Long jobId);
 	
 	/**
-	 * 查询定时任务列表
+	 * 根据ID，查询定时任务日志
+	 *//*
+	ScheduleJobLog queryObject(Long jobId);
+	
+	*//**
+	 * 查询定时任务日志列表
+	 *//*
+	List<ScheduleJobLog> queryList(Map<String, Object> map);
+	
+	*//**
+	 * 查询总数
+	 *//*
+	int queryTotal(Map<String, Object> map);
+	
+	*//**
+	 * 保存定时任务日志
+	 *//*
+	void save(ScheduleJobLog log);*/
+	
+	/**
+	 * 根据ID，查询定时任务日志
 	 */
-	List<ScheduleJob> queryList(Map<String, Object> map);
+	ScheduleJobLog queryScheduleJobLog(Long jobId);
+	
+	/**
+	 * 查询定时任务日志列表
+	 */
+	List<ScheduleJobLog> queryScheduleJobLogList(Map<String, Object> map);
 	
 	/**
 	 * 查询总数
 	 */
-	int queryTotal(Map<String, Object> map);
+	int queryScheduleJobLogTotal(Map<String, Object> map);
+	
+	/**
+	 * 保存定时任务日志
+	 */
+	void save(ScheduleJobLog log);
 	
 	/**
 	 * 保存定时任务
