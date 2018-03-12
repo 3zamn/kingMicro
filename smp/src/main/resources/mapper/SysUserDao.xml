@@ -50,8 +50,12 @@
 	<select id="queryTotal" resultType="int">
 		select count(*) from sys_user u
 		<where>
-			<if test="username != null and username.trim() != ''">
+			<!-- <if test="username != null and username.trim() != ''">
 				and u.`username` like concat('%',#{username},'%')
+			</if> -->
+			<if test="searchKey != null and searchKey.trim() != ''">
+				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
+				${searchSql}
 			</if>
 
 			<!--  数据过滤  -->

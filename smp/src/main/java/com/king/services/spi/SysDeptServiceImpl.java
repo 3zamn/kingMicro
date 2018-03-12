@@ -1,29 +1,30 @@
 package com.king.services.spi;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.SysDeptService;
 import com.king.common.annotation.DataFilter;
 import com.king.dal.gen.model.smp.SysDept;
+import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysDeptDao;
+import com.king.dao.SysRoleDeptDao;
 
 
 
 @Service("sysDeptService")
-public class SysDeptServiceImpl implements SysDeptService {
+public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysDeptService {
 	@Autowired
 	private SysDeptDao sysDeptDao;
-	
-	@Override
-	public SysDept queryObject(Long deptId){
-		return sysDeptDao.queryObject(deptId);
-	}
+	@Autowired
+	private SysRoleDeptDao sysRoleDeptDao;
 	
 	@Override
 	@DataFilter(tableAlias = "d", user = false)
@@ -31,21 +32,6 @@ public class SysDeptServiceImpl implements SysDeptService {
 		return sysDeptDao.queryList(map);
 	}
 	
-	@Override
-	public void save(SysDept sysDept){
-		sysDeptDao.save(sysDept);
-	}
-	
-	@Override
-	public void update(SysDept sysDept){
-		sysDeptDao.update(sysDept);
-	}
-	
-	@Override
-	public void delete(Long deptId){
-		sysDeptDao.delete(deptId);
-	}
-
 	@Override
 	public List<Long> queryDetpIdList(Long parentId) {
 		return sysDeptDao.queryDetpIdList(parentId);
@@ -79,5 +65,27 @@ public class SysDeptServiceImpl implements SysDeptService {
 
 			deptIdList.add(deptId);
 		}
+	}
+	
+	@Override
+	@Transactional
+	public void saveOrUpdate_R_D(Long roleId, List<Long> deptIdList) {
+		//先删除角色与菜单关系
+		sysRoleDeptDao.delete(roleId);
+
+		if(deptIdList.size() == 0){
+			return ;
+		}
+
+		//保存角色与菜单关系
+		Map<String, Object> map = new HashMap<>();
+		map.put("roleId", roleId);
+		map.put("deptIdList", deptIdList);
+		sysRoleDeptDao.save(map);
+	}
+
+	@Override
+	public List<Long> queryDeptIdList(Long roleId) {
+		return sysRoleDeptDao.queryDeptIdList(roleId);
 	}
 }

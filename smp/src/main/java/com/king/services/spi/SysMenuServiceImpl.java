@@ -2,6 +2,7 @@ package com.king.services.spi;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,16 +14,20 @@ import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysUserService;
 import com.king.common.utils.Constant;
 import com.king.dal.gen.model.smp.SysMenu;
+import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysMenuDao;
+import com.king.dao.SysRoleMenuDao;
 
 
-
+@Transactional
 @Service("sysMenuService")
-public class SysMenuServiceImpl implements SysMenuService {
+public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysMenuService {
 	@Autowired
 	private SysMenuDao sysMenuDao;
 	@Autowired
 	private SysUserService sysUserService;
+	@Autowired
+	private SysRoleMenuDao sysRoleMenuDao;
 	
 	@Override
 	public List<SysMenu> queryListParentId(Long parentId, List<Long> menuIdList) {
@@ -62,37 +67,6 @@ public class SysMenuServiceImpl implements SysMenuService {
 	}
 	
 	@Override
-	public SysMenu queryObject(Long menuId) {
-		return sysMenuDao.queryObject(menuId);
-	}
-
-	@Override
-	public List<SysMenu> queryList(Map<String, Object> map) {
-		return sysMenuDao.queryList(map);
-	}
-
-	@Override
-	public int queryTotal(Map<String, Object> map) {
-		return sysMenuDao.queryTotal(map);
-	}
-
-	@Override
-	public void save(SysMenu menu) {
-		sysMenuDao.save(menu);
-	}
-
-	@Override
-	public void update(SysMenu menu) {
-		sysMenuDao.update(menu);
-	}
-
-	@Override
-	@Transactional
-	public void deleteBatch(Long[] menuIds) {
-		sysMenuDao.deleteBatch(menuIds);
-	}
-	
-	@Override
 	public List<SysMenu> queryUserList(Long userId) {
 		return sysMenuDao.queryUserList(userId);
 	}
@@ -123,5 +97,25 @@ public class SysMenuServiceImpl implements SysMenuService {
 		}
 		
 		return subMenuList;
+	}
+
+	public void saveOrUpdate_R_M(Long roleId, List<Long> menuIdList) {
+		//先删除角色与菜单关系
+		sysRoleMenuDao.delete(roleId);
+
+		if(menuIdList.size() == 0){
+			return ;
+		}
+
+		//保存角色与菜单关系
+		Map<String, Object> map = new HashMap<>();
+		map.put("roleId", roleId);
+		map.put("menuIdList", menuIdList);
+		sysRoleMenuDao.save(map);
+	}
+
+	@Override
+	public List<Long> queryMenuIdList(Long roleId) {
+		return sysRoleMenuDao.queryMenuIdList(roleId);
 	}
 }

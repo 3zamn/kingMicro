@@ -16,16 +16,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.king.api.smp.ScheduleJobService;
 import com.king.common.utils.Constant;
 import com.king.dal.gen.model.smp.ScheduleJob;
+import com.king.dal.gen.model.smp.ScheduleJobLog;
+import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.ScheduleJobDao;
+import com.king.dao.ScheduleJobLogDao;
 import com.king.utils.ScheduleUtils;
 
 @Service("scheduleJobService")
-public class ScheduleJobServiceImpl implements ScheduleJobService {
+public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implements ScheduleJobService {
 	@Autowired
     private Scheduler scheduler;
 	@Autowired
 	private ScheduleJobDao schedulerJobDao;
-	
+	@Autowired
+	private ScheduleJobLogDao scheduleJobLogDao;
 	/**
 	 * 项目启动时，初始化定时器
 	 */
@@ -43,21 +47,6 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 		}
 	}
 	
-	@Override
-	public ScheduleJob queryObject(Long jobId) {
-		return schedulerJobDao.queryObject(jobId);
-	}
-
-	@Override
-	public List<ScheduleJob> queryList(Map<String, Object> map) {
-		return schedulerJobDao.queryList(map);
-	}
-
-	@Override
-	public int queryTotal(Map<String, Object> map) {
-		return schedulerJobDao.queryTotal(map);
-	}
-
 	@Override
 	@Transactional
 	public void save(ScheduleJob scheduleJob) {
@@ -122,5 +111,29 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 
     	updateBatch(jobIds, Constant.ScheduleStatus.NORMAL.getValue());
     }
+
+	@Override
+	public ScheduleJobLog queryScheduleJobLog(Long jobId) {
+		// TODO Auto-generated method stub
+		return scheduleJobLogDao.queryObject(jobId);
+	}
+
+	@Override
+	public List<ScheduleJobLog> queryScheduleJobLogList(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return scheduleJobLogDao.queryList(map);
+	}
+
+	@Override
+	public int queryScheduleJobLogTotal(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return scheduleJobLogDao.queryTotal();
+	}
+
+	@Override
+	public void save(ScheduleJobLog log) {
+		// TODO Auto-generated method stub
+		scheduleJobLogDao.save(log);
+	}
     
 }

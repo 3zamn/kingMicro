@@ -11,8 +11,8 @@
     <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
         <param name="file" value="dubbo-governance.log"/>
         <param name="append" value="true"/>
-        <param name="maxFileSize" value="10MB"/>
-        <param name="maxBackupIndex" value="100"/>
+        <param name="maxFileSize" value="100MB"/>
+        <param name="maxBackupIndex" value="10"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%t] %-5p %C{6} (%F:%L) - %m%n"/>
         </layout>

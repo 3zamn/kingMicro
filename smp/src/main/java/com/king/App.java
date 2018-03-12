@@ -1,6 +1,5 @@
 package com.king;
 
-
 /**
  * 用dubbo的main方法方式启动容器
  * @author King chen

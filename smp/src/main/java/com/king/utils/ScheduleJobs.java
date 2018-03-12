@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import com.king.api.smp.ScheduleJobLogService;
+import com.king.api.smp.ScheduleJobService;
 import com.king.common.utils.ScheduleRunnable;
 import com.king.common.utils.SpringContextUtils;
 import com.king.dal.gen.model.smp.ScheduleJob;
@@ -34,7 +34,7 @@ public class ScheduleJobs extends QuartzJobBean {
         		.get(ScheduleJob.JOB_PARAM_KEY);
         
         //获取spring bean
-        ScheduleJobLogService scheduleJobLogService = (ScheduleJobLogService) SpringContextUtils.getBean("scheduleJobLogService");
+        ScheduleJobService scheduleJobService = (ScheduleJobService) SpringContextUtils.getBean("scheduleJobService");
         
         //数据库保存执行记录
         ScheduleJobLog log = new ScheduleJobLog();
@@ -74,7 +74,7 @@ public class ScheduleJobs extends QuartzJobBean {
 			log.setStatus(1);
 			log.setError(StringUtils.substring(e.toString(), 0, 2000));
 		}finally {
-			scheduleJobLogService.save(log);
+			scheduleJobService.save(log);
 		}
     }
 }

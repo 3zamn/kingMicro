@@ -34,8 +34,9 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from sys_log 
 		<where>
-			<if test="key != null and key.trim() != ''">
-				`username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%')
+			<if test="searchKey != null and searchKey.trim() != ''">
+				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
+				${searchSql}
 			</if>
 		</where>
 	</select>
