@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.dubbo.rpc.service.GenericService;
-import com.king.api.smp.SysUserRoleService;
+import com.king.api.smp.SysRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.Query;
-import com.king.common.utils.SpringContextUtils;
 import com.king.common.validator.Assert;
 import com.king.common.validator.ValidatorUtils;
 import com.king.common.validator.group.AddGroup;
@@ -46,9 +44,8 @@ public class SysUserController extends AbstractController {
 	@Autowired
 	private SysUserService sysUserService;
 	@Autowired
-	private SysUserRoleService sysUserRoleService;
-  
-  
+	private SysRoleService sysRoleService;
+
 	
 	/**
 	 * 所有用户列表
@@ -59,9 +56,8 @@ public class SysUserController extends AbstractController {
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params,SysUser.class.getSimpleName());
-		GenericService barService = (GenericService) SpringContextUtils.getBean("smpGenericService");
-		Object result = barService.$invoke("sayHello", new String[] { "java.lang.String" }, new Object[] { "World" });
-		System.out.println(result);
+	/*	GenericService barService = (GenericService) SpringContextUtils.getBean("testService");
+		Object result = barService.$invoke("queryList", new String[] { "java.util.Map" }, new Object[] {query});*/
 		List<SysUser> userList = sysUserService.queryList(query);
 		int total = sysUserService.queryTotal(query);
 		
@@ -112,7 +108,7 @@ public class SysUserController extends AbstractController {
 		SysUser user = sysUserService.queryObject(userId);
 		
 		//获取用户所属的角色列表
-		List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
+		List<Long> roleIdList = sysRoleService.queryRoleIdList(userId);
 		user.setRoleIdList(roleIdList);
 		
 		return JsonResponse.success().put("user", user);

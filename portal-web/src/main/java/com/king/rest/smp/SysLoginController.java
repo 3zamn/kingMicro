@@ -15,16 +15,12 @@ import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.king.api.smp.SysUserService;
-import com.king.api.smp.SysUserTokenService;
 import com.king.common.annotation.Log;
-import com.king.common.annotation.Redis;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
@@ -46,8 +42,7 @@ public class SysLoginController extends AbstractController {
 	private Producer producer;
 	@Autowired
 	private SysUserService sysUserService;
-	@Autowired
-	private SysUserTokenService sysUserTokenService;
+
 
 	/**
 	 * 验证码
@@ -95,7 +90,7 @@ public class SysLoginController extends AbstractController {
 		}
 
 		//生成token，并保存到数据库
-		JsonResponse r = sysUserTokenService.createToken(user.getUserId());
+		JsonResponse r = sysUserService.createToken(user.getUserId());
 		
 		return r;
 	}
@@ -107,8 +102,9 @@ public class SysLoginController extends AbstractController {
 	@Log("退出登录")
 	@ApiOperation(value = "退出登录")
 	@PostMapping("/sys/logout")
-	public JsonResponse logout() {
-		sysUserTokenService.logout(getUserId());
+	public JsonResponse logout() {	
+		sysUserService.logout(getUserId());
+		ShiroUtils.logout();
 		return JsonResponse.success();
 	}
 	

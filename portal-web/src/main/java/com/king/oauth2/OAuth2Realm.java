@@ -18,11 +18,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.king.api.smp.ShiroService;
-import com.king.api.smp.SysUserTokenService;
+import com.king.api.smp.SysUserService;
 import com.king.common.utils.Constant;
-import com.king.common.utils.EnttyMapperResolver;
-import com.king.common.utils.RedisUtils;
-import com.king.common.utils.SpringContextUtils;
 import com.king.common.utils.TokenGenerator;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
@@ -45,7 +42,7 @@ public class OAuth2Realm extends AuthorizingRealm {
     private ShiroService shiroService;
     
     @Autowired
-    private SysUserTokenService sysUserTokenService;
+    private SysUserService sysUserService;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -74,17 +71,9 @@ public class OAuth2Realm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String accessToken = (String) token.getPrincipal();
-
         //根据accessToken，查询用户信息
         SysUserToken userToken = null;
         //token失效
-      /*  RedisUtils redisUtils =(RedisUtils)SpringContextUtils.getBean("redisUtils");
-    	if(redisUtils !=null){
-    		if(((EnttyMapperResolver)SpringContextUtils.getBean("enttyMapperRedis")).isExistAttribute("00", "000")){
- 				System.out.println("000");		
- 			}	
-    		
-    	}*/
         if(redisOpen){//是否开启redis
         	userToken= tokenGenerator.get(accessToken);
         	 if(userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()){
@@ -99,7 +88,7 @@ public class OAuth2Realm extends AuthorizingRealm {
              }else{
             	 Date expireTime = new Date(userToken.getExpireTime().getTime()+Constant.TOKEN_EXPIRE);
              	userToken.setExpireTime(expireTime);
-             	sysUserTokenService.update(userToken);
+             	sysUserService.updateUserToken(userToken);
              }
         	
         }

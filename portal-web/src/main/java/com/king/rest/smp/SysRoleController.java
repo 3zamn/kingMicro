@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.king.api.smp.SysRoleDeptService;
-import com.king.api.smp.SysRoleMenuService;
+import com.king.api.smp.SysDeptService;
+import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysRoleService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.Constant;
+import com.king.common.utils.JsonResponse;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.Query;
-import com.king.common.utils.JsonResponse;
 import com.king.common.validator.ValidatorUtils;
 import com.king.dal.gen.model.smp.SysRole;
 
@@ -40,9 +40,9 @@ public class SysRoleController extends AbstractController {
 	@Autowired
 	private SysRoleService sysRoleService;
 	@Autowired
-	private SysRoleMenuService sysRoleMenuService;
+	private SysMenuService sysMenuService;
 	@Autowired
-	private SysRoleDeptService sysRoleDeptService;
+	private SysDeptService sysDeptService;
 	
 	/**
 	 * 角色列表
@@ -94,11 +94,11 @@ public class SysRoleController extends AbstractController {
 		SysRole role = sysRoleService.queryObject(roleId);
 		
 		//查询角色对应的菜单
-		List<Long> menuIdList = sysRoleMenuService.queryMenuIdList(roleId);
+		List<Long> menuIdList = sysMenuService.queryMenuIdList(roleId);
 		role.setMenuIdList(menuIdList);
 
 		//查询角色对应的部门
-		List<Long> deptIdList = sysRoleDeptService.queryDeptIdList(roleId);
+		List<Long> deptIdList = sysDeptService.queryDeptIdList(roleId);
 		role.setDeptIdList(deptIdList);
 		
 		return JsonResponse.success().put("role", role);

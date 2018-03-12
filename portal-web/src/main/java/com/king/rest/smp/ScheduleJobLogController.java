@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.king.api.smp.ScheduleJobLogService;
+import com.king.api.smp.ScheduleJobService;
+import com.king.common.utils.JsonResponse;
 import com.king.common.utils.PageUtils;
 import com.king.common.utils.Query;
-import com.king.common.utils.JsonResponse;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 
 import io.swagger.annotations.Api;
@@ -30,9 +30,10 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "定时任务日志", description = "定时任务日志")
 @RequestMapping("/sys/scheduleLog")
 public class ScheduleJobLogController {
+	/*@Autowired
+	private ScheduleJobLogService scheduleJobLogService;*/
 	@Autowired
-	private ScheduleJobLogService scheduleJobLogService;
-	
+	private ScheduleJobService scheduleJobService;
 	/**
 	 * 定时任务日志列表
 	 */
@@ -42,8 +43,8 @@ public class ScheduleJobLogController {
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params);
-		List<ScheduleJobLog> jobList = scheduleJobLogService.queryList(query);
-		int total = scheduleJobLogService.queryTotal(query);
+		List<ScheduleJobLog> jobList = scheduleJobService.queryScheduleJobLogList(query);
+		int total = scheduleJobService.queryScheduleJobLogTotal(query);
 		
 		PageUtils pageUtil = new PageUtils(jobList, total, query.getLimit(), query.getPage());
 		
@@ -56,7 +57,7 @@ public class ScheduleJobLogController {
 	@ApiOperation(value = "定时任务日志信息")
 	@GetMapping("/info/{logId}")
 	public JsonResponse info(@PathVariable("logId") Long logId){
-		ScheduleJobLog log = scheduleJobLogService.queryObject(logId);
+		ScheduleJobLog log = scheduleJobService.queryScheduleJobLog(logId);
 		
 		return JsonResponse.success().put("log", log);
 	}

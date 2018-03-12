@@ -5,13 +5,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 全局过滤器
+ * @author King chen
+ * @emai 396885563@qq.com
+ * @data2018年3月7日
+ */
 @WebFilter(filterName = "globalFilter", urlPatterns = "/*")
 public class GlobalFilter implements Filter {
 
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
+    	//设置跨域
         HttpServletRequest req=(HttpServletRequest)request;
         HttpServletResponse res=(HttpServletResponse)response;
         res.setHeader("Access-Control-Allow-Origin", "*");
