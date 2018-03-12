@@ -20,8 +20,8 @@ T.p = url;
 //请求前缀
 //var baseURL = "http://192.168.4.11:8888/portal-web/";
 //var clientURL = "http://192.168.4.11:8888/portal-html/";
-var baseURL = "http://localhost:8888/portal-web/";
-var clientURL = "http://localhost:8888/portal-html/";
+var baseURL = "http://192.168.4.11:8888/portal-web/";
+var clientURL = "http://192.168.4.11:8888/portal-html/";
 
 //登录token
 var token = localStorage.getItem("token");
