@@ -1,15 +1,20 @@
 package com.king.dal.gen.model.smp;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-
-import com.king.common.validator.group.AddGroup;
-import com.king.common.validator.group.UpdateGroup;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.king.common.validator.group.AddGroup;
+import com.king.common.validator.group.UpdateGroup;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 系统用户
@@ -17,34 +22,40 @@ import java.util.List;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
+@ApiModel("系统用户")
 public class SysUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * 用户ID
 	 */
+	@ApiModelProperty("用户id")
 	private Long userId;
 
 	/**
 	 * 用户名
 	 */
+	@ApiModelProperty("用户名")
 	@NotBlank(message="用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
 	private String username;
 
 	/**
 	 * 密码
 	 */
+	@ApiModelProperty("密码")
 	@NotBlank(message="密码不能为空", groups = AddGroup.class)
 	private String password;
 
 	/**
 	 * 盐
 	 */
+	@ApiModelProperty("盐")
 	private String salt;
 
 	/**
 	 * 邮箱
 	 */
+	@ApiModelProperty("邮箱")
 	@NotBlank(message="邮箱不能为空", groups = {AddGroup.class, UpdateGroup.class})
 	@Email(message="邮箱格式不正确", groups = {AddGroup.class, UpdateGroup.class})
 	private String email;
@@ -52,11 +63,13 @@ public class SysUser implements Serializable {
 	/**
 	 * 手机号
 	 */
+	@ApiModelProperty("手机号")
 	private String mobile;
 
 	/**
 	 * 状态  0：禁用   1：正常
 	 */
+	@ApiModelProperty("状态  0：禁用   1：正常")
 	private Integer status;
 	
 	/**
@@ -67,17 +80,20 @@ public class SysUser implements Serializable {
 	/**
 	 * 创建时间
 	 */
+	@ApiModelProperty("创建时间")
 	private Date createTime;
 
 	/**
 	 * 部门ID
 	 */
+	@ApiModelProperty("部门ID")
 	@NotNull(message="部门不能为空", groups = {AddGroup.class, UpdateGroup.class})
 	private Long deptId;
 
 	/**
 	 * 部门名称
 	 */
+	@ApiModelProperty("部门名称")
 	private String deptName;
 
 	/**
@@ -124,6 +140,7 @@ public class SysUser implements Serializable {
 	 * 获取：密码
 	 * @return String
 	 */
+	@JSONField(serialize = false)
 	public String getPassword() {
 		return password;
 	}
@@ -200,6 +217,7 @@ public class SysUser implements Serializable {
 		this.roleIdList = roleIdList;
 	}
 
+	@JSONField(serialize = false)
 	public String getSalt() {
 		return salt;
 	}

@@ -3,58 +3,71 @@ package com.king.dal.gen.model.smp;
 import java.io.Serializable;
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 定时执行日志
  * @author King chen
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
+@ApiModel("定时任务日志")
 public class ScheduleJobLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * 日志id
 	 */
+	@ApiModelProperty("任务日志id")
 	private Long logId;
 	
 	/**
 	 * 任务id
 	 */
+	@ApiModelProperty("任务id")
 	private Long jobId;
 	
 	/**
 	 * spring bean名称
 	 */
+	@ApiModelProperty("spring bean名称")
 	private String beanName;
 	
 	/**
 	 * 方法名
 	 */
+	@ApiModelProperty("方法名")
 	private String methodName;
 	
 	/**
 	 * 参数
 	 */
+	@ApiModelProperty("参数")
 	private String params;
 	
 	/**
 	 * 任务状态    0：成功    1：失败
 	 */
+	@ApiModelProperty("任务状态    0：成功    1：失败")
 	private Integer status;
 	
 	/**
 	 * 失败信息
 	 */
+	@ApiModelProperty("失败信息")
 	private String error;
 	
 	/**
 	 * 耗时(单位：毫秒)
 	 */
+	@ApiModelProperty("耗时(单位：毫秒)")
 	private Integer times;
 	
 	/**
 	 * 创建时间
 	 */
+	@ApiModelProperty("创建时间")
 	private Date createTime;
 
 	public Long getLogId() {

@@ -3,6 +3,9 @@ package com.king.dal.gen.model.smp;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
@@ -14,34 +17,40 @@ import java.util.List;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
+@ApiModel("角色")
 public class SysRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * 角色ID
 	 */
+	@ApiModelProperty("角色Id")
 	private Long roleId;
 
 	/**
 	 * 角色名称
 	 */
+	@ApiModelProperty("角色名称")
 	@NotBlank(message="角色名称不能为空")
 	private String roleName;
 
 	/**
 	 * 备注
 	 */
+	@ApiModelProperty("备注")
 	private String remark;
 
 	/**
 	 * 部门ID
 	 */
+	@ApiModelProperty("部门ID")
 	@NotNull(message="部门不能为空")
 	private Long deptId;
 
 	/**
 	 * 部门名称
 	 */
+	@ApiModelProperty("部门名称")
 	private String deptName;
 	
 	private List<Long> menuIdList;
@@ -51,6 +60,7 @@ public class SysRole implements Serializable {
 	/**
 	 * 创建时间
 	 */
+	@ApiModelProperty("创建时间")
 	private Date createTime;
 
 	/**

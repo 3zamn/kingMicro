@@ -3,25 +3,38 @@ package com.king.dal.gen.model.smp;
 import java.io.Serializable;
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 部门管理
  * @author King chen
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
+@ApiModel("部门管理")
 public class SysDept implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//部门ID
+	@ApiModelProperty("部门ID")
 	private Long deptId;
 	//上级部门ID，一级部门为0
+	@ApiModelProperty("上级部门ID，一级部门为0")
 	private Long parentId;
 	//部门名称
+	@ApiModelProperty("部门名称")
 	private String name;
 	//上级部门名称
+	@ApiModelProperty("上级部门名称")
 	private String parentName;
 	//排序
+	@ApiModelProperty("排序")
 	private Integer orderNum;
+	
+	//是否删除  -1：已删除  0：正常
+	@ApiModelProperty("是否删除  -1：已删除  0：正常")
+	private Integer delFlag;
 	/**
 	 * ztree属性
 	 */
@@ -97,4 +110,13 @@ public class SysDept implements Serializable {
 	public void setList(List<?> list) {
 		this.list = list;
 	}
+
+	public Integer getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
+	}
+	
 }

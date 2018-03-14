@@ -4,58 +4,71 @@ package com.king.dal.gen.model.smp;
 import java.io.Serializable;
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 菜单管理
  * @author King chen
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
+@ApiModel("菜单管理")
 public class SysMenu implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * 菜单ID
 	 */
+	@ApiModelProperty("菜单ID")
 	private Long menuId;
 
 	/**
 	 * 父菜单ID，一级菜单为0
 	 */
+	@ApiModelProperty("父菜单ID，一级菜单为0")
 	private Long parentId;
 	
 	/**
 	 * 父菜单名称
 	 */
+	@ApiModelProperty("父菜单名称")
 	private String parentName;
 
 	/**
 	 * 菜单名称
 	 */
+	@ApiModelProperty("菜单名称")
 	private String name;
 
 	/**
 	 * 菜单URL
 	 */
+	@ApiModelProperty("菜单URL")
 	private String url;
 
 	/**
 	 * 授权(多个用逗号分隔，如：user:list,user:create)
 	 */
+	@ApiModelProperty("授权(多个用逗号分隔，如：user:list,user:create)")
 	private String perms;
 
 	/**
 	 * 类型     0：目录   1：菜单   2：按钮
 	 */
+	@ApiModelProperty("类型   0：目录   1：菜单   2：按钮")
 	private Integer type;
 
 	/**
 	 * 菜单图标
 	 */
+	@ApiModelProperty("菜单图标")
 	private String icon;
 
 	/**
 	 * 排序
 	 */
+	@ApiModelProperty("排序")
 	private Integer orderNum;
 	
 	/**

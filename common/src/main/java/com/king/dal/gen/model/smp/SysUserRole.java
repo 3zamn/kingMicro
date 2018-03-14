@@ -3,12 +3,16 @@ package com.king.dal.gen.model.smp;
 
 import java.io.Serializable;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  *  用户与角色对应关系
  * @author King chen
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
+@ApiModel("用户与角色对应关系")
 public class SysUserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -17,11 +21,13 @@ public class SysUserRole implements Serializable {
 	/**
 	 * 用户ID
 	 */
+	@ApiModelProperty("用户ID")
 	private Long userId;
 
 	/**
 	 * 角色ID
 	 */
+	@ApiModelProperty("角色ID")
 	private Long roleId;
 
 	/**
