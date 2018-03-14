@@ -51,9 +51,9 @@ public class ShiroConfig {
         sessionManager.setSessionIdUrlRewritingEnabled(false);
 
         //如果开启redis缓存且king.shiro.redis=true，则shiro session存到redis里
-        if(redisOpen && shiroRedis){
+     //   if(redisOpen && shiroRedis){
             sessionManager.setSessionDAO(redisShiroSessionDAO);
-        }
+      //  }
         return sessionManager;
     }
 

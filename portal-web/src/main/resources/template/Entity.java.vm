@@ -15,11 +15,13 @@ import java.math.BigDecimal;
  * @email ${email}
  * @date ${datetime}
  */
+ @ApiModel("${comments}")
 public class ${className}Entity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 #foreach ($column in $columns)
 	//$column.comments
+	@ApiModelProperty("$column.comments")
 	private $column.attrType $column.attrname;
 #end
 

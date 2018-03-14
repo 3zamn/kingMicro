@@ -1,5 +1,6 @@
 package com.king.utils;
 
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +37,18 @@ public class RRExceptionHandler {
 		logger.error(e.getMessage(), e);
 		return JsonResponse.error("数据库中已存在该记录");
 	}
+	
+/*	@ExceptionHandler(AuthenticationException.class)
+	public JsonResponse handleAuthenticationException(AuthenticationException e){
+		logger.error(e.getMessage());
+		return JsonResponse.error(401, "token失效，请重新登录");
+	}*/
+	
 
 	@ExceptionHandler(AuthorizationException.class)
 	public JsonResponse handleAuthorizationException(AuthorizationException e){
-		logger.error(e.getMessage(), e);
-		return JsonResponse.error("没有权限，请联系管理员授权");
+		logger.error(e.getMessage());
+		return JsonResponse.error(403, "没有权限，请联系管理员授权");
 	}
 
 	@ExceptionHandler(Exception.class)

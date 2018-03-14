@@ -27,6 +27,8 @@ import com.king.dal.gen.model.smp.SysUser;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 
 /**
@@ -69,24 +71,25 @@ public class SysLoginController extends AbstractController {
 	 * 登录
 	 */
 	@Log("用户登录")
-	@ApiOperation(value = "用户登录")
+	@ApiOperation(value = "用户登录", notes = "输入用户名、验证码和密码登录")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK",response=SysUser.class,responseContainer="sysUser"),@ApiResponse(code = 405, message = "输入登录信息不正确") })
 	@PostMapping("/sys/login")
 	public Map<String, Object> login(String username, String password, String captcha)throws IOException {
 		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-		if(!captcha.equalsIgnoreCase(kaptcha)){
-			return JsonResponse.error("验证码不正确");
+		if(captcha==null || !captcha.equalsIgnoreCase(kaptcha)){
+			return JsonResponse.error(405,"验证码不正确");
 		}
 		//用户信息
 		SysUser user = sysUserService.queryByUserName(username);
-		String PW=new Sha256Hash(password, user.getSalt()).toHex();
+		String PW=user!=null?new Sha256Hash(password, user.getSalt()).toHex():null;
 		//账号不存在、密码错误
 		if(user == null || !user.getPassword().equals(PW)) {
-			return JsonResponse.error("账号或密码不正确");
+			return JsonResponse.error(405,"账号或密码不正确");
 		}
 
 		//账号锁定
 		if(user.getStatus() == 0){
-			return JsonResponse.error("账号已被锁定,请联系管理员");
+			return JsonResponse.error(405,"账号已被锁定,请联系管理员");
 		}
 
 		//生成token，并保存到数据库

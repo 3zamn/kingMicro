@@ -1,6 +1,6 @@
 package ${package}.service;
 
-import ${package}.entity.${className}Entity;
+import ${package}.dal.gen.model.${className};
 
 import java.util.List;
 import java.util.Map;
@@ -12,17 +12,17 @@ import java.util.Map;
  * @email ${email}
  * @date ${datetime}
  */
-public interface ${className}Service {
+public interface ${className}Service extends BaseService<${className}>{
 	
-	${className}Entity queryObject(${pk.attrType} ${pk.attrname});
+	${className} queryObject(${pk.attrType} ${pk.attrname});
 	
-	List<${className}Entity> queryList(Map<String, Object> map);
+	List<${className}> queryList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	
-	void save(${className}Entity ${classname});
+	void save(${className} ${classname});
 	
-	void update(${className}Entity ${classname});
+	void update(${className} ${classname});
 	
 	void delete(${pk.attrType} ${pk.attrname});
 	
