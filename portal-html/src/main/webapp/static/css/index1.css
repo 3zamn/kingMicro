@@ -65,13 +65,13 @@
 /* 头部左侧 */
 .layui-larry-menu{
 	width: auto;
-	height: 70px;
+	height: 53px;
 	position: absolute;
 	left: 245px;
-	top: 0px;
+	top: -3px;
 }
 .layui-larry-menu ul.layui-nav{
-	height: 70px;
+	height: 53px;
 	position:static;
 }
 .layui-larry-menu ul.layui-nav li.layui-nav-item{
@@ -79,14 +79,14 @@
 }
 .layui-larry-menu ul.layui-nav li.layui-nav-item a{
 	color: #F5F5F5;
-	font-size: 14px;
-	line-height: 60px;
-	padding-left: 10px;
-	padding-right: 10px;
+	font-size: 15px;
+	line-height: 57px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 .layui-larry-menu ul.layui-nav li.layui-nav-item a i{
 	padding-right: 5px;
-	line-height: 70px;
+	/* line-height: 70px; */
 }
 .layui-larry-menu ul.layui-nav .layui-this{
 	background: #2B2E37;

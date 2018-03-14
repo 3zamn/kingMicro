@@ -27,21 +27,24 @@
 				</div>
 			</div>
             <!-- 顶级菜单区域 -->
-            <!--  <div class="layui-larry-menu">
-                 <ul class="layui-nav layui-layout-left">
-				      <li class="layui-nav-item"><a href="">控制台</a></li>
-				      <li class="layui-nav-item"><a href="">商品管理</a></li>
-				      <li class="layui-nav-item"><a href="">用户</a></li>
-				      <li class="layui-nav-item">
+             <div class="layui-larry-menu">
+                 <ul class="layui-nav layui-layout-left" >
+                 <nav-item :item="item" v-for="item in menuList"></nav-item>
+                  		<!-- <li class="layui-nav-item"> --><!-- <menu-item :item="item" v-for="item in menuList"></menu-item> --></li>             	 					
+					  <!-- <li class="layui-nav-item"><a href="">系统管理</a></li>
+				      <li class="layui-nav-item"><a href="">文件云盘</a></li>
+				      <li class="layui-nav-item"><a href="">个人邮箱</a></li>
+				      <li class="layui-nav-item"><a href="">运维监控</a></li> -->
+				      <!-- <li class="layui-nav-item">
 				        <a href="javascript:;">其它系统</a>
 				        <dl class="layui-nav-child">
 				          <dd><a href="">邮件管理</a></dd>
 				          <dd><a href="">消息管理</a></dd>
 				          <dd><a href="">授权管理</a></dd>
 				        </dl>
-				      </li>
+				      </li> -->
 				   </ul>
-            </div> -->
+            </div>
             <!-- 右侧导航 -->
 				<ul class="layui-nav layui-layout-right">
 					<li class="layui-nav-item"><a href="javascript:;"> <img
@@ -74,7 +77,7 @@
         <div class="layui-side-scroll" id="larry-nav-side" lay-filter="side">
 		<!-- 左侧菜单 -->
 		<ul class="layui-nav layui-nav-tree">
-			<menu-item :item="item" v-for="item in menuList"></menu-item>
+			<menu-item :item="item"  v-for="(item, index) in menuList" :index="index"></menu-item>
 		</ul>
 	    </div>
 	</div>
@@ -146,5 +149,12 @@
 <script type="text/javascript" src="static/libs/vue.min.js"></script>
 <script type="text/javascript" src="static/js/common.js"></script>
 <script type="text/javascript" src="static/js/index1.js"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+  
+});
+</script>
 </body>
 </html>

@@ -95,10 +95,10 @@ layui.use(['jquery','layer','element'],function(){
 //生成菜单
 var menuItem = Vue.extend({
 	name: 'menu-item',
-	props:{item:{}},
+	props:{item:{},index:{}},
 	template:[
 			 /* '<li class="layui-nav-item">',*/    //收缩状态
-	          '<li class="layui-nav-item layui-nav-itemed">',   //展开状态
+	          '<li class="layui-nav-item layui-nav-itemed" v-if="index === 0">',   //展开状态
 	          '<a v-if="item.type === 0" href="javascript:;">',
 	          '<i v-if="item.icon != null" :class="item.icon"></i>',
 	          '<span>{{item.name}}</span>',
@@ -114,8 +114,22 @@ var menuItem = Vue.extend({
 	].join('')
 });
 
+//生成导航--顶级菜单
+var navItem = Vue.extend({
+	name: 'nav-item',
+	props:{item:{}},
+	template:
+	`<li class="layui-nav-item" >
+		<a v-if="item.type === 0" href="javascript:;" style="height: 58px;font-size: 15px;">
+			<i v-if="item.icon != null" :class="item.icon"></i>
+			<span style="font-size: 15px;">{{item.name}}</span>
+		</a>
+	</li>`
+});
+
 //注册菜单组件
 Vue.component('menuItem',menuItem);
+Vue.component('navItem',navItem);
 
 var vm = new Vue({
 	el:'#layui_layout',
