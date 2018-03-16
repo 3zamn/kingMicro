@@ -91,14 +91,17 @@ layui.use(['jquery','layer','element'],function(){
 });
 
 
-
+var eventBus = new Vue({})
 //生成菜单
 var menuItem = Vue.extend({
 	name: 'menu-item',
-	props:{item:{},index:{}},
+	props:{item:{},index:{},menuId:{default :0}},
+	mounted: function() {
+		eventBus.menuId=this.index
+    },
 	template:[
 			 /* '<li class="layui-nav-item">',*/    //收缩状态
-	          '<li class="layui-nav-item layui-nav-itemed" v-if="index === 0">',   //展开状态
+	          '<li class="layui-nav-item layui-nav-itemed" v-if="index === menuId">',   //展开状态
 	          '<a v-if="item.type === 0" href="javascript:;">',
 	          '<i v-if="item.icon != null" :class="item.icon"></i>',
 	          '<span>{{item.name}}</span>',
@@ -114,13 +117,27 @@ var menuItem = Vue.extend({
 	].join('')
 });
 
+
 //生成导航--顶级菜单
 var navItem = Vue.extend({
 	name: 'nav-item',
-	props:{item:{}},
+	props:{item:{},index:{}},
+	methods: {
+		change: function(index) {
+            // 触发事件
+			debugger
+            eventBus.$emit('change')    
+            eventBus.index=index
+        }
+    },
+  /*  mounted: function() {
+        eventBus.$on('addFoo', function(num) {
+            this.fooCount +=num
+        }.bind(this)) 
+    },*/
 	template:
 	`<li class="layui-nav-item" >
-		<a v-if="item.type === 0" href="javascript:;" style="height: 58px;font-size: 15px;">
+		<a v-if="item.type === 0" href="javascript:;" @click="change(index)" style="height: 58px;font-size: 15px;">
 			<i v-if="item.icon != null" :class="item.icon"></i>
 			<span style="font-size: 15px;">{{item.name}}</span>
 		</a>

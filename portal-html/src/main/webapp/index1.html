@@ -29,7 +29,7 @@
             <!-- 顶级菜单区域 -->
              <div class="layui-larry-menu">
                  <ul class="layui-nav layui-layout-left" >
-                 <nav-item :item="item" v-for="item in menuList"></nav-item>
+                 <nav-item :item="item" v-for="(item, index) in menuList"  :index="index"></nav-item>
                   		<!-- <li class="layui-nav-item"> --><!-- <menu-item :item="item" v-for="item in menuList"></menu-item> --></li>             	 					
 					  <!-- <li class="layui-nav-item"><a href="">系统管理</a></li>
 				      <li class="layui-nav-item"><a href="">文件云盘</a></li>
