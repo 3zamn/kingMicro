@@ -101,3 +101,5 @@ app端：API模块用swt的token做安全校验
 八：优化token过期、提高用户体验。选用类session会话状态机制（每次请求刷新token过期时间。token放redis缓存中）
 
 九：添加docker支持
+
+![image](https://github.com/3zamn/kingMicro/blob/master/20180319110604.jpg)
