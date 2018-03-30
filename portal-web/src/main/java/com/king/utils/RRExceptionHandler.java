@@ -1,13 +1,16 @@
 package com.king.utils;
 
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.king.common.exception.RRException;
 import com.king.common.utils.JsonResponse;
 
@@ -38,12 +41,6 @@ public class RRExceptionHandler {
 		return JsonResponse.error("数据库中已存在该记录");
 	}
 	
-/*	@ExceptionHandler(AuthenticationException.class)
-	public JsonResponse handleAuthenticationException(AuthenticationException e){
-		logger.error(e.getMessage());
-		return JsonResponse.error(401, "token失效，请重新登录");
-	}*/
-	
 
 	@ExceptionHandler(AuthorizationException.class)
 	public JsonResponse handleAuthorizationException(AuthorizationException e){
@@ -53,7 +50,30 @@ public class RRExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public JsonResponse handleException(Exception e){
-		logger.error(e.getMessage(), e);
-		return JsonResponse.error();
+		if(e instanceof RuntimeException){
+			logger.error("数据库中已存在该记录");
+		}else{
+			logger.error("错误提示 "+"："+(e instanceof MethodArgumentTypeMismatchException? getException((MethodArgumentTypeMismatchException)e):e.getMessage()),e);
+		}
+		if(e.getMessage().contains("DuplicateKeyException")){
+			return JsonResponse.error("数据库中已存在该记录");
+		}
+		return JsonResponse.error("【服务调用内部错误】--"+e.getMessage());
+	}
+	
+	
+	/**
+	 * 参数类型错误
+	 * @param e
+	 * @return
+	 */
+	public JSONObject getException(MethodArgumentTypeMismatchException e){
+	
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("className",e.getParameter().getContainingClass());
+		jsonObject.put("method", e.getParameter().getContainingClass()+"."+e.getParameter().getMethod().getName()+"("+e.getParameter().getParameterType()+")");
+		jsonObject.put("cause", e.getName()+"："+e.getMessage());
+		return jsonObject;
+		
 	}
 }
