@@ -26,4 +26,8 @@ public class RedisKeys {
     public static String getKaptchaKey(String key){
         return "kaptcha:" + key;
     }
+    
+    public static String getSerialNoKey(String key){
+        return "serialNo:" + key;
+    }
 }

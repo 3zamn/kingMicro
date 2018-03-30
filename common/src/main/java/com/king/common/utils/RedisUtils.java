@@ -2,6 +2,7 @@ package com.king.common.utils;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @author King chen
  * @date 2017年12月25日
  */
+@Order(2)
 @Component
 public class RedisUtils {
     @SuppressWarnings("rawtypes")
