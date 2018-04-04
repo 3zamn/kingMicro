@@ -1,6 +1,5 @@
 package com.king.rest.smp;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.ScheduleJobService;
 import com.king.common.utils.JsonResponse;
-import com.king.common.utils.PageUtils;
+import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 
@@ -42,13 +41,9 @@ public class ScheduleJobLogController {
 	@RequiresPermissions("sys:schedule:log")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-		Query query = new Query(params);
-		List<ScheduleJobLog> jobList = scheduleJobService.queryScheduleJobLogList(query);
-		int total = scheduleJobService.queryScheduleJobLogTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(jobList, total, query.getLimit(), query.getPage());
-		
-		return JsonResponse.success().put("page", pageUtil);
+		Query query = new Query(params,ScheduleJobLog.class.getSimpleName());	
+		Page page = scheduleJobService.getPageScheduleJobLog(query);
+		return JsonResponse.success().put("page", page);
 	}
 	
 	/**

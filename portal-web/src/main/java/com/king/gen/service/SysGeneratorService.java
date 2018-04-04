@@ -3,6 +3,8 @@ package com.king.gen.service;
 import java.util.List;
 import java.util.Map;
 
+import com.king.common.utils.Page;
+
 
 /**
  * 代码生成器
@@ -24,4 +26,9 @@ public interface SysGeneratorService {
 	 * 生成代码
 	 */
 	byte[] generatorCode(String[] tableNames);
+	
+	/**
+	 * 分页查询列表
+	 */
+	public Page getPage(Map<String, Object> map); 
 }

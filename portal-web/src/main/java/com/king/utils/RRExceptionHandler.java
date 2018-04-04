@@ -50,15 +50,18 @@ public class RRExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public JsonResponse handleException(Exception e){
-		if(e instanceof RuntimeException){
-			logger.error("数据库中已存在该记录");
-		}else{
-			logger.error("错误提示 "+"："+(e instanceof MethodArgumentTypeMismatchException? getException((MethodArgumentTypeMismatchException)e):e.getMessage()),e);
+		String RRException=null;
+		if(e.getMessage() !=null){
+			if(e.getMessage().contains("DuplicateKeyException")){
+				logger.error("数据库中已存在该记录");
+				return JsonResponse.error("数据库中已存在该记录");
+			}	
+			if(e.getMessage().contains("RRException")){
+				RRException =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
+			}		
 		}
-		if(e.getMessage().contains("DuplicateKeyException")){
-			return JsonResponse.error("数据库中已存在该记录");
-		}
-		return JsonResponse.error("【服务调用内部错误】--"+e.getMessage());
+		logger.error("错误提示 "+"："+(e instanceof MethodArgumentTypeMismatchException? getException((MethodArgumentTypeMismatchException)e):""),e);
+		return JsonResponse.error(RRException!=null?RRException:"【服务调用内部错误】--"+e.getMessage());
 	}
 	
 	

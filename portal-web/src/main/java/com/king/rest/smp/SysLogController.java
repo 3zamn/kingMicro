@@ -1,7 +1,6 @@
 package com.king.rest.smp;
 
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.king.api.smp.SysLogService;
-import com.king.common.utils.PageUtils;
-import com.king.common.utils.Query;
 import com.king.common.utils.JsonResponse;
+import com.king.common.utils.Page;
+import com.king.common.utils.Query;
 import com.king.dal.gen.model.smp.SysLog;
 
 import io.swagger.annotations.Api;
@@ -44,12 +43,8 @@ public class SysLogController {
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params,SysLog.class.getSimpleName());
-		List<SysLog> sysLogList = sysLogService.queryList(query);
-		int total = sysLogService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(sysLogList, total, query.getLimit(), query.getPage());
-		
-		return JsonResponse.success().put("page", pageUtil);
+		Page page = sysLogService.getPage(query);	
+		return JsonResponse.success().put("page", page);
 	}
 	
 }

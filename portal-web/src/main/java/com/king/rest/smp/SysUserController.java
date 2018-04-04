@@ -20,7 +20,7 @@ import com.king.api.smp.SysRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
-import com.king.common.utils.PageUtils;
+import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.common.validator.Assert;
 import com.king.common.validator.ValidatorUtils;
@@ -56,14 +56,9 @@ public class SysUserController extends AbstractController {
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params,SysUser.class.getSimpleName());
-	/*	GenericService barService = (GenericService) SpringContextUtils.getBean("testService");
-		Object result = barService.$invoke("queryList", new String[] { "java.util.Map" }, new Object[] {query});*/
-		List<SysUser> userList = sysUserService.queryList(query);
-		int total = sysUserService.queryTotal(query);
+		Page page = sysUserService.getPage(query);
 		
-		PageUtils pageUtil = new PageUtils(userList, total, query.getLimit(), query.getPage());
-		
-		return JsonResponse.success().put("page", pageUtil);
+		return JsonResponse.success().put("page", page);
 	}
 	
 	/**

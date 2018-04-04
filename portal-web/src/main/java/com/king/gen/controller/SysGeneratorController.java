@@ -1,7 +1,6 @@
 package com.king.gen.controller;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.king.common.utils.JsonResponse;
-import com.king.common.utils.PageUtils;
+import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.gen.service.SysGeneratorService;
 import com.king.utils.XssHttpServletRequestWrapper;
@@ -43,12 +42,8 @@ public class SysGeneratorController {
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
 		Query query = new Query(params);
-		List<Map<String, Object>> list = sysGeneratorService.queryList(query);
-		int total = sysGeneratorService.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(list, total, query.getLimit(), query.getPage());
-		
-		return JsonResponse.success().put("page", pageUtil);
+		Page page = sysGeneratorService.getPage(query);
+		return JsonResponse.success().put("page", page);
 	}
 	
 	/**

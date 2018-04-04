@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import ${package}.common.utils.Page;
 import ${package}.dal.gen.model.${className};
 import ${package}.api.smp.${className}Service;
-import ${package}.common.utils.PageUtils;
 import ${package}.common.utils.Query;
 import ${package}.common.utils.JsonResponse;
 
@@ -42,12 +41,11 @@ public class ${className}Controller {
 		//查询列表数据
         Query query = new Query(params,${className}.class.getSimpleName());
 
-		List<${className}> ${classname}List = ${classname}Service.queryList(query);
-		int total = ${classname}Service.queryTotal(query);
-		
-		PageUtils pageUtil = new PageUtils(${classname}List, total, query.getLimit(), query.getPage());
-		
-		return JsonResponse.success().put("page", pageUtil);
+	//	List<${className}> ${classname}List = ${classname}Service.queryList(query);
+	//	int total = ${classname}Service.queryTotal(query);	
+	//	PageUtils pageUtil = new PageUtils(${classname}List, total, query.getLimit(), query.getPage());
+		Page page = ${classname}List.getPage(query);
+		return JsonResponse.success().put("page", page);
 	}
 	
 	

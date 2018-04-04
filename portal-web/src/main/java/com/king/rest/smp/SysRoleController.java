@@ -20,7 +20,7 @@ import com.king.api.smp.SysRoleService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.Constant;
 import com.king.common.utils.JsonResponse;
-import com.king.common.utils.PageUtils;
+import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.common.validator.ValidatorUtils;
 import com.king.dal.gen.model.smp.SysRole;
@@ -57,13 +57,10 @@ public class SysRoleController extends AbstractController {
 		}
 		
 		//查询列表数据
-		Query query = new Query(params);
-		List<SysRole> list = sysRoleService.queryList(query);
-		int total = sysRoleService.queryTotal(query);
+		Query query = new Query(params,SysRole.class.getSimpleName());
+		Page page = sysRoleService.getPage(query);
 		
-		PageUtils pageUtil = new PageUtils(list, total, query.getLimit(), query.getPage());
-		
-		return JsonResponse.success().put("page", pageUtil);
+		return JsonResponse.success().put("page", page);
 	}
 	
 	/**

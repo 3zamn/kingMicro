@@ -9,7 +9,9 @@ import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.king.common.utils.Page;
 import com.king.gen.dao.SysGeneratorDao;
 import com.king.gen.service.SysGeneratorService;
 import com.king.gen.utils.GenUtils;
@@ -54,6 +56,14 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 		}
 		IOUtils.closeQuietly(zip);
 		return outputStream.toByteArray();
+	}
+
+	@Transactional(readOnly = true)
+	public Page getPage(Map<String, Object> map) {
+		List<Map<String, Object>> list =sysGeneratorDao.queryList(map);
+		int totalCount =sysGeneratorDao.queryTotal(map);
+		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		return page;
 	}
 
 }
