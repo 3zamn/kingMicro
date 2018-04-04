@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.king.api.smp.SysLogService;
 import com.king.dal.gen.model.smp.SysLog;
+import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysLogDao;
 
 
 
 @Service("sysLogService")
-public class SysLogServiceImpl implements SysLogService {
+public class SysLogServiceImpl extends BaseServiceImpl<SysLog> implements SysLogService {
 	@Autowired
 	private SysLogDao sysLogDao;
 	

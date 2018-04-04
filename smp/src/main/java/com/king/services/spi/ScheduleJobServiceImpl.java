@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ScheduleJobService;
 import com.king.common.utils.Constant;
+import com.king.common.utils.Page;
 import com.king.dal.gen.model.smp.ScheduleJob;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 import com.king.dal.gen.service.BaseServiceImpl;
@@ -134,6 +135,14 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 	public void save(ScheduleJobLog log) {
 		// TODO Auto-generated method stub
 		scheduleJobLogDao.save(log);
+	}
+	
+	@Transactional(readOnly = true)
+	public Page getPageScheduleJobLog(Map<String, Object> map) {
+		List<ScheduleJobLog> list =scheduleJobLogDao.queryList(map);
+		int totalCount =scheduleJobLogDao.queryTotal(map);
+		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		return page;
 	}
     
 }

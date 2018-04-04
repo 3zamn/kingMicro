@@ -13,10 +13,11 @@ import com.king.api.smp.SysConfigService;
 import com.king.common.exception.RRException;
 import com.king.common.utils.SysConfigRedis;
 import com.king.dal.gen.model.smp.SysConfig;
+import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysConfigDao;
 
 @Service("sysConfigService")
-public class SysConfigServiceImpl implements SysConfigService {
+public class SysConfigServiceImpl extends BaseServiceImpl<SysConfig> implements SysConfigService {
 	@Autowired
 	private SysConfigDao sysConfigDao;
 	@Autowired
