@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.king.dal.gen.model.smp.SysLog;
+import com.king.dal.gen.service.BaseService;
 
 
 /**
@@ -13,7 +14,7 @@ import com.king.dal.gen.model.smp.SysLog;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public interface SysLogService {
+public interface SysLogService extends BaseService<SysLog>{
 	
 	SysLog queryObject(Long id);
 	

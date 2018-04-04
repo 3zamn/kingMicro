@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.king.dal.gen.model.smp.SysConfig;
+import com.king.dal.gen.service.BaseService;
 
 /**
  * 系统配置信息
@@ -10,7 +11,7 @@ import com.king.dal.gen.model.smp.SysConfig;
  * @email 396885563@qq.com
  * @date 2017年12月29日
  */
-public interface SysConfigService {
+public interface SysConfigService extends BaseService<SysConfig>{
 	
 	/**
 	 * 保存配置信息

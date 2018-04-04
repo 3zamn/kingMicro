@@ -3,6 +3,7 @@ package com.king.api.smp;
 import java.util.List;
 import java.util.Map;
 
+import com.king.common.utils.Page;
 import com.king.dal.gen.model.smp.ScheduleJob;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 import com.king.dal.gen.service.BaseService;
@@ -15,27 +16,6 @@ import com.king.dal.gen.service.BaseService;
  */
 public interface ScheduleJobService extends BaseService<ScheduleJob>{
 
-	
-	/**
-	 * 根据ID，查询定时任务日志
-	 *//*
-	ScheduleJobLog queryObject(Long jobId);
-	
-	*//**
-	 * 查询定时任务日志列表
-	 *//*
-	List<ScheduleJobLog> queryList(Map<String, Object> map);
-	
-	*//**
-	 * 查询总数
-	 *//*
-	int queryTotal(Map<String, Object> map);
-	
-	*//**
-	 * 保存定时任务日志
-	 *//*
-	void save(ScheduleJobLog log);*/
-	
 	/**
 	 * 根据ID，查询定时任务日志
 	 */
@@ -90,4 +70,9 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
 	 * 恢复运行
 	 */
 	void resume(Long[] jobIds);
+	
+	/**
+	 * 分页查询列表
+	 */
+	public Page getPageScheduleJobLog(Map<String, Object> map); 
 }
