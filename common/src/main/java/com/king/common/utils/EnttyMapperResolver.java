@@ -17,7 +17,7 @@ public  class EnttyMapperResolver {
 	 @Autowired
 	    private  RedisUtils redisUtils;
 	/**
-	 * 根据实体、熟悉获取字段
+	 * 根据实体、属性获取字段
 	 * @param enttyName
 	 * @param attribute
 	 * @return

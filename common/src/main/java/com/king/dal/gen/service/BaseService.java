@@ -3,6 +3,8 @@ package com.king.dal.gen.service;
 import java.util.List;
 import java.util.Map;
 
+import com.king.common.utils.Page;
+
 /**
  * service基础接口
  * @author King chen
@@ -52,5 +54,10 @@ public interface BaseService<T> {
 	 * 参数条件查询列表
 	 */
 	public  List<T> queryList(Map<String, Object> map);
+	
+	/**
+	 * 分页查询列表
+	 */
+	public Page getPage(Map<String, Object> map); 
 
 }

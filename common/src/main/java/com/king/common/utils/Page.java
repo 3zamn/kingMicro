@@ -8,7 +8,7 @@ import java.util.List;
  * @author King chen
  * @date 2017年12月25日
  */
-public class PageUtils implements Serializable {
+public class Page implements Serializable {
 	private static final long serialVersionUID = 1L;
 	//总记录数
 	private int totalCount;
@@ -28,7 +28,7 @@ public class PageUtils implements Serializable {
 	 * @param pageSize    每页记录数
 	 * @param currPage    当前页数
 	 */
-	public PageUtils(List<?> list, int totalCount, int pageSize, int currPage) {
+	public Page(List<?> list, int totalCount, int pageSize, int currPage) {
 		this.list = list;
 		this.totalCount = totalCount;
 		this.pageSize = pageSize;

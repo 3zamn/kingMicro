@@ -1,12 +1,8 @@
 package com.king.common.aspect;
 
-import java.util.UUID;
-
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import com.king.common.exception.RRException;
 import com.king.common.utils.RedisKeys;
 import com.king.common.utils.RedisUtils;
 import com.king.common.utils.SerialNoHolder;
-import com.king.common.utils.ShiroUtils;
 
 /**
  * 异常处理切面
@@ -42,16 +37,13 @@ public class ExceptionAspect {
             	
             	String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
             	Object appcode= redisUtils.hget(serialNoKey, "appcode");
-
-          //  	System.out.println("appcode:"+appcode+";serialNo:"+serialNoKey+"method:"+point.getSignature());
                 result = point.proceed();
             }catch (Exception e){
             	String serialNo= SerialNoHolder.serialNo.get();           	
             	String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
             	Object appcode= redisUtils.hget(serialNoKey, "appcode");
-                logger.error("服务异常:"+appcode+"方法："+"method:"+point.getSignature());
-          //      e.printStackTrace();
-                throw new RRException("服务异常"+appcode+"ff"+point.getSignature());
+                logger.error(String.format("错误流水号【%s】", serialNo)+String.format("服务【%s】", appcode)+String.format("方法【%s】异常！", point.getSignature()));
+                throw new RRException(String.format("服务调用时【%s】发生未知错误，错误流水号【%s】，请联系管理员", appcode,serialNo),500,e);
             }
 
         return result;

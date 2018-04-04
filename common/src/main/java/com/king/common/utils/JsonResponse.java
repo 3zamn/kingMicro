@@ -29,16 +29,31 @@ public class JsonResponse extends HashMap<String, Object> {
 		r.put("msg", msg);
 		return r;
 	}
+	
+	public static JsonResponse error(int code, String msg,Object data) {
+		JsonResponse r = new JsonResponse();
+		r.put("code", code);
+		r.put("msg", msg);
+		r.put("data", data);
+		return r;
+	}
 
-	public static JsonResponse success(String msg) {
+/*	public static JsonResponse success(String msg) {
 		JsonResponse r = new JsonResponse();
 		r.put("msg", msg);
+		return r;
+	}*/
+	
+	public static JsonResponse success(String msg,Object data) {
+		JsonResponse r = new JsonResponse();
+		r.put("msg", msg);
+		r.put("data", data);
 		return r;
 	}
 	
 	public static JsonResponse success(Map<String, Object> map) {
 		JsonResponse r = new JsonResponse();
-		r.putAll(map);
+		r.put("data", map);
 		return r;
 	}
 	
@@ -47,9 +62,21 @@ public class JsonResponse extends HashMap<String, Object> {
 		r.put("msg", "success");
 		return r;
 	}
+	
+	public static JsonResponse success(Object data) {
+		JsonResponse r = new JsonResponse();
+		r.put("msg", "success");
+		r.put("data", data);
+		return r;
+	}
 
 	public JsonResponse put(String key, Object value) {
 		super.put(key, value);
+		return this;
+	}
+	
+	public JsonResponse putPage(Object page, Object... value) {
+		super.put("page", page);
 		return this;
 	}
 }

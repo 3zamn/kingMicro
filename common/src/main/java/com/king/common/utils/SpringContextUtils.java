@@ -16,8 +16,7 @@ import com.sun.org.apache.regexp.internal.recompile;
 @Component
 public class SpringContextUtils implements ApplicationContextAware {
 	public static ApplicationContext applicationContext; 
-//	@Value("${king.redis.open}") 
-//	private Boolean redisOpen;
+
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)
 			throws BeansException {

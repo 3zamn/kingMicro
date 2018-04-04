@@ -2,10 +2,10 @@ package com.king.common.aspect;
 
 import java.util.UUID;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -18,7 +18,6 @@ import com.king.common.exception.RRException;
 import com.king.common.utils.RedisKeys;
 import com.king.common.utils.RedisUtils;
 import com.king.common.utils.SerialNoHolder;
-import com.king.common.utils.ShiroUtils;
 
 /**
  * 服务类参数切面
@@ -31,6 +30,7 @@ import com.king.common.utils.ShiroUtils;
 @Order(2)
 @Component
 public class SerialNoGeneratorAspect {
+	private static Configuration configs ;
 	 private Logger logger = LoggerFactory.getLogger(getClass());
 	    @Autowired
 	    private RedisUtils redisUtils;
@@ -44,16 +44,21 @@ public class SerialNoGeneratorAspect {
 	            		serialNo =UUID.randomUUID().toString();
 	            		 SerialNoHolder.serialNo.set(serialNo);
 	            		 String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
-	                 	redisUtils.hset(serialNoKey, "appcode", "smp",50);
-	              //   	redisUtils.hset(serialNoKey, "usercode", ShiroUtils.getUserId(), 5000);
-	             //    	System.out.println(";serialNo:"+serialNoKey+"method:"+point.getSignature());
-	            	}
-	            	
-
+	                 	redisUtils.hset(serialNoKey, "appcode", configs!=null?configs.getString("hostname"):null,50);
+	            	}	         
 	            }catch (Exception e){
 	                logger.error("服务异常");
 	                throw new RRException("服务异常");
 	            }
-
+	    }
+	    
+	    
+	    static{
+	    	try {
+				configs = new PropertiesConfiguration("settings.properties");
+			} catch (ConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 }

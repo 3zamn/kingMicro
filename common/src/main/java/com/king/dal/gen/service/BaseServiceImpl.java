@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.king.common.utils.Page;
 import com.king.dal.gen.dao.BaseDao;
 
 /**
@@ -69,4 +70,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return list;
 	}
 	
+	@Transactional(readOnly = true)
+	public Page getPage(Map<String, Object> map) {
+		List<T> list =getBaseDao().queryList(map);
+		int totalCount =getBaseDao().queryTotal(map);
+		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		return page;
+	}
 }
