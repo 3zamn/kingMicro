@@ -3,6 +3,7 @@ package com.king.services.spi;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ShiroService;
 import com.king.common.utils.Constant;
@@ -24,7 +25,7 @@ public class ShiroServiceImpl implements ShiroService {
     @Autowired
     private SysUserTokenDao sysUserTokenDao;
 
-    @Override
+    @Transactional(readOnly = true)
     public Set<String> getUserPermissions(long userId) {
         List<String> permsList;
 
@@ -49,12 +50,12 @@ public class ShiroServiceImpl implements ShiroService {
         return permsSet;
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public SysUserToken queryByToken(String token) {
         return sysUserTokenDao.queryByToken(token);
     }
 
-    @Override
+    @Transactional(readOnly = true)
     public SysUser queryUser(Long userId) {
         return sysUserDao.queryObject(userId);
     }

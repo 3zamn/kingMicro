@@ -27,17 +27,20 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	private SysRoleDeptDao sysRoleDeptDao;
 	
 	@Override
+	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "d", user = false)
 	public List<SysDept> queryList(Map<String, Object> map){
 		return sysDeptDao.queryList(map);
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<Long> queryDetpIdList(Long parentId) {
 		return sysDeptDao.queryDetpIdList(parentId);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public String getSubDeptIdList(Long deptId){
 		//部门及子部门ID列表
 		List<Long> deptIdList = new ArrayList<>();
@@ -56,6 +59,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	/**
 	 * 递归
 	 */
+	@Transactional(readOnly = true)
 	private void getDeptTreeList(List<Long> subIdList, List<Long> deptIdList){
 		for(Long deptId : subIdList){
 			List<Long> list = queryDetpIdList(deptId);
@@ -85,6 +89,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Long> queryDeptIdList(Long roleId) {
 		return sysRoleDeptDao.queryDeptIdList(roleId);
 	}

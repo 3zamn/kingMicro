@@ -113,19 +113,19 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
     	updateBatch(jobIds, Constant.ScheduleStatus.NORMAL.getValue());
     }
 
-	@Override
+	@Transactional(readOnly = true)
 	public ScheduleJobLog queryScheduleJobLog(Long jobId) {
 		// TODO Auto-generated method stub
 		return scheduleJobLogDao.queryObject(jobId);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<ScheduleJobLog> queryScheduleJobLogList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return scheduleJobLogDao.queryList(map);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public int queryScheduleJobLogTotal(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return scheduleJobLogDao.queryTotal();

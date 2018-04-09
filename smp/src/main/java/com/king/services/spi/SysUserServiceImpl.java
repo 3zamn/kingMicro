@@ -47,28 +47,29 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	@Autowired
 	private SysRoleService sysRoleService;
 
-	@Override
+	
+	@Transactional(readOnly = true)
 	public List<String> queryAllPerms(Long userId) {
 		return sysUserDao.queryAllPerms(userId);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<Long> queryAllMenuId(Long userId) {
 		return sysUserDao.queryAllMenuId(userId);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public SysUser queryByUserName(String username) {
 		return sysUserDao.queryByUserName(username);
 	}
 	
-	@Override
+	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "u", user = false)
 	public List<SysUser> queryList(Map<String, Object> map){
 		return sysUserDao.queryList(map);
 	}
 	
-	@Override
+	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "u", user = false)
 	public int queryTotal(Map<String, Object> map) {
 		return sysUserDao.queryTotal(map);

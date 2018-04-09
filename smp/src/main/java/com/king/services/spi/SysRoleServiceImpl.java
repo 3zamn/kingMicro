@@ -40,20 +40,19 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	private SysUserRoleDao sysUserRoleDao;
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@Override
+	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "r", user = false)
 	public List<SysRole> queryList(Map<String, Object> map) {
 		return sysRoleDao.queryList(map);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "r", user = false)
 	public int queryTotal(Map<String, Object> map) {
 		return sysRoleDao.queryTotal(map);
 	}
 
 	@Override
-	
 	public void save(SysRole role) {
 		role.setCreateTime(new Date());
 		sysRoleDao.save(role);
@@ -98,7 +97,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 		
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<Long> queryRoleIdList(Long userId) {
 		return sysUserRoleDao.queryRoleIdList(userId);
 	}

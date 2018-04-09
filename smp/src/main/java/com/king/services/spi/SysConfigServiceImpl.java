@@ -1,8 +1,5 @@
 package com.king.services.spi;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,29 +43,15 @@ public class SysConfigServiceImpl extends BaseServiceImpl<SysConfig> implements 
 
 	@Override
 	@Transactional
-	public void deleteBatch(Long[] ids) {
-		for(Long id : ids){
-			SysConfig config = queryObject(id);
+	public void deleteBatch(Object[] ids) {
+		for(Object id : ids){
+			SysConfig config = queryObject((Long)id);
 			sysConfigRedis.delete(config.getKey());
 		}
 
 		sysConfigDao.deleteBatch(ids);
 	}
 
-	@Override
-	public List<SysConfig> queryList(Map<String, Object> map) {
-		return sysConfigDao.queryList(map);
-	}
-
-	@Override
-	public int queryTotal(Map<String, Object> map) {
-		return sysConfigDao.queryTotal(map);
-	}
-
-	@Override
-	public SysConfig queryObject(Long id) {
-		return sysConfigDao.queryObject(id);
-	}
 
 	@Override
 	public String getValue(String key) {

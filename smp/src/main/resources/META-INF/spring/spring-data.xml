@@ -26,13 +26,13 @@
 		</property>
 	</bean>
 
-	<!-- druid数据源配置 -->
-	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<property name="name" value="${hostname}" />
-		<property name="url" value="${smp.jdbc.jdbcUrl}" />
+	<!-- 读库 -->
+	<bean name="readDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="name" value="${salve.hostname}" />
+		<property name="url" value="${smp.jdbc.salve.jdbcUrl}" />
 		<property name="driverClassName" value="${smp.jdbc.driverClass}" />
-		<property name="username" value="${smp.jdbc.user}" />
-		<property name="password" value="${smp.jdbc.password}" />
+		<property name="username" value="${smp.jdbc.salve.user}" />
+		<property name="password" value="${smp.jdbc.salve.password}" />
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="${smp.druid.initialSize}" />
 		<!-- 连接池最小空闲 -->
@@ -41,8 +41,9 @@
 		<property name="maxActive" value="${smp.druid.maxActive}" />
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${smp.druid.maxWait}" />
-		<!-- <property name="poolPreparedStatements" value="true" /> <property 
-			name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
+		<property name="poolPreparedStatements" value="true" /> <property 
+			name="maxPoolPreparedStatementPerConnectionSize" value="100" />
+		<property name="defaultReadOnly" value="true" />
 		<property name="validationQuery" value="SELECT 1" />
 		<property name="testOnBorrow" value="false" />
 		<property name="testOnReturn" value="false" />
@@ -69,7 +70,69 @@
 			</props>
 		</property>
 	</bean>
+	
+	<!-- 	写库 -->
+	<bean name="writeDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="name" value="${master.hostname}" />
+		<property name="url" value="${smp.jdbc.master.jdbcUrl}" />
+		<property name="driverClassName" value="${smp.jdbc.driverClass}" />
+		<property name="username" value="${smp.jdbc.master.user}" />
+		<property name="password" value="${smp.jdbc.master.password}" />
+		<!-- 初始化连接大小 -->
+		<property name="initialSize" value="${smp.druid.initialSize}" />
+		<!-- 连接池最小空闲 -->
+		<property name="minIdle" value="${smp.druid.minIdle}" />
+		<!-- 连接池最大使用连接数量 -->
+		<property name="maxActive" value="${smp.druid.maxActive}" />
+		<!-- 获取连接最大等待时间 -->
+		<property name="maxWait" value="${smp.druid.maxWait}" />
+		<property name="poolPreparedStatements" value="true" /> <property 
+			name="maxPoolPreparedStatementPerConnectionSize" value="100" />
+		<property name="defaultReadOnly" value="false" />
+		<property name="validationQuery" value="SELECT 1" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="testWhileIdle" value="true" />
 
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="25200000" />
+
+		<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandoned" value="true" />
+		<!-- 180秒，也就是3分钟 -->
+		<property name="removeAbandonedTimeout" value="180" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="true" />
+		<!-- 开启Druid的监控统计功能 -->
+		<property name="filters" value="stat" />
+		<!--<property name="filters" value="mergeStat" /> -->
+		<!-- Oracle连接是获取字段注释 -->
+		<property name="connectProperties">
+			<props>
+				<prop key="remarksReporting">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- druid数据源配置 -->
+	<bean id="dataSource" class="com.king.common.aspect.ChooseDataSource" lazy-init="true">
+		<description>数据源</description>
+		<property name="targetDataSources">
+			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
+				<!-- write -->
+				<entry key="write" value-ref="writeDataSource" />
+				<!-- read -->
+				<entry key="read" value-ref="readDataSource" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="writeDataSource" />
+	</bean>
+	
+	<bean class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
 	<!-- 事务配置 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

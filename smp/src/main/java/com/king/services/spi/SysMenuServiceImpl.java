@@ -29,7 +29,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	@Autowired
 	private SysRoleMenuDao sysRoleMenuDao;
 	
-	@Override
+	@Transactional(readOnly = true)
 	public List<SysMenu> queryListParentId(Long parentId, List<Long> menuIdList) {
 		List<SysMenu> menuList = queryListParentId(parentId);
 		if(menuIdList == null){
@@ -45,16 +45,17 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 		return userMenuList;
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<SysMenu> queryListParentId(Long parentId) {
 		return sysMenuDao.queryListParentId(parentId);
 	}
 
+	@Transactional(readOnly = true)
 	public List<SysMenu> queryNotButtonList() {
 		return sysMenuDao.queryNotButtonList();
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<SysMenu> getUserMenuList(Long userId) {
 		//系统管理员，拥有最高权限
 		if(userId == Constant.SUPER_ADMIN){
@@ -66,7 +67,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 		return getAllMenuList(menuIdList);
 	}
 	
-	@Override
+	@Transactional(readOnly = true)
 	public List<SysMenu> queryUserList(Long userId) {
 		return sysMenuDao.queryUserList(userId);
 	}
@@ -74,6 +75,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	/**
 	 * 获取所有菜单列表
 	 */
+	@Transactional(readOnly = true)
 	private List<SysMenu> getAllMenuList(List<Long> menuIdList){
 		//查询根菜单列表
 		List<SysMenu> menuList = queryListParentId(0L, menuIdList);
@@ -86,6 +88,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	/**
 	 * 递归
 	 */
+	@Transactional(readOnly = true)
 	private List<SysMenu> getMenuTreeList(List<SysMenu> menuList, List<Long> menuIdList){
 		List<SysMenu> subMenuList = new ArrayList<SysMenu>();
 		
@@ -114,7 +117,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 		sysRoleMenuDao.save(map);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<Long> queryMenuIdList(Long roleId) {
 		return sysRoleMenuDao.queryMenuIdList(roleId);
 	}
