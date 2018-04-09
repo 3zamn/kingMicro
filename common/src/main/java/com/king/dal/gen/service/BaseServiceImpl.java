@@ -19,13 +19,13 @@ import com.king.dal.gen.dao.BaseDao;
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	@Autowired 
-	protected BaseDao<T> baseDao;
+	public BaseDao<T> baseDao;
 	
 	/**
 	 * getBaseDao()的默认实现,子类可覆盖此方法
 	 * @return
 	 */
-	protected BaseDao<T> getBaseDao() {
+	public BaseDao<T> getBaseDao() {
 		return baseDao;
 	}
 	
@@ -49,22 +49,23 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		
 	}
 
-
+	@Transactional(readOnly = true)
 	public int queryTotal(Map<String, Object> map) {	
 		return getBaseDao().queryTotal(map);
 	}
 	
+	@Transactional(readOnly = true)
 	public int queryTotal() {	
 		return getBaseDao().queryTotal();
 	}
 
-
+	@Transactional(readOnly = true)
 	public T queryObject(Long id) {
 		T obj=getBaseDao().queryObject(id);
 		return obj;
 	}
 
-
+	@Transactional(readOnly = true)
 	public List<T> queryList(Map<String, Object> map) {
 		List<T> list =getBaseDao().queryList(map);
 		return list;

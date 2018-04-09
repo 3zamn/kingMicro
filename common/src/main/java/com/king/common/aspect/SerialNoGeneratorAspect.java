@@ -6,6 +6,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class SerialNoGeneratorAspect {
 	    private RedisUtils redisUtils;
 	    @Before("execution(* com.king.services.spi.*.*(..))")
 	    public void before(JoinPoint point) throws Throwable {
-
+	    //	 logger.info("getSignature异常"+point.getSignature());
 	            try{
 	            //	Signature signature=point.getSignature();      	
 	            	String serialNo= SerialNoHolder.serialNo.get();
@@ -50,6 +51,11 @@ public class SerialNoGeneratorAspect {
 	                logger.error("服务异常");
 	                throw new RRException("服务异常");
 	            }
+	    }
+	    @After("execution(* com.king.services.spi.*.*(..))")
+	    public void after(JoinPoint point) throws Throwable {
+
+	    	 SerialNoHolder.serialNo.remove();
 	    }
 	    
 	    
