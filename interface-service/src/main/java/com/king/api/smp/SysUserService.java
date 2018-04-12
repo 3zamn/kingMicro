@@ -40,13 +40,6 @@ public interface SysUserService extends BaseService<SysUser>{
 	 * @param newPassword  新密码
 	 */
 	int updatePassword(Long userId, String password, String newPassword);
-	
-	SysUserToken queryByUserId(Long userId);
-
-	
-	void saveUserToken(SysUserToken token);
-	
-	void updateUserToken(SysUserToken token);
 
 	/**
 	 * 生成token
@@ -58,6 +51,6 @@ public interface SysUserService extends BaseService<SysUser>{
 	 * 退出，修改token值
 	 * @param userId  用户ID
 	 */
-	void logout(long userId);
+	void logout(SysUserToken token);
 	
 }

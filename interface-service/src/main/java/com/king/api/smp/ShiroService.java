@@ -16,9 +16,7 @@ public interface ShiroService {
     /**
      * 获取用户权限列表
      */
-    Set<String> getUserPermissions(long userId);
-
-    SysUserToken queryByToken(String token);
+    Set<String> getUserPermissions(long userId,boolean cache,String token);
 
     /**
      * 根据用户ID，查询用户

@@ -26,8 +26,17 @@ public interface SysRoleService extends BaseService<SysRole>{
 	List<Long> queryRoleIdList(Long userId);
 	
 	/**
+	 * 根据角色ID，获取授权用户ID列表
+	 */
+	List<Long> queryUserIdList(Long roleId);
+	
+	/**
 	 * 根据用户ID，删除角色用户关联
 	 */
 	void delete_R_U(Long userId);
 
+	/**
+	 * 更新角色
+	 */
+	void update(SysRole sysRole,String token);
 }
