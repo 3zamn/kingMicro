@@ -30,4 +30,8 @@ public class RedisKeys {
     public static String getSerialNoKey(String key){
         return "serialNo:" + key;
     }
+    
+    public static String getPermsKey(Long userId,String key){
+        return "perms:"+userId+":" + key;
+    }
 }

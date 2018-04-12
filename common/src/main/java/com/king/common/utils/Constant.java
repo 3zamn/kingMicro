@@ -14,6 +14,8 @@ public class Constant {
 	
 	public static final long SHIRO_SESSION_EXPIRE =60 * 60 * 1000;//半小时
 	
+	public static final long SERIALNO_EXPIRE =30;//秒
+	
     public enum MenuType {
         /**
          * 目录
@@ -41,10 +43,8 @@ public class Constant {
     
     /**
      * 定时任务状态
-     * 
-     * @author chenshun
-     * @email sunlightcs@gmail.com
-     * @date 2016年12月3日 上午12:07:22
+     * @author King chen
+   	 * @date 2017年12月25日
      */
     public enum ScheduleStatus {
         /**

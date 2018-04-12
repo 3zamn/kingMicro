@@ -16,6 +16,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.king.common.exception.RRException;
+import com.king.common.utils.Constant;
 import com.king.common.utils.RedisKeys;
 import com.king.common.utils.RedisUtils;
 import com.king.common.utils.SerialNoHolder;
@@ -45,13 +46,14 @@ public class SerialNoGeneratorAspect {
 	            		serialNo =UUID.randomUUID().toString();
 	            		 SerialNoHolder.serialNo.set(serialNo);
 	            		 String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
-	                 	redisUtils.hset(serialNoKey, "appcode", configs!=null?configs.getString("hostname"):null,50);
+	                 	redisUtils.hset(serialNoKey, "appcode", configs!=null?configs.getString("hostname"):null,Constant.SERIALNO_EXPIRE);
 	            	}	         
 	            }catch (Exception e){
 	                logger.error("服务异常");
 	                throw new RRException("服务异常");
 	            }
 	    }
+	    
 	    @After("execution(* com.king.services.spi.*.*(..))")
 	    public void after(JoinPoint point) throws Throwable {
 

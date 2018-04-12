@@ -7,6 +7,10 @@ import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -97,6 +101,46 @@ public class RedisUtils {
     public Object hget(String key,String hashKey) {
         return hget(key,hashKey, NOT_EXPIRE);
     }
+    
+    
+    public  void sset(String hashKey, Object value, long expire){
+    	setOperations.add(hashKey, value);
+        if(expire != NOT_EXPIRE){
+            redisTemplate.expire(hashKey, expire, TimeUnit.SECONDS);
+        }
+    }
+
+    public  void sset(String hashKey,Object value){
+        sset(hashKey,value, DEFAULT_EXPIRE);
+    }
+    
+    public  Set<Object> sget(String hashKey, long expire) {
+    	Set<Object> value = setOperations.members(hashKey);
+        if(expire != NOT_EXPIRE){
+            redisTemplate.expire(hashKey, expire, TimeUnit.SECONDS);
+        }
+        return value;
+    }
+
+    public Set<Object> sget(String hashKey) {
+        return sget(hashKey, NOT_EXPIRE);
+    }
+    
+    public void expire(String hashKey,long expire){
+    	 if(expire >0){
+             redisTemplate.expire(hashKey, expire, TimeUnit.SECONDS);
+         }
+    }
+    
+    public boolean exsit(String hashKey){
+   	 
+    	return  redisTemplate.hasKey(hashKey);
+   }
+    
+    public Set<String> likeKey(String hashKey){
+      	 
+    	return  redisTemplate.keys(hashKey+"*");
+   }
     
     /**
      * Object转成JSON数据

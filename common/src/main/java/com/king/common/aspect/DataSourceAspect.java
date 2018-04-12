@@ -48,11 +48,11 @@ public class DataSourceAspect {
 				 boolean readOnly = transactional.readOnly();
 				 if(readOnly){
 					 HandleDataSource.read();
-					 logger.info("切换--读库");
+			//		 logger.info("切换--读库");
 				 }
 			 }else{
 				 HandleDataSource.write();
-				 logger.info("切换--写库");
+			//	 logger.info("切换--写库");
 			 }
 			
 		} catch (NoSuchMethodException e) {

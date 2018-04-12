@@ -8,6 +8,7 @@ import org.apache.shiro.subject.Subject;
 import com.king.common.exception.RRException;
 import com.king.dal.gen.model.smp.SysConfig;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.dal.gen.model.smp.SysUserToken;
 
 
 /**

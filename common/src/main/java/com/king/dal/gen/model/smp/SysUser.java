@@ -95,6 +95,8 @@ public class SysUser implements Serializable {
 	 */
 	@ApiModelProperty("部门名称")
 	private String deptName;
+	
+	private String token;
 
 	/**
 	 * 设置：
@@ -241,4 +243,14 @@ public class SysUser implements Serializable {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	
 }
