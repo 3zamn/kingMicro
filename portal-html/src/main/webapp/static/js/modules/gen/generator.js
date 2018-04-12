@@ -54,7 +54,8 @@ var vm = new Vue({
 			if(tableNames == null){
 				return ;
 			}
-			location.href = baseURL + "sys/generator/code?tables=" + JSON.stringify(tableNames);
+			var token = localStorage.getItem("token");
+			location.href = baseURL + "sys/generator/code?tables=" + JSON.stringify(tableNames)+"&token="+token;
 		}
 	}
 });
