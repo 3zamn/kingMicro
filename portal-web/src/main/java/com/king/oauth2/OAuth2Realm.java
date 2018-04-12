@@ -1,6 +1,5 @@
 package com.king.oauth2;
 
-import java.util.Date;
 import java.util.Set;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -14,15 +13,17 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.king.api.smp.ShiroService;
-import com.king.api.smp.SysUserService;
 import com.king.common.utils.Constant;
+import com.king.common.utils.RedisKeys;
+import com.king.common.utils.RedisUtils;
+import com.king.common.utils.SpringContextUtils;
 import com.king.common.utils.TokenGenerator;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
+import com.king.utils.TokenHolder;
 
 /**
  * shiro认证
@@ -32,17 +33,11 @@ import com.king.dal.gen.model.smp.SysUserToken;
  */
 @Component
 public class OAuth2Realm extends AuthorizingRealm {
-	@Value("#{new Boolean('${king.redis.open}')}")
-	private Boolean redisOpen;
-	
 	@Autowired
 	private TokenGenerator tokenGenerator;
 	
     @Autowired
     private ShiroService shiroService;
-    
-    @Autowired
-    private SysUserService sysUserService;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -58,8 +53,11 @@ public class OAuth2Realm extends AuthorizingRealm {
         Long userId = user.getUserId();
 
         //用户权限列表
-        Set<String> permsSet = shiroService.getUserPermissions(userId);
-
+        Set<String> permsSet = shiroService.getUserPermissions(userId,true,TokenHolder.token.get());
+        //刷新失效时间
+    	String permKey =RedisKeys.getPermsKey(userId,TokenHolder.token.get());
+    	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
+    	redisUtils.expire(permKey, Constant.TOKEN_EXPIRE/1000);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
         return info;
@@ -74,24 +72,12 @@ public class OAuth2Realm extends AuthorizingRealm {
         //根据accessToken，查询用户信息
         SysUserToken userToken = null;
         //token失效
-        if(redisOpen){//是否开启redis
-        	userToken= tokenGenerator.get(accessToken);
-        	 if(userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()){
-                 throw new IncorrectCredentialsException("token失效，请重新登录");
-             }else{
-             	tokenGenerator.saveOrUpdate(userToken); 
-             }
-        }else{
-        	userToken=shiroService.queryByToken(accessToken); 
-        	 if(userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()){
-                 throw new IncorrectCredentialsException("token失效，请重新登录");
-             }else{
-            	 Date expireTime = new Date(userToken.getExpireTime().getTime()+Constant.TOKEN_EXPIRE);
-             	userToken.setExpireTime(expireTime);
-             	sysUserService.updateUserToken(userToken);
-             }
-        	
-        }
+        userToken= tokenGenerator.get(accessToken);
+	   	 if(userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()){
+	            throw new IncorrectCredentialsException("token失效，请重新登录");
+	        }else{
+	        	tokenGenerator.saveOrUpdate(userToken); 
+	        }
         
         //查询用户信息
         SysUser user = shiroService.queryUser(userToken.getUserId());

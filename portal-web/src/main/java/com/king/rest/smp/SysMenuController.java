@@ -21,6 +21,7 @@ import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
 import com.king.common.utils.JsonResponse;
 import com.king.dal.gen.model.smp.SysMenu;
+import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +48,7 @@ public class SysMenuController extends AbstractController {
 	@GetMapping("/nav")
 	public JsonResponse nav(){
 		List<SysMenu> menuList = sysMenuService.getUserMenuList(getUserId());
-		Set<String> permissions = shiroService.getUserPermissions(getUserId());
+		Set<String> permissions = shiroService.getUserPermissions(getUserId(),true,TokenHolder.token.get());
 		return JsonResponse.success().put("menuList", menuList).put("permissions", permissions);
 	}
 	

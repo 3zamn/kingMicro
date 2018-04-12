@@ -24,6 +24,7 @@ import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.common.validator.ValidatorUtils;
 import com.king.dal.gen.model.smp.SysRole;
+import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -126,7 +127,7 @@ public class SysRoleController extends AbstractController {
 	public JsonResponse update(@RequestBody SysRole role){
 		ValidatorUtils.validateEntity(role);
 		
-		sysRoleService.update(role);
+		sysRoleService.update(role,TokenHolder.token.get());
 		
 		return JsonResponse.success();
 	}

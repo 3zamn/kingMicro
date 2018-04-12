@@ -23,7 +23,10 @@ import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.ShiroUtils;
+import com.king.common.utils.TokenGenerator;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.dal.gen.model.smp.SysUserToken;
+import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,7 +47,8 @@ public class SysLoginController extends AbstractController {
 	private Producer producer;
 	@Autowired
 	private SysUserService sysUserService;
-
+	@Autowired
+	private TokenGenerator tokenGenerator;
 
 	/**
 	 * 验证码
@@ -106,7 +110,8 @@ public class SysLoginController extends AbstractController {
 	@ApiOperation(value = "退出登录")
 	@PostMapping("/sys/logout")
 	public JsonResponse logout() {	
-		sysUserService.logout(getUserId());
+		SysUserToken sysUserToken = tokenGenerator.get(TokenHolder.token.get());
+		sysUserService.logout(sysUserToken);
 		ShiroUtils.logout();
 		return JsonResponse.success();
 	}

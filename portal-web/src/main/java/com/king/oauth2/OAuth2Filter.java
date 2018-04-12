@@ -15,6 +15,7 @@ import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 
 import com.google.gson.Gson;
 import com.king.common.utils.JsonResponse;
+import com.king.utils.TokenHolder;
 
 /**
  * oauth2过滤器
@@ -32,7 +33,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
         if(StringUtils.isBlank(token)){
             return null;
         }
-
+        TokenHolder.token.set(token);
         return new OAuth2Token(token);
     }
 

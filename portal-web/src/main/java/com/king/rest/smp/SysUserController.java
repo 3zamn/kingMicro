@@ -27,6 +27,7 @@ import com.king.common.validator.ValidatorUtils;
 import com.king.common.validator.group.AddGroup;
 import com.king.common.validator.group.UpdateGroup;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -133,7 +134,7 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:update")
 	public JsonResponse update(@RequestBody SysUser user){
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
-
+		user.setToken(TokenHolder.token.get());
 		sysUserService.update(user);
 		
 		return JsonResponse.success();
