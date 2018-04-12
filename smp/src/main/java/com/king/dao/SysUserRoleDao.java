@@ -17,4 +17,9 @@ public interface SysUserRoleDao extends BaseDao<SysUserRole> {
 	 * 根据用户ID，获取角色ID列表
 	 */
 	List<Long> queryRoleIdList(Long userId);
+	
+	/**
+	 * 根据角色ID，获取授权用户ID列表
+	 */
+	List<Long> queryUserIdList(Long roleId);
 }

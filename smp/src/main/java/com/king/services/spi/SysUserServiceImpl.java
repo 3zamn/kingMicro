@@ -3,28 +3,32 @@ package com.king.services.spi;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.king.api.smp.ShiroService;
 import com.king.api.smp.SysRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.DataFilter;
 import com.king.common.utils.Constant;
 import com.king.common.utils.JsonResponse;
+import com.king.common.utils.RedisKeys;
+import com.king.common.utils.RedisUtils;
+import com.king.common.utils.SpringContextUtils;
 import com.king.common.utils.TokenGenerator;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysUserDao;
-import com.king.dao.SysUserTokenDao;
 
 /**
  * 系统用户
@@ -37,15 +41,13 @@ import com.king.dao.SysUserTokenDao;
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysUserService  {
 
 	@Autowired
-	private SysUserTokenDao sysUserTokenDao;
-	@Value("#{new Boolean('${king.redis.open}')}")
-	private Boolean reids_open;
-	@Autowired
 	private TokenGenerator tokenGenerator;
 	@Autowired
 	private SysUserDao sysUserDao;
 	@Autowired
 	private SysRoleService sysRoleService;
+	@Autowired
+	private ShiroService shiroService;
 
 	
 	@Transactional(readOnly = true)
@@ -95,10 +97,23 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		}else{
 			user.setPassword(new Sha256Hash(user.getPassword(), user.getSalt()).toHex());
 		}
-		sysUserDao.update(user);
-		
+		sysUserDao.update(user);	
 		//保存用户与角色关系
 		sysRoleService.saveOrUpdate_R_U(user.getUserId(), user.getRoleIdList());
+		String permKey =RedisKeys.getPermsKey(user.getUserId(),user.getToken());
+    	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
+    	String pattern = RedisKeys.getPermsKey(user.getUserId(),"");
+    	Set<String> permKeys=redisUtils.likeKey(pattern);
+    	Iterator<String> its = permKeys.iterator();  
+    	while (its.hasNext()) {
+    		permKey=its.next();
+    		redisUtils.delete(permKey);
+        	Set<String> perms=shiroService.getUserPermissions(user.getUserId(), false,user.getToken());
+        	Iterator<String> it = perms.iterator();  
+        	while (it.hasNext()) {  
+        	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
+        	} 
+      	}     	
 	}
 
 	@Override
@@ -112,21 +127,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 
 	@Override
-	public SysUserToken queryByUserId(Long userId) {
-		return sysUserTokenDao.queryByUserId(userId);
-	}
-
-	@Override
-	public void saveUserToken(SysUserToken token){
-		sysUserTokenDao.save(token);
-	}
-	
-	@Override
-	public void updateUserToken(SysUserToken token){
-		sysUserTokenDao.update(token);
-	}
-
-	@Override
 	public JsonResponse createToken(long userId) {
 		//生成一个token
 		String token = TokenGenerator.generateValue();
@@ -137,27 +137,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		Date expireTime = new Date(now.getTime() + Constant.TOKEN_EXPIRE);
 
 		//判断是否生成过token
-		SysUserToken tokenEntity = queryByUserId(userId);
-		if(tokenEntity == null){
-			tokenEntity = new SysUserToken();
-			tokenEntity.setUserId(userId);
-			tokenEntity.setToken(token);
-			tokenEntity.setUpdateTime(now);
-			tokenEntity.setExpireTime(expireTime);
-
-			//保存token
-			saveUserToken(tokenEntity);	
-		}else{
-			tokenEntity.setToken(token);
-			tokenEntity.setUpdateTime(now);
-			tokenEntity.setExpireTime(expireTime);
-
-			//更新token
-			updateUserToken(tokenEntity);
-		}
-		if(reids_open){
-			tokenGenerator.saveOrUpdate(tokenEntity);
-		}
+		SysUserToken tokenEntity =  new SysUserToken();
+		tokenEntity.setUserId(userId);
+		tokenEntity.setToken(token);
+		tokenEntity.setUpdateTime(now);
+		tokenEntity.setExpireTime(expireTime);
+		tokenGenerator.saveOrUpdate(tokenEntity);
+		//缓存权限
+		String permKey =RedisKeys.getPermsKey(userId,token);
+    	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
+    	redisUtils.delete(permKey);
+    	Set<String> perms=shiroService.getUserPermissions(userId, false,token);
+    	Iterator<String> it = perms.iterator();  
+    	while (it.hasNext()) {  
+    	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
+    	}   
 
 		JsonResponse r = JsonResponse.success().put("token", token).put("expire", Constant.TOKEN_EXPIRE/1000);
 
@@ -165,18 +159,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	}
 
 	@Override
-	public void logout(long userId) {
-		//生成一个token
-		String token = TokenGenerator.generateValue();
-		SysUserToken userToken =queryByUserId(userId);
-		//修改token
-		SysUserToken tokenEntity = new SysUserToken();
-		tokenEntity.setUserId(userId);
-		tokenEntity.setToken(token);
-		updateUserToken(tokenEntity);
-		if(reids_open){
-			//删除redis中token
-			tokenGenerator.delete(userToken.getToken());
-		}
+	public void logout(SysUserToken token) {
+		String permsKey = RedisKeys.getPermsKey(token.getUserId(),token.getToken());
+		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
+		redisUtils.delete(permsKey);
+		tokenGenerator.delete(token.getToken());
 	}
 }

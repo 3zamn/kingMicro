@@ -2,20 +2,30 @@ package com.king.services.spi;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.king.api.smp.ShiroService;
 import com.king.api.smp.SysDeptService;
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysRoleService;
+import com.king.api.smp.SysUserService;
 import com.king.common.annotation.DataFilter;
+import com.king.common.utils.Constant;
+import com.king.common.utils.RedisKeys;
+import com.king.common.utils.RedisUtils;
+import com.king.common.utils.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysRole;
+import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysRoleDao;
 import com.king.dao.SysUserRoleDao;
@@ -38,7 +48,13 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	private SysDeptService sysDeptService;
 	@Autowired
 	private SysUserRoleDao sysUserRoleDao;
+	@Autowired
+	private ShiroService shiroService;
+	@Autowired
+	private SysUserService sysUserService;
+	
 	private Logger logger = LoggerFactory.getLogger(getClass());
+
 	
 	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "r", user = false)
@@ -65,7 +81,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	}
 
 	@Override
-	public void update(SysRole role) {
+	public void update(SysRole role,String token) {
 		sysRoleDao.update(role);
 		
 		//更新角色与菜单关系
@@ -73,6 +89,24 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 
 		//保存角色与部门关系
 		sysDeptService.saveOrUpdate_R_D(role.getRoleId(), role.getDeptIdList());
+		// 刷新权限缓存
+		List<Long> userList = queryUserIdList(role.getRoleId());
+		for (Long userId : userList) {
+			String permKey = RedisKeys.getPermsKey(userId, token);
+			RedisUtils redisUtils = SpringContextUtils.getBean(RedisUtils.class);
+			String pattern = RedisKeys.getPermsKey(userId, "");
+			Set<String> permKeys = redisUtils.likeKey(pattern);
+			Iterator<String> its = permKeys.iterator();
+			while (its.hasNext()) {
+	    		permKey=its.next();
+	    		redisUtils.delete(permKey);
+	        	Set<String> perms=shiroService.getUserPermissions(userId, false,token);
+	        	Iterator<String> it = perms.iterator();  
+	        	while (it.hasNext()) {  
+	        	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
+	        	} 
+	      	}
+		}	
 	}
 
 	@Override
@@ -100,6 +134,11 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	@Transactional(readOnly = true)
 	public List<Long> queryRoleIdList(Long userId) {
 		return sysUserRoleDao.queryRoleIdList(userId);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Long> queryUserIdList(Long roleId) {
+		return sysUserRoleDao.queryUserIdList(roleId);
 	}
 
 	@Override
