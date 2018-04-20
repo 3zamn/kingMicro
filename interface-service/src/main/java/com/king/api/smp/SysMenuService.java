@@ -40,7 +40,7 @@ public interface SysMenuService extends BaseService<SysMenu>{
 	List<SysMenu> getUserMenuList(Long userId);
 	
 	/**
-	 * 查询用户的权限列表
+	 *  查询用户所属权限的菜单列表
 	 */
 	List<SysMenu> queryUserList(Long userId);
 	

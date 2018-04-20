@@ -36,5 +36,11 @@ public interface SysDeptService extends BaseService<SysDept>{
 	 * 获取子部门ID(包含本部门ID)，用于数据过滤
 	 */
 	String getSubDeptIdList(Long deptId);
+	
+	/**
+	 * 查询子部门ID列表
+	 * @param parentIds  上级部门ID
+	 */
+	List<Long> queryDetpIdLists(List<Long> parentId);
 
 }
