@@ -17,6 +17,7 @@
 	<script src="../../static/plugins/layer/layer.js"></script>
 	<script src="../../static/libs/bootstrap.min.js"></script>
 	<script src="../../static/libs/vue.min.js"></script>
+	<script type="text/javascript" src="../../static/libs/validator.js"></script>
 	<script src="../../static/libs/bootstrap-table.min.js"></script>
 	<script src="../../static/plugins/treegrid/jquery.treegrid.min.js"></script>
 	<script src="../../static/plugins/treegrid/jquery.treegrid.bootstrap3.js"></script>
@@ -50,13 +51,13 @@
 			<div class="form-group">
 				<div class="col-sm-2 control-label">部门名称</div>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" v-model="dept.name" placeholder="部门名称"/>
+					<input type="text" name="deptName" class="form-control" v-model="dept.name" placeholder="部门名称"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-2 control-label">上级部门</div>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" style="cursor:pointer;" v-model="dept.parentName" @click="deptTree" readonly="readonly" placeholder="一级部门"/>
+					<input type="text" class="form-control" style="cursor:pointer;" v-model="dept.parentName" @click="deptTree" readonly="readonly" placeholder="所属部门"/>
 				</div>
 			</div>
 			<div class="form-group">

@@ -30,9 +30,10 @@ var vm = new Vue({
             $.get(baseURL + "sys/dept/select", function(r){
                 ztree = $.fn.zTree.init($("#deptTree"), setting, r.deptList);
                 var node = ztree.getNodeByParam("deptId", vm.dept.parentId);
-                ztree.selectNode(node);
-
-                vm.dept.parentName = node.name;
+                if(node!=null){
+                	 ztree.selectNode(node);
+                     vm.dept.parentName = node.name;
+                }           
             })
         },
         add: function(){
@@ -43,7 +44,8 @@ var vm = new Vue({
         },
         update: function () {
             var deptId = getDeptId();
-            if(deptId == null){
+          
+            if(deptId == false){
                 return ;
             }
 
