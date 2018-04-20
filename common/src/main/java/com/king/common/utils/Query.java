@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.king.common.utils.entityMapper.EntityMapperResolver;
+import com.king.common.utils.pattern.SQLFilter;
+import com.king.common.utils.security.ShiroUtils;
+import com.king.common.utils.spring.SpringContextUtils;
 
 /**
  *  查询参数
@@ -69,13 +73,13 @@ public class Query extends LinkedHashMap<String, Object> {
              		int i=0;
              		List<String> atts = new ArrayList<String>();
              		for(Object o:keyParam){
-             			if((SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).isExistAttribute(enttyName, o.toString())){
+             			if((SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).isExistAttribute(enttyName, o.toString())){
              				atts.add(o.toString());				
              			}		
              		}
              		for(String attr:atts){
      					i=i+1;
-             			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).getColumn(enttyName, attr);
+             			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attr);
              			String column = json.getString("column"); 
          				if(column!=null && column!=""){   	
                  			if(i<atts.size()){
@@ -93,14 +97,14 @@ public class Query extends LinkedHashMap<String, Object> {
 		Iterator<Map.Entry<String, Object>> it = params.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<String, Object> entry = it.next();
-			if((SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).isExistAttribute(enttyName, entry.getKey()))
+			if((SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).isExistAttribute(enttyName, entry.getKey()))
 				if(entry.getValue()!=null && !entry.getValue().toString().trim().equals(""))
 					attributes.add(entry.getKey());
 		}
 		int j=0;
 		for(String attribute:attributes){
 				j=j+1;
-				JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).getColumn(enttyName, attribute);
+				JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
 				String column = json.getString("column");
 				if(column!=null && column!=""){   	
      			if(j<attributes.size()){
@@ -128,7 +132,7 @@ public class Query extends LinkedHashMap<String, Object> {
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
         String sidx = params.get("sidx").toString();
         String order = params.get("order").toString();
-         sidx = (SpringContextUtils.getBean("enttyMapperResolver",EnttyMapperResolver.class)).getColumn(enttyName, sidx).getString("column");
+         sidx = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, sidx).getString("column");
         this.put("sidx", SQLFilter.sqlInject(sidx));
         this.put("order", SQLFilter.sqlInject(order));
     }

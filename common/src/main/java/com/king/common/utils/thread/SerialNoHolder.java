@@ -1,4 +1,4 @@
-package com.king.common.utils;
+package com.king.common.utils.thread;
 
 /**
  * 在线程级别保存应用编码、交易流水号、操作用户编码

@@ -1,10 +1,10 @@
-package com.king.common.utils;
+package com.king.common.utils.thread;
 import java.lang.reflect.Method;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
 import com.king.common.exception.RRException;
-import com.king.common.utils.SpringContextUtils;
+import com.king.common.utils.spring.SpringContextUtils;
 
 /**
  * 执行定时任务

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import com.king.common.utils.StringToolkit;
+import com.king.common.utils.pattern.StringToolkit;
 
 
 /**

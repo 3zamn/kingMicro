@@ -1,4 +1,4 @@
-package com.king.common.utils;
+package com.king.common.utils.pattern;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

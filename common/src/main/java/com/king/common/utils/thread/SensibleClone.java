@@ -1,4 +1,4 @@
-package com.king.common.utils;
+package com.king.common.utils.thread;
 
 /**
  * @author King chen

@@ -1,4 +1,4 @@
-package com.king.common.utils;  
+package com.king.common.utils.entityMapper;  
   
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -27,10 +27,10 @@ import com.alibaba.fastjson.JSONObject;
  * @data2018年1月11日
  */
 @Component
-public class GenEnttyMapper implements EntityResolver{  
+public class GenEntityMapper implements EntityResolver{  
 
 	@Autowired
-	private EnttyMapperRedis enttyMapperRedis;
+	private EntityMapperRedis enttyMapperRedis;
 	 @Override
 	 public InputSource resolveEntity(String publicId, String systemId)
 	   throws SAXException, IOException {
@@ -49,8 +49,8 @@ public class GenEnttyMapper implements EntityResolver{
     public static String getMapperColumnByProperty(String fileName, String id, String property){  
         try {  
             SAXReader saxReader = new SAXReader();    
-            saxReader.setEntityResolver(new GenEnttyMapper());
-            Document document = saxReader.read(GenEnttyMapper.class.getClassLoader().getResourceAsStream(fileName));    
+            saxReader.setEntityResolver(new GenEntityMapper());
+            Document document = saxReader.read(GenEntityMapper.class.getClassLoader().getResourceAsStream(fileName));    
             if(document != null){  
                 Element root = document.getRootElement();  
                 if(root != null){  
@@ -87,8 +87,8 @@ public class GenEnttyMapper implements EntityResolver{
     public   Element getResultMapElement(String fileName, String id){  
         try {  
             SAXReader saxReader = new SAXReader();    
-            saxReader.setEntityResolver(new GenEnttyMapper());//去掉dtd检验,要不然卡爆了、还可能网络连接超时。因为联网下载关联的dtd
-            Document document = saxReader.read(GenEnttyMapper.this.getClass().getResourceAsStream(fileName));    
+            saxReader.setEntityResolver(new GenEntityMapper());//去掉dtd检验,要不然卡爆了、还可能网络连接超时。因为联网下载关联的dtd
+            Document document = saxReader.read(GenEntityMapper.this.getClass().getResourceAsStream(fileName));    
             if(document != null){  
                 Element root = document.getRootElement();  
                 if(root != null){  
@@ -177,8 +177,9 @@ public class GenEnttyMapper implements EntityResolver{
 	 */
 	public  void  generateEnttyMapper(){
 //		 GenEnttyMapper aa = new GenEnttyMapper();           
-		   System.out.println("路径："+GenEnttyMapper.class.getClassLoader().getResource("mapper").getPath());
-	        List<String> filenames=find(GenEnttyMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml");
+		   System.out.println("路径："+this.getClass().getClassLoader().getResource("mapper").getPath());
+		   System.out.println("路径珊珊珊："+find(GenEntityMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml"));
+	        List<String> filenames=find(GenEntityMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml");
 	        //放在redis中会好效率一些，太多层了。
 	        for(String filename:filenames){
 	        	if (filename!=null && filename!="") {

@@ -1,4 +1,4 @@
-package com.king.common.utils;
+package com.king.common.utils.redis;
 
 
 import java.security.MessageDigest;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.king.common.exception.RRException;
+import com.king.common.utils.constant.Constant;
 import com.king.dal.gen.model.smp.SysConfig;
 import com.king.dal.gen.model.smp.SysUserToken;
 

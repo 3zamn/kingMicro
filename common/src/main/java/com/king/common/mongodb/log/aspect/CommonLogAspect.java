@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.king.common.mongodb.log.model.CommonLogVO;
 import com.king.common.mongodb.log.repo.CommonLogRepo;
-import com.king.common.utils.SerialNoHolder;
-import com.king.common.utils.StringToolkit;
+import com.king.common.utils.pattern.StringToolkit;
+import com.king.common.utils.thread.SerialNoHolder;
 
 
 /**

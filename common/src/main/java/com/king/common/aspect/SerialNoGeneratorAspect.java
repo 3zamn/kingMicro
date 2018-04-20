@@ -16,10 +16,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.king.common.exception.RRException;
-import com.king.common.utils.Constant;
-import com.king.common.utils.RedisKeys;
-import com.king.common.utils.RedisUtils;
-import com.king.common.utils.SerialNoHolder;
+import com.king.common.utils.constant.Constant;
+import com.king.common.utils.redis.RedisKeys;
+import com.king.common.utils.redis.RedisUtils;
+import com.king.common.utils.thread.SerialNoHolder;
 
 /**
  * 服务类参数切面

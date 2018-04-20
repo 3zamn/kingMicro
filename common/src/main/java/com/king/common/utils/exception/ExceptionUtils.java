@@ -1,6 +1,8 @@
-package com.king.common.utils;
+package com.king.common.utils.exception;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import com.king.common.utils.thread.SensibleClone;
 
 public class ExceptionUtils {
 	static class ThrowableCreatedElsewhere extends Throwable {

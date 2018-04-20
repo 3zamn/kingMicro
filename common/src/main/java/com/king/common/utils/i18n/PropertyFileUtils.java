@@ -12,7 +12,7 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.Properties;
 
-import com.king.common.utils.StringToolkit;
+import com.king.common.utils.pattern.StringToolkit;
 
 
 public class PropertyFileUtils {

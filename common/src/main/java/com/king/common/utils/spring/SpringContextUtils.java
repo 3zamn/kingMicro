@@ -1,4 +1,4 @@
-package com.king.common.utils;
+package com.king.common.utils.spring;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

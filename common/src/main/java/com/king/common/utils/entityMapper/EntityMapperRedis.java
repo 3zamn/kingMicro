@@ -1,11 +1,12 @@
-package com.king.common.utils;
+package com.king.common.utils.entityMapper;
 
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSONObject;
+import com.king.common.utils.redis.RedisKeys;
+import com.king.common.utils.redis.RedisUtils;
 
 /**
  * redis实体映射
@@ -14,7 +15,7 @@ import com.alibaba.fastjson.JSONObject;
  * @data2018年2月26日
  */
 @Component
-public class EnttyMapperRedis {
+public class EntityMapperRedis {
 	
 	@Autowired
     private RedisUtils redisUtils;

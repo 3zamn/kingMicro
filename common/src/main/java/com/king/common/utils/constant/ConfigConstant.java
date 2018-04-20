@@ -1,4 +1,4 @@
-package com.king.common.utils;
+package com.king.common.utils.constant;
 
 /**
  * 系统参数相关Key

@@ -1,4 +1,4 @@
-package com.king.common.utils;
+package com.king.common.utils.security;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -6,6 +6,9 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
 import com.king.common.exception.RRException;
+import com.king.common.utils.redis.RedisKeys;
+import com.king.common.utils.redis.RedisUtils;
+import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysConfig;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;

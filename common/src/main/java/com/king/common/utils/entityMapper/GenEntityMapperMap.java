@@ -1,4 +1,4 @@
-package com.king.common.utils;  
+package com.king.common.utils.entityMapper;  
   
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
  * @emai 396885563@qq.com
  * @data2018年1月11日
  */
-public class GenEnttyMapperMap implements EntityResolver{  
+public class GenEntityMapperMap implements EntityResolver{  
 	 @Override
 	 public InputSource resolveEntity(String publicId, String systemId)
 	   throws SAXException, IOException {
@@ -42,8 +42,8 @@ public class GenEnttyMapperMap implements EntityResolver{
     public static String getMapperColumnByProperty(String fileName, String id, String property){  
         try {  
             SAXReader saxReader = new SAXReader();    
-            saxReader.setEntityResolver(new GenEnttyMapper());
-            Document document = saxReader.read(GenEnttyMapper.class.getClassLoader().getResourceAsStream(fileName));    
+            saxReader.setEntityResolver(new GenEntityMapper());
+            Document document = saxReader.read(GenEntityMapper.class.getClassLoader().getResourceAsStream(fileName));    
             if(document != null){  
                 Element root = document.getRootElement();  
                 if(root != null){  
@@ -80,8 +80,8 @@ public class GenEnttyMapperMap implements EntityResolver{
     public   Element getResultMapElement(String fileName, String id){  
         try {  
             SAXReader saxReader = new SAXReader();    
-            saxReader.setEntityResolver(new GenEnttyMapper());//去掉dtd检验,要不然卡爆了、还可能网络连接超时。因为联网下载关联的dtd
-            Document document = saxReader.read(GenEnttyMapperMap.this.getClass().getResourceAsStream(fileName));    
+            saxReader.setEntityResolver(new GenEntityMapper());//去掉dtd检验,要不然卡爆了、还可能网络连接超时。因为联网下载关联的dtd
+            Document document = saxReader.read(GenEntityMapperMap.this.getClass().getResourceAsStream(fileName));    
             if(document != null){  
                 Element root = document.getRootElement();  
                 if(root != null){  
@@ -172,8 +172,8 @@ public class GenEnttyMapperMap implements EntityResolver{
 	 * @return
 	 */
 	public static HashMap<String, List<HashMap<String,String>>> generateEnttyMapper(){
-		 GenEnttyMapper aa = new GenEnttyMapper();           
-	        List<String> filenames=find(GenEnttyMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml");
+		 GenEntityMapper aa = new GenEntityMapper();           
+	        List<String> filenames=find(GenEntityMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml");
 	        //放在redis中会好效率一些，太多层了。
 	        HashMap<String, List<HashMap<String,String>>> map = new HashMap<String, List<HashMap<String,String>>>();
 	        for(String filename:filenames){
@@ -192,7 +192,7 @@ public class GenEnttyMapperMap implements EntityResolver{
     public static void main(String[] args) {  
     	  long startTime = new Date().getTime();  
     	  
-    	  GenEnttyMapper aa = new GenEnttyMapper();           
+    	  GenEntityMapper aa = new GenEntityMapper();           
         List<String> filenames=find("src/main/resources/mapper", "\\S+\\.xml");
         //放在redis中会好效率一些，太多层了。
         HashMap<String, List<HashMap<String,String>>> map = new HashMap<String, List<HashMap<String,String>>>();

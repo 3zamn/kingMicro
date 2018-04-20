@@ -1,9 +1,11 @@
-package com.king.common.utils;
+package com.king.common.utils.entityMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.king.common.utils.redis.RedisKeys;
+import com.king.common.utils.redis.RedisUtils;
 
 
 /**
@@ -13,7 +15,7 @@ import com.alibaba.fastjson.JSONObject;
  * @data2018年1月11日
  */
 @Component("enttyMapperResolver")
-public  class EnttyMapperResolver {
+public  class EntityMapperResolver {
 	 @Autowired
 	    private  RedisUtils redisUtils;
 	/**

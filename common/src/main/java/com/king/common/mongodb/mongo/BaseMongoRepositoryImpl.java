@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import com.king.common.utils.ReflectUtil;
+import com.king.common.utils.pattern.ReflectUtil;
 
 /**
  * Mongodb 基础数据操作仓库实现类
