@@ -40,7 +40,8 @@ public class RedisUtils {
     public final static long NOT_EXPIRE = -1;
     private final static Gson gson = new Gson();
 
-    public void set(String key, Object value, long expire){
+    @SuppressWarnings("unchecked")
+	public void set(String key, Object value, long expire){
         valueOperations.set(key, toJson(value));
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -51,7 +52,8 @@ public class RedisUtils {
         set(key, value, DEFAULT_EXPIRE);
     }
 
-    public <T> T get(String key, Class<T> clazz, long expire) {
+    @SuppressWarnings("unchecked")
+	public <T> T get(String key, Class<T> clazz, long expire) {
         String value = valueOperations.get(key);
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -63,7 +65,8 @@ public class RedisUtils {
         return get(key, clazz, NOT_EXPIRE);
     }
 
-    public String get(String key, long expire) {
+    @SuppressWarnings("unchecked")
+	public String get(String key, long expire) {
         String value = valueOperations.get(key);
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -75,11 +78,13 @@ public class RedisUtils {
         return get(key, NOT_EXPIRE);
     }
 
-    public void delete(String key) {
+    @SuppressWarnings("unchecked")
+	public void delete(String key) {
         redisTemplate.delete(key);
     }
 
-    public  void hset(String key,String hashKey, Object value, long expire){
+    @SuppressWarnings("unchecked")
+	public  void hset(String key,String hashKey, Object value, long expire){
     	hashOperations.put(key, hashKey, toJson(value));
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -90,7 +95,8 @@ public class RedisUtils {
         hset(key, hashKey,value, DEFAULT_EXPIRE);
     }
     
-    public  Object hget(String key,String hashKey, long expire) {
+    @SuppressWarnings("unchecked")
+	public  Object hget(String key,String hashKey, long expire) {
         Object value = hashOperations.get(key, hashKey);
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -103,7 +109,8 @@ public class RedisUtils {
     }
     
     
-    public  void sset(String hashKey, Object value, long expire){
+    @SuppressWarnings("unchecked")
+	public  void sset(String hashKey, Object value, long expire){
     	setOperations.add(hashKey, value);
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(hashKey, expire, TimeUnit.SECONDS);
@@ -114,7 +121,8 @@ public class RedisUtils {
         sset(hashKey,value, DEFAULT_EXPIRE);
     }
     
-    public  Set<Object> sget(String hashKey, long expire) {
+    @SuppressWarnings("unchecked")
+	public  Set<Object> sget(String hashKey, long expire) {
     	Set<Object> value = setOperations.members(hashKey);
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(hashKey, expire, TimeUnit.SECONDS);
@@ -126,18 +134,21 @@ public class RedisUtils {
         return sget(hashKey, NOT_EXPIRE);
     }
     
-    public void expire(String hashKey,long expire){
+    @SuppressWarnings("unchecked")
+	public void expire(String hashKey,long expire){
     	 if(expire >0){
              redisTemplate.expire(hashKey, expire, TimeUnit.SECONDS);
          }
     }
     
-    public boolean exsit(String hashKey){
+    @SuppressWarnings("unchecked")
+	public boolean exsit(String hashKey){
    	 
     	return  redisTemplate.hasKey(hashKey);
    }
     
-    public Set<String> likeKey(String hashKey){
+    @SuppressWarnings("unchecked")
+	public Set<String> likeKey(String hashKey){
       	 
     	return  redisTemplate.keys(hashKey+"*");
    }

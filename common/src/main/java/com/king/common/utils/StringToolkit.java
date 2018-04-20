@@ -1,4 +1,4 @@
-package util;
+package com.king.common.utils;
 
 import java.io.InputStream;
 import java.util.ArrayList;

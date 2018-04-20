@@ -177,6 +177,7 @@ public class GenEnttyMapper implements EntityResolver{
 	 */
 	public  void  generateEnttyMapper(){
 //		 GenEnttyMapper aa = new GenEnttyMapper();           
+		   System.out.println("路径："+GenEnttyMapper.class.getClassLoader().getResource("mapper").getPath());
 	        List<String> filenames=find(GenEnttyMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml");
 	        //放在redis中会好效率一些，太多层了。
 	        for(String filename:filenames){

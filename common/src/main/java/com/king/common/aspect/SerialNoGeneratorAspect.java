@@ -46,7 +46,7 @@ public class SerialNoGeneratorAspect {
 	            		serialNo =UUID.randomUUID().toString();
 	            		 SerialNoHolder.serialNo.set(serialNo);
 	            		 String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
-	                 	redisUtils.hset(serialNoKey, "appcode", configs!=null?configs.getString("hostname"):null,Constant.SERIALNO_EXPIRE);
+	                 	redisUtils.hset(serialNoKey, "appcode", configs!=null?configs.getString("serverName"):null,Constant.SERIALNO_EXPIRE);
 	            	}	         
 	            }catch (Exception e){
 	                logger.error("服务异常");

@@ -3,6 +3,11 @@ package com.king.dal.gen.model.smp;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.king.common.validator.group.AddGroup;
+import com.king.common.validator.group.UpdateGroup;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -24,6 +29,7 @@ public class SysDept implements Serializable {
 	private Long parentId;
 	//部门名称
 	@ApiModelProperty("部门名称")
+	@NotBlank(message="部门名称不能为空", groups = {AddGroup.class, UpdateGroup.class})
 	private String name;
 	//上级部门名称
 	@ApiModelProperty("上级部门名称")

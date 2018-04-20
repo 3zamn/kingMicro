@@ -1,4 +1,4 @@
-package com.king.utils;
+package com.king.common.utils;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
