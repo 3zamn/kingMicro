@@ -24,7 +24,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
 import com.king.common.exception.RRException;
-import com.king.common.utils.DateUtils;
+import com.king.common.utils.date.DateUtils;
 import com.king.gen.entity.ColumnEntity;
 import com.king.gen.entity.TableEntity;
 

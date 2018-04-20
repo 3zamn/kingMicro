@@ -16,11 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.king.api.smp.ShiroService;
-import com.king.common.utils.Constant;
-import com.king.common.utils.RedisKeys;
-import com.king.common.utils.RedisUtils;
-import com.king.common.utils.SpringContextUtils;
-import com.king.common.utils.TokenGenerator;
+import com.king.common.utils.constant.Constant;
+import com.king.common.utils.redis.RedisKeys;
+import com.king.common.utils.redis.RedisUtils;
+import com.king.common.utils.redis.TokenGenerator;
+import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.utils.TokenHolder;

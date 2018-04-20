@@ -20,7 +20,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import com.king.common.utils.Constant;
+import com.king.common.utils.constant.Constant;
 import com.king.utils.RedisShiroSession;
 
 /**

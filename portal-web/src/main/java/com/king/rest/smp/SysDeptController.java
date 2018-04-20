@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysDeptService;
-import com.king.common.utils.Constant;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Query;
+import com.king.common.utils.constant.Constant;
 import com.king.common.validator.ValidatorUtils;
 import com.king.common.validator.group.AddGroup;
 import com.king.common.validator.group.UpdateGroup;

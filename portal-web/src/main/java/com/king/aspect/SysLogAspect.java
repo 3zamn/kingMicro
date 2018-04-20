@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
 import com.king.common.annotation.Log;
 import com.google.gson.Gson;
 import com.king.api.smp.SysLogService;
-import com.king.common.utils.HttpContextUtils;
-import com.king.common.utils.IPUtils;
-import com.king.common.utils.ShiroUtils;
+import com.king.common.utils.network.HttpContextUtils;
+import com.king.common.utils.network.IPUtils;
+import com.king.common.utils.security.ShiroUtils;
 import com.king.dal.gen.model.smp.SysLog;
 import com.king.dal.gen.model.smp.SysUser;
 
