@@ -66,7 +66,7 @@
 		</if>
 	</select>
 	
-	<!-- 查询用户的权限列表 --> 
+	<!-- 查询用户所属权限的菜单列表 --> 
 	<select id="queryUserList" resultType="com.king.dal.gen.model.smp.SysMenu">
 		select distinct m.*,(select p.name from sys_menu p where p.menu_id = m.parent_id) as parentName
 			from sys_user_role ur 

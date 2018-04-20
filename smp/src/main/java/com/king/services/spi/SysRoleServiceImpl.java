@@ -21,10 +21,12 @@ import com.king.api.smp.SysRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.DataFilter;
 import com.king.common.utils.Constant;
+import com.king.common.utils.Page;
 import com.king.common.utils.RedisKeys;
 import com.king.common.utils.RedisUtils;
 import com.king.common.utils.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysRole;
+import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysRoleDao;
@@ -64,8 +66,11 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 
 	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "r", user = false)
-	public int queryTotal(Map<String, Object> map) {
-		return sysRoleDao.queryTotal(map);
+	public Page getPage(Map<String, Object> map) {
+		List<SysRole> list =sysRoleDao.queryList(map);
+		int totalCount =sysRoleDao.queryTotal(map);
+		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		return page;
 	}
 
 	@Override
@@ -99,22 +104,26 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 			Iterator<String> its = permKeys.iterator();
 			while (its.hasNext()) {
 	    		permKey=its.next();
-	    		redisUtils.delete(permKey);
-	        	Set<String> perms=shiroService.getUserPermissions(userId, false,token);
+	    		redisUtils.delete(permKey);    	
+	      	}
+	    	Iterator<String> is = permKeys.iterator();  
+	    	while (is.hasNext()) {
+	    		permKey=is.next();
+	    		Set<String> perms=shiroService.getUserPermissions(userId, false,token);
 	        	Iterator<String> it = perms.iterator();  
 	        	while (it.hasNext()) {  
 	        	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
 	        	} 
-	      	}
+	      	}	
 		}	
 	}
 
 	@Override
 	public void saveOrUpdate_R_U(Long userId, List<Long> roleIdList) {
 		try {
-			if(roleIdList.size() == 0){
+			/*if(roleIdList.size() == 0){
 				return ;
-			}
+			}*/
 			
 			//先删除用户与角色关系
 			sysUserRoleDao.delete(userId);

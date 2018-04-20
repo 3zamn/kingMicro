@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ShiroService;
-import com.king.api.smp.SysUserService;
 import com.king.common.utils.Constant;
 import com.king.common.utils.RedisKeys;
 import com.king.common.utils.RedisUtils;
@@ -30,10 +29,8 @@ public class ShiroServiceImpl implements ShiroService {
     @Autowired
     private SysUserDao sysUserDao;
 
-    @Autowired
-    private SysUserService sysUserService;
-
-    @Transactional(readOnly = true)
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@Transactional(readOnly = true)
     public Set<String> getUserPermissions(long userId,boolean cache,String token) {
         List<String> permsList;
 

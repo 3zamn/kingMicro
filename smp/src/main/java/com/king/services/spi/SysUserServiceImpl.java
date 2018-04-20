@@ -21,6 +21,7 @@ import com.king.api.smp.SysUserService;
 import com.king.common.annotation.DataFilter;
 import com.king.common.utils.Constant;
 import com.king.common.utils.JsonResponse;
+import com.king.common.utils.Page;
 import com.king.common.utils.RedisKeys;
 import com.king.common.utils.RedisUtils;
 import com.king.common.utils.SpringContextUtils;
@@ -71,10 +72,14 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		return sysUserDao.queryList(map);
 	}
 	
+	
 	@Transactional(readOnly = true)
-	@DataFilter(tableAlias = "u", user = false)
-	public int queryTotal(Map<String, Object> map) {
-		return sysUserDao.queryTotal(map);
+	@DataFilter(tableAlias = "u", user = true)
+	public Page getPage(Map<String, Object> map) {
+		List<SysUser> list =sysUserDao.queryList(map);
+		int totalCount =sysUserDao.queryTotal(map);
+		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		return page;
 	}
 
 	@Override
@@ -107,13 +112,17 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     	Iterator<String> its = permKeys.iterator();  
     	while (its.hasNext()) {
     		permKey=its.next();
-    		redisUtils.delete(permKey);
-        	Set<String> perms=shiroService.getUserPermissions(user.getUserId(), false,user.getToken());
+    		redisUtils.delete(permKey);    	
+      	}
+    	Iterator<String> is = permKeys.iterator();  
+    	while (is.hasNext()) {
+    		permKey=is.next();
+    		Set<String> perms=shiroService.getUserPermissions(user.getUserId(), false,user.getToken());
         	Iterator<String> it = perms.iterator();  
         	while (it.hasNext()) {  
         	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
         	} 
-      	}     	
+      	}	
 	}
 
 	@Override

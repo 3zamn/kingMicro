@@ -38,6 +38,12 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	public List<Long> queryDetpIdList(Long parentId) {
 		return sysDeptDao.queryDetpIdList(parentId);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Long> queryDetpIdLists(List<Long> parentIds) {
+		return sysRoleDeptDao.queryDetpIdLists(parentIds);
+	}
 
 	@Override
 	@Transactional(readOnly = true)

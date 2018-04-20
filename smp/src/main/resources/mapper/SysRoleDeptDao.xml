@@ -31,4 +31,11 @@
 		select dept_id from sys_role_dept where role_id = #{value}
 	</select>
 
+
+	<select id="queryDetpIdLists" >
+		select dept_id from sys_role_dept where dept_id in
+		<foreach item="deptId" collection="parentIds" open="(" separator="," close=")">
+			#{deptId}
+		</foreach>	
+	</select>
 </mapper>

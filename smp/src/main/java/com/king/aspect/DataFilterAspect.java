@@ -1,8 +1,9 @@
 package com.king.aspect;
-
-
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,11 +12,12 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.king.api.smp.SysDeptService;
 import com.king.common.exception.RRException;
 import com.king.common.utils.Constant;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.dao.SysRoleDeptDao;
+import com.king.dao.SysUserRoleDao;
 
 
 /**
@@ -28,6 +30,10 @@ import com.king.dal.gen.model.smp.SysUser;
 public class DataFilterAspect {
     @Autowired
     private SysDeptService sysDeptService;
+    @Autowired
+    private SysUserRoleDao sysUserRoleDao;
+    @Autowired
+    private SysRoleDeptDao sysRoleDeptDao;
 
     @Pointcut("@annotation(com.king.common.annotation.DataFilter)")
     public void dataFilterCut() {
@@ -45,15 +51,13 @@ public class DataFilterAspect {
         		  //如果不是超级管理员，则只能查询本部门及子部门数据
         		SysUser user = (SysUser)object;
                 if(user.getUserId() != Constant.SUPER_ADMIN){
-                    Map map = (Map)params;
+                    @SuppressWarnings("unchecked")
+					HashMap<String, Object> map = (HashMap<String, Object>)params;
                     map.put("filterSql", getFilterSQL(user, point));
                 }
-        	}
-          
-
+        	}      
             return ;
         }
-
         throw new RRException("要实现数据权限接口的参数，只能是Map类型，且不能为NULL");
     }
 
@@ -68,20 +72,32 @@ public class DataFilterAspect {
         if(StringUtils.isNotBlank(tableAlias)){
             tableAlias +=  ".";
         }
-
-        //获取子部门ID
-        String subDeptIds = sysDeptService.getSubDeptIdList(user.getDeptId());
-
-        StringBuilder filterSql = new StringBuilder();
-        filterSql.append("and (");
-        filterSql.append(tableAlias).append("dept_id in(").append(subDeptIds).append(")");
-
-        //没有本部门数据权限，也能查询本人数据
-        if(dataFilter.user()){
-            filterSql.append(" or ").append(tableAlias).append("user_id=").append(user.getUserId());
+        Set<Long> deptIds = new HashSet<Long>();
+        StringBuilder listSubDeptId = new StringBuilder();
+        List<Long> list= sysUserRoleDao.queryRoleIdList(user.getUserId());
+        for(Long roleId:list){
+        	List<Long> deptId=sysRoleDeptDao.queryDeptIdList(roleId);
+        	deptIds.addAll(deptId);
         }
-        filterSql.append(")");
-
+        for(Long deptId:deptIds){
+        	 String subDeptIds = sysDeptService.getSubDeptIdList(deptId);
+        	 listSubDeptId.append(","+subDeptIds);
+        }
+        //获取子部门ID
+        StringBuilder filterSql = new StringBuilder();
+        if(listSubDeptId!=null && listSubDeptId.length()>0){
+        	  filterSql.append("and (");
+              filterSql.append(tableAlias).append("dept_id in(").append(listSubDeptId.toString().replaceFirst(",", "")).append(")");
+              filterSql.append(")");
+        }else{
+        	//没有数据权限或没勾选数据权限
+        	 filterSql.append("and 1=0");
+        	//没有本部门数据权限，也能查询本人数据
+            if(dataFilter.user()){
+                filterSql.append(" or ").append(tableAlias).append("user_id=").append(user.getUserId());
+            }
+        }
+      
         return filterSql.toString();
     }
 }
