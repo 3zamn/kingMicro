@@ -40,7 +40,7 @@ public class ScheduleJobController {
 	/**
 	 * 定时任务列表
 	 */
-	@ApiOperation(value = "定时任务列表")
+	@ApiOperation(value = "定时任务列表", notes = "权限编码（sys:schedule:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -53,7 +53,7 @@ public class ScheduleJobController {
 	/**
 	 * 定时任务信息
 	 */
-	@ApiOperation(value = "定时任务详情")
+	@ApiOperation(value = "定时任务详情", notes = "权限编码（sys:schedule:info）")
 	@GetMapping("/info/{jobId}")
 	@RequiresPermissions("sys:schedule:info")
 	public JsonResponse info(@PathVariable("jobId") Long jobId){
@@ -66,7 +66,7 @@ public class ScheduleJobController {
 	 * 保存定时任务
 	 */
 	@Log("保存定时任务")
-	@ApiOperation(value = "保存定时任务")
+	@ApiOperation(value = "保存定时任务", notes = "权限编码（sys:schedule:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:schedule:save")
 	public JsonResponse save(@RequestBody ScheduleJob scheduleJob){
@@ -81,7 +81,7 @@ public class ScheduleJobController {
 	 * 修改定时任务
 	 */
 	@Log("修改定时任务")
-	@ApiOperation(value = "修改定时任务")
+	@ApiOperation(value = "修改定时任务", notes = "权限编码（sys:schedule:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:schedule:update")
 	public JsonResponse update(@RequestBody ScheduleJob scheduleJob){
@@ -96,7 +96,7 @@ public class ScheduleJobController {
 	 * 删除定时任务
 	 */
 	@Log("删除定时任务")
-	@ApiOperation(value = "删除定时任务")
+	@ApiOperation(value = "删除定时任务", notes = "权限编码（sys:schedule:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:schedule:delete")
 	public JsonResponse delete(@RequestBody Long[] jobIds){
@@ -109,7 +109,7 @@ public class ScheduleJobController {
 	 * 立即执行任务
 	 */
 	@Log("立即执行任务")
-	@ApiOperation(value = "立即执行任务")
+	@ApiOperation(value = "立即执行任务", notes = "权限编码（sys:schedule:run）")
 	@PostMapping("/run")
 	@RequiresPermissions("sys:schedule:run")
 	public JsonResponse run(@RequestBody Long[] jobIds){
@@ -122,7 +122,7 @@ public class ScheduleJobController {
 	 * 暂停定时任务
 	 */
 	@Log("暂停定时任务")
-	@ApiOperation(value = "暂停执行任务")
+	@ApiOperation(value = "暂停执行任务", notes = "权限编码（sys:schedule:pause）")
 	@PostMapping("/pause")
 	@RequiresPermissions("sys:schedule:pause")
 	public JsonResponse pause(@RequestBody Long[] jobIds){
@@ -135,7 +135,7 @@ public class ScheduleJobController {
 	 * 恢复定时任务
 	 */
 	@Log("恢复定时任务")
-	@ApiOperation(value = "恢复定时任务")
+	@ApiOperation(value = "恢复定时任务", notes = "权限编码（sys:schedule:resume）")
 	@PostMapping("/resume")
 	@RequiresPermissions("sys:schedule:resume")
 	public JsonResponse resume(@RequestBody Long[] jobIds){

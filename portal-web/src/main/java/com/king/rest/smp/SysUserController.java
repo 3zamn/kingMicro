@@ -51,7 +51,7 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 所有用户列表
 	 */
-	@ApiOperation(value = "用户列表")
+	@ApiOperation(value = "用户列表", notes = "权限编码（sys:user:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:user:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -97,7 +97,7 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 用户信息
 	 */
-	@ApiOperation(value = "用户信息")
+	@ApiOperation(value = "用户信息", notes = "权限编码（sys:user:info）")
 	@GetMapping("/info/{userId}")
 	@RequiresPermissions("sys:user:info")
 	public JsonResponse info(@PathVariable("userId") Long userId){
@@ -114,7 +114,7 @@ public class SysUserController extends AbstractController {
 	 * 保存用户
 	 */
 	@Log("保存用户")
-	@ApiOperation(value = "保存用户")
+	@ApiOperation(value = "保存用户", notes = "权限编码（sys:user:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:user:save")
 	public JsonResponse save(@RequestBody SysUser user){
@@ -129,7 +129,7 @@ public class SysUserController extends AbstractController {
 	 * 修改用户
 	 */
 	@Log("修改用户")
-	@ApiOperation(value = "修改用户")
+	@ApiOperation(value = "修改用户", notes = "权限编码（sys:user:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:user:update")
 	public JsonResponse update(@RequestBody SysUser user){
@@ -144,7 +144,7 @@ public class SysUserController extends AbstractController {
 	 * 删除用户
 	 */
 	@Log("删除用户")
-	@ApiOperation(value = "删除用户")
+	@ApiOperation(value = "删除用户", notes = "权限编码（sys:user:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:user:delete")
 	public JsonResponse delete(@RequestBody Long[] userIds){

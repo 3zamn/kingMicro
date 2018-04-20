@@ -20,7 +20,8 @@ import com.king.common.utils.RedisKeys;
  */
 @Component
 public class RedisShiroSession extends EnterpriseCacheSessionDAO {
-    @Autowired
+    @SuppressWarnings("rawtypes")
+	@Autowired
     private RedisTemplate redisTemplate;
 
     //创建session
@@ -52,7 +53,8 @@ public class RedisShiroSession extends EnterpriseCacheSessionDAO {
     }
 
     //删除session
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected void doDelete(Session session) {
         super.doDelete(session);
         final String key = RedisKeys.getShiroSessionKey(session.getId().toString());
@@ -63,7 +65,8 @@ public class RedisShiroSession extends EnterpriseCacheSessionDAO {
         return (Session)redisTemplate.opsForValue().get(key);
     }
 
-    private void setShiroSession(String key, Session session){
+    @SuppressWarnings("unchecked")
+	private void setShiroSession(String key, Session session){
         redisTemplate.opsForValue().set(key, session);
         redisTemplate.expire(key, Constant.SHIRO_SESSION_EXPIRE, TimeUnit.MINUTES);
     }

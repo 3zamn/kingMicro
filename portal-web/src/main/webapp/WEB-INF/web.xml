@@ -12,6 +12,7 @@
 				classpath:/spring-mvc.xml
 				classpath:/spring-dubbo.xml	
 				classpath:/spring-redis.xml
+				classpath:/spring-mongodb.xml
 				classpath:/generator.xml
 			</param-value>
 		

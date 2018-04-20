@@ -10,6 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,7 +38,7 @@ public class SysGeneratorController {
 	 * 列表
 	 */
 	@ResponseBody
-	@RequestMapping("/list")
+	@GetMapping("/list")
 	@RequiresPermissions("sys:generator:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
@@ -49,7 +50,7 @@ public class SysGeneratorController {
 	/**
 	 * 生成代码
 	 */
-	@RequestMapping("/code")
+	@GetMapping("/code")
 	@RequiresPermissions("sys:generator:code")
 	public void code(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		//获取表名，不进行xss过滤

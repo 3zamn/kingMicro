@@ -36,7 +36,7 @@ public class ScheduleJobLogController {
 	/**
 	 * 定时任务日志列表
 	 */
-	@ApiOperation(value = "定时任务日志列表")
+	@ApiOperation(value = "定时任务日志列表", notes = "权限编码（sys:schedule:log）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:log")
 	public JsonResponse list(@RequestParam Map<String, Object> params){

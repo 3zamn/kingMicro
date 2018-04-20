@@ -1,18 +1,12 @@
 package com.king.utils;
 
-import io.swagger.annotations.ApiOperation;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.king.api.smp.SysConfigService;
 
@@ -49,38 +43,43 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public Docket api(){  
+    public Docket smpApi(){  
     	String enableSwagger =sysConfigService.getValue("enableSwagger");
         ParameterBuilder tokenPar = new ParameterBuilder();  
         List<Parameter> pars = new ArrayList<Parameter>();  
         tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();  
         pars.add(tokenPar.build());  
         return new Docket(DocumentationType.SWAGGER_2)  
+        	.groupName("smpApi")  
         	.enable(enableSwagger!=null?enableSwagger.equals("true"):false)
             .select()  
         //    .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)) 
-            .apis(RequestHandlerSelectors.any())  
+            .apis(RequestHandlerSelectors.basePackage("com.king.rest.smp"))  
+        //    .apis(RequestHandlerSelectors.any())  
          //.paths(regex("/api.*"))   
             .paths(PathSelectors.any())
             .build()  
             .globalOperationParameters(pars)  
-            .apiInfo(apiInfo());
+            .apiInfo(smpApiInfo());
           //  .enable(enableSwagger);  
     } 
-    private List<Parameter> setHeaderToken() {
-        ParameterBuilder tokenPar = new ParameterBuilder();
-        List<Parameter> pars = new ArrayList<>();
-        tokenPar.name("X-Auth-Token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
-        pars.add(tokenPar.build());
-        return pars;
-    }
-    private ApiInfo apiInfo() {
+  
+    private ApiInfo smpApiInfo() {
         return new ApiInfoBuilder()
             .title("King Fast Dev Platform")
             .description("接口文档。提示：Try it out时请输入当前用户的token")
             .termsOfServiceUrl("https://github.com/3zamn/kingMicro")
             .version("1.0")
             .build();
+    }
+    
+    
+    private List<Parameter> setHeaderToken() {
+        ParameterBuilder tokenPar = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<>();
+        tokenPar.name("X-Auth-Token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        pars.add(tokenPar.build());
+        return pars;
     }
 
 }

@@ -55,19 +55,24 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 所有菜单列表
 	 */
-	@ApiOperation(value = "菜单列表")
+	@ApiOperation(value = "菜单列表", notes = "权限编码（sys:menu:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:menu:list")
 	public List<SysMenu> list(){
-		List<SysMenu> menuList = sysMenuService.queryList(new HashMap<String, Object>());
-
+		List<SysMenu> menuList = null;
+		if(getUserId()==Constant.SUPER_ADMIN){
+			menuList=sysMenuService.queryList(new HashMap<String, Object>());
+		}else{
+			menuList=sysMenuService.queryUserList(getUserId());
+		}
 		return menuList;
 	}
+	
 	
 	/**
 	 * 选择菜单(添加、修改菜单)
 	 */
-	@ApiOperation(value = "菜单选择")
+	@ApiOperation(value = "菜单选择", notes = "权限编码（sys:menu:select）")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:menu:select")
 	public JsonResponse select(){
@@ -88,7 +93,7 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 菜单信息
 	 */
-	@ApiOperation(value = "菜单信息")
+	@ApiOperation(value = "菜单信息", notes = "权限编码（sys:menu:info）")
 	@GetMapping("/info/{menuId}")
 	@RequiresPermissions("sys:menu:info")
 	public JsonResponse info(@PathVariable("menuId") Long menuId){
@@ -100,7 +105,7 @@ public class SysMenuController extends AbstractController {
 	 * 保存
 	 */
 	@Log("保存菜单")
-	@ApiOperation(value = "保存菜单")
+	@ApiOperation(value = "保存菜单", notes = "权限编码（sys:menu:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:menu:save")
 	public JsonResponse save(@RequestBody SysMenu menu){
@@ -116,7 +121,7 @@ public class SysMenuController extends AbstractController {
 	 * 修改
 	 */
 	@Log("修改菜单")
-	@ApiOperation(value = "修改菜单")
+	@ApiOperation(value = "修改菜单", notes = "权限编码（sys:menu:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:menu:update")
 	public JsonResponse update(@RequestBody SysMenu menu){
@@ -132,7 +137,7 @@ public class SysMenuController extends AbstractController {
 	 * 删除
 	 */
 	@Log("删除菜单")
-	@ApiOperation(value = "删除菜单")
+	@ApiOperation(value = "删除菜单", notes = "权限编码（sys:menu:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")
 	public JsonResponse delete(long menuId){

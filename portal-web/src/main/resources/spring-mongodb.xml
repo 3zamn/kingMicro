@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:mongo="http://www.springframework.org/schema/data/mongo"  
+    xsi:schemaLocation="http://www.springframework.org/schema/context  
+          http://www.springframework.org/schema/context/spring-context.xsd  
+          http://www.springframework.org/schema/data/mongo 
+	      http://www.springframework.org/schema/data/mongo/spring-mongo-2.0.xsd      
+          http://www.springframework.org/schema/beans  
+          http://www.springframework.org/schema/beans/spring-beans.xsd">  
+
+	<!-- 配置文件模板，对应的模块只需要配置对应的bean即可 -->
+	<description>Mongo-Logger</description>
+	
+	<context:component-scan base-package="com.king.common.mongodb"/>
+	
+	<!-- 配置Mongodb服务（集群使用 replica-set方式） -->
+    <mongo:mongo-client  host="${mongo.hostport}"  credentials="${mongo.username}:${mongo.password}@${mongo.dbname}"  id="mongo">  
+	 <mongo:client-options
+	        connections-per-host="${mongo.connectionsPerHost}"
+	        threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
+	        connect-timeout="${mongo.connectTimeout}"
+	        max-wait-time="${mongo.maxWaitTime}"
+	        socket-keep-alive="${mongo.socketKeepAlive}"
+	        socket-timeout="${mongo.socketTimeout}"/>
+	</mongo:mongo-client>
+    
+    <!-- 配置Mongodb Factory -->
+    <mongo:db-factory id="mongoDbFactory"   mongo-ref="mongo"/>
+ <!--   <mongo:db-factory id="mongoDbFactory" dbname="${mongo.dbname}"  mongo-ref="mongo"/> -->
+    <!-- 配置多个MongoTemplate -->
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+    	<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"></constructor-arg>
+    </bean>
+ 
+    <!-- 映射转换器，扫描back-package目录下的文件，根据注释，把它们作为mongodb的一个collection的映射 -->  
+    <mongo:mapping-converter base-package="com.king.common.mongodb" />  
+  
+    <!-- mongodb bean的仓库目录，会自动扫描扩展了MongoRepository接口的接口进行注入 -->  
+    <mongo:repositories base-package="com.king.common.mongodb" />  
+    
+</beans>

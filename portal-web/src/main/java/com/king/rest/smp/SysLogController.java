@@ -36,7 +36,7 @@ public class SysLogController {
 	/**
 	 * 日志列表
 	 */
-	@ApiOperation(value = "日志列表")
+	@ApiOperation(value = "日志列表", notes = "权限编码（sys:log:list）")
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("sys:log:list")

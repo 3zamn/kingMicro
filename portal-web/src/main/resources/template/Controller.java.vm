@@ -34,7 +34,7 @@ public class ${className}Controller {
 	/**
 	 * 列表
 	 */
-	@ApiOperation(value = "列表")
+	@ApiOperation(value = "列表",notes = "权限编码（${pathName}:list）")
 	@RequestMapping("/list")
 	@RequiresPermissions("${pathName}:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -52,7 +52,7 @@ public class ${className}Controller {
 	/**
 	 * 信息
 	 */
-    @ApiOperation(value = "查询信息")
+    @ApiOperation(value = "查询信息",notes = "权限编码（${pathName}:info）")
 	@RequestMapping("/info/{${pk.attrname}}")
 	@RequiresPermissions("${pathName}:info")
 	public JsonResponse info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
@@ -64,7 +64,7 @@ public class ${className}Controller {
 	/**
 	 * 保存
 	 */
-	@ApiOperation(value = "保存")
+	@ApiOperation(value = "保存",notes = "权限编码（${pathName}:save）")
 	@RequestMapping("/save")
 	@RequiresPermissions("${pathName}:save")
 	public JsonResponse save(@RequestBody ${className} ${classname}){
@@ -76,7 +76,7 @@ public class ${className}Controller {
 	/**
 	 * 修改
 	 */
-	@ApiOperation(value = "保存")
+	@ApiOperation(value = "保存",notes = "权限编码（${pathName}:update）")
 	@RequestMapping("/update")
 	@RequiresPermissions("${pathName}:update")
 	public JsonResponse update(@RequestBody ${className} ${classname}){
@@ -88,7 +88,7 @@ public class ${className}Controller {
 	/**
 	 * 删除
 	 */
-	@ApiOperation(value = "删除")
+	@ApiOperation(value = "删除",notes = "权限编码（${pathName}:delete）")
 	@RequestMapping("/delete")
 	@RequiresPermissions("${pathName}:delete")
 	public JsonResponse delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
