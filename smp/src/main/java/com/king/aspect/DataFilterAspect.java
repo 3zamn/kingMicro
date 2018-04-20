@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.king.api.smp.SysDeptService;
 import com.king.common.exception.RRException;
-import com.king.common.utils.Constant;
+import com.king.common.utils.constant.Constant;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dao.SysRoleDeptDao;
 import com.king.dao.SysUserRoleDao;

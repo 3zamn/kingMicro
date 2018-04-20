@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ScheduleJobService;
-import com.king.common.utils.Constant;
 import com.king.common.utils.Page;
+import com.king.common.utils.constant.Constant;
 import com.king.dal.gen.model.smp.ScheduleJob;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 import com.king.dal.gen.service.BaseServiceImpl;

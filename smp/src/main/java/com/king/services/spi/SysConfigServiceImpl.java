@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.gson.Gson;
 import com.king.api.smp.SysConfigService;
 import com.king.common.exception.RRException;
-import com.king.common.utils.SysConfigRedis;
+import com.king.common.utils.redis.SysConfigRedis;
 import com.king.dal.gen.model.smp.SysConfig;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysConfigDao;

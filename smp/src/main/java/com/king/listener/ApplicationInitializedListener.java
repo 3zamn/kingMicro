@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.king.common.utils.EnttyMapperRedis;
-import com.king.common.utils.GenEnttyMapper;
-import com.king.common.utils.SpringContextUtils;
+import com.king.common.utils.entityMapper.EntityMapperRedis;
+import com.king.common.utils.entityMapper.GenEntityMapper;
+import com.king.common.utils.spring.SpringContextUtils;
 
 /**
  * spring 容器启动后加载解析表与实体的映射
@@ -21,7 +21,7 @@ public  class  ApplicationInitializedListener {
 	@Value("${king.redis.open}") 
 	private Boolean redisOpen;
 	@Autowired
-	private GenEnttyMapper genEnttyMapper;
+	private GenEntityMapper genEnttyMapper;
 	//建议开启redis
 	@PostConstruct
 	public  void loadEnttyMapper(){

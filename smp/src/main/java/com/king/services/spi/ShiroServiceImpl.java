@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ShiroService;
-import com.king.common.utils.Constant;
-import com.king.common.utils.RedisKeys;
-import com.king.common.utils.RedisUtils;
-import com.king.common.utils.SpringContextUtils;
+import com.king.common.utils.constant.Constant;
+import com.king.common.utils.redis.RedisKeys;
+import com.king.common.utils.redis.RedisUtils;
+import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysMenu;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dao.SysMenuDao;

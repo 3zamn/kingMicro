@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysUserService;
-import com.king.common.utils.Constant;
+import com.king.common.utils.constant.Constant;
 import com.king.dal.gen.model.smp.SysMenu;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysMenuDao;
