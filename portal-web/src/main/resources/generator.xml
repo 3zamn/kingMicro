@@ -80,12 +80,12 @@
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis.xml" /> 
-		<property name="mapperLocations" value="classpath:gen/SysGeneratorDao.xml" /> 
+		<property name="mapperLocations" value="classpath:*/**/*Dao.xml" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.king.gen.dao" />
+		<property name="basePackage" value="com.king.*.dao" />
 	</bean>
 
 </beans>

@@ -17,7 +17,7 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.Query;
-import com.king.common.validator.ValidatorUtils;
+import com.king.common.utils.validator.ValidatorUtils;
 import com.king.dal.gen.model.smp.ScheduleJob;
 
 import io.swagger.annotations.Api;

@@ -11,8 +11,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.king.common.exception.RRException;
 import com.king.common.utils.JsonResponse;
+import com.king.common.utils.exception.RRException;
 
 /**
  * 异常处理器
