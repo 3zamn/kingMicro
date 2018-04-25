@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.king.common.utils.entityMapper.EntityMapperRedis;
 import com.king.common.utils.entityMapper.GenEntityMapper;
-import com.king.common.utils.spring.SpringContextUtils;
 
 /**
  * spring 容器启动后加载解析表与实体的映射
