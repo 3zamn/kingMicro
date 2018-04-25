@@ -1,8 +1,8 @@
-package com.king.common.validator;
+package com.king.common.utils.validator;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.king.common.exception.RRException;
+import com.king.common.utils.exception.RRException;
 
 /**
  * 数据校验

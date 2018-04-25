@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.king.common.exception.RRException;
 import com.king.common.utils.constant.Constant;
+import com.king.common.utils.exception.RRException;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.thread.SerialNoHolder;

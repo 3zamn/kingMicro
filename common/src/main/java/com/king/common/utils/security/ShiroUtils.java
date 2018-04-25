@@ -5,7 +5,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
-import com.king.common.exception.RRException;
+import com.king.common.utils.exception.RRException;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.spring.SpringContextUtils;

@@ -171,7 +171,7 @@ public class GenEntityMapperMap implements EntityResolver{
 	 * 生成实体、表字段的映射map
 	 * @return
 	 */
-	public static HashMap<String, List<HashMap<String,String>>> generateEnttyMapper(){
+	/*public static HashMap<String, List<HashMap<String,String>>> generateEnttyMapper(){
 		 GenEntityMapper aa = new GenEntityMapper();           
 	        List<String> filenames=find(GenEntityMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml");
 	        //放在redis中会好效率一些，太多层了。
@@ -187,7 +187,7 @@ public class GenEntityMapperMap implements EntityResolver{
 				}	
 	        }
 	        return map;
-	}
+	}*/
 	
     public static void main(String[] args) {  
     	  long startTime = new Date().getTime();  
@@ -196,7 +196,7 @@ public class GenEntityMapperMap implements EntityResolver{
         List<String> filenames=find("src/main/resources/mapper", "\\S+\\.xml");
         //放在redis中会好效率一些，太多层了。
         HashMap<String, List<HashMap<String,String>>> map = new HashMap<String, List<HashMap<String,String>>>();
-        for(String filename:filenames){
+        /*for(String filename:filenames){
         	if (filename!=null && filename!="") {
         		String entity =filename.substring(filename.lastIndexOf("\\")+1, filename.length()).replace("Dao.xml", "");
         		filename=filename.replace("\\","/");
@@ -206,7 +206,7 @@ public class GenEntityMapperMap implements EntityResolver{
         		map.put(entity, getMapperResultByElement(e, entity));
 			}
    	
-        }
+        }*/
         System.out.println(map);
         List<HashMap<String, String>> ss=map.get("Dept");
         if(ss!=null){

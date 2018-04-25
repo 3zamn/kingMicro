@@ -10,8 +10,8 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.king.common.validator.group.AddGroup;
-import com.king.common.validator.group.UpdateGroup;
+import com.king.common.utils.validator.group.AddGroup;
+import com.king.common.utils.validator.group.UpdateGroup;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

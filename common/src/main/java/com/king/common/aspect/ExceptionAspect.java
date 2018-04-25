@@ -15,9 +15,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
-import com.king.common.exception.RRException;
 import com.king.common.mongodb.log.model.ExceptionLogVO;
 import com.king.common.mongodb.log.repo.ExceptionLogRepo;
+import com.king.common.utils.exception.RRException;
 import com.king.common.utils.network.HttpContextUtils;
 import com.king.common.utils.network.IPUtils;
 import com.king.common.utils.pattern.StringToolkit;

@@ -3,8 +3,17 @@ package com.king.common.utils.entityMapper;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.JarURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,7 +55,7 @@ public class GenEntityMapper implements EntityResolver{
      * @param property 属性名（对应的Java对象属性名） 
      * @return 
      */  
-    public static String getMapperColumnByProperty(String fileName, String id, String property){  
+  /*  public static String getMapperColumnByProperty(String fileName, String id, String property){  
         try {  
             SAXReader saxReader = new SAXReader();    
             saxReader.setEntityResolver(new GenEntityMapper());
@@ -73,7 +82,7 @@ public class GenEntityMapper implements EntityResolver{
             e.printStackTrace();  
         }  
         return null;  
-    }  
+    }  */
       
     /** 
      * 返回ResultMap对应Element对象（取2次以上的时候，建议先把Element对象找到，再根据此Element对象再去找column，效率高很多） 
@@ -84,11 +93,17 @@ public class GenEntityMapper implements EntityResolver{
      * </p> 
      * @return 
      */  
-    public   Element getResultMapElement(String fileName, String id){  
+    public   Element getResultMapElement(String fileName, String id,Boolean jar){  
         try {  
             SAXReader saxReader = new SAXReader();    
             saxReader.setEntityResolver(new GenEntityMapper());//去掉dtd检验,要不然卡爆了、还可能网络连接超时。因为联网下载关联的dtd
-            Document document = saxReader.read(GenEntityMapper.this.getClass().getResourceAsStream(fileName));    
+            Document document = null;
+            System.out.println(fileName);
+            if(jar){
+            	 document =saxReader.read(GenEntityMapper.class.getClassLoader().getResourceAsStream(fileName));    
+            }else{
+            	 document =saxReader.read(GenEntityMapper.this.getClass().getResourceAsStream(fileName));    
+            }    
             if(document != null){  
                 Element root = document.getRootElement();  
                 if(root != null){  
@@ -152,6 +167,8 @@ public class GenEntityMapper implements EntityResolver{
 	public static List<String>  find(String path, String reg) {
 		Pattern pat = Pattern.compile(reg);
 		File file = new File(path);
+	//	System.out.println(file);
+	//	System.out.println(file.getPath());
 		File[] arr = file.listFiles();
 		for (int i = 0; i < arr.length; i++) {
 			// 判断是否是文件夹，如果是的话，再调用一下find方法
@@ -175,26 +192,54 @@ public class GenEntityMapper implements EntityResolver{
 	 * 生成实体、表字段的映射map
 	 * @return
 	 */
+	@SuppressWarnings("null")
 	public  void  generateEnttyMapper(){
-//		 GenEnttyMapper aa = new GenEnttyMapper();           
-		   System.out.println("路径："+this.getClass().getClassLoader().getResource("mapper").getPath());
-		   System.out.println("路径珊珊珊："+find(GenEntityMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml"));
-	        List<String> filenames=find(GenEntityMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml");
-	        //放在redis中会好效率一些，太多层了。
-	        for(String filename:filenames){
-	        	if (filename!=null && filename!="") {
-	        		String entity =filename.substring(filename.lastIndexOf("\\")+1, filename.length()).replace("Dao.xml", "");
-	        		filename=filename.replace("\\","/");
-	        		String str ="/mapper";
-	        		String relePath = filename.substring(filename.indexOf(str), filename.length());
-	        		Element e = getResultMapElement(relePath,"BaseResultMap");     	
-	        		getMapperResultByElement(e, entity);
-				}	
-	        }
-
+		    URL url=Thread.currentThread().getContextClassLoader().getResource("mapper");
+		    String protocol =url.getProtocol();
+		    if("jar".equals(protocol)){
+		    	try {
+					JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
+					JarFile jarFile = jarURLConnection.getJarFile();  
+			        System.out.println("jarFile:" + jarFile.getName()); 		        
+			        Enumeration<JarEntry> jarEntries = jarFile.entries(); 
+			    //   List<String> mapperfiles=null;
+			        while(jarEntries.hasMoreElements()){
+			            JarEntry entry = jarEntries.nextElement();               
+			            if (entry.getName().trim().startsWith("mapper")&& !entry.isDirectory()) {
+			            	System.out.println("mapper："+entry.getName());     
+			            	String name=entry.getName();
+			            	String entity =name.substring(name.lastIndexOf("/")+1, name.length()).replace("Dao.xml", "");
+			            	System.out.println(entity);
+			        		String filename=entry.getName().substring(entry.getName().lastIndexOf("/")+1, entry.getName().length());
+			        		System.out.println(filename);
+			        		Element e = getResultMapElement(entry.getName(),"BaseResultMap",true);     	
+			        		getMapperResultByElement(e, entity);
+			            }
+			        }
+			       
+			        
+			        jarFile.close();	       
+			       	       
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  
+		    }else if("file".equals(protocol)){
+		    	 List<String> filenames=find(GenEntityMapper.class.getClassLoader().getResource("mapper").getPath(), "\\S+\\.xml");
+			        //放在redis中会好效率一些，太多层了。
+			        for(String filename:filenames){
+			        	if (filename!=null && filename!="") {
+			        		String entity =filename.substring(filename.lastIndexOf("\\")+1, filename.length()).replace("Dao.xml", "");
+			        		filename=filename.replace("\\","/");
+			        		String str ="/mapper";
+			        		String relePath = filename.substring(filename.indexOf(str), filename.length());
+			        	//	System.out.println("entity:"+entity);
+			        	//	System.out.println("relePath:"+relePath);
+			        		Element e = getResultMapElement(relePath,"BaseResultMap",false);     	
+			        		getMapperResultByElement(e, entity);
+						}	
+			        }
+		    }     
 	}
-	
-
-  
-      
+ 
 }  
