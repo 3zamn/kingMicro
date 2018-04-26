@@ -20,6 +20,9 @@
 			<if test="roleName != null and roleName.trim() != ''">
 				and r.`role_name` like concat('%',#{roleName},'%')
 			</if>
+			<if test="createUserId != null ">
+				and r.`role_id` not in (select us.role_id FROM sys_user_role us where us.`user_id` =#{createUserId})
+			</if>
 
 			<!--  数据过滤  -->
 			${filterSql}
@@ -43,7 +46,9 @@
 			<if test="roleName != null and roleName.trim() != ''">
 				and r.`role_name` like concat('%',#{roleName},'%')
 			</if>
-
+			<if test="createUserId != null ">
+				and r.`role_id` not in (select us.role_id FROM sys_user_role us where us.`user_id` =#{createUserId})
+			</if>
 			<!--  数据过滤  -->
 			${filterSql}
 		</where>

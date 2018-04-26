@@ -103,26 +103,31 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 			user.setPassword(new Sha256Hash(user.getPassword(), user.getSalt()).toHex());
 		}
 		sysUserDao.update(user);	
-		//保存用户与角色关系
-		sysRoleService.saveOrUpdate_R_U(user.getUserId(), user.getRoleIdList());
-		String permKey =RedisKeys.getPermsKey(user.getUserId(),user.getToken());
-    	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
-    	String pattern = RedisKeys.getPermsKey(user.getUserId(),"");
-    	Set<String> permKeys=redisUtils.likeKey(pattern);
-    	Iterator<String> its = permKeys.iterator();  
-    	while (its.hasNext()) {
-    		permKey=its.next();
-    		redisUtils.delete(permKey);    	
-      	}
-    	Iterator<String> is = permKeys.iterator();  
-    	while (is.hasNext()) {
-    		permKey=is.next();
-    		Set<String> perms=shiroService.getUserPermissions(user.getUserId(), false,user.getToken());
-        	Iterator<String> it = perms.iterator();  
-        	while (it.hasNext()) {  
-        	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
-        	} 
-      	}	
+		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
+		//保存用户与角色关系/不能修改当前用户角色
+		String tokenKey = RedisKeys.getTokenKey(user.getToken());
+		SysUserToken sysUserToken = redisUtils.get(tokenKey, SysUserToken.class);
+		if(sysUserToken!=null && !sysUserToken.getUserId().equals(user.getUserId())){
+			sysRoleService.saveOrUpdate_R_U(user.getUserId(), user.getRoleIdList());
+			String permKey =RedisKeys.getPermsKey(user.getUserId(),user.getToken()); 
+	    	String pattern = RedisKeys.getPermsKey(user.getUserId(),"");
+	    	Set<String> permKeys=redisUtils.likeKey(pattern);
+	    	Iterator<String> its = permKeys.iterator();  
+	    	while (its.hasNext()) {
+	    		permKey=its.next();
+	    		redisUtils.delete(permKey);    	
+	      	}
+	    	Iterator<String> is = permKeys.iterator();  
+	    	while (is.hasNext()) {
+	    		permKey=is.next();
+	    		Set<String> perms=shiroService.getUserPermissions(user.getUserId(), false,user.getToken());
+	        	Iterator<String> it = perms.iterator();  
+	        	while (it.hasNext()) {  
+	        	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
+	        	} 
+	      	}	
+		}	
+		
 	}
 
 	@Override

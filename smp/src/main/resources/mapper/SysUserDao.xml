@@ -26,7 +26,7 @@
 			<!-- <if test="username != null and username.trim() != ''">
 				and u.`username` like concat('%',#{username},'%')
 			</if> -->
-			<if test="searchKey != null and searchKey.trim() != ''">
+			<if test="searchSql!= null and searchSql.trim() != ''">
 				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
 				${searchSql}
 			</if>
@@ -53,7 +53,7 @@
 			<!-- <if test="username != null and username.trim() != ''">
 				and u.`username` like concat('%',#{username},'%')
 			</if> -->
-			<if test="searchKey != null and searchKey.trim() != ''">
+			<if test="searchSql!= null and searchSql.trim() != ''">
 				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
 				${searchSql}
 			</if>

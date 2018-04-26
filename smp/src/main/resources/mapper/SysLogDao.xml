@@ -20,7 +20,7 @@
 	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysLog">
 		select * from sys_log 
 		<where>
-			<if test="searchKey != null and searchKey.trim() != ''">
+			<if test="searchSql!= null and searchSql.trim() != ''">
 				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
 				${searchSql}
 			</if>
@@ -34,7 +34,7 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from sys_log 
 		<where>
-			<if test="searchKey != null and searchKey.trim() != ''">
+			<if test="searchSql!= null and searchSql.trim() != ''">
 				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
 				${searchSql}
 			</if>
