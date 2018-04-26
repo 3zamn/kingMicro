@@ -31,6 +31,12 @@ public class RedisKeys {
         return "serialNo:" + key;
     }
     
+    /**
+     * 根据用户id获取权限key
+     * @param userId
+     * @param key
+     * @return
+     */
     public static String getPermsKey(Long userId,String key){
         return "perms:"+userId+":" + key;
     }

@@ -98,7 +98,7 @@ public class GenEntityMapper implements EntityResolver{
             SAXReader saxReader = new SAXReader();    
             saxReader.setEntityResolver(new GenEntityMapper());//去掉dtd检验,要不然卡爆了、还可能网络连接超时。因为联网下载关联的dtd
             Document document = null;
-            System.out.println(fileName);
+        //    System.out.println(fileName);
             if(jar){
             	 document =saxReader.read(GenEntityMapper.class.getClassLoader().getResourceAsStream(fileName));    
             }else{
@@ -200,18 +200,18 @@ public class GenEntityMapper implements EntityResolver{
 		    	try {
 					JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
 					JarFile jarFile = jarURLConnection.getJarFile();  
-			        System.out.println("jarFile:" + jarFile.getName()); 		        
+			 //       System.out.println("jarFile:" + jarFile.getName()); 		        
 			        Enumeration<JarEntry> jarEntries = jarFile.entries(); 
 			    //   List<String> mapperfiles=null;
 			        while(jarEntries.hasMoreElements()){
 			            JarEntry entry = jarEntries.nextElement();               
 			            if (entry.getName().trim().startsWith("mapper")&& !entry.isDirectory()) {
-			            	System.out.println("mapper："+entry.getName());     
+			           // 	System.out.println("mapper："+entry.getName());     
 			            	String name=entry.getName();
 			            	String entity =name.substring(name.lastIndexOf("/")+1, name.length()).replace("Dao.xml", "");
-			            	System.out.println(entity);
+			            //	System.out.println(entity);
 			        		String filename=entry.getName().substring(entry.getName().lastIndexOf("/")+1, entry.getName().length());
-			        		System.out.println(filename);
+			        	//	System.out.println(filename);
 			        		Element e = getResultMapElement(entry.getName(),"BaseResultMap",true);     	
 			        		getMapperResultByElement(e, entity);
 			            }

@@ -57,7 +57,7 @@ public class ExceptionAspect {
             	String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
             	Object appcode= redisUtils.hget(serialNoKey, "appcode");
             	String logCode = appcode + "-" + DateTimeUtils.currentTimeMillis();
-            	addExceptionLog(e.getMessage(), point,appcode.toString(), logCode);
+            	addExceptionLog(e.getMessage(), point,appcode!=null?appcode.toString():null, logCode);
                 logger.error(String.format("错误流水号【%s】", serialNo)+String.format("服务【%s】", appcode)+String.format("方法【%s】异常！", point.getSignature()));
                 throw new RRException(String.format("服务调用时【%s】发生未知错误，错误流水号【%s】，请联系管理员", appcode,serialNo),500,e);
             }
@@ -86,7 +86,7 @@ public class ExceptionAspect {
 		//	vo.setIp(IPUtils.getIpAddr(request));
 			vo.setLogCode(logCode);
 			vo.setExceptionMsg(errMsg);
-			exceptionLogRepo.insert(vo);
+		//	exceptionLogRepo.insert(vo);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

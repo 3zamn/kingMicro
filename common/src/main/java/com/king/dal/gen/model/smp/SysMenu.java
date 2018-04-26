@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @date 2017年12月29日
  */
 @ApiModel("菜单管理")
-public class SysMenu implements Serializable {
+public class SysMenu implements Serializable ,Comparable<SysMenu>{
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -204,5 +204,9 @@ public class SysMenu implements Serializable {
 
 	public void setOpen(Boolean open) {
 		this.open = open;
+	}
+	@Override
+	public int compareTo(SysMenu o) {
+		 return this.orderNum.compareTo(o.orderNum);  
 	}
 }

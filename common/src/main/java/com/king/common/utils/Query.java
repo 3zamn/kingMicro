@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -64,6 +65,7 @@ public class Query extends LinkedHashMap<String, Object> {
         this.putAll(params);
         Object mutlSql ="";//多列查询
         Object likeSql ="";//模糊查询
+        Object betweenSql ="";//范围查询
         Object searchSql ="";
         //多字段模糊查询
         if(params.get("keyParam")!=null && params.get("searchKey")!=null){
@@ -94,32 +96,93 @@ public class Query extends LinkedHashMap<String, Object> {
         }
         //多列查询
         List<String> attributes = new ArrayList<String>();
+        List<String> between_ttr = new ArrayList<String>();//范围查询
+        List<String> equal_ttr = new ArrayList<String>();//精确查询
 		Iterator<Map.Entry<String, Object>> it = params.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<String, Object> entry = it.next();
 			if((SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).isExistAttribute(enttyName, entry.getKey()))
 				if(entry.getValue()!=null && !entry.getValue().toString().trim().equals(""))
 					attributes.add(entry.getKey());
-		}
-		int j=0;
+		}	
 		for(String attribute:attributes){
-				j=j+1;
-				JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
-				String column = json.getString("column");
-				if(column!=null && column!=""){   	
-     			if(j<attributes.size()){
-     				mutlSql +=column +" = "+"'"+params.get(attribute)+"'" +" and ";
-     			}else {
-     				mutlSql +=column +" = "+"'"+params.get(attribute)+"'";
-					}			
+			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
+			String column = json.getString("column");
+			if(column!=null && column!=""){   	
+				Object strobj = params.get(attribute);
+				Boolean isJson =false;
+				try {
+					JSONObject.parseObject(strobj.toString());
+					isJson=true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					isJson=false;
 				}
+				if(isJson){
+					between_ttr.add(attribute);
+				}else{
+					equal_ttr.add(attribute);
+				}
+			}
+					
  		}
-		if(!likeSql.toString().trim().equals("") && !mutlSql.toString().trim().equals("")){
-			searchSql =likeSql+" and "+ "("+mutlSql+")";
-		}else{
-			searchSql =likeSql.toString() + mutlSql.toString();
+		int j=0;
+		for(String attribute:between_ttr){//范围查询
+			j=j+1;		
+			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
+			String column = json.getString("column");
+			Object strobj = params.get(attribute);
+			JSONObject jsonObject = JSONObject.parseObject(strobj.toString());
+			if(j<between_ttr.size()){
+				betweenSql += column + " between  " +"'"+jsonObject.getString("begin")+"'" +"  and  " +"'"+ jsonObject.getString("end")+"'" +" and ";
+ 			}else {
+ 				betweenSql += column + " between  " +"'"+jsonObject.getString("begin")+"'" +"  and  " +"'"+ jsonObject.getString("end")+"'" ;
+			}
 		}
-        this.put("searchSql", searchSql);
+		int i=0;
+		for(String attribute:equal_ttr){//精确查询
+			i=i+1;		
+			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
+			String column = json.getString("column");
+			if(i<equal_ttr.size()){
+ 				mutlSql +=column +" = "+"'"+params.get(attribute)+"'" +" and ";
+ 			}else {
+ 				mutlSql +=column +" = "+"'"+params.get(attribute)+"'";
+			}
+		}
+		StringBuffer like = new StringBuffer();
+		StringBuffer equal = new StringBuffer();
+		StringBuffer mutl = new StringBuffer();
+		if(StringUtils.isNotBlank(likeSql.toString())){
+			like.append("(").append(likeSql).append(")");
+		}
+		if(StringUtils.isNotBlank(mutlSql.toString())){
+			equal.append("(").append(mutlSql).append(")");
+		}
+		if(StringUtils.isNotBlank(betweenSql.toString())){
+			mutl.append("(").append(betweenSql).append(")");
+		}
+		//组合查询语句
+		if(StringUtils.isBlank(like.toString())){
+			if(StringUtils.isNotBlank(equal.toString()) && StringUtils.isNotBlank(mutl.toString())){
+				searchSql =  equal +" and "+ mutl;
+			}else if(StringUtils.isBlank(equal.toString()) && StringUtils.isNotBlank(mutl.toString())){
+				searchSql =  mutl;
+			}else if(StringUtils.isNotBlank(equal.toString()) && StringUtils.isBlank(mutl.toString())){
+				searchSql =  equal;
+			}
+		}else{
+			if(StringUtils.isNotBlank(equal.toString()) && StringUtils.isNotBlank(mutl.toString())){
+				searchSql = like +" and "+ equal +" and "+ mutl;
+			}else if(StringUtils.isBlank(equal.toString()) && StringUtils.isNotBlank(mutl.toString())){
+				searchSql = like +" and "+  mutl;
+			}else if(StringUtils.isNotBlank(equal.toString()) && StringUtils.isBlank(mutl.toString())){
+				searchSql = like +" and "+  equal;
+			}else{
+				searchSql = like;
+			}
+		}
+        this.put("searchSql", searchSql.toString());
         //分页参数
         this.page = Integer.parseInt(params.get("page").toString());
         this.limit = Integer.parseInt(params.get("limit").toString());

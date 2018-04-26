@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @date 2017年12月29日
  */
 @ApiModel("部门管理")
-public class SysDept implements Serializable {
+public class SysDept implements Serializable ,Comparable<SysDept>{
 	private static final long serialVersionUID = 1L;
 	
 	//部门ID
@@ -123,6 +123,11 @@ public class SysDept implements Serializable {
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	@Override
+	public int compareTo(SysDept o) {
+		 return this.orderNum.compareTo(o.orderNum);  
 	}
 	
 }
