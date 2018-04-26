@@ -65,8 +65,10 @@ var vm = new Vue({
         showList: true,
         title:null,
         roleList:{},
+  //      currentUserId:null,
         user:{
-            status:1,
+        	userId:null,
+        	status:1,
             deptId:null,
             deptName:null,
             roleIdList:[]
@@ -104,13 +106,15 @@ var vm = new Vue({
             if(userId == null){
                 return ;
             }
-
+        //    debugger
             vm.showList = false;
             vm.title = "修改";
-
+            //清空上次权限数据
+            vm.roleList={};
+            //获取当前用户、当前用户角色不能修改
+            vm.getCurrentUser(userId);
             vm.getUser(userId);
-            //获取角色信息
-            this.getRoleList();
+            //获取角色信息  
         },
         del: function () {
             var userIds = getSelectedRows();
@@ -154,11 +158,20 @@ var vm = new Vue({
                 }
             });
         },
+        getCurrentUser: function(userId){
+			$.getJSON(baseURL + "sys/user/info", function(r){
+			//	debugger
+			//	vm.currentUserId = r.user.userId;
+				  if(parseInt(userId) != r.user.userId){	
+	            	  vm.getRoleList();
+	            }
+			});
+		},
         getUser: function(userId){
             $.get(baseURL + "sys/user/info/"+userId, function(r){
                 vm.user = r.user;
                 vm.user.password = null;
-
+           //     debugger
                 vm.getDept();
             });
         },
@@ -191,7 +204,10 @@ var vm = new Vue({
         reload: function () {
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
-			var keyParam = new Array();
+            //范围查询
+            var createTime = {"begin":"2018-03-11","end":"2018-04-12"}
+            //多列模糊查询
+			var keyParam = new Array();		
 		//	debugger
 			keyParam.push('username');
 			keyParam.push('email');
@@ -199,6 +215,7 @@ var vm = new Vue({
 			var jsonString = JSON.stringify(keyParam);
 			$("#jqGrid").jqGrid('setGridParam',{ 
 				postData:{'searchKey': vm.q.key,'keyParam':jsonString},
+			/*	postData:{'searchKey': vm.q.key,'keyParam':jsonString,'createTime':JSON.stringify(createTime),'username':vm.q.username},*/
                 page:page
             }).trigger("reloadGrid");
         }
