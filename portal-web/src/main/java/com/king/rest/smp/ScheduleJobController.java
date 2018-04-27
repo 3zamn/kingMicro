@@ -47,7 +47,7 @@ public class ScheduleJobController {
 		//查询列表数据
 		Query query = new Query(params,ScheduleJob.class.getSimpleName());
 		Page page = scheduleJobService.getPage(query);
-		return JsonResponse.success().put("page", page);
+		return JsonResponse.success(page);
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class ScheduleJobController {
 	public JsonResponse info(@PathVariable("jobId") Long jobId){
 		ScheduleJob schedule = scheduleJobService.queryObject(jobId);
 		
-		return JsonResponse.success().put("schedule", schedule);
+		return JsonResponse.success(schedule);
 	}
 	
 	/**

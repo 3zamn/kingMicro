@@ -44,7 +44,7 @@ public class SysGeneratorController {
 		//查询列表数据
 		Query query = new Query(params);
 		Page page = sysGeneratorService.getPage(query);
-		return JsonResponse.success().put("page", page);
+		return JsonResponse.success(page);
 	}
 	
 	/**

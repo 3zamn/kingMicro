@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.ShiroService;
 import com.king.api.smp.SysMenuService;
 import com.king.common.annotation.Log;
@@ -49,7 +50,10 @@ public class SysMenuController extends AbstractController {
 	public JsonResponse nav(){
 		List<SysMenu> menuList = sysMenuService.getUserMenuList(getUserId());
 		Set<String> permissions = shiroService.getUserPermissions(getUserId(),true,TokenHolder.token.get());
-		return JsonResponse.success().put("menuList", menuList).put("permissions", permissions);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("menuList", menuList);
+		jsonObject.put("permissions", permissions);
+		return JsonResponse.success(jsonObject);
 	}
 	
 	/**
@@ -86,8 +90,7 @@ public class SysMenuController extends AbstractController {
 		root.setParentId(-1L);
 		root.setOpen(true);
 		menuList.add(root);
-		
-		return JsonResponse.success().put("menuList", menuList);
+		return JsonResponse.success(menuList);
 	}
 	
 	/**
@@ -98,7 +101,7 @@ public class SysMenuController extends AbstractController {
 	@RequiresPermissions("sys:menu:info")
 	public JsonResponse info(@PathVariable("menuId") Long menuId){
 		SysMenu menu = sysMenuService.queryObject(menuId);
-		return JsonResponse.success().put("menu", menu);
+		return JsonResponse.success(menu);
 	}
 	
 	/**

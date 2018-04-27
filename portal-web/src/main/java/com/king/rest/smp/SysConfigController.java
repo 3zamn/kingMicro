@@ -48,7 +48,7 @@ public class SysConfigController extends AbstractController {
 		//查询列表数据
 		Query query = new Query(params,SysConfig.class.getSimpleName());
 		Page page = sysConfigService.getPage(query);	
-		return JsonResponse.success().put("page", page);
+		return JsonResponse.success(page);
 	}
 	
 	
@@ -61,7 +61,7 @@ public class SysConfigController extends AbstractController {
 	public JsonResponse info(@PathVariable("id") Long id){
 		SysConfig config = sysConfigService.queryObject(id);
 		
-		return JsonResponse.success().put("config", config);
+		return JsonResponse.success(config);
 	}
 	
 	/**

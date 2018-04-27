@@ -59,7 +59,7 @@ public class SysUserController extends AbstractController {
 		Query query = new Query(params,SysUser.class.getSimpleName());
 		Page page = sysUserService.getPage(query);
 		
-		return JsonResponse.success().put("page", page);
+		return JsonResponse.success(page);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "登录信息")
 	@GetMapping("/info")
 	public JsonResponse info(){
-		return JsonResponse.success().put("user", getUser());
+		return JsonResponse.success(getUser());
 	}
 	
 	/**
@@ -107,7 +107,7 @@ public class SysUserController extends AbstractController {
 		List<Long> roleIdList = sysRoleService.queryRoleIdList(userId);
 		user.setRoleIdList(roleIdList);
 		
-		return JsonResponse.success().put("user", user);
+		return JsonResponse.success(user);
 	}
 	
 	/**

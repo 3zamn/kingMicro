@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.SysDeptService;
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysRoleService;
@@ -60,8 +61,12 @@ public class SysRoleController extends AbstractController {
 		//查询列表数据
 		Query query = new Query(params,SysRole.class.getSimpleName());
 		Page page = sysRoleService.getPage(query);
-		
-		return JsonResponse.success().put("page", page);
+/*		
+		List<SysRole> list = sysRoleService.queryList(query);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("list", list);
+		jsonObject.put("page", page);*/
+		return JsonResponse.success(page);
 	}
 	
 	/**
@@ -74,7 +79,7 @@ public class SysRoleController extends AbstractController {
 		Query query = new Query(new HashMap<String, Object>());
 		List<SysRole> list = sysRoleService.queryList(query);
 		
-		return JsonResponse.success().put("list", list);
+		return JsonResponse.success(list);
 	}
 	
 	/**
@@ -94,7 +99,7 @@ public class SysRoleController extends AbstractController {
 		List<Long> deptIdList = sysDeptService.queryDeptIdList(roleId);
 		role.setDeptIdList(deptIdList);
 		
-		return JsonResponse.success().put("role", role);
+		return JsonResponse.success(role);
 	}
 	
 	/**

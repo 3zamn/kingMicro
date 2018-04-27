@@ -76,7 +76,7 @@ public class ApiLoginController {
     @GetMapping("userInfo")
     @ApiOperation("获取用户信息")
     public JsonResponse userInfo(@LoginUser UserEntity user){
-        return JsonResponse.success().put("user", user);
+        return JsonResponse.success(user);
     }
     
 
@@ -89,7 +89,7 @@ public class ApiLoginController {
     @GetMapping("userId")
     @ApiOperation("获取用户ID")
     public JsonResponse userInfo(@RequestAttribute("userId") Integer userId){
-        return JsonResponse.success().put("userId", userId);
+        return JsonResponse.success(userId);
     }
 
 }

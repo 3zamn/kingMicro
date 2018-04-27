@@ -44,7 +44,7 @@ public class SysLogController {
 		//查询列表数据
 		Query query = new Query(params,SysLog.class.getSimpleName());
 		Page page = sysLogService.getPage(query);	
-		return JsonResponse.success().put("page", page);
+		return JsonResponse.success(page);
 	}
 	
 }

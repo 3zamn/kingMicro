@@ -43,7 +43,7 @@ public class ScheduleJobLogController {
 		//查询列表数据
 		Query query = new Query(params,ScheduleJobLog.class.getSimpleName());	
 		Page page = scheduleJobService.getPageScheduleJobLog(query);
-		return JsonResponse.success().put("page", page);
+		return JsonResponse.success(page);
 	}
 	
 	/**
@@ -54,6 +54,6 @@ public class ScheduleJobLogController {
 	public JsonResponse info(@PathVariable("logId") Long logId){
 		ScheduleJobLog log = scheduleJobService.queryScheduleJobLog(logId);
 		
-		return JsonResponse.success().put("log", log);
+		return JsonResponse.success(log);
 	}
 }

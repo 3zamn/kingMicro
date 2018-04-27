@@ -71,7 +71,7 @@ public class SysDeptController extends AbstractController {
 			deptList.add(root);
 		}
 
-		return JsonResponse.success().put("deptList", deptList);
+		return JsonResponse.success(deptList);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class SysDeptController extends AbstractController {
 			deptId = dept.getParentId();
 		}
 
-		return JsonResponse.success().put("deptId", deptId);
+		return JsonResponse.success(deptId);
 	}
 	
 	/**
@@ -99,7 +99,7 @@ public class SysDeptController extends AbstractController {
 	public JsonResponse info(@PathVariable("deptId") Long deptId){
 		SysDept dept = sysDeptService.queryObject(deptId);
 		
-		return JsonResponse.success().put("dept", dept);
+		return JsonResponse.success(dept);
 	}
 	
 	/**
