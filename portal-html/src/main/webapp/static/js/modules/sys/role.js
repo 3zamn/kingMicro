@@ -19,10 +19,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
         },
         prmNames : {
             page:"page",
@@ -159,7 +159,7 @@ var vm = new Vue({
         },
         getRole: function(roleId){
             $.get(baseURL + "sys/role/info/"+roleId, function(r){
-                vm.role = r.role;
+                vm.role = r.data;
 
                 //勾选角色所拥有的菜单
                 var menuIds = vm.role.menuIdList;

@@ -25,10 +25,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
         },
         prmNames : {
             page:"page", 
@@ -162,14 +162,14 @@ var vm = new Vue({
 			$.getJSON(baseURL + "sys/user/info", function(r){
 			//	debugger
 			//	vm.currentUserId = r.user.userId;
-				  if(parseInt(userId) != r.user.userId){	
+				  if(parseInt(userId) != r.data.userId){	
 	            	  vm.getRoleList();
 	            }
 			});
 		},
         getUser: function(userId){
             $.get(baseURL + "sys/user/info/"+userId, function(r){
-                vm.user = r.user;
+                vm.user = r.data;
                 vm.user.password = null;
            //     debugger
                 vm.getDept();
@@ -177,7 +177,7 @@ var vm = new Vue({
         },
         getRoleList: function(){
             $.get(baseURL + "sys/role/select", function(r){
-                vm.roleList = r.list;
+                vm.roleList = r.data;
             });
         },
         deptTree: function(){
@@ -205,7 +205,7 @@ var vm = new Vue({
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam','page');
             //范围查询
-            var createTime = {"begin":"2018-03-11","end":"2018-04-12"}
+            var createTime = {"begin":"2018-03-11","end":"2018-05-12"}
             //多列模糊查询
 			var keyParam = new Array();		
 		//	debugger

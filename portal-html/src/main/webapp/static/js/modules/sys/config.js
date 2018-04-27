@@ -18,10 +18,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
         },
         prmNames : {
             page:"page", 
@@ -63,7 +63,7 @@ var vm = new Vue({
 			$.get(baseURL + "sys/config/info/"+id, function(r){
                 vm.showList = false;
                 vm.title = "修改";
-                vm.config = r.config;
+                vm.config = r.data;
             });
 		},
 		del: function () {

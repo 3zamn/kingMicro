@@ -45,14 +45,14 @@ var vm = new Vue({
 	methods: {
 		getMenuList: function () {
 			$.getJSON(baseURL + "sys/menu/nav", function(r){
-				vm.menuList = r.menuList;
+				vm.menuList = r.data.menuList;
 			//	debugger
-                window.permissions = r.permissions;
+                window.permissions = r.data.permissions;
 			});
 		},
 		getUser: function(){
 			$.getJSON(baseURL + "sys/user/info", function(r){
-				vm.user = r.user;
+				vm.user = r.data;
 			});
 		},
 		updatePassword: function(){

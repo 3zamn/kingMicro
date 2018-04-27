@@ -25,10 +25,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
         },
         prmNames : {
             page:"page", 
@@ -70,7 +70,7 @@ var vm = new Vue({
 			$.get(baseURL + "sys/schedule/info/"+jobId, function(r){
 				vm.showList = false;
                 vm.title = "修改";
-				vm.schedule = r.schedule;
+				vm.schedule = r.data;
 			});
 		},
 		saveOrUpdate: function () {

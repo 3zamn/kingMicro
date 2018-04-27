@@ -29,7 +29,7 @@ var vm = new Vue({
         getMenu: function(){
             //加载菜单树
             $.get(baseURL + "sys/menu/select", function(r){
-                ztree = $.fn.zTree.init($("#menuTree"), setting, r.menuList);
+                ztree = $.fn.zTree.init($("#menuTree"), setting, r.data);
                 var node = ztree.getNodeByParam("menuId", vm.menu.parentId);
                 ztree.selectNode(node);
 
@@ -51,7 +51,7 @@ var vm = new Vue({
             $.get(baseURL + "sys/menu/info/"+menuId, function(r){
                 vm.showList = false;
                 vm.title = "修改";
-                vm.menu = r.menu;
+                vm.menu = r.data;
 
                 vm.getMenu();
             });

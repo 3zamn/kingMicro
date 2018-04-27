@@ -17,10 +17,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
         },
         prmNames : {
             page:"page", 
@@ -50,7 +50,7 @@ $(function () {
         },
         onComplete : function(file, r){
             if(r.code == 200){
-                alert(r.url);
+                alert(r.data.url);
                 vm.reload();
             }else{
                 alert(r.msg);
@@ -76,7 +76,7 @@ var vm = new Vue({
 		},
 		getConfig: function () {
             $.getJSON(baseURL + "sys/oss/config", function(r){
-				vm.config = r.config;
+				vm.config = r.data;
             });
         },
 		addConfig: function(){

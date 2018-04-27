@@ -26,10 +26,10 @@ $(function () {
         multiselect: false,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
         },
         prmNames : {
             page:"page", 
@@ -62,7 +62,7 @@ var vm = new Vue({
 				parent.layer.open({
 				  title:'失败信息',
 				  closeBtn:0,
-				  content: r.log.error
+				  content: r.data.error
 				});
 			});
 		},
