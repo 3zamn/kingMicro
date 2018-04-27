@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.ShiroService;
 import com.king.api.smp.SysRoleService;
 import com.king.api.smp.SysUserService;
@@ -166,8 +167,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     	while (it.hasNext()) {  
     	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
     	}   
-
-		JsonResponse r = JsonResponse.success().put("token", token).put("expire", Constant.TOKEN_EXPIRE/1000);
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put("token", token);
+    	jsonObject.put("expire", Constant.TOKEN_EXPIRE/1000);
+		JsonResponse r = JsonResponse.success(jsonObject);
 
 		return r;
 	}
