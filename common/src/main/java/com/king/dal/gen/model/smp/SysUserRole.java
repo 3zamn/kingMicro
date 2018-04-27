@@ -14,8 +14,13 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel("用户与角色对应关系")
 public class SysUserRole implements Serializable {
-	private static final long serialVersionUID = 1L;
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7319382256676238163L;
+
 	private Long id;
 
 	/**

@@ -23,9 +23,9 @@ import com.king.common.utils.spring.SpringContextUtils;
  */
 
 public class Query extends LinkedHashMap<String, Object> {
-/*	@Autowired
-	private EnttyMapperResolver enttyMapperResolver;*/
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 6414037103985495948L;
+	
 	//当前页码
     private int page;
     //每页条数
@@ -44,11 +44,14 @@ public class Query extends LinkedHashMap<String, Object> {
              this.put("offset", (page - 1) * limit);
              this.put("page", page);
              this.put("limit", limit);
-             //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
-             String sidx = params.get("sidx").toString();
+             //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）          
              String order = params.get("order").toString();
+             if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
+               	 order="";
+                }
+             this.put("order", order);
+             String sidx = params.get("sidx").toString();
              this.put("sidx", SQLFilter.sqlInject(sidx));
-             this.put("order", SQLFilter.sqlInject(order));
         }     
         if(SpringContextUtils.getBean("shiroFilter")!=null){
             this.put("user", ShiroUtils.getUserEntity());//用户
@@ -85,9 +88,9 @@ public class Query extends LinkedHashMap<String, Object> {
              			String column = json.getString("column"); 
          				if(column!=null && column!=""){   	
                  			if(i<atts.size()){
-                 				likeSql +=column +" like"+" '%"+params.get("searchKey")+"%'" +" or ";
+                 				likeSql +=column +" like"+" '%"+SQLFilter.filterSqlInject(params.get("searchKey").toString().trim())+"%'" +" or ";
                  			}else {
-                 				likeSql +=column +" like"+" '%"+params.get("searchKey")+"%'";
+                 				likeSql +=column +" like"+" '%"+SQLFilter.filterSqlInject(params.get("searchKey").toString().trim())+"%'";
          					}			
          				}
              		}
@@ -133,21 +136,26 @@ public class Query extends LinkedHashMap<String, Object> {
 			String column = json.getString("column");
 			Object strobj = params.get(attribute);
 			JSONObject jsonObject = JSONObject.parseObject(strobj.toString());
-			if(j<between_ttr.size()){
-				betweenSql += column + " between  " +"'"+jsonObject.getString("begin")+"'" +"  and  " +"'"+ jsonObject.getString("end")+"'" +" and ";
- 			}else {
- 				betweenSql += column + " between  " +"'"+jsonObject.getString("begin")+"'" +"  and  " +"'"+ jsonObject.getString("end")+"'" ;
-			}
+			String begin =jsonObject.getString("begin");
+			String end =jsonObject.getString("end");
+			if(StringUtils.isNotBlank(begin) && StringUtils.isNotBlank(end)){
+				if(j<between_ttr.size()){
+					betweenSql += column + " between  " +"'"+SQLFilter.filterSqlInject(begin)+"'" +"  and  " +"'"+SQLFilter.filterSqlInject(end)+"'" +" and ";
+	 			}else {
+	 				betweenSql += column + " between  " +"'"+SQLFilter.filterSqlInject(begin)+"'" +"  and  " +"'"+ SQLFilter.filterSqlInject(end)+"'" ;
+				}
+			}		
 		}
 		int i=0;
 		for(String attribute:equal_ttr){//精确查询
 			i=i+1;		
 			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
 			String column = json.getString("column");
+			String value =params.get(attribute).toString().trim();
 			if(i<equal_ttr.size()){
- 				mutlSql +=column +" = "+"'"+params.get(attribute)+"'" +" and ";
+ 				mutlSql +=column +" = "+"'"+SQLFilter.filterSqlInject(value)+"'" +" and ";
  			}else {
- 				mutlSql +=column +" = "+"'"+params.get(attribute)+"'";
+ 				mutlSql +=column +" = "+"'"+SQLFilter.filterSqlInject(value)+"'";
 			}
 		}
 		StringBuffer like = new StringBuffer();
@@ -197,7 +205,10 @@ public class Query extends LinkedHashMap<String, Object> {
         String order = params.get("order").toString();
          sidx = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, sidx).getString("column");
         this.put("sidx", SQLFilter.sqlInject(sidx));
-        this.put("order", SQLFilter.sqlInject(order));
+        if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
+       	 order="";
+        }
+        this.put("order", order);
     }
 
 

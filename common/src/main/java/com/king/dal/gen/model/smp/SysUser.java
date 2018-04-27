@@ -24,8 +24,12 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel("系统用户")
 public class SysUser implements Serializable {
-	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2744695388848203079L;
+
 	/**
 	 * 用户ID
 	 */
