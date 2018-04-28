@@ -53,6 +53,7 @@ public class ScheduleJobController {
 	/**
 	 * 定时任务信息
 	 */
+	@Log("查看定时任务详情")
 	@ApiOperation(value = "定时任务详情", notes = "权限编码（sys:schedule:info）")
 	@GetMapping("/info/{jobId}")
 	@RequiresPermissions("sys:schedule:info")
