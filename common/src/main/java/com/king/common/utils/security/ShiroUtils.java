@@ -43,7 +43,10 @@ public class ShiroUtils {
 	}
 
 	public static SysUser getUserEntity() {
-		return (SysUser)SecurityUtils.getSubject().getPrincipal();
+		SysUser sysUser =(SysUser)SecurityUtils.getSubject().getPrincipal();
+		sysUser.setSalt(null);//安全考虑忽略敏感信息
+		sysUser.setPassword(null);
+		return sysUser;
 	}
 
 	public static Long getUserId() {

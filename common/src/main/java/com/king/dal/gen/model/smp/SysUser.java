@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 系统用户
+ * 系统用户--敏感信息不序列号
  * @author King chen
  * @email 396885563@qq.com
  * @date 2017年12月29日
@@ -248,6 +248,7 @@ public class SysUser implements Serializable {
 		this.deptName = deptName;
 	}
 
+	@JSONField(serialize = false)
 	public String getToken() {
 		return token;
 	}

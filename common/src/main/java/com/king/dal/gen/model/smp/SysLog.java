@@ -31,6 +31,10 @@ public class SysLog implements Serializable {
 	//请求参数
 	@ApiModelProperty("请求参数")
 	private String params;
+	
+	@ApiModelProperty("结果")
+	private String result;
+	
 	//执行时长(毫秒)
 	@ApiModelProperty("执行时长(毫秒)")
 	private Long time;
@@ -133,5 +137,12 @@ public class SysLog implements Serializable {
 	public void setTime(Long time) {
 		this.time = time;
 	}
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	
 	
 }

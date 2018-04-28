@@ -36,7 +36,7 @@ public class SerialNoGeneratorAspect {
 	 private Logger logger = LoggerFactory.getLogger(getClass());
 	    @Autowired
 	    private RedisUtils redisUtils;
-	    @Before("execution(* com.king.services.spi.*.*(..))")
+	    @Before("execution(* com.king.dal.gen.service.*.*(..)) || execution(* com.king.services.spi.*.*(..))")
 	    public void before(JoinPoint point) throws Throwable {
 	    //	 logger.info("getSignature异常"+point.getSignature());
 	            try{
