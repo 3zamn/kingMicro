@@ -40,4 +40,12 @@ public class RedisKeys {
     public static String getPermsKey(Long userId,String key){
         return "perms:"+userId+":" + key;
     }
+    
+    public static String getErrorIPKey(String ip,String key){
+        return "login:"+ key+ip;
+    }
+    
+    public static String getLoginKey(String key){
+        return "login:"+ key;
+    }
 }
