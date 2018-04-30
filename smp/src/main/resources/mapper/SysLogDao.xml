@@ -10,6 +10,7 @@
         <result property="method" column="method" jdbcType="VARCHAR"/>
         <result property="params" column="params" jdbcType="VARCHAR"/>
         <result property="result" column="result" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
         <result property="time" column="time" jdbcType="BIGINT"/>
         <result property="ip" column="ip" jdbcType="VARCHAR"/>
         <result property="createDate" column="create_date" jdbcType="DATE"/>
@@ -50,6 +51,7 @@
 			`method`, 
 			`params`,  
 			`result`,
+			`status`,
 			`time`,
 			`ip`,
 			`create_date`
@@ -61,6 +63,7 @@
 			#{method},
 			#{params},
 			#{result},
+			#{status},
 			#{time},
 			#{ip},
 			#{createDate}
@@ -75,6 +78,7 @@
 			<if test="method != null">`method` = #{method}, </if>
 			<if test="params != null">`params` = #{params}, </if>
 			<if test="result != null">`result` = #{result}, </if>
+			<if test="status != null">`status` = #{status}, </if>
 			<if test="ip != null">`ip` = #{ip} </if>
 		</set>
 		where id = #{id}
