@@ -15,7 +15,7 @@ import com.king.dal.gen.dao.BaseDao;
  * @data2018年3月5日
  * @param <T>
  */
-@Transactional
+
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	@Autowired 

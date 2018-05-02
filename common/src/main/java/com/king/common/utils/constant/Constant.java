@@ -12,10 +12,11 @@ public class Constant {
 	/*token失效时长*/
 	public static final long TOKEN_EXPIRE =30 * 60 *1000;//半小时失效
 	
-	public static final long SHIRO_SESSION_EXPIRE =60 * 60 * 1000;//半小时
+	public static final long SHIRO_SESSION_EXPIRE =30 * 60 * 1000;//半小时
 	
 	public static final long SERIALNO_EXPIRE =30;//秒
-	
+	public static final long LOGIN_IP_COUNT =30;//同一个IP同一个帐号
+	public static final long LOGIN_COUNT =100;//同一个帐号
     public enum MenuType {
         /**
          * 目录

@@ -67,6 +67,10 @@ public class DataSourceAspect {
        
 	}
 
+	/**
+	 * remove掉本地线程变量、防止内存泄漏
+	 * @param point
+	 */
 	@After("aspect()")
 	public void after(JoinPoint point) {
 		HandleDataSource.clear();

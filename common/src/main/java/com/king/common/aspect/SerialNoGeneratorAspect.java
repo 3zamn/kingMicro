@@ -36,11 +36,11 @@ public class SerialNoGeneratorAspect {
 	 private Logger logger = LoggerFactory.getLogger(getClass());
 	    @Autowired
 	    private RedisUtils redisUtils;
+	    
 	    @Before("execution(* com.king.dal.gen.service.*.*(..)) || execution(* com.king.services.spi.*.*(..))")
 	    public void before(JoinPoint point) throws Throwable {
-	    //	 logger.info("getSignature异常"+point.getSignature());
+	    	 logger.info("getSignature方法："+point.getSignature());
 	            try{
-	            //	Signature signature=point.getSignature();      	
 	            	String serialNo= SerialNoHolder.serialNo.get();
 	            	if(serialNo ==null){
 	            		serialNo =UUID.randomUUID().toString();
@@ -54,14 +54,19 @@ public class SerialNoGeneratorAspect {
 	            }
 	    }
 	    
-	    @After("execution(* com.king.services.spi.*.*(..))")
+	    /**
+	     * remove掉本地线程变量、防止内存泄漏
+	     * @param point
+	     * @throws Throwable
+	     */
+	    @After("execution(* com.king.dal.gen.service.*.*(..)) || execution(* com.king.services.spi.*.*(..))")
 	    public void after(JoinPoint point) throws Throwable {
 
 	    	 SerialNoHolder.serialNo.remove();
 	    }
 	    
 	    
-	    static{
+	    static{//获取配置
 	    	try {
 				configs = new PropertiesConfiguration("settings.properties");
 			} catch (ConfigurationException e) {
