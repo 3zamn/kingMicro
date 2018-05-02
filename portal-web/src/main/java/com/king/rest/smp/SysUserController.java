@@ -51,6 +51,7 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 所有用户列表
 	 */
+	@Log("查看用户列表")
 	@ApiOperation(value = "用户列表", notes = "权限编码（sys:user:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:user:list")
@@ -65,6 +66,7 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 获取登录的用户信息
 	 */
+	@Log("当前登录信息")
 	@ApiOperation(value = "登录信息")
 	@GetMapping("/info")
 	public JsonResponse info(){
@@ -97,6 +99,7 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 用户信息
 	 */
+	@Log("用户信息详情")
 	@ApiOperation(value = "用户信息", notes = "权限编码（sys:user:info）")
 	@GetMapping("/info/{userId}")
 	@RequiresPermissions("sys:user:info")

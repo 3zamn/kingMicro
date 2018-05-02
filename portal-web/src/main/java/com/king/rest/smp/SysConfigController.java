@@ -41,6 +41,7 @@ public class SysConfigController extends AbstractController {
 	/**
 	 * 所有配置列表
 	 */
+	@Log("配置列表")
 	@ApiOperation(value = "配置列表", notes = "权限编码（sys:config:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:config:list")
@@ -55,6 +56,7 @@ public class SysConfigController extends AbstractController {
 	/**
 	 * 配置信息
 	 */
+	@Log("配置信息")
 	@ApiOperation(value = "配置信息", notes = "权限编码（sys:config:info）")
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")

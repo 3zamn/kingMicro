@@ -59,6 +59,7 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 所有菜单列表
 	 */
+	@Log("菜单列表")
 	@ApiOperation(value = "菜单列表", notes = "权限编码（sys:menu:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:menu:list")
@@ -76,6 +77,7 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 选择菜单(添加、修改菜单)
 	 */
+	@Log("菜单选择")
 	@ApiOperation(value = "菜单选择", notes = "权限编码（sys:menu:select）")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:menu:select")
@@ -96,6 +98,7 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 菜单信息
 	 */
+	@Log("菜单信息")
 	@ApiOperation(value = "菜单信息", notes = "权限编码（sys:menu:info）")
 	@GetMapping("/info/{menuId}")
 	@RequiresPermissions("sys:menu:info")

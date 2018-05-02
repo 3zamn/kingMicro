@@ -49,6 +49,7 @@ public class SysRoleController extends AbstractController {
 	/**
 	 * 角色列表
 	 */
+	@Log("角色列表")
 	@ApiOperation(value = "角色列表", notes = "权限编码（sys:role:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:role:list")
@@ -56,22 +57,17 @@ public class SysRoleController extends AbstractController {
 		//如果不是超级管理员，则只查询自己创建的角色列表
 		if(getUserId() != Constant.SUPER_ADMIN){
 			params.put("createUserId", getUserId());
-		}
-		
+		}	
 		//查询列表数据
 		Query query = new Query(params,SysRole.class.getSimpleName());
 		Page page = sysRoleService.getPage(query);
-/*		
-		List<SysRole> list = sysRoleService.queryList(query);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("list", list);
-		jsonObject.put("page", page);*/
 		return JsonResponse.success(page);
 	}
 	
 	/**
-	 * 角色列表
+	 * 角色选择
 	 */
+	@Log("角色选择")
 	@ApiOperation(value = "角色选择", notes = "权限编码（sys:role:select）")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:role:select")
@@ -85,6 +81,7 @@ public class SysRoleController extends AbstractController {
 	/**
 	 * 角色信息
 	 */
+	@Log("角色信息")
 	@ApiOperation(value = "角色信息", notes = "权限编码（sys:role:info）")
 	@GetMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")

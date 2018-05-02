@@ -58,13 +58,14 @@ public class SysLoginController extends AbstractController {
 	private SysUserService sysUserService;
 	@Autowired
 	private TokenGenerator tokenGenerator;
-	 @Autowired
+	@Autowired
 	private RedisUtils redisUtils;
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	//private static volatile   AtomicInteger errorCount = new AtomicInteger(0); 
 	/**
 	 * 验证码
 	 */
+//	@Log("获取验证码")
 	@ApiOperation(value = "获取验证码")
 	@GetMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response)throws ServletException, IOException {
@@ -108,39 +109,46 @@ public class SysLoginController extends AbstractController {
 		String errorValue=redisUtils.get(errorKey);
 		if(value!=null && errorValue!=null) {//防通过代理ip方式暴力破解、限制同一ip错误数次/同一帐号错误次数
 			if(Integer.parseInt(value)>Constant.LOGIN_IP_COUNT || Integer.parseInt(value)>Constant.LOGIN_COUNT) {
-				return JsonResponse.error(408,"错误次数过多！请稍后重试");
+				return JsonResponse.error(408,"错误次数过多！请稍后重试","连续输出登录错误次数过多！锁住30分钟、稍后重试。");
 			}
 		}
-		if(user == null || !user.getPassword().equals(PW)) {			
-			if(value!=null && errorValue!=null) {							
+		if(user == null || !user.getPassword().equals(PW)) {
+			AtomicInteger error_count = new AtomicInteger(1);
+			if(value!=null) {//同一个IP同一个帐号							
 				Integer count =Integer.parseInt(value);
 				AtomicInteger countValue = new AtomicInteger(count); 
-				countValue.getAndIncrement();			
-				String orderValue=redisUtils.getset(errorIPKey, countValue, Constant.TOKEN_EXPIRE);
-				Integer errorCount =Integer.parseInt(errorValue);
-				AtomicInteger errorCountOlder = new AtomicInteger(errorCount); 
-				errorCountOlder.getAndIncrement();			
-				String errorCountValue=redisUtils.getset(errorKey, errorCount, Constant.TOKEN_EXPIRE);
-				logger.error("同一ip连续登录错误数次："+orderValue);
-				logger.error("同一帐号连续登录错误数次："+errorCountValue);
+				countValue.getAndIncrement();
+				error_count=countValue;
+				redisUtils.getset(errorIPKey, countValue, Constant.TOKEN_EXPIRE);
+				logger.error("用户:"+username+"，IP:"+ip+"连续登录错误数次："+countValue);
 			}else {
+				logger.error("用户:"+username+"，IP:"+ip+"连续登录错误数次："+1);
 				redisUtils.set(errorIPKey, 1, Constant.TOKEN_EXPIRE);
-				redisUtils.set(errorKey, 1, Constant.TOKEN_EXPIRE);
 			}
-			return JsonResponse.error(405,"账号或密码不正确");
+			if(errorValue!=null) {//同一个帐号							
+				Integer errorCount =Integer.parseInt(errorValue);
+				AtomicInteger errors= new AtomicInteger(errorCount); 
+				errors.getAndIncrement();			
+				redisUtils.getset(errorKey, errors, Constant.TOKEN_EXPIRE);	
+				logger.error("该帐号:"+username+"连续登录错误数次："+errors);
+			}else {	
+				redisUtils.set(errorKey, 1, Constant.TOKEN_EXPIRE);
+				logger.error("该帐号:"+username+"连续登录错误数次："+1);
+			}	
+			return JsonResponse.error(405,"账号或密码不正确","用户:"+username+"，IP:"+ip+"连续登录错误数次："+error_count);
 		}
-
 		//账号锁定
 		if(user.getStatus() == 0){
-			return JsonResponse.error(405,"账号已被锁定,请联系管理员");
+			return JsonResponse.error(405,"账号已被锁定,请联系管理员",user.getUsername()+"：该账号已被锁定,请联系管理员");
 		}
-		if(value!=null && errorValue!=null) {
+		if(value!=null) {//登录成功清除错误次数
 			redisUtils.delete(errorIPKey);
+		}
+		if(errorValue!=null) {//登录成功清除错误次数
 			redisUtils.delete(errorKey);
 		}
 		//生成token，并保存到数据库
-		JsonResponse r = sysUserService.createToken(user.getUserId());
-		
+		JsonResponse r = sysUserService.createToken(user.getUserId());		
 		return r;
 	}
 
@@ -151,11 +159,12 @@ public class SysLoginController extends AbstractController {
 	@Log("退出登录")
 	@ApiOperation(value = "退出登录")
 	@PostMapping("/sys/logout")
-	public JsonResponse logout() {	
+	public JsonResponse logout() {
+		String currentUser=getUser().getUsername();
 		SysUserToken sysUserToken = tokenGenerator.get(TokenHolder.token.get());
 		sysUserService.logout(sysUserToken);
 		ShiroUtils.logout();
-		return JsonResponse.success();
+		return JsonResponse.success(currentUser);
 	}
 	
 }

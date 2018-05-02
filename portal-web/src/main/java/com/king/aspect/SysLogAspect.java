@@ -5,17 +5,15 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
-import com.king.common.annotation.Log;
+
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.king.api.smp.SysLogService;
@@ -38,71 +36,106 @@ import com.king.dal.gen.model.smp.SysUser;
 public class SysLogAspect {
 	@Autowired
 	private SysLogService sysLogService;
-	
+
 	@Pointcut("@annotation(com.king.common.annotation.Log)")
-	public void logPointCut() { 
-		
+	public void logPointCut() {
+
 	}
 
-	@Around("logPointCut()")
-	public Object around(ProceedingJoinPoint point) throws Throwable {
-		long beginTime = System.currentTimeMillis();
-		//执行方法
-		String username=null;
+	/**
+	 * 日常日志记录--错误流水号方便去mongodb查询
+	 * @param point
+	 * @param e
+	 */
+	@AfterThrowing(pointcut = "logPointCut()", throwing = "e")
+	public void afterThrowing(JoinPoint point, Exception e) {
+		// 执行方法
+		String username = null;
 		if (ShiroUtils.getSubject().getPrincipal() != null) {
-			username= ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
-		}		
-		Object result = point.proceed();
-		//执行时长(毫秒)
-		long time = System.currentTimeMillis() - beginTime;
-		//输出
-		JSONObject jsonObject = (JSONObject) JSONObject.toJSON(result);
-		String data =jsonObject.getString("data");
-		//保存日志
-		saveSysLog(point, time,data,username);
+			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
+		}
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("data", e.getMessage());
+		jsonObject.put("msg", "error");
+		saveSysLog(point, jsonObject, username);
+
+	}
+
+	@AfterReturning(pointcut = "logPointCut()", returning = "result")
+	public Object afterReturning(JoinPoint point, Object result) {
+		// 执行方法
+		String username = null;
+		if (ShiroUtils.getSubject().getPrincipal() != null) {
+			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
+		}
+		try {
+			// 输出
+			JSONObject jsonObject = (JSONObject) JSONObject.toJSON(result);
+			// 保存日志
+			saveSysLog(point, jsonObject, username);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
 
 		return result;
 	}
 
-	private void saveSysLog(ProceedingJoinPoint joinPoint, long time,String data,String username) {
+	/**
+	 * 保存系统操作日志--后面考虑存mongodb
+	 * 
+	 * @param joinPoint
+	 * @param jsonObject
+	 * @param username
+	 */
+	private void saveSysLog(JoinPoint joinPoint, JSONObject jsonObject, String username) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
-	//	if (ShiroUtils.getSubject().getPrincipal() != null) {
-			SysLog sysLog = new SysLog();
-			com.king.common.annotation.Log log = method.getAnnotation(com.king.common.annotation.Log.class);
-			if (log != null) {
-				// 注解上的描述
-				sysLog.setOperation(log.value());
-			}
+		SysLog sysLog = new SysLog();
 
-			// 请求的方法名
-			String className = joinPoint.getTarget().getClass().getName();
-			String methodName = signature.getName();
-			sysLog.setMethod(className + "." + methodName + "()");
-			sysLog.setResult(data);
-			// 请求的参数
-			Object[] args = joinPoint.getArgs();
-			String params=null;
-			try {
-				params= new Gson().toJson(args[0]);
-				sysLog.setParams(params);
-			} catch (Exception e) {
+		com.king.common.annotation.Log log = method.getAnnotation(com.king.common.annotation.Log.class);
+		if (log != null) {
+			// 注解上的描述
+			sysLog.setOperation(log.value());
+		}
+		String data = null;
+		String msg = null;
+		if (jsonObject != null) {
+			data = jsonObject.getString("data");
+			msg = jsonObject.getString("msg");
+		}
+		// 请求的方法名
+		String className = joinPoint.getTarget().getClass().getName();
+		String methodName = signature.getName();
+		sysLog.setMethod(className + "." + methodName + "()");
+		sysLog.setResult(data);
+		sysLog.setStatus(msg);
+		// 请求的参数
+		Object[] args = joinPoint.getArgs();
+		String params = null;
+		try {
+			params = new Gson().toJson(args[0]);
+			sysLog.setParams(params);
+		} catch (Exception e) {
 
-			}
-			// 获取request
-			HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
-			// 设置IP地址
-			sysLog.setIp(IPUtils.getIpAddr(request));
-			// 用户名
-			if ( username==null && params!=null) {		
+		}
+		// 获取request
+		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+		// 设置IP地址
+		sysLog.setIp(IPUtils.getIpAddr(request));
+		// 用户名
+		if (username == null) {
+			if (params != null) {// 登录
 				sysLog.setUsername(params.replaceAll("\"", ""));
-			}else{
-				sysLog.setUsername(username);
+			} else if (data != null && methodName.equals("logout")) {// 退出登录
+				sysLog.setUsername(data);
 			}
-			sysLog.setTime(time);
-			sysLog.setCreateDate(new Date());
-			// 保存系统日志
-			sysLogService.save(sysLog);
-//		}
+		} else {
+			sysLog.setUsername(username);
+		}
+		sysLog.setCreateDate(new Date());
+		// 保存系统日志
+		sysLogService.save(sysLog);
 	}
 }

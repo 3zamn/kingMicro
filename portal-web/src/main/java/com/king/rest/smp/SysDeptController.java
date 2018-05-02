@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysDeptService;
+import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
@@ -41,6 +42,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 列表
 	 */
+	@Log("部门列表")
 	@ApiOperation(value = "部门列表", notes = "权限编码（sys:dept:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:dept:list")
@@ -54,6 +56,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 选择部门(添加、修改菜单)
 	 */
+	@Log("选择部门(添加、修改菜单)")
 	@ApiOperation(value = "选择部门", notes = "权限编码（sys:dept:select）")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:dept:select")
@@ -77,6 +80,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 上级部门Id(管理员则为0)
 	 */
+	@Log("部门树列表")
 	@ApiOperation(value = "部门树列表", notes = "权限编码（sys:dept:list）")
 	@GetMapping("/info")
 	@RequiresPermissions("sys:dept:list")
@@ -93,6 +97,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 信息
 	 */
+	@Log("部门信息")
 	@ApiOperation(value = "部门信息", notes = "权限编码（sys:dept:info）")
 	@GetMapping("/info/{deptId}")
 	@RequiresPermissions("sys:dept:info")
@@ -105,6 +110,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 保存
 	 */
+	@Log("保存部门")
 	@ApiOperation(value = "保存部门", notes = "权限编码（sys:dept:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dept:save")
@@ -118,6 +124,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 修改
 	 */
+	@Log("保存部门")
 	@ApiOperation(value = "修改部门", notes = "权限编码（sys:dept:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:dept:update")
@@ -131,6 +138,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 删除
 	 */
+	@Log("删除部门")
 	@ApiOperation(value = "删除部门", notes = "权限编码（sys:dept:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:dept:delete")
