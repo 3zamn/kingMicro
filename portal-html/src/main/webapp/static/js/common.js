@@ -22,7 +22,9 @@ T.p = url;
 //var clientURL = "http://192.168.4.11:8888/portal-html/";
 var baseURL = "http://192.168.4.11:8888/portal-web/";
 var clientURL = "http://192.168.4.11:8888/portal-html/";
-
+/*window.onunload=function(){
+    localStorage.clear();
+}*/
 //登录token
 var token = localStorage.getItem("token");
 if(token == 'null'){
