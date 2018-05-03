@@ -24,6 +24,8 @@ import com.king.common.utils.security.ShiroUtils;
 import com.king.dal.gen.model.smp.SysLog;
 import com.king.dal.gen.model.smp.SysUser;
 
+import net.sf.json.JSONArray;
+
 
 /**
  * 系统日志，切面处理类
@@ -71,8 +73,9 @@ public class SysLogAspect {
 		if (ShiroUtils.getSubject().getPrincipal() != null) {
 			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
 		}
-		 try {//校验返回数据是否json格式。
-		        JSONObject.parseObject(StringToolkit.getObjectString(result));
+		 try {//校验返回数据是否json格式。	
+			 JSONObject.parseObject(StringToolkit.getObjectString(JSONObject.toJSON(result)));
+			
 		        data =result;
 		   } catch (Exception e) {
 			   data= result;
@@ -113,7 +116,7 @@ public class SysLogAspect {
 			 data = jsonObject.getString("data");
 			 msg = jsonObject.getString("msg");
 		}else{
-			data=StringToolkit.getObjectString(object);
+			data=StringToolkit.getObjectString(JSONArray.fromObject(object));
 			msg="success";
 		}
 
