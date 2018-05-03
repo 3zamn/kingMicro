@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.king.api.smp.SysLogService;
 import com.king.common.utils.network.HttpContextUtils;
 import com.king.common.utils.network.IPUtils;
+import com.king.common.utils.pattern.StringToolkit;
 import com.king.common.utils.security.ShiroUtils;
 import com.king.dal.gen.model.smp.SysLog;
 import com.king.dal.gen.model.smp.SysUser;
@@ -57,27 +58,33 @@ public class SysLogAspect {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("data", e.getMessage());
 		jsonObject.put("msg", "error");
-		saveSysLog(point, jsonObject, username);
+		saveSysLog(point, jsonObject, username,true);
 
 	}
 
 	@AfterReturning(pointcut = "logPointCut()", returning = "result")
 	public Object afterReturning(JoinPoint point, Object result) {
 		// 执行方法
+		Boolean isSave=true;
 		String username = null;
+		Object data=null;
 		if (ShiroUtils.getSubject().getPrincipal() != null) {
 			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
 		}
-		try {
-			// 输出
-			JSONObject jsonObject = (JSONObject) JSONObject.toJSON(result);
-			// 保存日志
-			saveSysLog(point, jsonObject, username);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			// TODO: handle exception
-		}
+		 try {//校验返回数据是否json格式。
+		        JSONObject.parseObject(StringToolkit.getObjectString(result));
+		        data =result;
+		   } catch (Exception e) {
+			   data= result;
+		       isSave= false;
+		  }
+		 if(isSave){
+			 JSONObject jsonObject = (JSONObject) JSONObject.toJSON(result);
+				// 保存日志
+			saveSysLog(point, jsonObject, username,true);
+		 }else{
+			 saveSysLog(point, data, username,false);
+		 }
 
 		return result;
 	}
@@ -89,7 +96,7 @@ public class SysLogAspect {
 	 * @param jsonObject
 	 * @param username
 	 */
-	private void saveSysLog(JoinPoint joinPoint, JSONObject jsonObject, String username) {
+	private void saveSysLog(JoinPoint joinPoint, Object object, String username,Boolean formJson) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
 		SysLog sysLog = new SysLog();
@@ -101,14 +108,18 @@ public class SysLogAspect {
 		}
 		String data = null;
 		String msg = null;
-		if (jsonObject != null) {
-			data = jsonObject.getString("data");
-			msg = jsonObject.getString("msg");
+		if(formJson){
+			 JSONObject jsonObject = (JSONObject) JSONObject.toJSON(object);
+			 data = jsonObject.getString("data");
+			 msg = jsonObject.getString("msg");
+		}else{
+			data=StringToolkit.getObjectString(object);
+			msg="success";
 		}
+
 		// 请求的方法名
-		String className = joinPoint.getTarget().getClass().getName();
 		String methodName = signature.getName();
-		sysLog.setMethod(className + "." + methodName + "()");
+		sysLog.setMethod(joinPoint.getSignature()+"");
 		sysLog.setResult(data);
 		sysLog.setStatus(msg);
 		// 请求的参数

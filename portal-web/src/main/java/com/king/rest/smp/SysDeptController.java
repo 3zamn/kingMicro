@@ -46,7 +46,7 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "部门列表", notes = "权限编码（sys:dept:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:dept:list")
-	public List<SysDept> list(){
+	public  List<SysDept> list(){
 		Query query = new Query(new HashMap<String, Object>());
 		List<SysDept> deptList = sysDeptService.queryList(query);
 
