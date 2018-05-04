@@ -109,7 +109,7 @@ public class SysLoginController extends AbstractController {
 		String errorValue=redisUtils.get(errorKey);
 		if(value!=null && errorValue!=null) {//防通过代理ip方式暴力破解、限制同一ip错误数次/同一帐号错误次数
 			if(Integer.parseInt(value)>Constant.LOGIN_IP_COUNT || Integer.parseInt(value)>Constant.LOGIN_COUNT) {
-				return JsonResponse.error(408,"错误次数过多！请稍后重试","连续输出登录错误次数过多！锁住30分钟、稍后重试。");
+				return JsonResponse.error(408,"错误次数过多！锁住30分钟,请稍后重试","连续输出登录错误次数过多！锁住30分钟、稍后重试。");
 			}
 		}
 		if(user == null || !user.getPassword().equals(PW)) {
@@ -120,9 +120,9 @@ public class SysLoginController extends AbstractController {
 				countValue.getAndIncrement();
 				error_count=countValue;
 				redisUtils.getset(errorIPKey, countValue, Constant.TOKEN_EXPIRE);
-				logger.error("用户:"+username+"，IP:"+ip+"连续登录错误数次："+countValue);
+				logger.error("用户:"+username+",IP:"+ip+"连续登录错误数次："+countValue);
 			}else {
-				logger.error("用户:"+username+"，IP:"+ip+"连续登录错误数次："+1);
+				logger.error("用户:"+username+",IP:"+ip+"连续登录错误数次："+1);
 				redisUtils.set(errorIPKey, 1, Constant.TOKEN_EXPIRE);
 			}
 			if(errorValue!=null) {//同一个帐号							
@@ -135,7 +135,7 @@ public class SysLoginController extends AbstractController {
 				redisUtils.set(errorKey, 1, Constant.TOKEN_EXPIRE);
 				logger.error("该帐号:"+username+"连续登录错误数次："+1);
 			}	
-			return JsonResponse.error(405,"账号或密码不正确","用户:"+username+"，IP:"+ip+"连续登录错误数次："+error_count);
+			return JsonResponse.error(405,"账号或密码不正确","用户:"+username+",IP:"+ip+"连续登录错误数次："+error_count);
 		}
 		//账号锁定
 		if(user.getStatus() == 0){
