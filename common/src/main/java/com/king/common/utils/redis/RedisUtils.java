@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -156,9 +157,20 @@ public class RedisUtils {
     	return  redisTemplate.hasKey(hashKey);
    }
     
+    /**
+     * 小心用keys查询大量数据-否则灾难
+     * @param hashKey
+     * @return
+     */
     @SuppressWarnings("unchecked")
 	public Set<String> likeKey(String hashKey){
-      	 
+      	 //用scan代理keys查询
+    /*	Set<String> objects = new HashSet<>();
+    	Cursor<Object> curosr = setOperations.scan(hashKey, ScanOptions.NONE);
+        while(curosr.hasNext()){
+        	objects.add(curosr.next().toString());
+        }
+    	return objects;*/
     	return  redisTemplate.keys(hashKey+"*");
    }
     

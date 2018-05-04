@@ -5,6 +5,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
+import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
@@ -44,7 +45,8 @@ public class ShiroUtils {
 
 	public static SysUser getUserEntity() {
 		SysUser sysUser =(SysUser)SecurityUtils.getSubject().getPrincipal();
-		sysUser.setSalt(null);//安全考虑忽略敏感信息
+		//安全考虑忽略敏感信息
+		sysUser.setSalt(null);
 		sysUser.setPassword(null);
 		return sysUser;
 	}
@@ -57,7 +59,7 @@ public class ShiroUtils {
 		getSession().setAttribute(key, value);
 		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
 		String sessionId = RedisKeys.getKaptchaKey(getSession().getId().toString());
-		redisUtils.set(sessionId, value);
+		redisUtils.set(sessionId, value,Constant.TOKEN_EXPIRE/1000);
 	}
 
 	public static Object getSessionAttribute(Object key) {
