@@ -132,8 +132,10 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 			Map<String, Object> map = new HashMap<>();
 			map.put("userId", userId);
 			map.put("roleIdList", roleIdList);
-			sysUserRoleDao.save(map);
-			logger.info("角色修改成功");
+			if(roleIdList.size()>0){
+				sysUserRoleDao.save(map);
+				logger.info("角色修改成功");
+			}		
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
