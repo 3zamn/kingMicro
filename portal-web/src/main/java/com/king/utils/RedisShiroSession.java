@@ -68,7 +68,7 @@ public class RedisShiroSession extends EnterpriseCacheSessionDAO {
     @SuppressWarnings("unchecked")
 	private void setShiroSession(String key, Session session){
         redisTemplate.opsForValue().set(key, session);
-        redisTemplate.expire(key, Constant.SHIRO_SESSION_EXPIRE, TimeUnit.MINUTES);
+        redisTemplate.expire(key, Constant.SHIRO_SESSION_EXPIRE/1000, TimeUnit.SECONDS);
     }
 
 }

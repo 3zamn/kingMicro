@@ -119,20 +119,20 @@ public class SysLoginController extends AbstractController {
 				AtomicInteger countValue = new AtomicInteger(count); 
 				countValue.getAndIncrement();
 				error_count=countValue;
-				redisUtils.getset(errorIPKey, countValue, Constant.TOKEN_EXPIRE);
+				redisUtils.getset(errorIPKey, countValue, Constant.TOKEN_EXPIRE/1000);
 				logger.error("用户:"+username+",IP:"+ip+"连续登录错误数次："+countValue);
 			}else {
 				logger.error("用户:"+username+",IP:"+ip+"连续登录错误数次："+1);
-				redisUtils.set(errorIPKey, 1, Constant.TOKEN_EXPIRE);
+				redisUtils.set(errorIPKey, 1, Constant.TOKEN_EXPIRE/1000);
 			}
 			if(errorValue!=null) {//同一个帐号							
 				Integer errorCount =Integer.parseInt(errorValue);
 				AtomicInteger errors= new AtomicInteger(errorCount); 
 				errors.getAndIncrement();			
-				redisUtils.getset(errorKey, errors, Constant.TOKEN_EXPIRE);	
+				redisUtils.getset(errorKey, errors, Constant.TOKEN_EXPIRE/1000);	
 				logger.error("该帐号:"+username+"连续登录错误数次："+errors);
 			}else {	
-				redisUtils.set(errorKey, 1, Constant.TOKEN_EXPIRE);
+				redisUtils.set(errorKey, 1, Constant.TOKEN_EXPIRE/1000);
 				logger.error("该帐号:"+username+"连续登录错误数次："+1);
 			}	
 			return JsonResponse.error(405,"账号或密码不正确","用户:"+username+",IP:"+ip+"连续登录错误数次："+error_count);
