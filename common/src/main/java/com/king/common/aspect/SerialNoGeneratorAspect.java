@@ -39,7 +39,7 @@ public class SerialNoGeneratorAspect {
 	    
 	    @Before("execution(* com.king.dal.gen.service.*.*(..)) || execution(* com.king.services.spi.*.*(..))")
 	    public void before(JoinPoint point) throws Throwable {
-	    	 logger.info("getSignature方法："+point.getSignature());
+	    //	 logger.info("getSignature方法："+point.getSignature());
 	            try{
 	            	String serialNo= SerialNoHolder.serialNo.get();
 	            	if(serialNo ==null){

@@ -36,7 +36,6 @@ public class JodaTimeUtils {
 	}
 	
 	
-	
 	/**
 	 * 获取一年中所有的日期
 	 * @param year
@@ -55,8 +54,7 @@ public class JodaTimeUtils {
 		}
 		return results;
 	}
-	
- 
+
 	
 	/**
 	 * 获取当天是星期几，返回中文星期几，如：星期日
@@ -91,8 +89,6 @@ public class JodaTimeUtils {
 		} 
 		return weekname;
 	}
-	
-
 	
 	
 	/**
@@ -169,13 +165,6 @@ public class JodaTimeUtils {
 		return weekname;
 	}
 	
-	
-	
-	
-
-	
-	
-
 	public static void main(String[] args){
 		List<String> name = JodaTimeUtils.getYearDays(2015);
 		for (String str : name) {
@@ -183,9 +172,5 @@ public class JodaTimeUtils {
 		}
 		
 	}
-	
-	
-	
-	
 	
 }
