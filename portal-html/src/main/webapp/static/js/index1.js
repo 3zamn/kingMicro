@@ -97,7 +97,10 @@ var menuItem = Vue.extend({
 	name: 'menu-item',
 	props:{item:{},index:{},menuId:{default :0}},
 	mounted: function() {
-		eventBus.menuId=this.index
+		var that=this;
+		eventBus.$on("change",function (msg) {
+            that.menuId=msg;
+        })
     },
 	template:[
 			 /* '<li class="layui-nav-item">',*/    //收缩状态
@@ -125,16 +128,12 @@ var navItem = Vue.extend({
 	methods: {
 		change: function(index) {
             // 触发事件
-			debugger
-            eventBus.$emit('change')    
-            eventBus.index=index
+		//	debugger
+            eventBus.$emit('change',this.index)    
+         //   eventBus.index=index
         }
     },
-  /*  mounted: function() {
-        eventBus.$on('addFoo', function(num) {
-            this.fooCount +=num
-        }.bind(this)) 
-    },*/
+
 	template:
 	`<li class="layui-nav-item" >
 		<a v-if="item.type === 0" href="javascript:;" @click="change(index)" style="height: 58px;font-size: 15px;">
