@@ -62,7 +62,6 @@ public class ShiroConfig {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setRealm(oAuth2Realm);
 		securityManager.setSessionManager(sessionManager);
-
 		return securityManager;
 	}
 
@@ -75,7 +74,7 @@ public class ShiroConfig {
         Map<String, Filter> filters = new HashMap<>();
         filters.put("oauth2", new OAuth2Filter());
         shiroFilter.setFilters(filters);
-
+        //第三方应用或插件在其他拦截器或过滤器出来权限、这里设为anon
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/druid/**", "anon");
@@ -94,7 +93,7 @@ public class ShiroConfig {
         filterMap.put("/favicon.ico", "anon");
         filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/", "anon");
-     /*   filterMap.put("/index.html", "anon");*/
+        filterMap.put("/monitoring/**", "anon");
         filterMap.put("/**", "oauth2");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 

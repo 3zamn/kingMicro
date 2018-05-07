@@ -15,6 +15,8 @@ import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 
 import com.google.gson.Gson;
 import com.king.common.utils.JsonResponse;
+import com.king.common.utils.constant.Constant;
+import com.king.common.utils.security.ShiroUtils;
 import com.king.utils.TokenHolder;
 
 /**
@@ -46,6 +48,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         //获取请求token，如果token不存在，直接返回401
         String token = getRequestToken((HttpServletRequest) request);
+    //    long userid=ShiroUtils.getUserId();
         if(StringUtils.isBlank(token)){
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             String json = new Gson().toJson(JsonResponse.error(HttpStatus.SC_UNAUTHORIZED, "invalid token"));
@@ -81,12 +84,12 @@ public class OAuth2Filter extends AuthenticatingFilter {
     private String getRequestToken(HttpServletRequest httpRequest){
         //从header中获取token
         String token = httpRequest.getHeader("token");
-
+        
         //如果header中不存在token，则从参数中获取token
         if(StringUtils.isBlank(token)){
             token = httpRequest.getParameter("token");
         }
-
+   
         return token;
     }
 

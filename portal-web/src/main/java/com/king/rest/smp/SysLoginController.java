@@ -147,7 +147,7 @@ public class SysLoginController extends AbstractController {
 		if(errorValue!=null) {//登录成功清除错误次数
 			redisUtils.delete(errorKey);
 		}
-		//生成token，并保存到数据库
+		//生成token，并保存到redis
 		JsonResponse r = sysUserService.createToken(user.getUserId());		
 		return r;
 	}
@@ -163,6 +163,7 @@ public class SysLoginController extends AbstractController {
 		String currentUser=getUser().getUsername();
 		SysUserToken sysUserToken = tokenGenerator.get(TokenHolder.token.get());
 		sysUserService.logout(sysUserToken);
+		TokenHolder.token.remove();//防止内存泄漏
 		ShiroUtils.logout();
 		return JsonResponse.success(currentUser);
 	}

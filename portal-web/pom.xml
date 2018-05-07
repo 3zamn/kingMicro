@@ -128,17 +128,14 @@
             <groupId>org.apache.velocity</groupId>
 			<version>1.7</version>
 		</dependency>
-        <!-- JSP视图所需jar -->
-       <!--  <dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
+		<!-- javamelody服务器性能监控 -->
+        <!-- https://mvnrepository.com/artifact/net.bull.javamelody/javamelody-core -->
 		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
-		</dependency> -->
+		    <groupId>net.bull.javamelody</groupId>
+		    <artifactId>javamelody-core</artifactId>
+		    <version>1.70.0</version>
+		</dependency>
+        
 		<!-- mybatis框架 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
