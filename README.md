@@ -3,11 +3,11 @@ kingMicro 是一套实现分布式、完全前后端分离基础框架。
 
 项目目录结构：
 
-portal-web：系统请求入口、用springmvc处理resfull请求。作为消费者、通过rpc调度提供者的服务。
+portal-web：系统请求入口、用springmvc处理resfull请求/权限安全校验等。作为消费者、通过rpc调度提供者的服务。
 
 portal-html：前端文件、建议单独部署在nginx。
 
-interfere-service：提供分布式系统的服务
+interfere-service：提供分布式系统的服务接口
 
 common：公共类、方法、工具类。
 
