@@ -43,6 +43,34 @@ public class Constant {
     }
     
     /**
+     * 字典类型
+     * @author King chen
+     * @emai 396885563@qq.com
+     * @data2018年5月10日
+     */
+    public enum DicType {
+        /**
+         * 字典目录
+         */
+    	CATALOG(0),
+        /**
+         * 字典项
+         */
+        TERM(1);
+
+
+        private int value;
+
+        private DicType(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+    
+    /**
      * 定时任务状态
      * @author King chen
    	 * @date 2017年12月25日

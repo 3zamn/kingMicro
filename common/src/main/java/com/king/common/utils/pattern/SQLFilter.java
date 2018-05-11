@@ -1,7 +1,5 @@
 package com.king.common.utils.pattern;
-
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.king.common.utils.exception.RRException;
 

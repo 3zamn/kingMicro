@@ -1,9 +1,10 @@
-package com.king.common.utils.network;
+package com.king.utils;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 
 public class HttpContextUtils {
 

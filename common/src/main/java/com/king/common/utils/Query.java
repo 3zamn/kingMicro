@@ -5,13 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.king.common.utils.entityMapper.EntityMapperResolver;
 import com.king.common.utils.pattern.SQLFilter;
+import com.king.common.utils.pattern.StringToolkit;
 import com.king.common.utils.security.ShiroUtils;
 import com.king.common.utils.spring.SpringContextUtils;
 
@@ -39,24 +38,27 @@ public class Query extends LinkedHashMap<String, Object> {
         this.putAll(params);     
         //分页参数
         if(!params.isEmpty()){
-        	 this.page = Integer.parseInt(params.get("page").toString());
-             this.limit = Integer.parseInt(params.get("limit").toString());
-             this.put("offset", (page - 1) * limit);
-             this.put("page", page);
-             this.put("limit", limit);
-             //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）          
-             String order = params.get("order").toString();
-             if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
-               	 order="";
-                }
-             this.put("order", order);
-             String sidx = params.get("sidx").toString();
-             this.put("sidx", SQLFilter.sqlInject(sidx));
-        }     
-        if(SpringContextUtils.getBean("shiroFilter")!=null){
-            this.put("user", ShiroUtils.getUserEntity());//用户
-        }
-       
+        	try {
+        		 this.page = Integer.parseInt(StringToolkit.getObjectString(params.get("page")));
+                 this.limit = Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
+                 this.put("offset", (page - 1) * limit);
+                 this.put("page", page);
+                 this.put("limit", limit);
+               //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）          
+                 String order = StringToolkit.getObjectString(params.get("order"));
+                 if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
+                   	 order="";
+                    }
+                 this.put("order", order);
+                 String sidx = StringToolkit.getObjectString(params.get("sidx"));
+                 this.put("sidx", SQLFilter.sqlInject(sidx));
+                 if(SpringContextUtils.getBean("shiroFilter")!=null){
+                     this.put("user", ShiroUtils.getUserEntity());//用户
+                 }
+			} catch (Exception e) {
+				// TODO: handle exception
+			}     
+        }       
     }
     
     /**
@@ -191,24 +193,29 @@ public class Query extends LinkedHashMap<String, Object> {
 			}
 		}
         this.put("searchSql", searchSql.toString());
+       
         //分页参数
-        this.page = Integer.parseInt(params.get("page").toString());
-        this.limit = Integer.parseInt(params.get("limit").toString());
-        this.put("offset", (page - 1) * limit);
-        this.put("page", page);
-        this.put("limit", limit);
+        try {
+        	this.page = Integer.parseInt(StringToolkit.getObjectString(params.get("page")));
+            this.limit = Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
+            this.put("offset", (page - 1) * limit);
+            this.put("page", page);
+            this.put("limit", limit);
+          //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
+            String sidx = StringToolkit.getObjectString(params.get("sidx"));
+            String order = StringToolkit.getObjectString(params.get("order"));
+             sidx = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, sidx).getString("column");
+            this.put("sidx", SQLFilter.sqlInject(sidx));
+            if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
+           	 order="";
+            }
+            this.put("order", order);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}      
         if(SpringContextUtils.getBean("shiroFilter")!=null){
             this.put("user", ShiroUtils.getUserEntity());//用户
         }
-        //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
-        String sidx = params.get("sidx").toString();
-        String order = params.get("order").toString();
-         sidx = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, sidx).getString("column");
-        this.put("sidx", SQLFilter.sqlInject(sidx));
-        if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
-       	 order="";
-        }
-        this.put("order", order);
     }
 
 

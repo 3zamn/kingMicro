@@ -988,7 +988,7 @@ public class HttpUtils {
     
     public static void main(String[] args) throws Exception{
         //登录印章系统
-        String url = "http://localhost:81/portal-web/loginseal.do?TextUserName=admin&TextPassword=111111";
+        String url = "http://localhost:8888/portal-web/test.do?TextUserName=admin&TextPassword=111111";
         HttpUtils http = HttpUtils.post(url);
         http.setContentType("application/x-www-form-urlencoded", Consts.UTF_8);
 //      http.addHeader("content-type", "application/x-www-form-urlencoded;charset=utf-8");//这样设置无效，必须使用http.setContentype
@@ -997,40 +997,11 @@ public class HttpUtils {
         ResponseWrap response = http.execute(); //执行请求
         System.out.println(response.getString()); //输出内容
         
-        //查询
-//      url = "http://localhost:81/wordemo/adminseal.do";
-//      http = HttpUtils.post(url,http);
-//      http.SetCookieStore(response.getCookieStore());
-//      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-//      response = http.execute(); //执行请求
-        
-        //删除印章
-//      url = "http://localhost:81/wordemo/adminseal.do?op=delete&id=14";
-//      http = HttpUtils.get(url,http);
-//      http.SetCookieStore(response.getCookieStore());
-//      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-//      response = http.execute(); //执行请求
-//      System.out.println(response.getString()); //输出内容
-//      response.transferTo("d:/baidu-search-java.html"); //输出到文件
-        
-        //增加印章
-        url = "http://localhost:81/portal-web/adminseal.do?op=add";
+     
+        url = "http://localhost:8888/portal-web/test.do?op=add";
         http = HttpUtils.post(url,http);
-        http.addParameter("txtSealName", "广州市地下铁道设计院科技服务部"); //
         http.addParameter("txtSignerName", "1"); //
-        http.addParameter("txtDeptName", "广州地下铁道研究设计院"); //
-        http.addParameter("SelectSealType", "印章"); //
-        http.addParameter("ipt_ImageType", "image/jpg"); //
-        http.addParameter("ipt_TmpPicPath", "9d81c63c-c5e7-4db4-ab69-0a89598019f8.jpg"); //
-        
-//      Map<String, String> parameters = new HashMap<String, String>();
-//      parameters.put("txtSealName", "38"); //
-//      parameters.put("txtSignerName", "38"); //
-//      parameters.put("txtDeptName", "38"); //
-//      parameters.put("ipt_ImageType", "image/gif"); //
-//      parameters.put("ipt_TmpPicPath", "~pic2755138328742383295.ss"); //
-//      parameters.put("SelectSealType", "印章"); //
-//      http.setParameters(parameters);
+      
         response = http.execute(); //执行请求
         System.out.println(response.getString()); //输出内容
         response.transferTo("d:/baidu-search-java.html"); //输出到文件

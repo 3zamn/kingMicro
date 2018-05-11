@@ -1,4 +1,4 @@
-package com.king.common.utils.network;
+package com.king.utils;
 
 
 import org.apache.commons.lang.StringUtils;

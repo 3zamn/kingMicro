@@ -36,7 +36,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
  
 /**
- * @author livan.c
+ * @author King chen
+ * @emai 396885563@qq.com
+ * @data2018年5月11日
  */
 public class ResponseWrap {
     private Logger logger = LoggerFactory.getLogger(ResponseWrap.class);
