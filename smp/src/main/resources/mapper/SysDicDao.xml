@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.king.dao.SysDicDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.king.dal.gen.model.smp.SysDic" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="value" column="value" jdbcType="VARCHAR"/>
+        <result property="text" column="text" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <result property="sortNo" column="sort_no" jdbcType="INTEGER"/>
+        <result property="editable" column="editable" jdbcType="TINYINT"/>
+        <result property="enable" column="enable" jdbcType="TINYINT"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysDic">
+		select * from sys_dic where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysDic">
+		select u.*,(select d.name from sys_dic d where d.id=u.parent_id) as parentName  from sys_dic u
+		<where>
+			<if test="searchSql!= null and searchSql.trim() != ''">
+			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
+				${searchSql}
+			</if>
+		</where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from sys_dic 
+		<where>
+			<if test="searchSql!= null and searchSql.trim() != ''">
+			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
+				${searchSql}
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.king.dal.gen.model.smp.SysDic" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_dic
+		(
+			`name`, 
+			`code`, 
+			`value`, 
+			`text`, 
+			`type`, 
+			`parent_id`, 
+			`sort_no`, 
+			`editable`, 
+			`enable`, 
+			`remark`, 
+			`create_by`, 
+			`create_time`, 
+			`update_by`, 
+			`update_time`
+		)
+		values
+		(
+			#{name}, 
+			#{code}, 
+			#{value}, 
+			#{text}, 
+			#{type}, 
+			#{parentId}, 
+			#{sortNo}, 
+			#{editable}, 
+			#{enable}, 
+			#{remark}, 
+			#{createBy}, 
+			#{createTime}, 
+			#{updateBy}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.king.dal.gen.model.smp.SysDic">
+		update sys_dic 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="value != null">`value` = #{value}, </if>
+			<if test="text != null">`text` = #{text}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="parentId != null">`parent_id` = #{parentId}, </if>
+			<if test="sortNo != null">`sort_no` = #{sortNo}, </if>
+			<if test="editable != null">`editable` = #{editable}, </if>
+			<if test="enable != null">`enable` = #{enable}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from sys_dic where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from sys_dic where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+	<select id="queryDicList" resultType="com.king.dal.gen.model.smp.SysDic">
+		SELECT p.* from sys_dic p WHERE type =1 and enable =1 and  parent_id = (SELECT u.id from sys_dic u WHERE code = #{code}) order by sort_no asc
+		 
+	</select>
+	
+	<select id="queryParentList" resultType="com.king.dal.gen.model.smp.SysDic">
+		SELECT p.* from sys_dic p WHERE  parent_id = #{parentId} 
+		 
+	</select>
+</mapper>

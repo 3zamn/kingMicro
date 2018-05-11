@@ -3,14 +3,12 @@ package com.king.utils;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.king.api.smp.SysUserService;
-import com.king.dal.gen.model.smp.SysUser;
 
 
 @Component("testTask")
