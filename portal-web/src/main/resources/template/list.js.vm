@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + '${pathName}/list',
+        url: baseURL + '${requestUrl}/list',
         datatype: "json",
         colModel: [			
 #foreach($column in $columns)
@@ -22,10 +22,10 @@ $(function () {
         multiselect: true,
         pager: "#jqGridPager",
         jsonReader : {
-            root: "page.list",
-            page: "page.currPage",
-            total: "page.totalPage",
-            records: "page.totalCount"
+            root: "data.list",
+            page: "data.currPage",
+            total: "data.totalPage",
+            records: "data.totalCount"
         },
         prmNames : {
             page:"page", 
@@ -42,6 +42,9 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			key: null
+		},
 		showList: true,
 		title: null,
 		${classname}: {}
@@ -66,14 +69,14 @@ var vm = new Vue({
             vm.getInfo(${pk.attrname})
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.${classname}.${pk.attrname} == null ? "${pathName}/save" : "${pathName}/update";
+			var url = vm.${classname}.${pk.attrname} == null ? "${requestUrl}/save" : "${requestUrl}/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
 			    contentType: "application/json",
 			    data: JSON.stringify(vm.${classname}),
 			    success: function(r){
-			    	if(r.code === 0){
+			    	if(r.code === 200){
 						alert('操作成功', function(index){
 							vm.reload();
 						});
@@ -92,11 +95,11 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "${pathName}/delete",
+				    url: baseURL + "${requestUrl}/delete",
 				    contentType: "application/json",
 				    data: JSON.stringify(${pk.attrname}s),
 				    success: function(r){
-						if(r.code == 0){
+						if(r.code == 200){
 							alert('操作成功', function(index){
 								$("#jqGrid").trigger("reloadGrid");
 							});
@@ -108,14 +111,15 @@ var vm = new Vue({
 			});
 		},
 		getInfo: function(${pk.attrname}){
-			$.get(baseURL + "${pathName}/info/"+${pk.attrname}, function(r){
-                vm.${classname} = r.${classname};
+			$.get(baseURL + "${requestUrl}/info/"+${pk.attrname}, function(r){
+                vm.${classname} = r.data;
             });
 		},
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
+			  	postData:{'key': vm.q.key},
                 page:page
             }).trigger("reloadGrid");
 		}

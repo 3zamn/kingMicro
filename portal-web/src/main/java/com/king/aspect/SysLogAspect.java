@@ -17,12 +17,12 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.king.api.smp.SysLogService;
-import com.king.common.utils.network.HttpContextUtils;
-import com.king.common.utils.network.IPUtils;
 import com.king.common.utils.pattern.StringToolkit;
 import com.king.common.utils.security.ShiroUtils;
 import com.king.dal.gen.model.smp.SysLog;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.utils.HttpContextUtils;
+import com.king.utils.IPUtils;
 
 import net.sf.json.JSONArray;
 
@@ -57,8 +57,12 @@ public class SysLogAspect {
 		if (ShiroUtils.getSubject().getPrincipal() != null) {
 			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
 		}
+		String RRException =null;
+		if(e.getMessage().contains("RRException")){
+			RRException =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
+		}
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("data", e.getMessage());
+		jsonObject.put("data", RRException);
 		jsonObject.put("msg", "error");
 		saveSysLog(point, jsonObject, username,true);
 

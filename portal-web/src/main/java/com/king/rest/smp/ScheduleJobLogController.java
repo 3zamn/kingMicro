@@ -51,6 +51,7 @@ public class ScheduleJobLogController {
 	 */
 	@ApiOperation(value = "定时任务日志信息")
 	@GetMapping("/info/{logId}")
+	@RequiresPermissions("sys:scheduleLog:list")
 	public JsonResponse info(@PathVariable("logId") Long logId){
 		ScheduleJobLog log = scheduleJobService.queryScheduleJobLog(logId);
 		

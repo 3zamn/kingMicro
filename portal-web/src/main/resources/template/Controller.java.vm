@@ -1,4 +1,4 @@
-package ${package}.controller;
+package ${package}.rest.${module};
 
 import java.util.List;
 import java.util.Map;
@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ${package}.common.utils.Page;
 import ${package}.common.annotation.Log;
-import ${package}.dal.gen.model.${className};
-import ${package}.api.smp.${className}Service;
+import ${package}.dal.gen.model.${module}.${className};
+import ${package}.api.${module}.${className}Service;
 import ${package}.common.utils.Query;
 import ${package}.common.utils.JsonResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 
 /**
@@ -27,49 +29,46 @@ import ${package}.common.utils.JsonResponse;
  */
 @RestController
 @Api(value = "${comments}", description = "${comments}")
-@RequestMapping("${pathName}")
-public class ${className}Controller {
+@RequestMapping("/${requestUrl}")
+public class ${className}Controller extends AbstractController{
 	@Autowired
 	private ${className}Service ${classname}Service;
 	
 	/**
 	 * 列表
 	 */
-	@ApiOperation(value = "列表",notes = "权限编码（${pathName}:list）")
-	@RequestMapping("/list")
-	@RequiresPermissions("${pathName}:list")
+	@Log("${comments}列表")
+	@ApiOperation(value = "列表",notes = "权限编码（${permUrl}:list）")
+	@GetMapping("/list")
+	@RequiresPermissions("${permUrl}:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params,${className}.class.getSimpleName());
-
-	//	List<${className}> ${classname}List = ${classname}Service.queryList(query);
-	//	int total = ${classname}Service.queryTotal(query);	
-	//	PageUtils pageUtil = new PageUtils(${classname}List, total, query.getLimit(), query.getPage());
-		Page page = ${classname}List.getPage(query);
-		return JsonResponse.success().put("page", page);
+		Page page = ${classname}Service.getPage(query);
+		return JsonResponse.success(page);
 	}
 	
 	
 	/**
 	 * 信息
 	 */
-	@Log("查询信息")
-    @ApiOperation(value = "查询信息",notes = "权限编码（${pathName}:info）")
-	@RequestMapping("/info/{${pk.attrname}}")
-	@RequiresPermissions("${pathName}:info")
+	@Log("${comments}查询信息")
+    @ApiOperation(value = "查询信息",notes = "权限编码（${permUrl}:info）")
+	@GetMapping("/info/{${pk.attrname}}")
+	@RequiresPermissions("${permUrl}:info")
 	public JsonResponse info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
 		${className} ${classname} = ${classname}Service.queryObject(${pk.attrname});
 		
-		return JsonResponse.success().put("${classname}", ${classname});
+		return JsonResponse.success(${classname});
 	}
 	
 	/**
 	 * 保存
 	 */
-	@Log("保存")
-	@ApiOperation(value = "保存",notes = "权限编码（${pathName}:save）")
-	@RequestMapping("/save")
-	@RequiresPermissions("${pathName}:save")
+	@Log("${comments}保存")
+	@ApiOperation(value = "保存",notes = "权限编码（${permUrl}:save）")
+	@PostMapping("/save")
+	@RequiresPermissions("${permUrl}:save")
 	public JsonResponse save(@RequestBody ${className} ${classname}){
 		${classname}Service.save(${classname});
 		
@@ -79,10 +78,10 @@ public class ${className}Controller {
 	/**
 	 * 修改
 	 */
-	@Log("修改")
-	@ApiOperation(value = "修改",notes = "权限编码（${pathName}:update）")
-	@RequestMapping("/update")
-	@RequiresPermissions("${pathName}:update")
+	@Log("${comments}修改")
+	@ApiOperation(value = "修改",notes = "权限编码（${permUrl}:update）")
+	@PostMapping("/update")
+	@RequiresPermissions("${permUrl}:update")
 	public JsonResponse update(@RequestBody ${className} ${classname}){
 		${classname}Service.update(${classname});
 		
@@ -92,10 +91,10 @@ public class ${className}Controller {
 	/**
 	 * 删除
 	 */
-	@Log("删除")
-	@ApiOperation(value = "删除",notes = "权限编码（${pathName}:delete）")
-	@RequestMapping("/delete")
-	@RequiresPermissions("${pathName}:delete")
+	@Log("${comments}删除")
+	@ApiOperation(value = "删除",notes = "权限编码（${permUrl}:delete）")
+	@PostMapping("/delete")
+	@RequiresPermissions("${permUrl}:delete")
 	public JsonResponse delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
 		${classname}Service.deleteBatch(${pk.attrname}s);
 		

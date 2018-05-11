@@ -1,9 +1,8 @@
-package ${package}.service;
+package ${package}.spi.${module};
 
-import ${package}.dal.gen.model.${className};
+import ${package}.dal.gen.model.${module}.${className};
+import ${package}.dal.gen.service.BaseService;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * ${comments}
@@ -14,17 +13,5 @@ import java.util.Map;
  */
 public interface ${className}Service extends BaseService<${className}>{
 	
-	${className} queryObject(${pk.attrType} ${pk.attrname});
 	
-	List<${className}> queryList(Map<String, Object> map);
-	
-	int queryTotal(Map<String, Object> map);
-	
-	void save(${className} ${classname});
-	
-	void update(${className} ${classname});
-	
-	void delete(${pk.attrType} ${pk.attrname});
-	
-	void deleteBatch(${pk.attrType}[] ${pk.attrname}s);
 }

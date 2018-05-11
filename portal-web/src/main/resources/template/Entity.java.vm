@@ -1,7 +1,9 @@
-package ${package}.entity;
+package ${package}.dal.gen.model.${module};
 
 import java.io.Serializable;
 import java.util.Date;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 #if(${hasBigDecimal})
 import java.math.BigDecimal;
@@ -16,7 +18,7 @@ import java.math.BigDecimal;
  * @date ${datetime}
  */
  @ApiModel("${comments}")
-public class ${className}Entity implements Serializable {
+public class ${className} implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 #foreach ($column in $columns)

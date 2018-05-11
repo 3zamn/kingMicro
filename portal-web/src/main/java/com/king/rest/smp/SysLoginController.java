@@ -27,14 +27,14 @@ import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
-import com.king.common.utils.network.HttpContextUtils;
-import com.king.common.utils.network.IPUtils;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.redis.TokenGenerator;
 import com.king.common.utils.security.ShiroUtils;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
+import com.king.utils.HttpContextUtils;
+import com.king.utils.IPUtils;
 import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;

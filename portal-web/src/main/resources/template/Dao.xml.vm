@@ -4,18 +4,24 @@
 <mapper namespace="${package}.dao.${className}Dao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="${package}.dal.gen.model.${className}" id="BaseResultMap">
+    <resultMap type="${package}.dal.gen.model.${module}.${className}" id="BaseResultMap">
 #foreach($column in $columns)
         <result property="${column.attrname}" column="${column.columnName}" jdbcType="${column.dataType}"/>
 #end
     </resultMap>
 
-	<select id="queryObject" resultType="${package}.dal.gen.model.${className}">
+	<select id="queryObject" resultType="${package}.dal.gen.model.${module}.${className}">
 		select * from ${tableName} where ${pk.columnName} = #{value}
 	</select>
 
-	<select id="queryList" resultType="${package}.dal.gen.model.${className}">
+	<select id="queryList" resultType="${package}.dal.gen.model.${module}.${className}">
 		select * from ${tableName}
+		<where>
+			<if test="searchSql!= null and searchSql.trim() != ''">
+			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
+				${searchSql}
+			</if>
+		</where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -31,9 +37,15 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from ${tableName} 
+		<where>
+			<if test="searchSql!= null and searchSql.trim() != ''">
+			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
+				${searchSql}
+			</if>
+		</where>
 	</select>
 	 
-	<insert id="save" parameterType="${package}.dal.gen.model.${className}"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
+	<insert id="save" parameterType="${package}.dal.gen.model.${module}.${className}"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
 		insert into ${tableName}
 		(
 #foreach($column in $columns)
@@ -54,7 +66,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="${package}.dal.gen.model.${className}">
+	<update id="update" parameterType="${package}.dal.gen.model.${module}.${className}">
 		update ${tableName} 
 		<set>
 #foreach($column in $columns)

@@ -35,6 +35,7 @@
 <!-- 	<dubbo:reference   interface="com.king.api.smp.ScheduleJobLogService" id="scheduleJobLogService" /> -->
 	<dubbo:reference   interface="com.king.api.smp.ScheduleJobService" id="scheduleJobService" />
 	<dubbo:reference   interface="com.king.api.smp.SysConfigService" id="sysConfigService" />
+	<dubbo:reference   interface="com.king.api.smp.SysDicService" id="sysDicService" />
 	<dubbo:reference   interface="com.king.api.smp.SysDeptService" id="sysDeptService" />
 	<dubbo:reference   interface="com.king.api.smp.SysLogService" id="sysLogService" />
 	<dubbo:reference   interface="com.king.api.smp.SysMenuService" id="sysMenuService" />

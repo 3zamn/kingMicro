@@ -65,7 +65,8 @@ public class GenUtils {
 		String className = tableToJava(tableEntity.getTableName(), config.getString("tablePrefix"));
 		tableEntity.setClassName(className);
 		tableEntity.setClassname(StringUtils.uncapitalize(className));
-		
+		tableEntity.setRequestUrl(tableToRequestUrl(tableEntity.getTableName()));
+		tableEntity.setPermUrl(tableToPermUrl(tableEntity.getTableName()));
 		//列信息
 		List<ColumnEntity> columsList = new ArrayList<>();
 		for(Map<String, String> column : columns){
@@ -112,8 +113,11 @@ public class GenUtils {
 		map.put("className", tableEntity.getClassName());
 		map.put("classname", tableEntity.getClassname());
 		map.put("pathName", tableEntity.getClassname().toLowerCase());
+		map.put("requestUrl", tableEntity.getRequestUrl());
+		map.put("permUrl", tableEntity.getPermUrl());
 		map.put("columns", tableEntity.getColumns());
 		map.put("package", config.getString("package"));
+		map.put("module", config.getString("module"));
 		map.put("author", config.getString("author"));
 		map.put("email", config.getString("email"));
 		map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
@@ -155,6 +159,27 @@ public class GenUtils {
 			tableName = tableName.replace(tablePrefix, "");
 		}
 		return columnToJava(tableName);
+	}
+	
+	/**
+	 * 表名转换成RequestUrl
+	 * @param tableName
+	 * @param tablePrefix
+	 * @return
+	 */
+	public static String tableToRequestUrl(String tableName) {
+		
+		return WordUtils.capitalizeFully(tableName, new char[]{'_'}).replace("_", "/");
+	}
+	
+	/**
+	 * 表名转换成权限编码
+	 * @param tableName
+	 * @param tablePrefix
+	 * @return
+	 */
+	public static String tableToPermUrl(String tableName) {
+		return WordUtils.capitalizeFully(tableName, new char[]{'_'}).replace("_", ":");
 	}
 	
 	/**
@@ -203,11 +228,11 @@ public class GenUtils {
 		
 		if(template.contains("list.html.vm")){
 			return "main" + File.separator + "webapp" + File.separator + "WEB-INF" + File.separator + "views"
-					+ File.separator + "modules"+ File.separator + "generator" + File.separator + className.toLowerCase() + ".html";
+					+ File.separator + "modules"+ File.separator + className.toLowerCase() + ".html";
 		}
 		
 		if(template.contains("list.js.vm")){
-			return "main" + File.separator + "webapp" + File.separator + "statics" + File.separator + "js" + File.separator + "modules" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
+			return "main" + File.separator + "webapp" + File.separator + "statics" + File.separator + "js" + File.separator + "modules" + File.separator + className.toLowerCase() + ".js";
 		}
 		
 		return null;

@@ -23,6 +23,10 @@ public class TableEntity {
 	//类名(第一个字母小写)，如：sys_user => sysUser
 	private String classname;
 	
+	private String requestUrl;
+	
+	private String permUrl;
+	
 	public String getTableName() {
 		return tableName;
 	}
@@ -59,4 +63,17 @@ public class TableEntity {
 	public void setClassname(String classname) {
 		this.classname = classname;
 	}
+	public String getRequestUrl() {
+		return requestUrl;
+	}
+	public void setRequestUrl(String requestUrl) {
+		this.requestUrl = requestUrl;
+	}
+	public String getPermUrl() {
+		return permUrl;
+	}
+	public void setPermUrl(String permUrl) {
+		this.permUrl = permUrl;
+	}
+	
 }

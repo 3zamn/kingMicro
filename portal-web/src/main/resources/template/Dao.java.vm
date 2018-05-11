@@ -1,6 +1,8 @@
 package ${package}.dao;
 
-import ${package}.dal.gen.model.${className};
+import ${package}.dal.gen.model.${module}.${className};
+import ${package}.dal.gen.dao.BaseDao;
+
 
 /**
  * ${comments}

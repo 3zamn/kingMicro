@@ -2,26 +2,44 @@
 <html>
 <head>
 <title>${comments}</title>
-#set($header='<#include "/header.html">')
-#set($save='<#if shiro.hasPermission("'+${pathName}+':save")>')
-#set($update='<#if shiro.hasPermission("'+${pathName}+':update")>')
-#set($delete='<#if shiro.hasPermission("'+${pathName}+':delete")>')
-#set($end='</#if>')
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../static/css/font-awesome.min.css">
+<link rel="stylesheet" href="../../static/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../../static/plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="../../static/css/main.css">
+<script src="../../static/libs/jquery.min.js"></script>
+<script src="../../static/plugins/layer/layer.js"></script>
+<script src="../../static/libs/bootstrap.min.js"></script>
+<script src="../../static/libs/vue.min.js"></script>
+<script src="../../static/plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="../../static/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../../static/plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="../../static/js/common.js"></script>
+
+#set($save='<a v-if="hasPermission("'+${permUrl}+':save")" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>')
+#set($update='<a v-if="hasPermission("'+${permUrl}+':update")" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>')
+#set($delete='<a v-if="hasPermission("'+${permUrl}+':delete")" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>')
 $header
 </head>
 <body>
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
 		<div class="grid-btn">
+		
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.key" @keyup.enter="query" placeholder="模糊查询">
+			</div>
+			<a class="btn btn-default" @click="query">查询</a>		
+			
 			$save
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			$end
+        
 			$update
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			$end
+           
 			$delete
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			$end
+           
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>
@@ -49,6 +67,6 @@ $header
 	</div>
 </div>
 
-<script src="${request.contextPath}/statics/js/modules/generator/${pathName}.js?_${.now?long}"></script>
+<script src="${request.contextPath}/statics/js/modules/${requestUrl}.js?_${.now?long}"></script>
 </body>
 </html>
