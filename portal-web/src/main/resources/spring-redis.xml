@@ -17,6 +17,17 @@
         <property name="maxIdle" value="${redis.maxIdle}"/>
         <property name="maxTotal" value="${redis.maxTotal}"/>
         <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+         <property name="numTestsPerEvictionRun" value="${redis.pool.numTestsPerEvictionRun}"/>
+        <!-- 释放扫描的扫描间隔 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.pool.timeBetweenEvictionRunsMillis}"/>
+        <!-- 连接的最小空闲时间 -->
+       <!--  <property name="minEvictableIdleTimeMillis" value="${redis.pool.minEvictableIdleTimeMillis}"/> -->
+        <!-- 连接控歘按时间多久后释放，当空闲时间>该值且空闲连接>最大空闲连接数时直接释放 -->
+       <!--  <property name="softMinEvictableIdleTimeMillis" value="${redis.pool.softMinEvictableIdleTimeMillis}"/> -->
+        <!-- 在获得链接的时候检查有效性，默认false -->
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
+        <!-- 在空闲时检查有效性，默认false -->
+        <property name="testWhileIdle" value="${redis.pool.testWhileIdle}"/>
     </bean>
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">

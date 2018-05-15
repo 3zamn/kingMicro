@@ -10,7 +10,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.king.app.annotation.LoginUser;
-import com.king.app.entity.UserEntity;
+import com.king.app.entity.AppUser;
 import com.king.app.interceptor.AuthorizationInterceptor;
 import com.king.app.service.UserService;
 
@@ -27,7 +27,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().isAssignableFrom(UserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
+        return parameter.getParameterType().isAssignableFrom(AppUser.class) && parameter.hasParameterAnnotation(LoginUser.class);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
         }
 
         //获取用户信息
-        UserEntity user = userService.queryObject((Long)object);
+        AppUser user = userService.queryObject((Long)object);
 
         return user;
     }

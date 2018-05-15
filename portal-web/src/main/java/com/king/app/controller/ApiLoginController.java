@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.king.app.annotation.Login;
 import com.king.app.annotation.LoginUser;
-import com.king.app.entity.UserEntity;
+import com.king.app.entity.AppUser;
 import com.king.app.service.UserService;
 import com.king.app.utils.JwtUtils;
 import com.king.common.utils.JsonResponse;
@@ -75,7 +75,7 @@ public class ApiLoginController {
     @Login
     @GetMapping("userInfo")
     @ApiOperation("获取用户信息")
-    public JsonResponse userInfo(@LoginUser UserEntity user){
+    public JsonResponse userInfo(@LoginUser AppUser user){
         return JsonResponse.success(user);
     }
     

@@ -23,7 +23,6 @@ import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.dal.gen.model.smp.SysDic;
-import com.king.dal.gen.model.smp.SysMenu;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -74,7 +73,7 @@ public class SysDicController extends AbstractController{
 	 * 字典目录(添加、修改字典)
 	 */
 	@Log("字典目录")
-	@ApiOperation(value = "字典目录选择", notes = "权限编码（sys:menu:select）")
+	@ApiOperation(value = "字典目录选择", notes = "权限编码（sys:dic:select）")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:dic:select")
 	public JsonResponse select(){
@@ -179,11 +178,9 @@ public class SysDicController extends AbstractController{
 			}
 			if(StringUtils.isBlank(sysDic.getParentName())){
 				throw new RRException("字典所在目录不能为空");
-			}
-		
+			}	
 		}
-		
-		
+			
 		//上级目录类型
 		int parentType = Constant.DicType.CATALOG.getValue();
 		if(sysDic.getParentId() != 0){

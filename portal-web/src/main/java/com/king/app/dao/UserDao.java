@@ -2,7 +2,7 @@ package com.king.app.dao;
 
 import org.mapstruct.Mapper;
 
-import com.king.app.entity.UserEntity;
+import com.king.app.entity.AppUser;
 import com.king.dal.gen.dao.BaseDao;
 
 /**
@@ -12,7 +12,7 @@ import com.king.dal.gen.dao.BaseDao;
  * @data2018年4月23日
  */
 @Mapper
-public interface UserDao extends BaseDao<UserEntity> {
+public interface UserDao extends BaseDao<AppUser> {
 
-    UserEntity queryByMobile(String mobile);
+    AppUser queryByMobile(String mobile);
 }

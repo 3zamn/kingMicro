@@ -4,7 +4,7 @@ package com.king.app.service;
 import java.util.List;
 import java.util.Map;
 
-import com.king.app.entity.UserEntity;
+import com.king.app.entity.AppUser;
 
 /**
  * 用户service
@@ -14,21 +14,21 @@ import com.king.app.entity.UserEntity;
  */
 public interface UserService {
 
-	UserEntity queryObject(Long userId);
+	AppUser queryObject(Long userId);
 	
-	List<UserEntity> queryList(Map<String, Object> map);
+	List<AppUser> queryList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);
 	
 	void save(String mobile, String password);
 	
-	void update(UserEntity user);
+	void update(AppUser user);
 	
 	void delete(Long userId);
 	
 	void deleteBatch(Long[] userIds);
 
-	UserEntity queryByMobile(String mobile);
+	AppUser queryByMobile(String mobile);
 
 	/**
 	 * 用户登录

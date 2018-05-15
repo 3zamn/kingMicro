@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.king.app.dao.UserDao;
-import com.king.app.entity.UserEntity;
+import com.king.app.entity.AppUser;
 import com.king.app.service.UserService;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.validator.Assert;
@@ -23,12 +23,12 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 	
 	@Override
-	public UserEntity queryObject(Long userId){
+	public AppUser queryObject(Long userId){
 		return userDao.queryObject(userId);
 	}
 	
 	@Override
-	public List<UserEntity> queryList(Map<String, Object> map){
+	public List<AppUser> queryList(Map<String, Object> map){
 		return userDao.queryList(map);
 	}
 	
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void save(String mobile, String password){
-		UserEntity user = new UserEntity();
+		AppUser user = new AppUser();
 		user.setMobile(mobile);
 		user.setUsername(mobile);
 		user.setPassword(DigestUtils.sha256Hex(password));
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void update(UserEntity user){
+	public void update(AppUser user){
 		userDao.update(user);
 	}
 	
@@ -63,13 +63,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserEntity queryByMobile(String mobile) {
+	public AppUser queryByMobile(String mobile) {
 		return userDao.queryByMobile(mobile);
 	}
 
 	@Override
 	public long login(String mobile, String password) {
-		UserEntity user = queryByMobile(mobile);
+		AppUser user = queryByMobile(mobile);
 		Assert.isNull(user, "手机号或密码错误");
 
 		//密码错误

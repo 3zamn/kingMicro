@@ -15,6 +15,7 @@
 	</select>
 
 	<select id="queryList" resultType="${package}.dal.gen.model.${module}.${className}">
+	<!-- 数据量大时,此分页效率不高。建议改为:select * from table where id &lt;=(select id from table order by id  desc limit #{offset}, 1) order by id desc limit #{limit}) -->
 		select * from ${tableName}
 		<where>
 			<if test="searchSql!= null and searchSql.trim() != ''">

@@ -1,8 +1,14 @@
 package com.king.rest.smp;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,6 +28,8 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.Query;
+import com.king.common.utils.redis.IdGenerator;
+import com.king.common.utils.spring.SpringContextUtils;
 import com.king.common.utils.validator.Assert;
 import com.king.common.utils.validator.ValidatorUtils;
 import com.king.common.utils.validator.group.AddGroup;
@@ -46,8 +54,54 @@ public class SysUserController extends AbstractController {
 	private SysUserService sysUserService;
 	@Autowired
 	private SysRoleService sysRoleService;
-
 	
+	@Autowired
+	private IdGenerator idGenerator;
+	  
+	public static AtomicInteger count = new AtomicInteger(0);
+
+
+	/**
+	 * Id生成测试
+	 * @return
+	 */
+	@GetMapping("/test")
+	public JsonResponse test(){
+		int clientTotal = 60000;
+		// 同时并发执行的线程数
+		int threadTotal = 600;
+		 ExecutorService executorService = Executors.newCachedThreadPool();
+		    //信号量，此处用于控制并发的线程数
+		    final Semaphore semaphore = new Semaphore(threadTotal);
+		    //闭锁，可实现计数器递减
+		    final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
+		    Long begin = new Date().getTime();  
+		    for (int i = 0; i < clientTotal ; i++) {
+		      executorService.execute(() -> {
+		        try {//执行此方法用于获取执行许可，当总计未释放的许可数不超过60000时，	         	 
+		          semaphore.acquire(); //允许通行，否则线程阻塞等待，直到获取到许可。
+		          idGenerator.incrementHash("id", "value", null);         
+		          semaphore.release(); //释放许可
+		        } catch (Exception e) {
+		          e.printStackTrace();
+		        }       
+		        countDownLatch.countDown(); //闭锁减一
+		      });
+		    }
+		    try {
+				countDownLatch.await();//线程阻塞，直到闭锁值为0时，阻塞才释放，继续往下执行
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		    Long end = new Date().getTime();  
+		    System.out.println("cast : " + (end - begin) / 1000 + " ms");  
+		    executorService.shutdown();
+			return JsonResponse.success("cast : " + (end - begin) / 1000 + " ms");
+		
+	}
+	  private static void add() {
+		   System.out.println("count计数器:"+count.incrementAndGet());
+		}
 	/**
 	 * 所有用户列表
 	 */
@@ -59,7 +113,8 @@ public class SysUserController extends AbstractController {
 		//查询列表数据
 		Query query = new Query(params,SysUser.class.getSimpleName());
 		Page page = sysUserService.getPage(query);
-		
+		long v = idGenerator.generate("hell");
+	      System.out.println("id:"+v);
 		return JsonResponse.success(page);
 	}
 	
