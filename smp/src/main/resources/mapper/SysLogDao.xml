@@ -20,16 +20,13 @@
 	</select>
 
 	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysLog">
-		select * from sys_log 
-		<where>
+		select * from sys_log where id &lt;=(select id from sys_log ORDER BY id DESC limit #{offset}, 1) 
 			<if test="searchSql!= null and searchSql.trim() != ''">
-				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
-				${searchSql}
+			 and	${searchSql}
 			</if>
-		</where>
-		order by id desc 
+		order by id desc 	
 		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
+			limit  #{limit}
 		</if>
 	</select>
 	
