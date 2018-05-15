@@ -133,14 +133,22 @@ var navItem = Vue.extend({
          //   eventBus.index=index
         }
     },
-
-	template:
+    template:[
+         '<li class="layui-nav-item" >',
+         '<a v-if="item.type === 0" href="javascript:;" @click="change(index)" style="height: 58px;font-size: 15px;">',
+         '<i v-if="item.icon != null" :class="item.icon"></i>',
+         '<span style="font-size: 15px;">{{item.name}}</span>',
+         '</a>',
+         '</li>'
+    ].join('')
+    //下面写法IE不兼容
+	/*template:
 	`<li class="layui-nav-item" >
 		<a v-if="item.type === 0" href="javascript:;" @click="change(index)" style="height: 58px;font-size: 15px;">
 			<i v-if="item.icon != null" :class="item.icon"></i>
 			<span style="font-size: 15px;">{{item.name}}</span>
 		</a>
-	</li>`
+	</li>`*/
 });
 
 //注册菜单组件

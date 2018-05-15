@@ -176,7 +176,7 @@ var Dic = {
  */
 Dic.initColumn = function () {
     var columns = [
-        {field: 'selectItem', radio: true,width: '10px'},
+        {field: 'selectItem', radio: true},
         {title: 'ID', field: 'id', visible: false, align: 'center', valign: 'middle', width: '20px'},
         {title: '字典名称', field: 'name', align: 'center', valign: 'middle', sortable: true, width: '60px'},
         {title: '字典编码', field: 'code', align: 'center', valign: 'middle', sortable: true, width: '60px'},
