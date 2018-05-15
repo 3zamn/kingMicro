@@ -9,7 +9,7 @@ import java.util.Date;
  * @emai 396885563@qq.com
  * @data2018年4月23日
  */
-public class UserEntity implements Serializable {
+public class AppUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//用户ID
