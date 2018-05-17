@@ -21,17 +21,60 @@
 </head>
 <body>
 <div id="rrapp">
-	<div class="grid-btn">
-		<div class="form-group col-sm-2">
-			<input type="text" class="form-control" v-model="q.tableName" @keyup.enter="query" placeholder="表名">
+	<div v-show="showList">
+		<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.tableName" @keyup.enter="query" placeholder="表名">
+			</div>
+			<a class="btn btn-default" @click="query">查询</a>
+			<a v-if="hasPermission('sys:generator:info')" class="btn btn-primary" @click="getInfo"><i class="fa fa-pencil-square-o"></i>&nbsp;配置</a>
+			<a v-if="hasPermission('sys:generator:code')" class="btn btn-primary" @click="generator"><i class="fa fa-plus"></i>&nbsp;生成代码</a>
 		</div>
-		<a class="btn btn-default" @click="query">查询</a>
-		<a v-if="hasPermission('sys:user:save')" class="btn btn-primary" @click="generator"><i class="fa fa-plus"></i>&nbsp;生成代码</a>
-		<!-- <a class="btn btn-primary" @click="generator"><i class="fa fa-file-code-o"></i>&nbsp;生成代码</a> -->
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+		<div v-show="!showList" class="panel panel-default">
+			<div class="panel-heading">{{title}}</div>
+			<form class="form-horizontal">
+				<div class="form-group">
+					<table class="table table-bordered table-striped text-center">
+						<thead>
+							<tr class="">
+								<th>数据类型</th>
+								<th>字段名</th>
+								<th>备注</th>
+								<th>是否生成此列</th>
+								<th>类型</th>							
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="column in columns">
+								<th>{{column.dataType}}</th>
+								<th>{{column.columnName}}</th>
+								<th>{{column.columnComment}}</th>
+								<th><input type="checkbox"  ></th>
+								<th>
+								<select class='form-control'>  
+								     <option value='input'>input</option>
+								     <option value='select'>select</option>  
+								     <!-- <option value='select'>select</option>   -->
+								     <option value='radio'>radio</option>  
+								     <option value='textarea'>textarea</option>  
+								</select>
+								</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label"></div>
+					<input type="button" class="btn btn-primary" @click="generator"
+						value="生成代码" /> &nbsp;&nbsp;<input type="button"
+						class="btn btn-warning" @click="reload" value="返回" />
+				</div>
+			</form>
+		</div>
 	</div>
-    <table id="jqGrid"></table>
-    <div id="jqGridPager"></div>
-</div>
 <script src="../../static/js/modules/gen/generator.js"></script>
 </body>
 </html>

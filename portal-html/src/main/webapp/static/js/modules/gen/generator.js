@@ -40,7 +40,10 @@ var vm = new Vue({
 	data:{
 		q:{
 			tableName: null
-		}
+		},
+		title: null,
+		showList: true,
+		columns: {}
 	},
 	methods: {
 		query: function () {
@@ -49,6 +52,20 @@ var vm = new Vue({
                 page:1 
             }).trigger("reloadGrid");
 		},
+		getInfo: function () {
+			var id = getSelectedRow();
+			if(id == null){
+				return ;
+			}
+			
+			$.get(baseURL + "sys/generator/info/"+id, function(r){
+                vm.showList = false;
+            //    debugger
+                vm.title = "配置";
+                vm.columns = r.data.columns;
+                
+            });
+		},
 		generator: function() {
 			var tableNames = getSelectedRows();
 			if(tableNames == null){
@@ -56,7 +73,15 @@ var vm = new Vue({
 			}
 			var token = localStorage.getItem("token");
 			location.href = baseURL + "sys/generator/code?tables=" + JSON.stringify(tableNames)+"&token="+token;
-		}
+		},
+		reload: function () {
+			vm.showList = true;
+			var page = $("#jqGrid").jqGrid('getGridParam','page');
+			$("#jqGrid").jqGrid('setGridParam',{ 
+                postData:{'key': vm.q.key},
+                page:page
+            }).trigger("reloadGrid");
+		},
 	}
 });
 
