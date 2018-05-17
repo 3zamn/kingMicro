@@ -77,9 +77,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "u", user = true)
 	public Page getPage(Map<String, Object> map) {
-		List<SysUser> list =sysUserDao.queryList(map);
-		int totalCount =sysUserDao.queryTotal(map);
-		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		Page page = null;
+		if (map.get("limit") != null && map.get("page") != null) {
+			List<SysUser> list = sysUserDao.queryList(map);
+			int totalCount = sysUserDao.queryTotal(map);
+			page = new Page(list, totalCount, (int) map.get("limit"), (int) map.get("page"));
+		}
 		return page;
 	}
 

@@ -139,9 +139,12 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 	
 	@Transactional(readOnly = true)
 	public Page getPageScheduleJobLog(Map<String, Object> map) {
-		List<ScheduleJobLog> list =scheduleJobLogDao.queryList(map);
-		int totalCount =scheduleJobLogDao.queryTotal(map);
-		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		Page page = null;
+		if (map.get("limit") != null && map.get("page") != null) {
+			List<ScheduleJobLog> list = scheduleJobLogDao.queryList(map);
+			int totalCount = scheduleJobLogDao.queryTotal(map);
+			page = new Page(list, totalCount, (int) map.get("limit"), (int) map.get("page"));
+		}
 		return page;
 	}
     

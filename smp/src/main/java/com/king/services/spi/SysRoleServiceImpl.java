@@ -67,9 +67,12 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	@Transactional(readOnly = true)
 	@DataFilter(tableAlias = "r", user = false)
 	public Page getPage(Map<String, Object> map) {
-		List<SysRole> list =sysRoleDao.queryList(map);
-		int totalCount =sysRoleDao.queryTotal(map);
-		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		Page page = null;
+		if (map.get("limit") != null && map.get("page") != null) {
+			List<SysRole> list = sysRoleDao.queryList(map);
+			int totalCount = sysRoleDao.queryTotal(map);
+			page = new Page(list, totalCount, (int) map.get("limit"), (int) map.get("page"));
+		}
 		return page;
 	}
 
