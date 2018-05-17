@@ -73,9 +73,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	
 	@Transactional(readOnly = true)
 	public Page getPage(Map<String, Object> map) {
-		List<T> list =getBaseDao().queryList(map);
-		int totalCount =getBaseDao().queryTotal(map);
-		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		Page page=null;
+		if(map.get("limit")!=null && map.get("page")!=null){
+			List<T> list =getBaseDao().queryList(map);
+			int totalCount =getBaseDao().queryTotal(map);
+			page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	
+		}	
 		return page;
 	}
 }

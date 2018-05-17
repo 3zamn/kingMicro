@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -41,6 +42,7 @@ public class SysUser implements Serializable {
 	 */
 	@ApiModelProperty("用户名")
 	@NotBlank(message="用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
+	@Length(max=20)
 	private String username;
 
 	/**
@@ -68,6 +70,7 @@ public class SysUser implements Serializable {
 	 * 手机号
 	 */
 	@ApiModelProperty("手机号")
+	@Length(max=20)
 	private String mobile;
 
 	/**

@@ -18,7 +18,8 @@ public class SQLFilter {
         if(StringUtils.isBlank(str)){
             return null;
         }
-        //去掉'|"|;|\字符
+        //去掉`|'|"|;|\字符
+        str = StringUtils.replace(str, "`", "");
         str = StringUtils.replace(str, "'", "");
         str = StringUtils.replace(str, "\"", "");
         str = StringUtils.replace(str, ";", "");
@@ -39,7 +40,8 @@ public class SQLFilter {
         if(StringUtils.isBlank(str)){
             return null;
         }
-        //去掉'|"|;|\字符
+        //去掉`|'|"|;|\字符
+        str = StringUtils.replace(str, "`", "");
         str = StringUtils.replace(str, "'", "");
         str = StringUtils.replace(str, "\"", "");
         str = StringUtils.replace(str, ";", "");

@@ -50,11 +50,20 @@ public class DateUtils {
 	}
 	
 	/**
-	 * 获取默认的当前日期与时间字符串
+	 * 获取默认的当前日期与时间yyyy-MM-dd HH:mm
 	 * @return
 	 */
 	public static String getDefaultDateTimeStr() {
 		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		return dateFormat.format(new Date());
+	}
+	
+	/**
+	 * 获取默认的当前日期与时间yyyy-MM-dd HH:mm:ss 
+	 * @return
+	 */
+	public static String getDefaultDateTimeSec() {
+		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return dateFormat.format(new Date());
 	}
 	

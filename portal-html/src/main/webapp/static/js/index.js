@@ -1,46 +1,168 @@
-//生成菜单
-var menuItem = Vue.extend({
-    name: 'menu-item',
-    props:{item:{},index:0},
-    template:[
-        '<li :class="{active: (item.type===0 && index === 0)}">',
-        '<a v-if="item.type === 0" href="javascript:;">',
-        '<i v-if="item.icon != null" :class="item.icon"></i>',
-        '<span>{{item.name}}</span>',
-        '<i class="fa fa-angle-left pull-right"></i>',
-        '</a>',
-        '<ul v-if="item.type === 0" class="treeview-menu">',
-        '<menu-item :item="item" :index="index" v-for="(item, index) in item.list"></menu-item>',
-        '</ul>',
-        '<a v-if="item.type === 1" :href="\'#\'+item.url">' +
-        '<i v-if="item.icon != null" :class="item.icon"></i>' +
-        '<i v-else class="fa fa-circle-o"></i> {{item.name}}' +
-        '</a>',
-        '</li>'
-    ].join('')
+layui.config({
+  base:'static/js/'
+}).use(['navtab'],function(){
+	window.jQuery = window.$ = layui.jquery;
+	window.layer = layui.layer;
+    var element = layui.element,
+	navtab = layui.navtab({
+		elem: '.larry-tab-box'
+	});
+
+    //iframe自适应
+	$(window).on('resize', function() {
+		var $content = $('#larry-tab .layui-tab-content');
+		$content.height($(this).height() - 140);
+	    $content.find('iframe').each(function() {
+	    	$(this).height($content.height());
+	    });
+	}).resize();
+  
+	$(function(){
+	    $('#larry-nav-side').click(function(){
+	        if($(this).attr('lay-filter')!== undefined){
+	            $(this).children('ul').find('li').each(function(){
+	                var $this = $(this);
+	                if($this.find('dl').length > 0){
+	                   var $dd = $this.find('dd').each(function(){
+	                       $(this).on('click', function() {
+	                           var $a = $(this).children('a');
+	                           var href = $a.data('url');
+	                           var icon = $a.children('i:first').data('icon');
+	                           var title = $a.children('span').text();
+	                           var data = {
+	                                 href: href,
+	                                 icon: icon,
+	                                 title: title
+	                           }
+	                           navtab.tabAdd(data);
+	                       });
+	                   });
+	                }else{
+	                	$this.on('click', function() {
+                           var $a = $(this).children('a');
+                           var href = $a.data('url');
+                           var icon = $a.children('i:first').data('icon');
+                           var title = $a.children('span').text();
+                           var data = {
+                                 href: href,
+                                 icon: icon,
+                                 title: title
+                           }
+                           navtab.tabAdd(data);
+	                    });
+	                }
+	            });
+	        }
+	    }).trigger("click");
+	});
 });
 
-//iframe自适应
-$(window).on('resize', function() {
-	var $content = $('.content');
-	$content.height($(this).height() - 120);
-	$content.find('iframe').each(function() {
-		$(this).height($content.height());
+
+layui.use(['jquery','layer','element'],function(){
+	window.jQuery = window.$ = layui.jquery;
+	window.layer = layui.layer;
+	var element = layui.element;
+
+	// larry-side-menu向左折叠
+	$('.larry-side-menu').click(function() {
+	  var sideWidth = $('#larry-side').width();
+	  if(sideWidth === 200) {
+	      $('#larry-body').animate({
+	        left: '0'
+	      }); 
+	      $('#larry-footer').animate({
+	        left: '0'
+	      });
+	      $('#larry-side').animate({
+	        width: '0'
+	      });
+	  } else {
+	      $('#larry-body').animate({
+	        left: '200px'
+	      });
+	      $('#larry-footer').animate({
+	        left: '200px'
+	      });
+	      $('#larry-side').animate({
+	        width: '200px'
+	      });
+	  }
 	});
-}).resize();
+});
+
+
+var eventBus = new Vue({})
+//生成菜单
+var menuItem = Vue.extend({
+	name: 'menu-item',
+	props:{item:{},index:{},menuId:{default :0}},
+	mounted: function() {
+		var that=this;
+		eventBus.$on("change",function (msg) {
+            that.menuId=msg;
+        })
+    },
+	template:[
+			 /* '<li class="layui-nav-item">',*/    //收缩状态
+	          '<li class="layui-nav-item layui-nav-itemed" v-if="index === menuId">',   //展开状态
+	          '<a v-if="item.type === 0" href="javascript:;">',
+	          '<i v-if="item.icon != null" :class="item.icon"></i>',
+	          '<span>{{item.name}}</span>',
+	          '<em class="layui-nav-more"></em>',
+	          '</a>',
+	          '<dl v-if="item.type === 0" class="layui-nav-child">',
+	          '<dd v-for="item in item.list">',
+	          '<a v-if="item.type === 1" href="javascript:;" :data-url="item.url"><i v-if="item.icon != null" :class="item.icon" :data-icon="item.icon"></i> <span>{{item.name}}</span></a>',
+	          '</dd>',
+	          '</dl>',
+	          '<a v-if="item.type === 1" href="javascript:;" :data-url="item.url"><i v-if="item.icon != null" :class="item.icon" :data-icon="item.icon"></i> <span>{{item.name}}</span></a>',
+	          '</li>'
+	].join('')
+});
+
+
+//生成导航--顶级菜单
+var navItem = Vue.extend({
+	name: 'nav-item',
+	props:{item:{},index:{}},
+	methods: {
+		change: function(index) {
+            // 触发事件
+		//	debugger
+            eventBus.$emit('change',this.index)    
+         //   eventBus.index=index
+        }
+    },
+    template:[
+         '<li class="layui-nav-item" >',
+         '<a v-if="item.type === 0" href="javascript:;" @click="change(index)" style="height: 58px;font-size: 15px;">',
+         '<i v-if="item.icon != null" :class="item.icon"></i>',
+         '<span style="font-size: 15px;">{{item.name}}</span>',
+         '</a>',
+         '</li>'
+    ].join('')
+    //下面写法IE不兼容
+	/*template:
+	`<li class="layui-nav-item" >
+		<a v-if="item.type === 0" href="javascript:;" @click="change(index)" style="height: 58px;font-size: 15px;">
+			<i v-if="item.icon != null" :class="item.icon"></i>
+			<span style="font-size: 15px;">{{item.name}}</span>
+		</a>
+	</li>`*/
+});
 
 //注册菜单组件
 Vue.component('menuItem',menuItem);
+Vue.component('navItem',navItem);
 
 var vm = new Vue({
-	el:'#rrapp',
+	el:'#layui_layout',
 	data:{
 		user:{},
 		menuList:{},
-		main:"main.html",
 		password:'',
 		newPassword:'',
-        navTitle:"欢迎页"
+        navTitle:"控制台"
 	},
 	methods: {
 		getMenuList: function () {
@@ -98,50 +220,20 @@ var vm = new Vue({
                 }
             });
         },
-        donate: function () {
-            layer.open({
-                type: 2,
-                title: false,
-                area: ['806px', '467px'],
-                closeBtn: 1,
-                shadeClose: false,
-                content: ['http://cdn.renren.io/donate.jpg', 'no']
-            });
-        }
+        personInfo: function(){
+			layer.open({
+				type: 1,
+				skin: 'layui-layer-molv',
+				title: "基本资料",
+				area: ['550px', '310px'],
+				shadeClose: false,
+				content: jQuery("#personInfo"),
+				btn: ['关闭']
+			});
+		},
 	},
 	created: function(){
 		this.getMenuList();
 		this.getUser();
-	},
-	updated: function(){
-		//路由
-		var router = new Router();
-		routerList(router, vm.menuList);
-		router.start();
 	}
 });
-
-
-
-function routerList(router, menuList){
-	for(var key in menuList){
-		var menu = menuList[key];
-		if(menu.type == 0){
-			routerList(router, menu.list);
-		}else if(menu.type == 1){
-			router.add('#'+menu.url, function() {
-				var url = window.location.hash;
-				
-				//替换iframe的url
-			    vm.main = url.replace('#', '');
-			    
-			    //导航菜单展开
-			    $(".treeview-menu li").removeClass("active");
-                $(".sidebar-menu li").removeClass("active");
-			    $("a[href='"+url+"']").parents("li").addClass("active");
-			    
-			    vm.navTitle = $("a[href='"+url+"']").text();
-			});
-		}
-	}
-}

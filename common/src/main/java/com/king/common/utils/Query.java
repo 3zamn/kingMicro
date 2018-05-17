@@ -56,6 +56,9 @@ public class Query extends LinkedHashMap<String, Object> {
                      this.put("user", ShiroUtils.getUserEntity());//用户
                  }
 			} catch (Exception e) {
+				 this.put("offset", null);
+				 this.put("page", null);
+		         this.put("limit", null);
 				// TODO: handle exception
 			}     
         }       
@@ -211,6 +214,9 @@ public class Query extends LinkedHashMap<String, Object> {
             }
             this.put("order", order);
 		} catch (Exception e) {
+			 this.put("offset", null);
+			 this.put("page", null);
+	         this.put("limit", null);
 			// TODO: handle exception
 		}      
         if(SpringContextUtils.getBean("shiroFilter")!=null){
