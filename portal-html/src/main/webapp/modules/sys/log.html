@@ -24,7 +24,13 @@
 	<div>
 		<div class="grid-btn">
 			<div class="form-group col-sm-2">
-				<input type="text" class="form-control" v-model="q.key" @keyup.enter="query" placeholder="用户名,用户操作,请求方法,状态">
+				<input type="text" class="form-control" v-model="q.key" @keyup.enter="query" placeholder="用户名,用户操作,请求方法">
+			</div>
+			<div class="form-group col-sm-1" style="width: auto;">		
+			<select v-model="selected" class="form-control"  name="status" id="status" >
+			 		<option value="">执行状态</option>
+			      <option v-for="(item,index) in logStatus"  :value="item.value">{{ item.text }}</option>
+			</select>
 			</div>
 			<a class="btn btn-default" @click="query">查询</a>
 		</div>

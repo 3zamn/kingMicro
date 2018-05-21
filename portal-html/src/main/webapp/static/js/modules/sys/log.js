@@ -47,8 +47,18 @@ var vm = new Vue({
 		q:{
 			key: null
 		},
+		selected: '',
+		logStatus:{}
 	},
-	methods: {
+	created: function(){
+		this.getDic();
+	},
+	methods: {		
+		getDic: function () {//下拉选项字典查询
+			 $.get(baseURL + "sys/dic/query/"+"syslog", function(r){
+			        vm.logStatus = r.data;
+			   });
+		},
 		query: function () {
 			vm.reload();
 		},
@@ -57,14 +67,16 @@ var vm = new Vue({
 			var keyParam = new Array();
 		//	debugger
 			keyParam.push('username');
-			keyParam.push('status');
+			keyParam.push('ip');
+		/*	keyParam.push('status');*/
 			keyParam.push('operation');
 			keyParam.push('method');
 			var jsonString = JSON.stringify(keyParam);
 			$("#jqGrid").jqGrid('setGridParam',{ 
-				postData:{'searchKey': vm.q.key,'keyParam':jsonString},
+				postData:{'searchKey': vm.q.key,'keyParam':jsonString,'status':vm.selected},
                 page:page
             }).trigger("reloadGrid");
 		}
 	}
+	
 });

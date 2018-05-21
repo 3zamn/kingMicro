@@ -89,7 +89,7 @@
                     data: data,
                     dataType: "json",
                     success: function(r){
-                        if(r.code == 200){//登录成功
+                        if(r.code == 200){
                             localStorage.setItem("token", r.data.token);
                             parent.location.href ='index.html';
                         }else{

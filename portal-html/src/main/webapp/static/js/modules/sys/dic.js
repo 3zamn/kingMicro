@@ -178,11 +178,12 @@ Dic.initColumn = function () {
     var columns = [
         {field: 'selectItem', radio: true},
         {title: 'ID', field: 'id', visible: false, align: 'center', valign: 'middle', width: '20px'},
-        {title: '字典名称', field: 'name', align: 'center', valign: 'middle', sortable: true, width: '60px'},
-        {title: '字典编码', field: 'code', align: 'center', valign: 'middle', sortable: true, width: '60px'},
+        {title: '字典名称', field: 'name', align: 'center', valign: 'middle', sortable: true, width: '80px'},
+        {title: '字典编码', field: 'code', align: 'center', valign: 'middle', sortable: true, width: '40px'},
         {title: '上级目录', field: 'parentName', align: 'center', valign: 'middle', sortable: true, width: '60px'}, 
         {title: '项', field: 'text', visible: false, align: 'center', valign: 'middle', width: '60px'},
         {title: '值', field: 'value', visible: false, align: 'center', valign: 'middle', width: '40px'},
+        {title: '排序', field: 'sortNo', visible: false, align: 'center', valign: 'middle', width: '20px'},
         {title: '类型', field: 'type', align: 'center', valign: 'middle', sortable: true, width: '40px', formatter: function(item, index){
             if(item.type === 0){
                 return '<span class="label label-primary">目录</span>';
@@ -200,7 +201,7 @@ Dic.initColumn = function () {
             }          
         }},
         {title: '备注', field: 'remark', align: 'center', valign: 'middle', sortable: true, width: '60px'},
-        {title: '创建者', field: 'createBy', align: 'center', valign: 'middle', sortable: true, width: '40px'},
+      /*  {title: '创建者', field: 'createBy', align: 'center', valign: 'middle', sortable: true, width: '40px'},*/
         {title: '创建时间', field: 'createTime', align: 'center', valign: 'middle', sortable: true,width: '80px'}]
     return columns;
 };
