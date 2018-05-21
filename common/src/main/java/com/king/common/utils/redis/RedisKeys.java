@@ -31,13 +31,17 @@ public class RedisKeys {
         return "serialNo:" + key;
     }
     
+    public static String getSysDicKey(String key){
+        return "sys:dic:" + key;
+    }
+    
     /**
      * 根据用户id获取权限key
      * @param userId
      * @param key
      * @return
      */
-    public static String getPermsKey(Long userId,String key){
+    public static String getPermsKey(Object userId,String key){
         return "perms:"+userId+":" + key;
     }
     

@@ -43,7 +43,7 @@ public class Query extends LinkedHashMap<String, Object> {
                  this.limit = Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
                  this.put("offset", (page - 1) * limit);
                  this.put("page", page);
-                 this.put("limit", limit);
+                 this.put("limit", limit>200?200:limit);//分页过载保护、最大每页200
                //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）          
                  String order = StringToolkit.getObjectString(params.get("order"));
                  if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
@@ -51,17 +51,17 @@ public class Query extends LinkedHashMap<String, Object> {
                     }
                  this.put("order", order);
                  String sidx = StringToolkit.getObjectString(params.get("sidx"));
-                 this.put("sidx", SQLFilter.sqlInject(sidx));
-                 if(SpringContextUtils.getBean("shiroFilter")!=null){
-                     this.put("user", ShiroUtils.getUserEntity());//用户
-                 }
+                 this.put("sidx", SQLFilter.sqlInject(sidx));         
 			} catch (Exception e) {
 				 this.put("offset", null);
 				 this.put("page", null);
 		         this.put("limit", null);
 				// TODO: handle exception
 			}     
-        }       
+        } 
+        if(SpringContextUtils.getBean("shiroFilter")!=null){
+            this.put("user", ShiroUtils.getUserEntity());//用户
+        }
     }
     
     /**
@@ -203,7 +203,7 @@ public class Query extends LinkedHashMap<String, Object> {
             this.limit = Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
             this.put("offset", (page - 1) * limit);
             this.put("page", page);
-            this.put("limit", limit);
+            this.put("limit", limit>200?200:limit);//分页过载保护、最大每页200
           //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
             String sidx = StringToolkit.getObjectString(params.get("sidx"));
             String order = StringToolkit.getObjectString(params.get("order"));

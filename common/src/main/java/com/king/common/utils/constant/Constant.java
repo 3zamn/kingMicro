@@ -7,7 +7,7 @@ package com.king.common.utils.constant;
  */
 public class Constant {
 	/** 超级管理员ID */
-	public static final int SUPER_ADMIN = 1;
+	public static final long SUPER_ADMIN = 1;
 
 	/*token失效时长*/
 	public static final long TOKEN_EXPIRE =30 * 60 *1000;//半小时失效

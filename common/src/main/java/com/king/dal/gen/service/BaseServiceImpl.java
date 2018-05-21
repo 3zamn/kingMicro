@@ -64,6 +64,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		T obj=getBaseDao().queryObject(id);
 		return obj;
 	}
+	
+	@Transactional(readOnly = true)
+	public T queryObject(Object id) {
+		T obj=getBaseDao().queryObject(id);
+		return obj;
+	}
 
 	@Transactional(readOnly = true)
 	public List<T> queryList(Map<String, Object> map) {

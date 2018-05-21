@@ -3,6 +3,7 @@ package com.king.common.utils.security;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
 
 import com.king.common.utils.constant.Constant;
@@ -73,14 +74,28 @@ public class ShiroUtils {
 	}
 
 	public static void logout() {
-		String sessionId = getSession().getId().toString();
-		SecurityUtils.getSubject().logout();
+	/*	String sessionId = getSession().getId().toString();		
 		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
 		String sessionKey = RedisKeys.getShiroSessionKey(sessionId);
 		String kaptchaKey = RedisKeys.getKaptchaKey(sessionId);
 		redisUtils.delete(sessionKey);
-		redisUtils.delete(kaptchaKey);
+		redisUtils.delete(kaptchaKey);*/
+		SecurityUtils.getSubject().logout();
 	}
+	
+	public void userLogout(String sessionId){  
+	    org.apache.shiro.mgt.SecurityManager securityManager = SecurityUtils.getSecurityManager();
+	    Subject.Builder builder = new Subject.Builder(securityManager);  
+	    builder.sessionId(sessionId);  
+	    Subject subject = builder.buildSubject();  
+	    if (null != subject) {  
+	        try {  
+	            subject.logout();  
+	        } catch (SessionException e) {  
+	            // TODO: handle exception  
+	        }  
+	    }  
+	}  
 	
 	public static String getKaptcha(String key) {
 		Object kaptcha = getSessionAttribute(key);

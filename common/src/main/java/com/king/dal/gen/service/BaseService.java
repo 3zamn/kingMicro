@@ -51,6 +51,11 @@ public interface BaseService<T> {
 	public T queryObject(Long id);
 	
 	/**
+	 * 根据ID，查询
+	 */
+	public T queryObject(Object id);
+	
+	/**
 	 * 参数条件查询列表
 	 */
 	public  List<T> queryList(Map<String, Object> map);
