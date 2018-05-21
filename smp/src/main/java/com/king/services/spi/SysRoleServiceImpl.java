@@ -122,7 +122,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	}
 
 	@Override
-	public void saveOrUpdate_R_U(Long userId, List<Long> roleIdList) {
+	public void saveOrUpdate_R_U(Object userId, List<Long> roleIdList) {
 		try {
 			/*if(roleIdList.size() == 0){
 				return ;
@@ -146,17 +146,17 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	}
 
 	@Transactional(readOnly = true)
-	public List<Long> queryRoleIdList(Long userId) {
+	public List<Long> queryRoleIdList(Object userId) {
 		return sysUserRoleDao.queryRoleIdList(userId);
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Long> queryUserIdList(Long roleId) {
+	public List<Long> queryUserIdList(Object roleId) {
 		return sysUserRoleDao.queryUserIdList(roleId);
 	}
 
 	@Override
-	public void delete_R_U(Long userId) {
+	public void delete_R_U(Object userId) {
 		sysUserRoleDao.delete(userId);
 	}
 

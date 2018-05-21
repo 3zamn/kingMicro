@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.SysDicService;
 import com.king.dal.gen.model.smp.SysDic;
+import com.king.dal.gen.model.smp.SysDicTerm;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysDicDao;
 
@@ -17,16 +18,15 @@ public class SysDicServiceImpl extends BaseServiceImpl<SysDic> implements SysDic
 	@Autowired
 	private SysDicDao sysDicDao;
     
-	@Override
 	@Transactional(readOnly = true)
-	public List<SysDic> queryDicList(String code) {
+	public List<SysDicTerm> queryDicTerm(Object code) {
 		// TODO Auto-generated method stub
-		return sysDicDao.queryDicList(code);
+		return sysDicDao.queryDicTerm(code);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<SysDic> queryParentList(long parentId) {
+	public List<SysDic> queryParentList(Object parentId) {
 		// TODO Auto-generated method stub
 		return sysDicDao.queryParentList(parentId);
 	}

@@ -45,7 +45,7 @@ public class SysConfigServiceImpl extends BaseServiceImpl<SysConfig> implements 
 	@Transactional
 	public void deleteBatch(Object[] ids) {
 		for(Object id : ids){
-			SysConfig config = queryObject((Long)id);
+			SysConfig config = queryObject(id);
 			sysConfigRedis.delete(config.getKey());
 		}
 

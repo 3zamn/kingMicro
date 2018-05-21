@@ -53,12 +53,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 	
 	@Transactional(readOnly = true)
-	public List<String> queryAllPerms(Long userId) {
+	public List<String> queryAllPerms(Object userId) {
 		return sysUserDao.queryAllPerms(userId);
 	}
 
 	@Transactional(readOnly = true)
-	public List<Long> queryAllMenuId(Long userId) {
+	public List<Long> queryAllMenuId(Object userId) {
 		return sysUserDao.queryAllMenuId(userId);
 	}
 
@@ -135,7 +135,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	}
 
 	@Override
-	public int updatePassword(Long userId, String password, String newPassword) {
+	public int updatePassword(Object userId, String password, String newPassword) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("userId", userId);
 		map.put("password", password);

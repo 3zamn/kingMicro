@@ -30,7 +30,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	private SysRoleMenuDao sysRoleMenuDao;
 	
 	@Transactional(readOnly = true)
-	public List<SysMenu> queryListParentId(Long parentId, List<Long> menuIdList) {
+	public List<SysMenu> queryListParentId(Object parentId, List<Long> menuIdList) {
 		List<SysMenu> menuList = queryListParentId(parentId);
 		if(menuIdList == null){
 			return menuList;
@@ -46,7 +46,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	}
 
 	@Transactional(readOnly = true)
-	public List<SysMenu> queryListParentId(Long parentId) {
+	public List<SysMenu> queryListParentId(Object parentId) {
 		return sysMenuDao.queryListParentId(parentId);
 	}
 
@@ -56,9 +56,9 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	}
 
 	@Transactional(readOnly = true)
-	public List<SysMenu> getUserMenuList(Long userId) {
+	public List<SysMenu> getUserMenuList(Object userId) {
 		//系统管理员，拥有最高权限
-		if(userId == Constant.SUPER_ADMIN){
+		if(userId.equals(Constant.SUPER_ADMIN)){
 			return getAllMenuList(null);
 		}
 		
@@ -68,7 +68,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	}
 	
 	@Transactional(readOnly = true)
-	public List<SysMenu> queryUserList(Long userId) {
+	public List<SysMenu> queryUserList(Object userId) {
 		return sysMenuDao.queryUserList(userId);
 	}
 
@@ -102,7 +102,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 		return subMenuList;
 	}
 
-	public void saveOrUpdate_R_M(Long roleId, List<Long> menuIdList) {
+	public void saveOrUpdate_R_M(Object roleId, List<Long> menuIdList) {
 		//先删除角色与菜单关系
 		sysRoleMenuDao.delete(roleId);
 
@@ -118,7 +118,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	}
 
 	@Transactional(readOnly = true)
-	public List<Long> queryMenuIdList(Long roleId) {
+	public List<Long> queryMenuIdList(Object roleId) {
 		return sysRoleMenuDao.queryMenuIdList(roleId);
 	}
 }

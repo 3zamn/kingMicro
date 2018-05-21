@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.king.dal.gen.dao.BaseDao;
 import com.king.dal.gen.model.smp.SysDic;
+import com.king.dal.gen.model.smp.SysDicTerm;
 
 /**
  * 数据字典明细表
@@ -19,13 +20,13 @@ public interface SysDicDao extends BaseDao<SysDic> {
 	 * @param code
 	 * @return
 	 */
-	List<SysDic> queryDicList(String code);
+	List<SysDicTerm> queryDicTerm(Object code);
 	
 	/**
 	 * 根据父节点查询
 	 * @param parentd
 	 * @return
 	 */
-	List<SysDic> queryParentList(long parentId);
+	List<SysDic> queryParentList(Object parentId);
 	
 }

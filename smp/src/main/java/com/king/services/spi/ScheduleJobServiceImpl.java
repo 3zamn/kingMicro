@@ -68,8 +68,8 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 
 	@Override
 	@Transactional
-    public void deleteBatch(Long[] jobIds) {
-    	for(Long jobId : jobIds){
+    public void deleteBatch(Object[] jobIds) {
+    	for(Object jobId : jobIds){
     		ScheduleUtils.deleteScheduleJob(scheduler, jobId);
     	}
     	
@@ -78,7 +78,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 	}
 
 	@Override
-    public int updateBatch(Long[] jobIds, int status){
+    public int updateBatch(Object[] jobIds, int status){
     	Map<String, Object> map = new HashMap<>();
     	map.put("list", jobIds);
     	map.put("status", status);
@@ -87,16 +87,16 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
     
 	@Override
 	@Transactional
-    public void run(Long[] jobIds) {
-    	for(Long jobId : jobIds){
+    public void run(Object[] jobIds) {
+    	for(Object jobId : jobIds){
     		ScheduleUtils.run(scheduler, queryObject(jobId));
     	}
     }
 
 	@Override
 	@Transactional
-    public void pause(Long[] jobIds) {
-        for(Long jobId : jobIds){
+    public void pause(Object[] jobIds) {
+        for(Object jobId : jobIds){
     		ScheduleUtils.pauseJob(scheduler, jobId);
     	}
         
@@ -105,8 +105,8 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 
 	@Override
 	@Transactional
-    public void resume(Long[] jobIds) {
-    	for(Long jobId : jobIds){
+    public void resume(Object[] jobIds) {
+    	for(Object jobId : jobIds){
     		ScheduleUtils.resumeJob(scheduler, jobId);
     	}
 
@@ -114,7 +114,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
     }
 
 	@Transactional(readOnly = true)
-	public ScheduleJobLog queryScheduleJobLog(Long jobId) {
+	public ScheduleJobLog queryScheduleJobLog(Object jobId) {
 		// TODO Auto-generated method stub
 		return scheduleJobLogDao.queryObject(jobId);
 	}

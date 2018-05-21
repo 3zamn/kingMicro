@@ -31,11 +31,11 @@ public class ShiroServiceImpl implements ShiroService {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	@Transactional(readOnly = true)
-    public Set<String> getUserPermissions(long userId,boolean cache,String token) {
+    public Set<String> getUserPermissions(Object userId,boolean cache,String token) {
         List<String> permsList;
 
         //系统管理员，拥有最高权限
-        if(userId == Constant.SUPER_ADMIN){
+        if(userId.equals(Constant.SUPER_ADMIN)){
             List<SysMenu> menuList = sysMenuDao.queryList(new HashMap<>());
             permsList = new ArrayList<>(menuList.size());
             for(SysMenu menu : menuList){
@@ -63,7 +63,7 @@ public class ShiroServiceImpl implements ShiroService {
     }
 
     @Transactional(readOnly = true)
-    public SysUser queryUser(Long userId) {
+    public SysUser queryUser(Object userId) {
         return sysUserDao.queryObject(userId);
     }
 }

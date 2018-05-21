@@ -35,7 +35,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Long> queryDetpIdList(Long parentId) {
+	public List<Long> queryDetpIdList(Object parentId) {
 		return sysDeptDao.queryDetpIdList(parentId);
 	}
 	
@@ -47,7 +47,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 
 	@Override
 	@Transactional(readOnly = true)
-	public String getSubDeptIdList(Long deptId){
+	public String getSubDeptIdList(Object deptId){
 		//部门及子部门ID列表
 		List<Long> deptIdList = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 		getDeptTreeList(subIdList, deptIdList);
 
 		//添加本部门
-		deptIdList.add(deptId);
+		deptIdList.add((Long)deptId);
 
 		String deptFilter = StringUtils.join(deptIdList, ",");
 		return deptFilter;
@@ -79,7 +79,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	
 	@Override
 	@Transactional
-	public void saveOrUpdate_R_D(Long roleId, List<Long> deptIdList) {
+	public void saveOrUpdate_R_D(Object roleId, List<Long> deptIdList) {
 		//先删除角色与菜单关系
 		sysRoleDeptDao.delete(roleId);
 
@@ -96,7 +96,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Long> queryDeptIdList(Long roleId) {
+	public List<Long> queryDeptIdList(Object roleId) {
 		return sysRoleDeptDao.queryDeptIdList(roleId);
 	}
 }

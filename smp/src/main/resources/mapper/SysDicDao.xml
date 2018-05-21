@@ -22,6 +22,13 @@
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+<!-- 数据字典项 -->
+    <resultMap type="com.king.dal.gen.model.smp.SysDicTerm" id="DicTermMap">
+        <result property="value" column="value" jdbcType="VARCHAR"/>
+        <result property="text" column="text" jdbcType="VARCHAR"/>
+        <result property="sortNo" column="sort_no" jdbcType="INTEGER"/>    
+    </resultMap>
+
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysDic">
 		select * from sys_dic where id = #{value}
 	</select>
@@ -126,9 +133,8 @@
 		</foreach>
 	</delete>
 
-
-	<select id="queryDicList" resultType="com.king.dal.gen.model.smp.SysDic">
-		SELECT p.* from sys_dic p WHERE type =1 and enable =1 and  parent_id = (SELECT u.id from sys_dic u WHERE code = #{code}) order by sort_no asc
+	<select id="queryDicTerm" resultType="com.king.dal.gen.model.smp.SysDicTerm">
+		SELECT p.text,p.value,p.sort_no from sys_dic p WHERE type =1 and enable =1 and  parent_id = (SELECT u.id from sys_dic u WHERE code = #{code}) order by sort_no asc
 		 
 	</select>
 	
