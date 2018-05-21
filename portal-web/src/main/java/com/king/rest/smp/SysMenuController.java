@@ -65,7 +65,7 @@ public class SysMenuController extends AbstractController {
 	@RequiresPermissions("sys:menu:list")
 	public List<SysMenu> list(){
 		List<SysMenu> menuList = null;
-		if(getUserId()==Constant.SUPER_ADMIN){
+		if(getUserId().equals(Constant.SUPER_ADMIN)){
 			menuList=sysMenuService.queryList(new HashMap<String, Object>());
 		}else{
 			menuList=sysMenuService.queryUserList(getUserId());
@@ -102,7 +102,7 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "菜单信息", notes = "权限编码（sys:menu:info）")
 	@GetMapping("/info/{menuId}")
 	@RequiresPermissions("sys:menu:info")
-	public JsonResponse info(@PathVariable("menuId") Long menuId){
+	public JsonResponse info(@PathVariable("menuId") Object menuId){
 		SysMenu menu = sysMenuService.queryObject(menuId);
 		return JsonResponse.success(menu);
 	}
@@ -146,14 +146,14 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "删除菜单", notes = "权限编码（sys:menu:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")
-	public JsonResponse delete(long menuId){
+	public JsonResponse delete(Long menuId){
 		//判断是否有子菜单或按钮
 		List<SysMenu> menuList = sysMenuService.queryListParentId(menuId);
 		if(menuList.size() > 0){
 			return JsonResponse.error("请先删除子菜单或按钮");
 		}
 
-		sysMenuService.deleteBatch(new Long[]{menuId});
+		sysMenuService.deleteBatch(new Object[]{menuId});
 		
 		return JsonResponse.success();
 	}

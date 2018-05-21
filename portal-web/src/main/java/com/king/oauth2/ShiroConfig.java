@@ -42,18 +42,13 @@ public class ShiroConfig {
     private	Boolean swagger;
     
 	@Bean("sessionManager")
-    public SessionManager sessionManager(RedisShiroSession redisShiroSessionDAO ){
-		
+    public SessionManager sessionManager(RedisShiroSession redisShiroSessionDAO ){	
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        //设置session过期时间为1小时(单位：毫秒)，默认为30分钟
+        //设置session过期时间为30分钟(单位：毫秒)
         sessionManager.setGlobalSessionTimeout(Constant.SHIRO_SESSION_EXPIRE);
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
-
-        //如果开启redis缓存且king.shiro.redis=true，则shiro session存到redis里
-     //   if(redisOpen && shiroRedis){
-            sessionManager.setSessionDAO(redisShiroSessionDAO);
-      //  }
+        sessionManager.setSessionDAO(redisShiroSessionDAO);
         return sessionManager;
     }
 
@@ -80,7 +75,7 @@ public class ShiroConfig {
         filterMap.put("/druid/**", "anon");
         filterMap.put("/app/**", "anon");
         filterMap.put("/sys/login", "anon");
-        filterMap.put("/sys/user/test", "anon");
+    //    filterMap.put("/sys/user/test", "anon");
         filterMap.put("/**/*.css", "anon");
         filterMap.put("/**/*.js", "anon");
         filterMap.put("/**/*.html", "anon");
@@ -106,12 +101,12 @@ public class ShiroConfig {
     }
     
     //统一用spring中一个aop自动代理、使用cglib代理<aop:aspectj-autoproxy proxy-target-class="true" />。防止两次代理或冲突、shrio中不创建代理
-    /*@Bean
+    @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
         proxyCreator.setProxyTargetClass(true);
         return proxyCreator;
-    }*/
+    }
 
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {

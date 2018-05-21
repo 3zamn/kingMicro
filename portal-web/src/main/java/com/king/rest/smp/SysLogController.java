@@ -97,8 +97,8 @@ public class SysLogController {
 	@ResponseBody
 	@GetMapping("/exceptionDetail/{id}")
 	@RequiresPermissions("sys:exception:detail")
-	public JsonResponse exceptionDetail(@PathVariable("id") String id){
-		ExceptionLogVO ExceptionLogVO=exceptionLogRepo.findOne(id);		
+	public JsonResponse exceptionDetail(@PathVariable("id") Object id){
+		ExceptionLogVO ExceptionLogVO=exceptionLogRepo.findOne(StringToolkit.getObjectString(id));		
 		return JsonResponse.success(ExceptionLogVO);
 	}
 	

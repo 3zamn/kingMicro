@@ -53,13 +53,9 @@ public class SysUserController extends AbstractController {
 	@Autowired
 	private SysUserService sysUserService;
 	@Autowired
-	private SysRoleService sysRoleService;
-	
+	private SysRoleService sysRoleService;	
 	@Autowired
 	private IdGenerator idGenerator;
-	  
-	public static AtomicInteger count = new AtomicInteger(0);
-
 
 	/**
 	 * Id生成测试
@@ -99,9 +95,7 @@ public class SysUserController extends AbstractController {
 			return JsonResponse.success("cast : " + (end - begin) / 1000 + " ms");
 		
 	}
-	  private static void add() {
-		   System.out.println("count计数器:"+count.incrementAndGet());
-		}
+
 	/**
 	 * 所有用户列表
 	 */
@@ -113,8 +107,6 @@ public class SysUserController extends AbstractController {
 		//查询列表数据
 		Query query = new Query(params,SysUser.class.getSimpleName());
 		Page page = sysUserService.getPage(query);
-		long v = idGenerator.generate("hell");
-	      System.out.println("id:"+v);
 		return JsonResponse.success(page);
 	}
 	
@@ -158,7 +150,7 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "用户信息", notes = "权限编码（sys:user:info）")
 	@GetMapping("/info/{userId}")
 	@RequiresPermissions("sys:user:info")
-	public JsonResponse info(@PathVariable("userId") Long userId){
+	public JsonResponse info(@PathVariable("userId") Object userId){
 		SysUser user = sysUserService.queryObject(userId);
 		
 		//获取用户所属的角色列表
@@ -205,7 +197,7 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "删除用户", notes = "权限编码（sys:user:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:user:delete")
-	public JsonResponse delete(@RequestBody Long[] userIds){
+	public JsonResponse delete(@RequestBody Object[] userIds){
 		if(ArrayUtils.contains(userIds, 1L)){
 			return JsonResponse.error("系统管理员不能删除");
 		}

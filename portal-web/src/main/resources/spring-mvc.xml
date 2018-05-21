@@ -37,6 +37,7 @@
 						<value>DisableCircularReferenceDetect</value>
                     </list>
                 </property>
+                 <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
             </bean>
         </mvc:message-converters>
 	</mvc:annotation-driven>

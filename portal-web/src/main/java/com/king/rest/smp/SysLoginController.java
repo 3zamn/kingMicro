@@ -61,7 +61,7 @@ public class SysLoginController extends AbstractController {
 	@Autowired
 	private RedisUtils redisUtils;
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	//private static volatile   AtomicInteger errorCount = new AtomicInteger(0); 
+
 	/**
 	 * 验证码
 	 */

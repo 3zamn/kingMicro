@@ -56,7 +56,7 @@ public class ${className}Controller extends AbstractController{
     @ApiOperation(value = "查询信息",notes = "权限编码（${permUrl}:info）")
 	@GetMapping("/info/{${pk.attrname}}")
 	@RequiresPermissions("${permUrl}:info")
-	public JsonResponse info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+	public JsonResponse info(@PathVariable("${pk.attrname}") Object ${pk.attrname}){
 		${className} ${classname} = ${classname}Service.queryObject(${pk.attrname});
 		
 		return JsonResponse.success(${classname});
@@ -95,7 +95,7 @@ public class ${className}Controller extends AbstractController{
 	@ApiOperation(value = "删除",notes = "权限编码（${permUrl}:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("${permUrl}:delete")
-	public JsonResponse delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
+	public JsonResponse delete(@RequestBody Object[] ${pk.attrname}s){
 		${classname}Service.deleteBatch(${pk.attrname}s);
 		
 		return JsonResponse.success();

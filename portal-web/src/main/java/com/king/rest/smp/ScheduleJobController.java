@@ -57,7 +57,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "定时任务详情", notes = "权限编码（sys:schedule:info）")
 	@GetMapping("/info/{jobId}")
 	@RequiresPermissions("sys:schedule:info")
-	public JsonResponse info(@PathVariable("jobId") Long jobId){
+	public JsonResponse info(@PathVariable("jobId") Object jobId){
 		ScheduleJob schedule = scheduleJobService.queryObject(jobId);
 		
 		return JsonResponse.success(schedule);
@@ -100,7 +100,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "删除定时任务", notes = "权限编码（sys:schedule:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:schedule:delete")
-	public JsonResponse delete(@RequestBody Long[] jobIds){
+	public JsonResponse delete(@RequestBody Object[] jobIds){
 		scheduleJobService.deleteBatch(jobIds);
 		
 		return JsonResponse.success();
@@ -113,7 +113,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "立即执行任务", notes = "权限编码（sys:schedule:run）")
 	@PostMapping("/run")
 	@RequiresPermissions("sys:schedule:run")
-	public JsonResponse run(@RequestBody Long[] jobIds){
+	public JsonResponse run(@RequestBody Object[] jobIds){
 		scheduleJobService.run(jobIds);
 		
 		return JsonResponse.success();
@@ -126,7 +126,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "暂停执行任务", notes = "权限编码（sys:schedule:pause）")
 	@PostMapping("/pause")
 	@RequiresPermissions("sys:schedule:pause")
-	public JsonResponse pause(@RequestBody Long[] jobIds){
+	public JsonResponse pause(@RequestBody Object[] jobIds){
 		scheduleJobService.pause(jobIds);
 		
 		return JsonResponse.success();
@@ -139,7 +139,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "恢复定时任务", notes = "权限编码（sys:schedule:resume）")
 	@PostMapping("/resume")
 	@RequiresPermissions("sys:schedule:resume")
-	public JsonResponse resume(@RequestBody Long[] jobIds){
+	public JsonResponse resume(@RequestBody Object[] jobIds){
 		scheduleJobService.resume(jobIds);
 		
 		return JsonResponse.success();

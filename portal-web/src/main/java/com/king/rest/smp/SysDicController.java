@@ -23,6 +23,7 @@ import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.dal.gen.model.smp.SysDic;
+import com.king.dal.gen.model.smp.SysDicTerm;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,7 +37,7 @@ import io.swagger.annotations.ApiOperation;
  * @date 2018-05-08 17:26:32
  */
 @RestController
-@Api(value = "数据字典", description = "数据字典明细表")
+@Api(value = "数据字典", description = "数据字典")
 @RequestMapping("/sys/dic")
 public class SysDicController extends AbstractController{
 	@Autowired
@@ -61,11 +62,11 @@ public class SysDicController extends AbstractController{
 	 * @param code
 	 * @return
 	 */
-	@ApiOperation(value = "数据字典查询",notes = "权限编码（sysdic:query）")
-	@GetMapping("/query{code}")
+	@ApiOperation(value = "根据字典编码查询数据字典",notes = "权限编码（sysdic:query）")
+	@GetMapping("/query/{code}")
 	@RequiresPermissions("sys:dic:query")
-	public JsonResponse query(@PathVariable("code") String code){ 
-		List<SysDic> dics = sysDicService.queryDicList(code);
+	public JsonResponse query(@PathVariable("code") Object code){ 
+		List<SysDicTerm> dics = sysDicService.queryDicTerm(code);
 		return JsonResponse.success(dics);
 	}
 	
@@ -102,7 +103,7 @@ public class SysDicController extends AbstractController{
     @ApiOperation(value = "查询信息",notes = "权限编码（sysdic:info）")
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:dic:info")
-	public JsonResponse info(@PathVariable("id") Long id){
+	public JsonResponse info(@PathVariable("id") Object id){
 		SysDic sysDic = sysDicService.queryObject(id);
 		
 		return JsonResponse.success(sysDic);
@@ -147,13 +148,13 @@ public class SysDicController extends AbstractController{
 	@ApiOperation(value = "删除",notes = "权限编码（sysdic:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:dic:delete")
-	public JsonResponse delete(long id){
+	public JsonResponse delete(Long id){
 		
 		List<SysDic> sysDic = sysDicService.queryParentList(id);
 		if(sysDic.size() > 0){
 			return JsonResponse.error("请先删除字典项再删目录");
 		}
-		sysDicService.deleteBatch(new Long[]{id});
+		sysDicService.deleteBatch(new Object[]{id});
 		return JsonResponse.success();
 	}
 	

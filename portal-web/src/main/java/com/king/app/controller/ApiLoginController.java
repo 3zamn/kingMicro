@@ -24,18 +24,18 @@ import io.swagger.annotations.ApiOperation;
  * @emai 396885563@qq.com
  * @data2018年4月23日
  */
-@RestController
-@RequestMapping("/app")
-@Api(value = "第三方应用登录接口", description = "第三方应用登录接口")
+//@RestController
+//@RequestMapping("/app")
+//@Api(value = "第三方应用登录接口", description = "第三方应用登录接口")
 public class ApiLoginController {
-    @Autowired
+   /* @Autowired
     private UserService userService;
     @Autowired
     private JwtUtils jwtUtils;
 
-    /**
+    *//**
      * 登录
-     */
+     *//*
     @PostMapping("login")
     @ApiOperation("登录")
     public JsonResponse login(String mobile, String password){
@@ -51,12 +51,12 @@ public class ApiLoginController {
         return JsonResponse.success(map);
     }
     
-    /**
+    *//**
      * 注册
      * @param mobile
      * @param password
      * @return
-     */
+     *//*
     @PostMapping("register")
     @ApiOperation("注册")
     public JsonResponse register(String mobile, String password){
@@ -67,11 +67,11 @@ public class ApiLoginController {
     }
     
     
-    /**
+    *//**
      * 获取用户信息
      * @param user
      * @return
-     */
+     *//*
     @Login
     @GetMapping("userInfo")
     @ApiOperation("获取用户信息")
@@ -80,16 +80,16 @@ public class ApiLoginController {
     }
     
 
-    /**
+    *//**
      * 获取用户ID
      * @param userId
      * @return
-     */
+     *//*
     @Login
     @GetMapping("userId")
     @ApiOperation("获取用户ID")
     public JsonResponse userInfo(@RequestAttribute("userId") Integer userId){
         return JsonResponse.success(userId);
-    }
+    }*/
 
 }

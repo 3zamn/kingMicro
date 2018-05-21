@@ -32,11 +32,13 @@ public class GlobalFilter implements Filter {
         HttpServletRequest req=(HttpServletRequest)request;
         HttpServletResponse res=(HttpServletResponse)response;
         res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
         res.setHeader("Access-Control-Max-Age", "0");
         res.setHeader("Access-Control-Allow-Headers",
-                "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
+                "Origin, No-Cache, X-Requested-With, X-Content-Type-Options, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
         res.setHeader("Access-Control-Allow-Credentials", "true");
+      //  res.setHeader("Content-Security-Policy", "default-src");
+        res.setHeader("X-XSS-Protection", "1");
         res.setHeader("XDomainRequestAllowed", "1");
         String url = req.getRequestURI();
         //为第三方插件权限拦截、只允许超级管理员
@@ -50,7 +52,13 @@ public class GlobalFilter implements Filter {
 				accessDenied(req, res);
 			} 		
         }
-        chain.doFilter(req, res);
+     /* 退出登录跳过monitoring监控的过滤链防止再次获取session与shiro冲突*/
+        if(url.contains("/sys/logout")){
+        	String servletPath = req.getServletPath();
+        	req.getRequestDispatcher(servletPath).forward(req, res);
+        }else{
+        	 chain.doFilter(req, res);
+        }    
     }
 
     @Override

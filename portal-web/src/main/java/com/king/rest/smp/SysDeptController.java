@@ -65,7 +65,7 @@ public class SysDeptController extends AbstractController {
 		List<SysDept> deptList = sysDeptService.queryList(query);
 
 		//添加一级部门
-		if(getUserId() == Constant.SUPER_ADMIN){
+		if(getUserId().equals(Constant.SUPER_ADMIN)){
 			SysDept root = new SysDept();
 			root.setDeptId(0L);
 			root.setName("一级部门");
@@ -101,7 +101,7 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "部门信息", notes = "权限编码（sys:dept:info）")
 	@GetMapping("/info/{deptId}")
 	@RequiresPermissions("sys:dept:info")
-	public JsonResponse info(@PathVariable("deptId") Long deptId){
+	public JsonResponse info(@PathVariable("deptId") Object deptId){
 		SysDept dept = sysDeptService.queryObject(deptId);
 		
 		return JsonResponse.success(dept);
@@ -142,7 +142,7 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "删除部门", notes = "权限编码（sys:dept:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:dept:delete")
-	public JsonResponse delete(long deptId){
+	public JsonResponse delete(Long deptId){
 		//判断是否有子部门
 		List<Long> deptList = sysDeptService.queryDetpIdList(deptId);
 		if(deptList.size() > 0){

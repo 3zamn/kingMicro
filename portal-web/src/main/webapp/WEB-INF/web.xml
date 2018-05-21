@@ -4,7 +4,6 @@
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
   http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
   version="3.1"  metadata-complete="false">
-  <!-- <display-name>portal-web</display-name> -->
  
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -60,15 +59,10 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<!-- 配置Shiro过滤器,先让Shiro过滤系统接收到的请求 -->  
-	<!-- 这里filter-name必须对应applicationContext.xml中定义的<bean id="shiroFilter"/> -->  
-	<!-- 使用[/*]匹配所有请求,保证所有的可控请求都经过Shiro的过滤 -->  
-	<!-- 通常会将此filter-mapping放置到最前面(即其他filter-mapping前面),以保证它是过滤器链中第一个起作用的 --> 
 	<filter>
 	    <filter-name>shiroFilter</filter-name>
 	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	    <init-param>
-	    	<!-- 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由servlet container管理 -->
 	        <param-name>targetFilterLifecycle</param-name>
 	        <param-value>true</param-value>
 	    </init-param>
@@ -100,7 +94,7 @@
 			<param-value>classpath:/spring-mvc.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		<!-- <async-supported>true</async-supported> -->
+
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>spring-mvc</servlet-name>
@@ -120,6 +114,6 @@
     
     <error-page>
 		<error-code>404</error-code>
-		<location>/404.html</location>
+		<location>/index.html</location>
 	</error-page>
 </web-app>

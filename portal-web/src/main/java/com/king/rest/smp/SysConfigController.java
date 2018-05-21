@@ -60,7 +60,7 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "配置信息", notes = "权限编码（sys:config:info）")
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
-	public JsonResponse info(@PathVariable("id") Long id){
+	public JsonResponse info(@PathVariable("id") Object id){
 		SysConfig config = sysConfigService.queryObject(id);
 		
 		return JsonResponse.success(config);
@@ -103,7 +103,7 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "删除配置", notes = "权限编码（sys:config:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
-	public JsonResponse delete(@RequestBody Long[] ids){
+	public JsonResponse delete(@RequestBody Object[] ids){
 		sysConfigService.deleteBatch(ids);
 		
 		return JsonResponse.success();

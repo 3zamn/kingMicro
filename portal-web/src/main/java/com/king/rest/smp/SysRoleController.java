@@ -85,7 +85,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "角色信息", notes = "权限编码（sys:role:info）")
 	@GetMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")
-	public JsonResponse info(@PathVariable("roleId") Long roleId){
+	public JsonResponse info(@PathVariable("roleId") Object roleId){
 		SysRole role = sysRoleService.queryObject(roleId);
 		
 		//查询角色对应的菜单
@@ -136,7 +136,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "删除角色", notes = "权限编码（sys:role:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:role:delete")
-	public JsonResponse delete(@RequestBody Long[] roleIds){
+	public JsonResponse delete(@RequestBody Object[] roleIds){
 		sysRoleService.deleteBatch(roleIds);
 		
 		return JsonResponse.success();
