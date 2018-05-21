@@ -19,23 +19,23 @@ public interface SysDeptService extends BaseService<SysDept>{
 	/**
 	 * 保存或更新角色、部门相关联
 	 */
-	void saveOrUpdate_R_D(Long roleId, List<Long> deptIdList);
+	void saveOrUpdate_R_D(Object roleId, List<Long> deptIdList);
 	
 	/**
 	 * 根据角色ID，获取部门ID列表
 	 */
-	List<Long> queryDeptIdList(Long roleId);
+	List<Long> queryDeptIdList(Object roleId);
 
 	/**
 	 * 查询子部门ID列表
 	 * @param parentId  上级部门ID
 	 */
-	List<Long> queryDetpIdList(Long parentId);
+	List<Long> queryDetpIdList(Object parentId);
 
 	/**
 	 * 获取子部门ID(包含本部门ID)，用于数据过滤
 	 */
-	String getSubDeptIdList(Long deptId);
+	String getSubDeptIdList(Object deptId);
 	
 	/**
 	 * 查询子部门ID列表

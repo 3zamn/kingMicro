@@ -21,13 +21,13 @@ public interface SysMenuService extends BaseService<SysMenu>{
 	 * @param parentId 父菜单ID
 	 * @param menuIdList  用户菜单ID
 	 */
-	List<SysMenu> queryListParentId(Long parentId, List<Long> menuIdList);
+	List<SysMenu> queryListParentId(Object parentId, List<Long> menuIdList);
 
 	/**
 	 * 根据父菜单，查询子菜单
 	 * @param parentId 父菜单ID
 	 */
-	List<SysMenu> queryListParentId(Long parentId);
+	List<SysMenu> queryListParentId(Object parentId);
 	
 	/**
 	 * 获取不包含按钮的菜单列表
@@ -37,20 +37,20 @@ public interface SysMenuService extends BaseService<SysMenu>{
 	/**
 	 * 获取用户菜单列表
 	 */
-	List<SysMenu> getUserMenuList(Long userId);
+	List<SysMenu> getUserMenuList(Object userId);
 	
 	/**
 	 *  查询用户所属权限的菜单列表
 	 */
-	List<SysMenu> queryUserList(Long userId);
+	List<SysMenu> queryUserList(Object userId);
 	
 	/**
 	 * 保存或更新角色菜单相关连
 	 */
-	void saveOrUpdate_R_M(Long roleId, List<Long> menuIdList);
+	void saveOrUpdate_R_M(Object roleId, List<Long> menuIdList);
 	
 	/**
 	 * 根据角色ID，获取菜单ID列表
 	 */
-	List<Long> queryMenuIdList(Long roleId);
+	List<Long> queryMenuIdList(Object roleId);
 }

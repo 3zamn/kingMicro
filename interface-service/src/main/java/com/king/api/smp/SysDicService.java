@@ -4,6 +4,7 @@ package com.king.api.smp;
 import java.util.List;
 
 import com.king.dal.gen.model.smp.SysDic;
+import com.king.dal.gen.model.smp.SysDicTerm;
 import com.king.dal.gen.service.BaseService;
 
 /**
@@ -20,12 +21,12 @@ public interface SysDicService extends BaseService<SysDic>{
 	 * @param code
 	 * @return
 	 */
-	List<SysDic> queryDicList(String code);
+	List<SysDicTerm> queryDicTerm(Object code);
 	
 	/**
 	 * 根据父节点查询
 	 * @param parentd
 	 * @return
 	 */
-	List<SysDic> queryParentList(long parentId);
+	List<SysDic> queryParentList(Object parentId);
 }

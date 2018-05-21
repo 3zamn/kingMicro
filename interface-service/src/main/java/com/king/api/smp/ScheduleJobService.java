@@ -19,7 +19,7 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
 	/**
 	 * 根据ID，查询定时任务日志
 	 */
-	ScheduleJobLog queryScheduleJobLog(Long jobId);
+	ScheduleJobLog queryScheduleJobLog(Object jobId);
 	
 	/**
 	 * 查询定时任务日志列表
@@ -49,27 +49,27 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
 	/**
 	 * 批量删除定时任务
 	 */
-	void deleteBatch(Long[] jobIds);
+	void deleteBatch(Object[] jobIds);
 	
 	/**
 	 * 批量更新定时任务状态
 	 */
-	int updateBatch(Long[] jobIds, int status);
+	int updateBatch(Object[] jobIds, int status);
 	
 	/**
 	 * 立即执行
 	 */
-	void run(Long[] jobIds);
+	void run(Object[] jobIds);
 	
 	/**
 	 * 暂停运行
 	 */
-	void pause(Long[] jobIds);
+	void pause(Object[] jobIds);
 	
 	/**
 	 * 恢复运行
 	 */
-	void resume(Long[] jobIds);
+	void resume(Object[] jobIds);
 	
 	/**
 	 * 分页查询列表
