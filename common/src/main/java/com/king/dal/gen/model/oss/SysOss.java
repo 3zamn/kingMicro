@@ -21,6 +21,9 @@ public class SysOss implements Serializable {
 	//
 	@ApiModelProperty("")
 	private Long id;
+	//名称
+	@ApiModelProperty("名称")
+	private String name;
 	//类型
 	@ApiModelProperty("类型")
 	private String type;
@@ -45,6 +48,13 @@ public class SysOss implements Serializable {
 	 */
 	public Long getId() {
 		return id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	/**
 	 * 设置：类型

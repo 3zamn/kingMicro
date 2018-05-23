@@ -1,4 +1,4 @@
-package com.king.rest.smp;
+package com.king.dal.gen.controller;
 
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
