@@ -22,6 +22,7 @@ import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
+import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.smp.SysDic;
 import com.king.dal.gen.model.smp.SysDicTerm;
 

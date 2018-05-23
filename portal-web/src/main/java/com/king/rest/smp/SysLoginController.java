@@ -31,6 +31,7 @@ import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.redis.TokenGenerator;
 import com.king.common.utils.security.ShiroUtils;
+import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.utils.HttpContextUtils;

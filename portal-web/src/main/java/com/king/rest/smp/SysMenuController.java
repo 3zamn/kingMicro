@@ -21,6 +21,7 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
+import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.smp.SysMenu;
 import com.king.utils.TokenHolder;
 

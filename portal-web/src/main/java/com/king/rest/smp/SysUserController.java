@@ -34,6 +34,7 @@ import com.king.common.utils.validator.Assert;
 import com.king.common.utils.validator.ValidatorUtils;
 import com.king.common.utils.validator.group.AddGroup;
 import com.king.common.utils.validator.group.UpdateGroup;
+import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.utils.TokenHolder;
 

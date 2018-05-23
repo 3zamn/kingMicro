@@ -20,6 +20,7 @@ import com.king.common.utils.constant.Constant;
 import com.king.common.utils.validator.ValidatorUtils;
 import com.king.common.utils.validator.group.AddGroup;
 import com.king.common.utils.validator.group.UpdateGroup;
+import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.smp.SysDept;
 
 import io.swagger.annotations.Api;

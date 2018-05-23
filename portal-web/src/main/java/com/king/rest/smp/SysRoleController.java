@@ -24,6 +24,7 @@ import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.validator.ValidatorUtils;
+import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.smp.SysRole;
 import com.king.utils.TokenHolder;
 

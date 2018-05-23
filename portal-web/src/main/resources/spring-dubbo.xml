@@ -9,8 +9,6 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
 	http://code.alibabatech.com/schema/dubbo        
 	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-	
-
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<!-- 容许多次加载属性文件 -->
@@ -45,5 +43,7 @@
 	<!-- <dubbo:reference   interface="com.king.api.smp.SysUserRoleService" id="sysUserRoleService" /> -->
 	<dubbo:reference   interface="com.king.api.smp.ShiroService" id="shiroService" />
 	<!-- <dubbo:reference   interface="com.king.api.smp.SysUserTokenService" id="sysUserTokenService" /> -->
-	<!-- <dubbo:annotation package="com.king" /> -->
+
+	<!-- OSS云盘服务 -->
+	<dubbo:reference   interface="com.king.api.oss.SysOssService" id="sysOssService" />
 </beans>
