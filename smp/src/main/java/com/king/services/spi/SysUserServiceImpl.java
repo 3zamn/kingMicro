@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.ShiroService;
+import com.king.api.smp.SysDeptService;
 import com.king.api.smp.SysRoleService;
 import com.king.api.smp.SysUserService;
 import com.king.common.annotation.DataFilter;
@@ -50,6 +51,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	private SysRoleService sysRoleService;
 	@Autowired
 	private ShiroService shiroService;
+	@Autowired
+	private SysDeptService sysDeptService;
 
 	
 	@Transactional(readOnly = true)
@@ -184,5 +187,20 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
 		redisUtils.delete(permsKey);
 		tokenGenerator.delete(token.getToken());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SysUser> queryByDeptId(Object deptId) {
+		
+		return sysUserDao.queryByDeptId(deptId);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<SysUser> queryByDeptIds(Object deptId) {
+		String deptIds=sysDeptService.getSubDeptIdList(deptId);
+		String[] list= deptIds.split(",");
+		return sysUserDao.queryByDeptIds(list);
 	}
 }

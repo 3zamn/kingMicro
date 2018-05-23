@@ -14,21 +14,21 @@ import com.king.common.utils.Page;
  */
 public interface SysGeneratorService {
 	
-	List<Map<String, Object>> queryList(Map<String, Object> map);
+	/*List<Map<String, Object>> queryList(Map<String, Object> map);
 	
-	int queryTotal(Map<String, Object> map);
+	int queryTotal(Map<String, Object> map);*/
 	
-	Map<String, String> queryTable(String tableName);
+	Map<String, String> queryTable(String dataSource,String tableName);
 	
-	List<Map<String, String>> queryColumns(String tableName);
+	List<Map<String, String>> queryColumns(String dataSource,String tableName);
 	
 	/**
 	 * 生成代码
 	 */
-	byte[] generatorCode(String[] tableNames);
+	byte[] generatorCode(String dataSource,String[] tableNames);
 	
 	/**
 	 * 分页查询列表
 	 */
-	public Page getPage(Map<String, Object> map); 
+	public Page getPage(String dataSource,Map<String, Object> map); 
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd        
+	 http://code.alibabatech.com/schema/dubbo        
+	 http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="oss-app" />
+	<!-- 	使用simple或zookeeper注册中心 -->
+	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
+	<!-- 用dubbo协议在30880端口暴露服务 -->
+<!-- 	<dubbo:protocol name="dubbo" port="9090" server="netty" client="netty" codec="dubbo" serialization="hessian2" charset="UTF-8" threadpool="fixed" threads="100" queues="0" iothreads="9" buffer="8192" accepts="1000" payload="8388608" />
+ -->	
+	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}"  threads="${dubbo.threads}"/>
+	<!-- <dubbo:protocol name="hessian" port="8082" /> -->
+	<!--  <dubbo:protocol name="hessian" port="8082" /> --> <!-- 文件云盘传输使用hessian -->
+<!-- 	<dubbo:provider protocol="hessian"  timeout="${dubbo.provider.timeout}"/> -->
+	<!-- 设置超时控制 -->
+	<dubbo:provider timeout="${dubbo.provider.timeout}"></dubbo:provider> 
+	<!-- <dubbo:registry file="${user.home}/output/dubbo.cache" /> -->
+	<!-- <dubbo:service interface="com.alibaba.hello.api.HelloService" version="1.0.0" ref="hel loService" timeout="300" retry="2" loadbalance="random" actives="0" />
+	<dubbo:service interface="com.alibaba.hello.api.WorldService" version="1.0.0" ref="helloService" timeout="300" retry="2" loadbalance="random" actives="0" >
+    <dubbo:method name="findAllPerson" timeout="10000" retries="9" loadbalance="leastactive" actives="5" /> 
+	<dubbo:service/> -->
+	
+	<!-- 声明需要暴露的服务接口（interface是全路径名，不能自定义）group分组 group="smp-${hostname}"-->
+	
+	<!-- <dubbo:service   interface="com.king.api.smp.ScheduleJobLogService" ref="scheduleJobLogService" /> -->
+	
+</beans>

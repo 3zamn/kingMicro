@@ -55,6 +55,9 @@ var menu_setting = {
         nocheckInherit:true
     }
 };
+//授权用户树
+var user_ztree;
+
 
 //部门结构树
 var dept_ztree;
@@ -76,7 +79,11 @@ var dept_setting = {
 var data_ztree;
 var data_setting = {
     data: {
-        simpleData: {
+    	 keep: {
+             parent: true,
+             leaf: true
+         },
+    	simpleData: {
             enable: true,
             idKey: "deptId",
             pIdKey: "parentId",
@@ -119,6 +126,7 @@ var vm = new Vue({
             vm.getDept();
 
             vm.getDataTree();
+            vm.getUser();
         },
         update: function () {
             var roleId = getSelectedRow();
@@ -236,6 +244,9 @@ var vm = new Vue({
             //加载部门树
             $.get(baseURL + "sys/dept/list", function(r){
                 dept_ztree = $.fn.zTree.init($("#deptTree"), dept_setting, r);
+                //加载授权用户树
+                user_ztree =$.fn.zTree.init($("#userTree"), dept_setting, r);
+                user_ztree.expandAll(true);
                 var node = dept_ztree.getNodeByParam("deptId", vm.role.deptId);
                 if(node != null){
                     dept_ztree.selectNode(node);
@@ -243,6 +254,64 @@ var vm = new Vue({
                     vm.role.deptName = node.name;
                 }
             })
+        },
+        getUser:function(){
+        	 $("#jqGrid_user").jqGrid({
+        	        url: baseURL + 'sys/user/list',
+        	        datatype: "json",
+        	        colModel: [			
+        				{ label: '用户ID', name: 'userId',  width: 45, key: true ,hidden:true},
+        				{ label: '用户名', name: 'username', width: 75 },
+        	            { label: '所属部门', name: 'deptName', width: 75 },	
+        				{ label: '手机号', name: 'mobile', width: 100 }
+        				
+        	        ],
+        	        viewrecords: true,
+        	        height: 250,
+        	        rowNum: 10,
+        	        rowList : [10,30,50],
+        	        rownumbers: false,
+        	        rownumWidth: 5, 	     
+        	        autowidth:true,
+        	        multiselect: true,
+        	        pager: "#jqGridPager_user",
+        	        jsonReader : {
+        	            root: "data.list",
+        	            page: "data.currPage",
+        	            total: "data.totalPage",
+        	            records: "data.totalCount"
+        	        },
+        	        prmNames : {
+        	            page:"page",
+        	            rows:"limit",
+        	            order: "order"
+        	        },
+        	        gridComplete:function(){
+        	            //隐藏grid底部滚动条
+        	            $("#jqGrid_user").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
+        	        }
+        	    });
+        },
+        userTree: function(){
+            layer.open({
+                type: 1,
+                offset: '50px',
+                skin: 'layui-layer-molv',
+                title: "授权用户",
+                area: ['860px', '450px'],
+                shade: 0,
+                shadeClose: false,
+                content: jQuery("#userLayer"),
+                btn: ['确定', '取消'],
+                btn1: function (index) {
+                   /* var node = dept_ztree.getSelectedNodes();
+                    //选择上级部门
+                    vm.role.deptId = node[0].deptId;
+                    vm.role.deptName = node[0].name;*/
+
+                    layer.close(index);
+                }
+            });
         },
         deptTree: function(){
             layer.open({

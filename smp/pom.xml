@@ -16,11 +16,6 @@
 			<artifactId>interface-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>	
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>3.6.3</version>
-		</dependency>
 		<!-- 定时器 -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>

@@ -57,6 +57,9 @@ public class SysRole implements Serializable {
 
 	private List<Long> deptIdList;
 	
+	private List<Long> userIdList;
+	
+	private String users;
 	/**
 	 * 创建时间
 	 */
@@ -150,4 +153,22 @@ public class SysRole implements Serializable {
 	public void setDeptIdList(List<Long> deptIdList) {
 		this.deptIdList = deptIdList;
 	}
+
+	public List<Long> getUserIdList() {
+		return userIdList;
+	}
+
+	public void setUserIdList(List<Long> userIdList) {
+		this.userIdList = userIdList;
+	}
+
+	public String getUsers() {
+		return users;
+	}
+
+	public void setUsers(String users) {
+		this.users = users;
+	}
+	
+	
 }

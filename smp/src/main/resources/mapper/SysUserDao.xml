@@ -138,5 +138,12 @@
 			#{userId}
 		</foreach>
 	</delete>
+	
+	<select id="queryByDeptIds" >
+		select * from sys_user where dept_id in
+		<foreach item="deptId" collection="array" open="(" separator="," close=")">
+			#{deptId}
+		</foreach>	
+	</select>
 
 </mapper>

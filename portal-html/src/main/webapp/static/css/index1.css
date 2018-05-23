@@ -320,3 +320,36 @@ body .layui-layout-admin .layui-larry-foot a{
 	padding:3px 6px;margin-top:8px;width:auto;border-radius:5px;text-align: left;background-color:#009688; color: #fff;
 }
 
+.grant-user {
+ /*    color:white; */
+    text-align:center;
+    padding:2px;
+    height:100%;
+    width:100%;
+}
+.grant-user-header {
+	
+    background-color:white;
+    color:gray;
+    text-align:center;
+     height:12%;
+   /*  padding:2px; */
+}
+.grant-user-nav {
+    line-height:20px;
+     color:gray;
+    /* background-color:#eeeeee; */
+    height:83%;
+    width:25%;
+    float:left;
+  /*    padding-left: 5px;	 	 */
+}
+.grant-user-section {
+	 color:gray;
+    width:72%;
+    float:left;
+    padding-left: 5px;	 	 
+}
+
+
+

@@ -34,4 +34,18 @@ public interface SysUserDao extends BaseDao<SysUser> {
 	 * 修改密码
 	 */
 	int updatePassword(Map<String, Object> map);
+	
+	/**
+	 * 根据部门查询用户
+	 * @param deptId
+	 * @return
+	 */
+	List<SysUser> queryByDeptId(Object deptId);
+	
+	/**
+	 * 根据部门递归查询所属及下属部门用户
+	 * @param deptIdList
+	 * @return
+	 */
+	List<SysUser> queryByDeptIds(Object[] deptIdList);
 }

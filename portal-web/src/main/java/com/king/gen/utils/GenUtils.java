@@ -65,8 +65,8 @@ public class GenUtils {
 		String className = tableToJava(tableEntity.getTableName(), config.getString("tablePrefix"));
 		tableEntity.setClassName(className);
 		tableEntity.setClassname(StringUtils.uncapitalize(className));
-		tableEntity.setRequestUrl(tableToRequestUrl(tableEntity.getTableName()));
-		tableEntity.setPermUrl(tableToPermUrl(tableEntity.getTableName()));
+		tableEntity.setRequestUrl(tableToRequestUrl(tableEntity.getTableName()).toLowerCase());
+		tableEntity.setPermUrl(tableToPermUrl(tableEntity.getTableName()).toLowerCase());
 		//列信息
 		List<ColumnEntity> columsList = new ArrayList<>();
 		for(Map<String, String> column : columns){

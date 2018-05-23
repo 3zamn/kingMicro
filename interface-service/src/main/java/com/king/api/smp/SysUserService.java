@@ -53,4 +53,18 @@ public interface SysUserService extends BaseService<SysUser>{
 	 */
 	void logout(SysUserToken token);
 	
+	/**
+	 * 根据部门查询用户
+	 * @param deptId
+	 * @return
+	 */
+	List<SysUser> queryByDeptId(Object deptId);
+	
+	/**
+	 * 根据部门递归查询所属部门及下级部门用户
+	 * @param deptIdList
+	 * @return
+	 */
+	List<SysUser> queryByDeptIds(Object deptId);
+	
 }

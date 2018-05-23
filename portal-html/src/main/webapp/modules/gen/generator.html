@@ -26,6 +26,12 @@
 			<div class="form-group col-sm-2">
 				<input type="text" class="form-control" v-model="q.tableName" @keyup.enter="query" placeholder="表名">
 			</div>
+			<div class="form-group col-sm-1" style="width: auto;">		
+			<select v-model="selected" class="form-control"  name="status" id="status" >
+			 	  <option value="">选择数据源</option>
+			      <option v-for="(item,index) in dataSource"  :value="item.value">{{ item.text }}</option>
+			</select>
+			</div>
 			<a class="btn btn-default" @click="query">查询</a>
 			<a v-if="hasPermission('sys:generator:info')" class="btn btn-primary" @click="getInfo"><i class="fa fa-pencil-square-o"></i>&nbsp;配置</a>
 			<a v-if="hasPermission('sys:generator:code')" class="btn btn-primary" @click="generator"><i class="fa fa-plus"></i>&nbsp;生成代码</a>

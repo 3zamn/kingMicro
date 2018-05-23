@@ -27,6 +27,7 @@ import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.common.utils.date.DateUtils;
+import com.king.common.utils.pattern.StringToolkit;
 import com.king.dal.gen.model.smp.SysConfig;
 import com.king.gen.service.SysGeneratorService;
 import com.king.utils.XssHttpServletRequestWrapper;
@@ -52,9 +53,11 @@ public class SysGeneratorController {
 	@GetMapping("/list")
 	@RequiresPermissions("sys:generator:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		//查询列表数据
+		//查询列表数据根据数据源
+		String dataSource = StringToolkit.getObjectString(params.get("dataSource"));
+		
 		Query query = new Query(params);
-		Page page = sysGeneratorService.getPage(query);
+		Page page = sysGeneratorService.getPage(dataSource,query);
 		return JsonResponse.success(page);
 	}
 	
@@ -62,10 +65,10 @@ public class SysGeneratorController {
 	 * 配置信息
 	 */
 
-	@GetMapping("/info/{id}")
+	@GetMapping("/info/{dataSource}/{id}")
 	@RequiresPermissions("sys:generator:info")
-	public JsonResponse info(@PathVariable("id") String id){
-		List<Map<String, String>> columns= sysGeneratorService.queryColumns(id);
+	public JsonResponse info(@PathVariable("dataSource") String dataSource,@PathVariable("id") String id){
+		List<Map<String, String>> columns= sysGeneratorService.queryColumns(dataSource,id);
 	//	JSONArray array = JSONArray.parseArray(columns.toString());
 		JSONArray jsonArray = new JSONArray();
 		for(Map<String, String> column: columns){
@@ -84,11 +87,12 @@ public class SysGeneratorController {
 	@GetMapping("/code")
 	@RequiresPermissions("sys:generator:code")
 	public void code(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		//获取表名，不进行xss过滤
-		HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
+		
+		HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);//不进行xss过滤
 		String tables = orgRequest.getParameter("tables");
+		String dataSource = orgRequest.getParameter("dataSource");
 		String[] tableNames = new Gson().fromJson(tables, String[].class);
-		byte[] data = sysGeneratorService.generatorCode(tableNames);	
+		byte[] data = sysGeneratorService.generatorCode(dataSource,tableNames);	
 		StringBuffer filename = new StringBuffer("king");
 		filename.append(DateUtils.getDefaultDateTimeSec());
 		filename.append(".zip");

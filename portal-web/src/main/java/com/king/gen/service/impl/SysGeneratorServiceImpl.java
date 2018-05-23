@@ -21,7 +21,7 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 	@Autowired
 	private SysGeneratorDao sysGeneratorDao;
 
-	@Override
+/*	@Override
 	public List<Map<String, Object>> queryList(Map<String, Object> map) {
 		return sysGeneratorDao.queryList(map);
 	}
@@ -29,28 +29,28 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 	@Override
 	public int queryTotal(Map<String, Object> map) {
 		return sysGeneratorDao.queryTotal(map);
-	}
+	}*/
 
 	@Override
-	public Map<String, String> queryTable(String tableName) {
+	public Map<String, String> queryTable(String dataSource,String tableName) {
 		return sysGeneratorDao.queryTable(tableName);
 	}
 
 	@Override
-	public List<Map<String, String>> queryColumns(String tableName) {
+	public List<Map<String, String>> queryColumns(String dataSource,String tableName) {
 		return sysGeneratorDao.queryColumns(tableName);
 	}
 
 	@Override
-	public byte[] generatorCode(String[] tableNames) {
+	public byte[] generatorCode(String dataSource,String[] tableNames) {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		ZipOutputStream zip = new ZipOutputStream(outputStream);
 		
 		for(String tableName : tableNames){
 			//查询表信息
-			Map<String, String> table = queryTable(tableName);
+			Map<String, String> table = queryTable(dataSource,tableName);
 			//查询列信息
-			List<Map<String, String>> columns = queryColumns(tableName);
+			List<Map<String, String>> columns = queryColumns(dataSource,tableName);
 			//生成代码
 			GenUtils.generatorCode(table, columns, zip);
 		}
@@ -58,8 +58,7 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 		return outputStream.toByteArray();
 	}
 
-	@Transactional(readOnly = true)
-	public Page getPage(Map<String, Object> map) {
+	public Page getPage(String dataSource,Map<String, Object> map) {
 		List<Map<String, Object>> list =sysGeneratorDao.queryList(map);
 		int totalCount =sysGeneratorDao.queryTotal(map);
 		Page page = new Page(list, totalCount, (int)map.get("limit"), (int)map.get("page"));	

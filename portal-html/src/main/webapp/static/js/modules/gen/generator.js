@@ -2,9 +2,10 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'sys/generator/list',
         datatype: "json",
-        colModel: [			
+        colModel: [			 	
 			{ label: '表名', name: 'tableName', width: 100, key: true },
 			{ label: 'Engine', name: 'engine', width: 70},
+			{ label: '库名', name: 'dataSource', width: 70 },
 			{ label: '表备注', name: 'tableComment', width: 100 },
 			{ label: '创建时间', name: 'createTime', width: 100 }
         ],
@@ -43,22 +44,36 @@ var vm = new Vue({
 		},
 		title: null,
 		showList: true,
-		columns: {}
+		columns: {},
+		selected: '',
+		dataSource:{}
 	},
-	methods: {
+	created: function(){
+		this.getDic();
+	},
+	methods: {		
+		getDic: function () {//下拉选项字典查询
+			 $.get(baseURL + "sys/dic/query/"+"DBGen", function(r){
+			        vm.dataSource = r.data;
+			   });
+		},
 		query: function () {
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			vm.reload();
+		/*	$("#jqGrid").jqGrid('setGridParam',{ 
                 postData:{'tableName': vm.q.tableName},
                 page:1 
-            }).trigger("reloadGrid");
+            }).trigger("reloadGrid");*/
 		},
 		getInfo: function () {
 			var id = getSelectedRow();
+			var rowid = $("#jqGrid").getGridParam("selrow");
+			var rowData = $("#jqGrid").getRowData(rowid);  //1.获取选中行的数据
+	        var dataSource = rowData.dataSource
 			if(id == null){
 				return ;
 			}
 			
-			$.get(baseURL + "sys/generator/info/"+id, function(r){
+			$.get(baseURL + "sys/generator/info/"+dataSource+"/"+id, function(r){
                 vm.showList = false;
             //    debugger
                 vm.title = "配置";
@@ -68,17 +83,21 @@ var vm = new Vue({
 		},
 		generator: function() {
 			var tableNames = getSelectedRows();
+			var rowid = $("#jqGrid").getGridParam("selrow");
+            var rowData = $("#jqGrid").getRowData(rowid);  //1.获取选中行的数据
+            var dataSource = rowData.dataSource
+	//		debugger
 			if(tableNames == null){
 				return ;
 			}
 			var token = localStorage.getItem("token");
-			location.href = baseURL + "sys/generator/code?tables=" + JSON.stringify(tableNames)+"&token="+token;
+			location.href = baseURL + "sys/generator/code?tables=" + JSON.stringify(tableNames)+"&token="+token+"&dataSource="+dataSource;
 		},
 		reload: function () {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
-                postData:{'key': vm.q.key},
+                postData:{'tableName': vm.q.tableName,'key': vm.q.key,'dataSource':vm.selected},
                 page:page
             }).trigger("reloadGrid");
 		},
