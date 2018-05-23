@@ -94,7 +94,7 @@ app或第三方应用端：API模块用jwt的token做安全校验
 
 四：加入redis缓存，完善统一query封装、查询无需写java代码、仅仅前端添加参数即可
 
-五：加入api网关服务监控模块（kong、openresty）
+五：加入api网关服务监控模块（kong、openresty或使用orange）
 
 六：集成fastdhf分布式文件管理。
 
