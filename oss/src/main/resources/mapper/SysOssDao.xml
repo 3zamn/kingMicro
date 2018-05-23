@@ -6,6 +6,7 @@
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.king.dal.gen.model.oss.SysOss" id="BaseResultMap">
         <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="VARCHAR"/>
         <result property="url" column="url" jdbcType="VARCHAR"/>
         <result property="creator" column="creator" jdbcType="VARCHAR"/>
@@ -50,7 +51,8 @@
 	 
 	<insert id="save" parameterType="com.king.dal.gen.model.oss.SysOss" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_oss
-		(
+		(	
+			`name`, 
 			`type`, 
 			`url`, 
 			`creator`, 
@@ -58,6 +60,7 @@
 		)
 		values
 		(
+			#{name}, 
 			#{type}, 
 			#{url}, 
 			#{creator}, 
@@ -68,6 +71,7 @@
 	<update id="update" parameterType="com.king.dal.gen.model.oss.SysOss">
 		update sys_oss 
 		<set>
+			<if test="name != null">`name` = #{name}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="url != null">`url` = #{url}, </if>
 			<if test="creator != null">`creator` = #{creator}, </if>
