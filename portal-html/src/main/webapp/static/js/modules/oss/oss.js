@@ -3,9 +3,13 @@ $(function () {
         url: baseURL + 'sys/oss/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', width: 20, key: true },
-            { label: 'URL地址', name: 'url', width: 160 },
-			{ label: '创建时间', name: 'createDate', width: 40 }
+			{ label: 'id', name: 'id', width: 20, key: true ,hidden:true},
+			{ label: '文件名', name: 'name', width: 60},
+            { label: 'URL地址', name: 'url', width: 200 ,formatter:function(value,row,index) {
+				return '<a href=\''+value+'\' target=\'_blank\'>'+value+'</a>';
+			}},
+			{ label: '创建者', name: 'creator', width: 20 },
+			{ label: '创建时间', name: 'createDate', width: 60 }
         ],
 		viewrecords: true,
         height: 385,
@@ -43,18 +47,19 @@ $(function () {
                 alert("云存储配置未配置");
                 return false;
             }
-            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
+           /* if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
                 alert('只支持jpg、png、gif格式的图片！');
                 return false;
-            }
+            }*/
         },
         onComplete : function(file, r){
-            if(r.code == 200){
-                alert(r.data.url);
-                vm.reload();
-            }else{
-                alert(r.msg);
-            }
+        	 if(r.code == 200){
+                 alert('上传成功', function(){
+                     vm.reload();
+                 });
+             }else{
+                 alert(r.msg);
+             }
         }
     });
 
