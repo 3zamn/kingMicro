@@ -13,6 +13,8 @@ common：公共类、方法、工具类。
 
 smp:系统管理子系统。
 
+oss:云储存服务。
+
 maven依赖关系：interfere-service —>common。
 portal-web —>interfere-service。
 smp —>interfere-service。
@@ -52,7 +54,7 @@ api文档生成：springfox+swagger2
 
 前端框架：vue2.X （双向数据绑定、方便灵巧）、layui、bootstrap
 
-app端：API模块用swt的token做安全校验
+app或第三方应用端：API模块用jwt的token做安全校验
 
 具有如下特点:
 
@@ -92,7 +94,7 @@ app端：API模块用swt的token做安全校验
 
 四：加入redis缓存，完善统一query封装、查询无需写java代码、仅仅前端添加参数即可
 
-五：加入api网关服务监控模块（kong、openresty）
+五：加入api网关服务监控模块（kong、openresty或使用orange）
 
 六：集成fastdhf分布式文件管理。
 
