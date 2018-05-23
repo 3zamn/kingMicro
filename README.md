@@ -13,6 +13,8 @@ common：公共类、方法、工具类。
 
 smp:系统管理子系统。
 
+oss:云储存服务。
+
 maven依赖关系：interfere-service —>common。
 portal-web —>interfere-service。
 smp —>interfere-service。
