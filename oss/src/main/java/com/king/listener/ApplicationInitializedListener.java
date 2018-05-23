@@ -1,5 +1,4 @@
 package com.king.listener;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -27,6 +27,6 @@
 	
 	<!-- 声明需要暴露的服务接口（interface是全路径名，不能自定义）group分组 group="smp-${hostname}"-->
 	
-	<!-- <dubbo:service   interface="com.king.api.smp.ScheduleJobLogService" ref="scheduleJobLogService" /> -->
+	<dubbo:service   interface="com.king.api.oss.SysOssService" ref="sysOssService" />
 	
 </beans>
