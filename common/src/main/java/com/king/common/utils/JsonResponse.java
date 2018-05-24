@@ -38,12 +38,6 @@ public class JsonResponse extends HashMap<String, Object> {
 		return r;
 	}
 
-/*	public static JsonResponse success(String msg) {
-		JsonResponse r = new JsonResponse();
-		r.put("msg", msg);
-		return r;
-	}*/
-	
 	public static JsonResponse success(String msg,Object data) {
 		JsonResponse r = new JsonResponse();
 		r.put("msg", msg);
@@ -78,13 +72,4 @@ public class JsonResponse extends HashMap<String, Object> {
 		return r;
 	}
 
-	/*public JsonResponse put(String key, Object value) {
-		super.put(key, value);
-		return this;
-	}*/
-	
-	/*public JsonResponse putPage(Object page, Object... value) {
-		super.put("page", page);
-		return this;
-	}*/
 }

@@ -75,7 +75,7 @@ public class ResponseWrap {
  
     /**
      * 终止请求
-     * @author livan.c
+     * 
      */
     public void abort(){
         request.abort();
@@ -83,7 +83,7 @@ public class ResponseWrap {
      
     /**
      * 获取重定向的地址
-     * @author livan.c
+     * 
      * @return
      */
     public List<URI> getRedirectLocations(){
@@ -92,7 +92,7 @@ public class ResponseWrap {
      
     /**
      * 关闭连接
-     * @author livan.c
+     * 
      */
     @SuppressWarnings("deprecation")
     public void shutdown(){
@@ -101,7 +101,7 @@ public class ResponseWrap {
      
     /**
      * 获取响应内容为String,默认编码为 "UTF-8"
-     * @author livan.c
+     * 
      * @return
      */
     public String getString() {
@@ -110,7 +110,7 @@ public class ResponseWrap {
      
     /**
      * 获取响应内容为String
-     * @author livan.c
+     * 
      * @param defaultCharset 指定编码
      * @return
      */
@@ -125,7 +125,7 @@ public class ResponseWrap {
      
     /**
      * 获取响应的类型
-     * @author livan.c
+     * 
      * @return
      */
     public Header getContentType() {
@@ -134,7 +134,7 @@ public class ResponseWrap {
      
     /**
      * 获取响应编码,如果是文本的话
-     * @author livan.c
+     * 
      * @return
      */
     public Charset getCharset() {
@@ -145,7 +145,7 @@ public class ResponseWrap {
      
     /**
      * 获取响应内容为字节数组
-     * @author livan.c
+     * 
      * @return
      */
     public byte[] getByteArray() {
@@ -159,7 +159,7 @@ public class ResponseWrap {
      
     /**
      * 获取所有Header
-     * @author livan.c
+     * 
      * @return
      */
     public Header[] getAllHeaders() {
@@ -168,7 +168,7 @@ public class ResponseWrap {
      
     /**
      * 获取知道名称的Header列表
-     * @author livan.c
+     * 
      * @return
      */
     public Header[] getHeaders(String name) {
@@ -177,7 +177,7 @@ public class ResponseWrap {
      
     /**
      * 获取响应状态信息
-     * @author livan.c
+     * 
      * @return
      */
     public StatusLine getStatusLine(){
@@ -186,7 +186,7 @@ public class ResponseWrap {
      
     /**
      * 移除指定name的Header列表
-     * @author livan.c
+     * 
      * @param name
      */
     public void removeHeaders(String name){
@@ -195,7 +195,7 @@ public class ResponseWrap {
      
     /**
      * 移除指定的Header
-     * @author livan.c
+     * 
      * @param header
      */
     public void removeHeader(Header header){
@@ -204,7 +204,7 @@ public class ResponseWrap {
      
     /**
      * 移除指定的Header
-     * @author livan.c
+     * 
      * @param name
      * @param value
      */
@@ -214,7 +214,7 @@ public class ResponseWrap {
      
     /**
      * 是否存在指定name的Header
-     * @author livan.c
+     * 
      * @param name
      * @return
      */
@@ -224,7 +224,7 @@ public class ResponseWrap {
      
     /**
      * 获取Header的迭代器
-     * @author livan.c
+     * 
      * @return
      */
     public HeaderIterator headerIterator(){
@@ -233,7 +233,7 @@ public class ResponseWrap {
  
     /**
      * 获取协议版本信息
-     * @author livan.c
+     * 
      * @return
      */
     public ProtocolVersion getProtocolVersion(){
@@ -242,7 +242,7 @@ public class ResponseWrap {
      
     /**
      * 获取CookieStore
-     * @author livan.c
+     * 
      * @return
      */
     public CookieStore getCookieStore(){
@@ -251,7 +251,7 @@ public class ResponseWrap {
      
     /**
      * 获取Cookie列表
-     * @author livan.c
+     * 
      * @return
      */
     public List<Cookie> getCookies(){
@@ -260,7 +260,7 @@ public class ResponseWrap {
      
     /**
      * 获取InputStream,需要手动关闭流
-     * @author livan.c
+     * 
      * @return
      */
     public InputStream getInputStream(){
@@ -274,7 +274,7 @@ public class ResponseWrap {
      
     /**
      * 获取BufferedReader
-     * @author livan.c
+     * 
      * @return
      */
     public BufferedReader getBufferedReader(){
@@ -283,7 +283,7 @@ public class ResponseWrap {
      
     /**
      * 响应内容写入到文件
-     * @author livan.c
+     * 
      * @param filePth 路径
      */
     public void transferTo(String filePth) {
@@ -292,7 +292,7 @@ public class ResponseWrap {
      
     /**
      * 响应内容写入到文件
-     * @author livan.c
+     * 
      * @param file
      */
     public void transferTo(File file) {
@@ -305,7 +305,7 @@ public class ResponseWrap {
      
     /**
      * 写入到OutputStream,并不会关闭OutputStream
-     * @author livan.c
+     * 
      * @param outputStream OutputStream
      */
     public void transferTo(OutputStream outputStream) {
@@ -319,7 +319,7 @@ public class ResponseWrap {
      
     /**
      * 获取JSON对象
-     * @author livan.c
+     * 
      * @param clazz
      * @return
      */
@@ -334,7 +334,7 @@ public class ResponseWrap {
  
     /**
      * 把Json转换成List
-     * @author livan.c
+     * 
      * @param clazz
      * @return
      */

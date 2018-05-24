@@ -74,12 +74,12 @@ public class ShiroUtils {
 	}
 
 	public static void logout() {
-	/*	String sessionId = getSession().getId().toString();		
+		String sessionId = getSession().getId().toString();		
 		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
 		String sessionKey = RedisKeys.getShiroSessionKey(sessionId);
 		String kaptchaKey = RedisKeys.getKaptchaKey(sessionId);
 		redisUtils.delete(sessionKey);
-		redisUtils.delete(kaptchaKey);*/
+		redisUtils.delete(kaptchaKey);
 		SecurityUtils.getSubject().logout();
 	}
 	

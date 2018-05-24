@@ -134,7 +134,7 @@ public class HttpUtils {
  
     /**
      * 创建post请求
-     * @author livan.c
+     * 
      * @param url 请求地址
      * @return
      */
@@ -144,7 +144,7 @@ public class HttpUtils {
      
     /**
      * 创建get请求
-     * @author livan.c
+     * 
      * @param url 请求地址
      * @return
      */
@@ -154,7 +154,7 @@ public class HttpUtils {
      
     /**
      * 创建put请求
-     * @author livan.c
+     * 
      * @param url 请求地址
      * @return
      */
@@ -164,7 +164,7 @@ public class HttpUtils {
      
     /**
      * 创建delete请求
-     * @author livan.c
+     * 
      * @param url 请求地址
      * @return
      */
@@ -174,7 +174,7 @@ public class HttpUtils {
      
     /**
      * 创建post请求
-     * @author livan.c
+     * 
      * @param uri 请求地址
      * @return
      */
@@ -184,7 +184,7 @@ public class HttpUtils {
      
     /**
      * 创建get请求
-     * @author livan.c
+     * 
      * @param uri 请求地址
      * @return
      */
@@ -194,7 +194,7 @@ public class HttpUtils {
      
     /**
      * 创建put请求
-     * @author livan.c
+     * 
      * @param uri 请求地址
      * @return
      */
@@ -204,7 +204,7 @@ public class HttpUtils {
      
     /**
      * 创建delete请求
-     * @author livan.c
+     * 
      * @param uri 请求地址
      * @return
      */
@@ -214,7 +214,7 @@ public class HttpUtils {
      
     /**
      * 创建post请求
-     * @author livan.c
+     * 
      * @param url 请求地址
      * @return
      */
@@ -224,7 +224,7 @@ public class HttpUtils {
      
     /**
      * 创建get请求
-     * @author livan.c
+     * 
      * @param url 请求地址
      * @return
      */
@@ -234,7 +234,7 @@ public class HttpUtils {
      
     /**
      * 创建put请求
-     * @author livan.c
+     * 
      * @param url 请求地址
      * @return
      */
@@ -244,7 +244,7 @@ public class HttpUtils {
      
     /**
      * 创建delete请求
-     * @author livan.c
+     * 
      * @param url 请求地址
      * @return
      */
@@ -254,7 +254,7 @@ public class HttpUtils {
      
     /**
      * 创建post请求
-     * @author livan.c
+     * 
      * @param uri 请求地址
      * @return
      */
@@ -264,7 +264,7 @@ public class HttpUtils {
      
     /**
      * 创建get请求
-     * @author livan.c
+     * 
      * @param uri 请求地址
      * @return
      */
@@ -274,7 +274,7 @@ public class HttpUtils {
      
     /**
      * 创建put请求
-     * @author livan.c
+     * 
      * @param uri 请求地址
      * @return
      */
@@ -284,7 +284,7 @@ public class HttpUtils {
      
     /**
      * 创建delete请求
-     * @author livan.c
+     * 
      * @param uri 请求地址
      * @return
      */
@@ -294,7 +294,7 @@ public class HttpUtils {
      
     /**
      * 添加参数
-     * @author livan.c
+     * 
      * @param parameters
      * @return
      */
@@ -309,7 +309,7 @@ public class HttpUtils {
      
     /**
      * 添加参数
-     * @author livan.c
+     * 
      * @param name
      * @param value
      * @return
@@ -325,7 +325,7 @@ public class HttpUtils {
      
     /**
      * 添加参数
-     * @author livan.c
+     * 
      * @param parameters
      * @return
      */
@@ -340,7 +340,7 @@ public class HttpUtils {
      
     /**
      * 设置请求参数,会覆盖之前的参数
-     * @author livan.c
+     * 
      * @param parameters
      * @return
      */
@@ -358,7 +358,7 @@ public class HttpUtils {
      
     /**
      * 设置请求参数,会覆盖之前的参数
-     * @author livan.c
+     * 
      * @param file
      * @return
      */
@@ -373,7 +373,7 @@ public class HttpUtils {
      
     /**
      * 设置请求参数,会覆盖之前的参数
-     * @author livan.c
+     * 
      * @param binary
      * @return
      */
@@ -388,7 +388,7 @@ public class HttpUtils {
      
     /**
      * 设置请求参数,会覆盖之前的参数
-     * @author livan.c
+     * 
      * @param serializable
      * @return
      */
@@ -403,7 +403,7 @@ public class HttpUtils {
      
     /**
      * 设置参数为Json对象
-     * @author livan.c
+     * 
      * @param parameter 参数对象
      * @return
      */
@@ -422,7 +422,7 @@ public class HttpUtils {
      
     /**
      * 设置请求参数,会覆盖之前的参数
-     * @author livan.c
+     * 
      * @param stream
      * @return
      */
@@ -437,7 +437,7 @@ public class HttpUtils {
      
     /**
      * 设置请求参数,会覆盖之前的参数
-     * @author livan.c
+     * 
      * @param text
      * @return
      */
@@ -452,7 +452,7 @@ public class HttpUtils {
      
     /**
      * 设置内容编码
-     * @author livan.c
+     * 
      * @param encoding
      * @return
      */
@@ -463,7 +463,7 @@ public class HttpUtils {
      
     /**
      * 设置ContentType
-     * @author livan.c
+     * 
      * @param contentType
      * @return
      */
@@ -474,7 +474,7 @@ public class HttpUtils {
      
     /**
      * 设置ContentType
-     * @author livan.c
+     * 
      * @param mimeType
      * @param charset 内容编码
      * @return
@@ -486,7 +486,7 @@ public class HttpUtils {
      
     /**
      * 添加参数
-     * @author livan.c
+     * 
      * @param parameters
      * @return
      */
@@ -507,7 +507,7 @@ public class HttpUtils {
      
     /**
      * 添加Header
-     * @author livan.c
+     * 
      * @param name
      * @param value
      * @return
@@ -519,7 +519,7 @@ public class HttpUtils {
      
     /**
      * 添加Header
-     * @author livan.c
+     * 
      * @param headers
      * @return
      */
@@ -533,7 +533,7 @@ public class HttpUtils {
      
     /**
      * 设置Header,会覆盖所有之前的Header
-     * @author livan.c
+     * 
      * @param headers
      * @return
      */
@@ -556,7 +556,7 @@ public class HttpUtils {
      
     /**
      * 获取所有Header
-     * @author livan.c
+     * 
      * @return
      */
     public Header[] getAllHeaders() {
@@ -565,7 +565,7 @@ public class HttpUtils {
      
     /**
      * 移除指定name的Header列表
-     * @author livan.c
+     * 
      * @param name
      */
     public HttpUtils removeHeaders(String name){
@@ -575,7 +575,7 @@ public class HttpUtils {
      
     /**
      * 移除指定的Header
-     * @author livan.c
+     * 
      * @param header
      */
     public HttpUtils removeHeader(Header header){
@@ -585,7 +585,7 @@ public class HttpUtils {
      
     /**
      * 移除指定的Header
-     * @author livan.c
+     * 
      * @param name
      * @param value
      */
@@ -596,7 +596,7 @@ public class HttpUtils {
      
     /**
      * 是否存在指定name的Header
-     * @author livan.c
+     * 
      * @param name
      * @return
      */
@@ -606,7 +606,7 @@ public class HttpUtils {
      
     /**
      * 获取Header的迭代器
-     * @author livan.c
+     * 
      * @return
      */
     public HeaderIterator headerIterator(){
@@ -615,7 +615,7 @@ public class HttpUtils {
      
     /**
      * 获取协议版本信息
-     * @author livan.c
+     * 
      * @return
      */
     public ProtocolVersion getProtocolVersion(){
@@ -624,7 +624,7 @@ public class HttpUtils {
      
     /**
      * 获取请求Url
-     * @author livan.c
+     * 
      * @return
      */
     public URI getURI(){
@@ -633,7 +633,7 @@ public class HttpUtils {
      
     /**
      * 设置请求Url
-     * @author livan.c
+     * 
      * @return
      */
     public HttpUtils setURI(URI uri){
@@ -643,7 +643,7 @@ public class HttpUtils {
      
     /**
      * 设置请求Url
-     * @author livan.c
+     * 
      * @return
      */
     public HttpUtils setURI(String uri){
@@ -652,7 +652,7 @@ public class HttpUtils {
      
     /**
      * 设置一个CookieStore
-     * @author livan.c
+     * 
      * @param cookieStore
      * @return
      */
@@ -664,7 +664,7 @@ public class HttpUtils {
      
     /**
      * 添加Cookie
-     * @author livan.c
+     * 
      * @param cookie
      * @return
      */
@@ -679,7 +679,7 @@ public class HttpUtils {
      
     /**
      * 设置网络代理
-     * @author livan.c
+     * 
      * @param hostname
      * @param port
      * @return
@@ -691,7 +691,7 @@ public class HttpUtils {
      
     /**
      * 设置网络代理
-     * @author livan.c
+     * 
      * @param hostname
      * @param port
      * @param schema
@@ -704,7 +704,7 @@ public class HttpUtils {
      
     /**
      * 设置网络代理
-     * @author livan.c
+     * 
      * @param address
      * @return
      */
@@ -715,7 +715,7 @@ public class HttpUtils {
      
     /**
      * 设置网络代理
-     * @author livan.c
+     * 
      * @param host
      * @return
      */
@@ -727,7 +727,7 @@ public class HttpUtils {
      
     /**
      * 设置双向认证的JKS
-     * @author livan.c
+     * 
      * @param jksFilePath jks文件路径
      * @param password 密码
      * @return
@@ -738,7 +738,7 @@ public class HttpUtils {
      
     /**
      * 设置双向认证的JKS
-     * @author livan.c
+     * 
      * @param jksFile jks文件
      * @param password 密码
      * @return
@@ -754,7 +754,7 @@ public class HttpUtils {
      
     /**
      * 设置双向认证的JKS, 不会关闭InputStream
-     * @author livan.c
+     * 
      * @param instream jks流
      * @param password 密码
      * @return
@@ -773,7 +773,7 @@ public class HttpUtils {
      
     /**
      * 设置双向认证的JKS
-     * @author livan.c
+     * 
      * @param keyStore jks
      * @return
      */
@@ -791,7 +791,7 @@ public class HttpUtils {
      
     /**
      * 设置Socket超时时间,单位:ms
-     * @author livan.c
+     * 
      * @param socketTimeout
      * @return
      */
@@ -802,7 +802,7 @@ public class HttpUtils {
      
     /**
      * 设置连接超时时间,单位:ms
-     * @author livan.c
+     * 
      * @param connectTimeout
      * @return
      */
@@ -813,7 +813,7 @@ public class HttpUtils {
      
     /**
      * 设置请求超时时间,单位:ms
-     * @author livan.c
+     * 
      * @param connectionRequestTimeout
      * @return
      */
@@ -824,7 +824,7 @@ public class HttpUtils {
      
     /**
      * 设置是否允许服务端循环重定向
-     * @author livan.c
+     * 
      * @param circularRedirectsAllowed
      * @return
      */
@@ -835,7 +835,7 @@ public class HttpUtils {
      
     /**
      * 设置是否启用调转
-     * @author livan.c
+     * 
      * @param redirectsEnabled
      * @return
      */
@@ -846,7 +846,7 @@ public class HttpUtils {
      
     /**
      * 设置重定向的次数
-     * @author livan.c
+     * 
      * @param maxRedirects
      * @return
      */
@@ -857,7 +857,7 @@ public class HttpUtils {
      
     /**
      * 执行请求
-     * @author livan.c
+     * 
      * @return
      */
     public ResponseWrap execute() {
@@ -878,7 +878,7 @@ public class HttpUtils {
  
     /**
      * 执行请求
-     * @author livan.c
+     * 
      * @param responseHandler
      * @return
      */
@@ -897,7 +897,7 @@ public class HttpUtils {
  
     /**
      * 关闭连接
-     * @author livan.c
+     * 
      */
     @SuppressWarnings("deprecation")
     public void shutdown(){
@@ -906,7 +906,7 @@ public class HttpUtils {
      
     /**
      * 获取LayeredConnectionSocketFactory 使用ssl单向认证
-     * @author livan.c
+     * 
      * @return
      */
     private LayeredConnectionSocketFactory getSSLSocketFactory() {

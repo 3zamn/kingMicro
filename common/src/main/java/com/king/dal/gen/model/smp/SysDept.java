@@ -37,7 +37,9 @@ public class SysDept implements Serializable ,Comparable<SysDept>{
 	//排序
 	@ApiModelProperty("排序")
 	private Integer orderNum;
-	
+	//部门负责人
+	@ApiModelProperty("部门负责人")
+	private Integer manager;
 	//是否删除  -1：已删除  0：正常
 	@ApiModelProperty("是否删除  -1：已删除  0：正常")
 	private Integer delFlag;
@@ -91,6 +93,14 @@ public class SysDept implements Serializable ,Comparable<SysDept>{
 	 */
 	public Integer getOrderNum() {
 		return orderNum;
+	}
+
+	public Integer getManager() {
+		return manager;
+	}
+
+	public void setManager(Integer manager) {
+		this.manager = manager;
 	}
 
 	public String getParentName() {

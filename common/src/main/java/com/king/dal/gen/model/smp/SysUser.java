@@ -103,6 +103,12 @@ public class SysUser implements Serializable {
 	@ApiModelProperty("部门名称")
 	private String deptName;
 	
+	/**
+	 * 职位
+	 */
+	@ApiModelProperty("职位")
+	private String position;
+	
 	private String token;
 
 	/**
@@ -249,6 +255,14 @@ public class SysUser implements Serializable {
 
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
+	}
+	
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 	@JSONField(serialize = false)
