@@ -28,6 +28,7 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.Query;
+import com.king.common.utils.constant.Constant;
 import com.king.common.utils.redis.IdGenerator;
 import com.king.common.utils.spring.SpringContextUtils;
 import com.king.common.utils.validator.Assert;
@@ -185,6 +186,11 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:update")
 	public JsonResponse update(@RequestBody SysUser user){
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
+		if(user.getUserId() == Constant.SUPER_ADMIN){
+			if(user.getStatus()==0){
+				return JsonResponse.error("系统管理员不能禁用!");
+			}
+		}
 		user.setToken(TokenHolder.token.get());
 		sysUserService.update(user);
 		
@@ -200,11 +206,11 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:delete")
 	public JsonResponse delete(@RequestBody Object[] userIds){
 		if(ArrayUtils.contains(userIds, 1L)){
-			return JsonResponse.error("系统管理员不能删除");
+			return JsonResponse.error("系统管理员不能删除!");
 		}
 		
 		if(ArrayUtils.contains(userIds, getUserId())){
-			return JsonResponse.error("当前用户不能删除");
+			return JsonResponse.error("当前用户不能删除!");
 		}
 		
 		sysUserService.deleteBatch(userIds);

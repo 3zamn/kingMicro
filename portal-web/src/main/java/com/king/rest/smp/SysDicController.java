@@ -63,9 +63,9 @@ public class SysDicController extends AbstractController{
 	 * @param code
 	 * @return
 	 */
-	@ApiOperation(value = "根据字典编码查询数据字典",notes = "权限编码（sysdic:query）")
+	@ApiOperation(value = "根据字典编码查询数据字典")
 	@GetMapping("/query/{code}")
-	@RequiresPermissions("sys:dic:query")
+	/*@RequiresPermissions("sys:dic:query")*/
 	public JsonResponse query(@PathVariable("code") Object code){ 
 		List<SysDicTerm> dics = sysDicService.queryDicTerm(code);
 		return JsonResponse.success(dics);
