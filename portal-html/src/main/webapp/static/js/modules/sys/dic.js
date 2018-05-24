@@ -194,7 +194,7 @@ Dic.initColumn = function () {
         }},
         {title: '启用状态', field: 'enable', align: 'center', valign: 'middle', sortable: true, width: '40px', formatter: function(item, index){
             if(item.enable === 0){
-                return '<span class="label label-primary">禁用</span>';
+                return '<span class="label label-danger">禁用</span>';
             }
             if(item.enable === 1){
                 return '<span class="label label-success">启用</span>';

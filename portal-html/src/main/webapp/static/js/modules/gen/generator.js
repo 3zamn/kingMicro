@@ -53,7 +53,7 @@ var vm = new Vue({
 	},
 	methods: {		
 		getDic: function () {//下拉选项字典查询
-			 $.get(baseURL + "sys/dic/query/"+"DBGen", function(r){
+			 $.get(baseURL + "sys/dic/query/"+"codeGen", function(r){
 			        vm.dataSource = r.data;
 			   });
 		},

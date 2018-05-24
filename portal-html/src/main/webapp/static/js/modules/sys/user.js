@@ -6,9 +6,10 @@ $(function () {
 			{ label: '用户ID', name: 'userId',  width: 45, key: true },
 			{ label: '用户名', name: 'username', width: 75 },
             { label: '所属部门', name: 'deptName', width: 75 },
+            { label: '职位', name: 'position', width: 50 },
 			{ label: '邮箱', name: 'email', width: 90 },
-			{ label: '手机号', name: 'mobile', width: 100 },
-			{ label: '状态', name: 'status', width: 60, formatter: function(value, options, row){
+			{ label: '手机号', name: 'mobile', width: 80 },
+			{ label: '状态', name: 'status', width: 40, formatter: function(value, options, row){
 				return value === 0 ? 
 					'<span class="label label-danger">禁用</span>' : 
 					'<span class="label label-success">正常</span>';
@@ -65,7 +66,9 @@ var vm = new Vue({
         showList: true,
         title:null,
         roleList:{},
-  //      currentUserId:null,
+        position: '',
+        dicSelect:{},
+        currentUserId:null,
         user:{
         	userId:null,
         	status:1,
@@ -86,9 +89,14 @@ var vm = new Vue({
 
             //获取角色信息
             this.getRoleList();
-
+            vm.getDic();
             vm.getDept();
         },
+        getDic: function () {//下拉选项字典查询
+			 $.get(baseURL + "sys/dic/query/"+"position", function(r){
+			        vm.dicSelect = r.data;
+			   });
+		},
         getDept: function(){
             //加载部门树
             $.get(baseURL + "sys/dept/list", function(r){
@@ -115,6 +123,8 @@ var vm = new Vue({
             vm.getCurrentUser(userId);
             vm.getUser(userId);
             //获取角色信息  
+            
+            vm.getDic();
         },
         del: function () {
             var userIds = getSelectedRows();
@@ -161,7 +171,7 @@ var vm = new Vue({
         getCurrentUser: function(userId){
 			$.getJSON(baseURL + "sys/user/info", function(r){
 			//	debugger
-			//	vm.currentUserId = r.user.userId;
+				vm.currentUserId = r.data.userId;
 				  if(parseInt(userId) != r.data.userId){	
 	            	  vm.getRoleList();
 	            }
@@ -170,6 +180,7 @@ var vm = new Vue({
         getUser: function(userId){
             $.get(baseURL + "sys/user/info/"+userId, function(r){
                 vm.user = r.data;
+                vm.position = r.data.position;
                 vm.user.password = null;
            //     debugger
                 vm.getDept();

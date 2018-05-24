@@ -225,7 +225,7 @@ var vm = new Vue({
 				type: 1,
 				skin: 'layui-layer-molv',
 				title: "基本资料",
-				area: ['550px', '310px'],
+				area: ['550px', '360px'],
 				shadeClose: false,
 				content: jQuery("#personInfo"),
 				btn: ['关闭']
