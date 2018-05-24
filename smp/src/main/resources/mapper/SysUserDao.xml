@@ -12,6 +12,7 @@
         <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="TINYINT"/>
         <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
+        <result property="position" column="position" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="DATE"/>
     </resultMap>
 
@@ -93,6 +94,7 @@
 			`mobile`, 
 			`status`,
 			`dept_id`,
+			`position`,
 			`create_time`
 		)
 		values
@@ -105,6 +107,7 @@
 			#{mobile}, 
 			#{status},
 			#{deptId},
+			#{position},
 			#{createTime}
 		)
 	</insert>
@@ -118,6 +121,7 @@
 			<if test="mobile != null">`mobile` = #{mobile}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="deptId != null">`dept_id` = #{deptId}, </if>
+			<if test="position != null">`position` = #{position}, </if>
 		</set>
 		where user_id = #{userId}
 	</update>

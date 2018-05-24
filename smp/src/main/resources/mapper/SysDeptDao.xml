@@ -8,6 +8,7 @@
         <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+        <result property="manager" column="manager" jdbcType="INTEGER"/>
         <result property="delFlag" column="del_flag" jdbcType="TINYINT"/>
     </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysDept">
@@ -37,12 +38,14 @@
 		(
 			`parent_id`, 
 			`name`, 
+			`manager`, 
 			`order_num`
 		)
 		values
 		(
 			#{parentId}, 
 			#{name}, 
+			#{manager}, 
 			#{orderNum}
 		)
 	</insert>
@@ -52,6 +55,7 @@
 		<set>
 			<if test="parentId != null">`parent_id` = #{parentId}, </if>
 			<if test="name != null">`name` = #{name}, </if>
+			<if test="manager != null">`manager` = #{manager}, </if>
 			<if test="orderNum != null">`order_num` = #{orderNum}</if>
 		</set>
 		where dept_id = #{deptId}

@@ -134,7 +134,7 @@
 	</delete>
 
 	<select id="queryDicTerm" resultType="com.king.dal.gen.model.smp.SysDicTerm">
-		SELECT p.text,p.value,p.sort_no from sys_dic p WHERE type =1 and enable =1 and  parent_id = (SELECT u.id from sys_dic u WHERE code = #{code}) order by sort_no asc
+		SELECT p.text,p.value,p.sort_no from sys_dic p WHERE type =1 and enable =1 and  parent_id = (SELECT u.id from sys_dic u WHERE code = #{code} and enable =1) order by sort_no asc
 		 
 	</select>
 	
