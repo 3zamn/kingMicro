@@ -67,4 +67,11 @@ public interface SysUserService extends BaseService<SysUser>{
 	 */
 	List<SysUser> queryByDeptIds(Object deptId);
 	
+	/**
+	 * 根据角色Id查询用户
+	 * @param roleId
+	 * @return
+	 */
+	List<SysUser> queryByRoleId(Object roleId);
+	
 }
