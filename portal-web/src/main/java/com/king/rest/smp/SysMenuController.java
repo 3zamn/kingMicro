@@ -22,11 +22,14 @@ import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.dal.gen.controller.AbstractController;
+import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysMenu;
 import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * 系统菜单
@@ -47,6 +50,7 @@ public class SysMenuController extends AbstractController {
 	 * 导航菜单
 	 */
 	@ApiOperation(value = "导航菜单")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/nav")
 	public JsonResponse nav(){
 		List<SysMenu> menuList = sysMenuService.getUserMenuList(getUserId());
@@ -80,6 +84,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@Log("菜单选择")
 	@ApiOperation(value = "菜单选择", notes = "权限编码（sys:menu:select）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/select")
 	@RequiresPermissions("sys:menu:select")
 	public JsonResponse select(){
@@ -101,6 +106,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@Log("菜单信息")
 	@ApiOperation(value = "菜单信息", notes = "权限编码（sys:menu:info）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info/{menuId}")
 	@RequiresPermissions("sys:menu:info")
 	public JsonResponse info(@PathVariable("menuId") Object menuId){
@@ -113,6 +119,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@Log("保存菜单")
 	@ApiOperation(value = "保存菜单", notes = "权限编码（sys:menu:save）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/save")
 	@RequiresPermissions("sys:menu:save")
 	public JsonResponse save(@RequestBody SysMenu menu){
@@ -129,6 +136,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@Log("修改菜单")
 	@ApiOperation(value = "修改菜单", notes = "权限编码（sys:menu:update）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/update")
 	@RequiresPermissions("sys:menu:update")
 	public JsonResponse update(@RequestBody SysMenu menu){
@@ -145,6 +153,7 @@ public class SysMenuController extends AbstractController {
 	 */
 	@Log("删除菜单")
 	@ApiOperation(value = "删除菜单", notes = "权限编码（sys:menu:delete）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")
 	public JsonResponse delete(Long menuId){

@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.SysDeptService;
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysRoleService;
+import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
@@ -25,11 +26,15 @@ import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.validator.ValidatorUtils;
 import com.king.dal.gen.controller.AbstractController;
+import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysRole;
+import com.king.dal.gen.model.smp.SysUser;
 import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * @author King chen
@@ -46,12 +51,15 @@ public class SysRoleController extends AbstractController {
 	private SysMenuService sysMenuService;
 	@Autowired
 	private SysDeptService sysDeptService;
+	@Autowired
+	private SysUserService sysUserService;
 	
 	/**
 	 * 角色列表
 	 */
 	@Log("角色列表")
 	@ApiOperation(value = "角色列表", notes = "权限编码（sys:role:list）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/list")
 	@RequiresPermissions("sys:role:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -70,6 +78,7 @@ public class SysRoleController extends AbstractController {
 	 */
 	@Log("角色选择")
 	@ApiOperation(value = "角色选择", notes = "权限编码（sys:role:select）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/select")
 	@RequiresPermissions("sys:role:select")
 	public JsonResponse select(){
@@ -84,6 +93,7 @@ public class SysRoleController extends AbstractController {
 	 */
 	@Log("角色信息")
 	@ApiOperation(value = "角色信息", notes = "权限编码（sys:role:info）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")
 	public JsonResponse info(@PathVariable("roleId") Object roleId){
@@ -105,6 +115,7 @@ public class SysRoleController extends AbstractController {
 	 */
 	@Log("保存角色")
 	@ApiOperation(value = "保存角色", notes = "权限编码（sys:role:save）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/save")
 	@RequiresPermissions("sys:role:save")
 	public JsonResponse save(@RequestBody SysRole role){
@@ -120,6 +131,7 @@ public class SysRoleController extends AbstractController {
 	 */
 	@Log("修改角色")
 	@ApiOperation(value = "保存角色", notes = "权限编码（sys:role:update）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/update")
 	@RequiresPermissions("sys:role:update")
 	public JsonResponse update(@RequestBody SysRole role){
@@ -131,15 +143,34 @@ public class SysRoleController extends AbstractController {
 	}
 	
 	/**
+	 * 授权的用户
+	 */
+	@Log("查询授权的用户")
+	@ApiOperation(value = "查询授权的用户", notes = "权限编码（sys:role:grantUsers）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@PostMapping("/grantUsers")
+	@RequiresPermissions("sys:role:grantUsers")
+	public JsonResponse grantUsers(@RequestBody Object roleId){
+		List<SysUser> sysUsers = sysUserService.queryByRoleId(roleId);
+		return JsonResponse.success(sysUsers);
+	}
+	
+	/**
 	 * 删除角色
 	 */
 	@Log("删除角色")
 	@ApiOperation(value = "删除角色", notes = "权限编码（sys:role:delete）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:role:delete")
 	public JsonResponse delete(@RequestBody Object[] roleIds){
-		sysRoleService.deleteBatch(roleIds);
-		
+		for(Object roleId:roleIds){
+			List<Long> list=sysRoleService.queryUserIdList(roleId);
+			if(list!=null && !list.isEmpty()){
+				return JsonResponse.error("角色Id为:"+roleId+",已存在用户。请先删除用户!");
+			}	
+		}
+		sysRoleService.deleteBatch(roleIds);	
 		return JsonResponse.success();
 	}
 }

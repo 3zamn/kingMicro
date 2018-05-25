@@ -23,11 +23,16 @@ import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.dal.gen.controller.AbstractController;
+import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysDic;
 import com.king.dal.gen.model.smp.SysDicTerm;
+import com.king.dal.gen.model.smp.SysUser;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 
 /**
@@ -64,9 +69,9 @@ public class SysDicController extends AbstractController{
 	 * @return
 	 */
 	@ApiOperation(value = "根据字典编码查询数据字典")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/query/{code}")
-	/*@RequiresPermissions("sys:dic:query")*/
-	public JsonResponse query(@PathVariable("code") Object code){ 
+	public JsonResponse query(@ApiParam(name="code",value="字典编码",required=true) @PathVariable("code") Object code){ 
 		List<SysDicTerm> dics = sysDicService.queryDicTerm(code);
 		return JsonResponse.success(dics);
 	}
@@ -76,6 +81,7 @@ public class SysDicController extends AbstractController{
 	 */
 	@Log("字典目录")
 	@ApiOperation(value = "字典目录选择", notes = "权限编码（sys:dic:select）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/select")
 	@RequiresPermissions("sys:dic:select")
 	public JsonResponse select(){
@@ -102,6 +108,7 @@ public class SysDicController extends AbstractController{
 	 */
 	@Log("数据字典信息")
     @ApiOperation(value = "查询信息",notes = "权限编码（sysdic:info）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:dic:info")
 	public JsonResponse info(@PathVariable("id") Object id){
@@ -115,6 +122,7 @@ public class SysDicController extends AbstractController{
 	 */
 	@Log("数据字典保存")
 	@ApiOperation(value = "保存",notes = "权限编码（sysdic:save）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dic:save")
 	public JsonResponse save(@RequestBody SysDic sysDic){
@@ -131,6 +139,7 @@ public class SysDicController extends AbstractController{
 	 */
 	@Log("数据字典修改")
 	@ApiOperation(value = "修改",notes = "权限编码（sysdic:update）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/update")
 	@RequiresPermissions("sys:dic:update")
 	public JsonResponse update(@RequestBody SysDic sysDic){
@@ -147,6 +156,7 @@ public class SysDicController extends AbstractController{
 	 */
 	@Log("数据字典删除")
 	@ApiOperation(value = "删除",notes = "权限编码（sysdic:delete）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:dic:delete")
 	public JsonResponse delete(Long id){

@@ -48,7 +48,7 @@ public class SwaggerConfig {
     	String enableSwagger =sysConfigService.getValue("enableSwagger");
         ParameterBuilder tokenPar = new ParameterBuilder();  
         List<Parameter> pars = new ArrayList<Parameter>();  
-        tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();  
+        tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
         pars.add(tokenPar.build());  
         return new Docket(DocumentationType.SWAGGER_2)  
         	.groupName("smpApi")  
@@ -68,19 +68,22 @@ public class SwaggerConfig {
     private ApiInfo smpApiInfo() {
         return new ApiInfoBuilder()
             .title("King Fast Dev Platform")
-            .description("接口文档。提示：Try it out时请输入当前用户的token")
+            .description("接口文档。提示：Try it out时请输入当前用户的token。分页查询接口传参约定；"
+            + "page:页码，limit:每页大小，sidx:排序字段(非必填)，order:排序，searchKey:模糊查询内容，keyParam:模糊查询的属性列，"
+            + "property(属性列):精确查询内容，property(属性列): {begin:范围查询开始,end:范围查询结束}。例子:"
+            + "limit=10&page=1&sidx=id&order=asc&searchKey=&keyParam=[\"username\",\"ip\",\"operation\",\"method\"]&status=&createDate={\"begin\":\"2018-05-21\",\"end\":\"2018-05-25\"}")
             .termsOfServiceUrl("https://github.com/3zamn/kingMicro")
-            .version("1.0")
+            .version("1.0.0")
             .build();
     }
-    
+
     //第三方应用api
     @Bean
     public Docket thirdappApi(){  
     	String enableSwagger =sysConfigService.getValue("enableSwagger");
         ParameterBuilder tokenPar = new ParameterBuilder();  
         List<Parameter> pars = new ArrayList<Parameter>();  
-        tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(false).build();  
+        tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
         pars.add(tokenPar.build());  
         return new Docket(DocumentationType.SWAGGER_2)  
         	.groupName("thirdappApi")  
@@ -102,7 +105,7 @@ public class SwaggerConfig {
             .title("第三方应用接入api")
             .description("接口文档。提示：Try it out时请输入当前用户的token")
             .termsOfServiceUrl("https://github.com/3zamn/kingMicro")
-            .version("1.0")
+            .version("1.0.0")
             .build();
     }
     
@@ -110,7 +113,7 @@ public class SwaggerConfig {
     private List<Parameter> setHeaderToken() {
         ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
-        tokenPar.name("X-Auth-Token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+        tokenPar.name("X-Auth-Token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(true).build();
         pars.add(tokenPar.build());
         return pars;
     }

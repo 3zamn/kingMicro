@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.king.dal.gen.controller.AbstractController;
+import com.king.dal.gen.model.Response;
 import ${package}.common.utils.Page;
 import ${package}.common.annotation.Log;
 import ${package}.dal.gen.model.${module}.${className};
@@ -21,6 +22,8 @@ import ${package}.common.utils.Query;
 import ${package}.common.utils.JsonResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 
 /**
@@ -40,11 +43,12 @@ public class ${className}Controller extends AbstractController{
 	/**
 	 * 列表
 	 */
-	@Log("${comments}列表")
-	@ApiOperation(value = "列表",notes = "权限编码（${permUrl}:list）")
+	@Log("${comments}列表页")
+	@ApiOperation(value = "列表页",notes = "权限编码（${permUrl}:list）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/list")
 	@RequiresPermissions("${permUrl}:list")
-	public JsonResponse list(@RequestParam Map<String, Object> params){
+	public JsonResponse list(@ApiParam(name="params",value="query string",required=true)@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params,${className}.class.getSimpleName());
 		Page page = ${classname}Service.getPage(query);
@@ -57,6 +61,7 @@ public class ${className}Controller extends AbstractController{
 	 */
 	@Log("${comments}查询信息")
     @ApiOperation(value = "查询信息",notes = "权限编码（${permUrl}:info）")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info/{${pk.attrname}}")
 	@RequiresPermissions("${permUrl}:info")
 	public JsonResponse info(@PathVariable("${pk.attrname}") Object ${pk.attrname}){
@@ -70,6 +75,7 @@ public class ${className}Controller extends AbstractController{
 	 */
 	@Log("${comments}保存")
 	@ApiOperation(value = "保存",notes = "权限编码（${permUrl}:save）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/save")
 	@RequiresPermissions("${permUrl}:save")
 	public JsonResponse save(@RequestBody ${className} ${classname}){
@@ -83,6 +89,7 @@ public class ${className}Controller extends AbstractController{
 	 */
 	@Log("${comments}修改")
 	@ApiOperation(value = "修改",notes = "权限编码（${permUrl}:update）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/update")
 	@RequiresPermissions("${permUrl}:update")
 	public JsonResponse update(@RequestBody ${className} ${classname}){
@@ -96,6 +103,7 @@ public class ${className}Controller extends AbstractController{
 	 */
 	@Log("${comments}删除")
 	@ApiOperation(value = "删除",notes = "权限编码（${permUrl}:delete）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/delete")
 	@RequiresPermissions("${permUrl}:delete")
 	public JsonResponse delete(@RequestBody Object[] ${pk.attrname}s){

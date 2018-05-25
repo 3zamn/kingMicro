@@ -25,11 +25,14 @@ import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.common.utils.pattern.StringToolkit;
+import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysLog;
 import com.mongodb.DBObject;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  *  系统日志
@@ -50,6 +53,7 @@ public class SysLogController {
 	 * 日志列表
 	 */
 	@ApiOperation(value = "日志列表", notes = "权限编码（sys:log:list）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("sys:log:list")
@@ -64,6 +68,7 @@ public class SysLogController {
 	 * 系统异常列表
 	 */
 	@ApiOperation(value = "系统异常列表", notes = "权限编码（sys:exception:list）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@ResponseBody
 	@GetMapping("/exception")
 	@RequiresPermissions("sys:exception:list")
@@ -94,6 +99,7 @@ public class SysLogController {
 	 * 系统异常详细
 	 */
 	@ApiOperation(value = "系统异常详细", notes = "权限编码（sys:exception:detail）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@ResponseBody
 	@GetMapping("/exceptionDetail/{id}")
 	@RequiresPermissions("sys:exception:detail")

@@ -8,8 +8,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -30,17 +28,19 @@ import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.redis.IdGenerator;
-import com.king.common.utils.spring.SpringContextUtils;
 import com.king.common.utils.validator.Assert;
 import com.king.common.utils.validator.ValidatorUtils;
 import com.king.common.utils.validator.group.AddGroup;
 import com.king.common.utils.validator.group.UpdateGroup;
 import com.king.dal.gen.controller.AbstractController;
+import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * 系统用户
@@ -103,6 +103,7 @@ public class SysUserController extends AbstractController {
 	 */
 	@Log("查看用户列表")
 	@ApiOperation(value = "用户列表", notes = "权限编码（sys:user:list）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/list")
 	@RequiresPermissions("sys:user:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -150,6 +151,7 @@ public class SysUserController extends AbstractController {
 	 */
 	@Log("用户信息详情")
 	@ApiOperation(value = "用户信息", notes = "权限编码（sys:user:info）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info/{userId}")
 	@RequiresPermissions("sys:user:info")
 	public JsonResponse info(@PathVariable("userId") Object userId){
@@ -167,6 +169,7 @@ public class SysUserController extends AbstractController {
 	 */
 	@Log("保存用户")
 	@ApiOperation(value = "保存用户", notes = "权限编码（sys:user:save）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/save")
 	@RequiresPermissions("sys:user:save")
 	public JsonResponse save(@RequestBody SysUser user){

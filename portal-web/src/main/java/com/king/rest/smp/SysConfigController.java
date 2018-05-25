@@ -20,10 +20,13 @@ import com.king.common.utils.Page;
 import com.king.common.utils.Query;
 import com.king.common.utils.validator.ValidatorUtils;
 import com.king.dal.gen.controller.AbstractController;
+import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysConfig;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 
 /**
@@ -44,6 +47,7 @@ public class SysConfigController extends AbstractController {
 	 */
 	@Log("配置列表")
 	@ApiOperation(value = "配置列表", notes = "权限编码（sys:config:list）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/list")
 	@RequiresPermissions("sys:config:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -59,6 +63,7 @@ public class SysConfigController extends AbstractController {
 	 */
 	@Log("配置信息")
 	@ApiOperation(value = "配置信息", notes = "权限编码（sys:config:info）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
 	public JsonResponse info(@PathVariable("id") Object id){
@@ -72,6 +77,7 @@ public class SysConfigController extends AbstractController {
 	 */
 	@Log("保存配置")
 	@ApiOperation(value = "保存配置", notes = "权限编码（sys:config:save）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/save")
 	@RequiresPermissions("sys:config:save")
 	public JsonResponse save(@RequestBody SysConfig config){
@@ -87,6 +93,7 @@ public class SysConfigController extends AbstractController {
 	 */
 	@Log("修改配置")
 	@ApiOperation(value = "修改配置", notes = "权限编码（sys:config:update）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/update")
 	@RequiresPermissions("sys:config:update")
 	public JsonResponse update(@RequestBody SysConfig config){
@@ -102,6 +109,7 @@ public class SysConfigController extends AbstractController {
 	 */
 	@Log("删除配置")
 	@ApiOperation(value = "删除配置", notes = "权限编码（sys:config:delete）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
 	public JsonResponse delete(@RequestBody Object[] ids){

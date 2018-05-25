@@ -21,10 +21,13 @@ import com.king.common.utils.validator.ValidatorUtils;
 import com.king.common.utils.validator.group.AddGroup;
 import com.king.common.utils.validator.group.UpdateGroup;
 import com.king.dal.gen.controller.AbstractController;
+import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysDept;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 
 /**
@@ -59,6 +62,7 @@ public class SysDeptController extends AbstractController {
 	 */
 	@Log("选择部门(添加、修改菜单)")
 	@ApiOperation(value = "选择部门", notes = "权限编码（sys:dept:select）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/select")
 	@RequiresPermissions("sys:dept:select")
 	public JsonResponse select(){
@@ -83,6 +87,7 @@ public class SysDeptController extends AbstractController {
 	 */
 	@Log("部门树列表")
 	@ApiOperation(value = "部门树列表", notes = "权限编码（sys:dept:list）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info")
 	@RequiresPermissions("sys:dept:list")
 	public JsonResponse info(){
@@ -100,6 +105,7 @@ public class SysDeptController extends AbstractController {
 	 */
 	@Log("部门信息")
 	@ApiOperation(value = "部门信息", notes = "权限编码（sys:dept:info）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info/{deptId}")
 	@RequiresPermissions("sys:dept:info")
 	public JsonResponse info(@PathVariable("deptId") Object deptId){
@@ -113,6 +119,7 @@ public class SysDeptController extends AbstractController {
 	 */
 	@Log("保存部门")
 	@ApiOperation(value = "保存部门", notes = "权限编码（sys:dept:save）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dept:save")
 	public JsonResponse save(@RequestBody SysDept dept){
@@ -127,6 +134,7 @@ public class SysDeptController extends AbstractController {
 	 */
 	@Log("保存部门")
 	@ApiOperation(value = "修改部门", notes = "权限编码（sys:dept:update）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/update")
 	@RequiresPermissions("sys:dept:update")
 	public JsonResponse update(@RequestBody SysDept dept){
@@ -141,6 +149,7 @@ public class SysDeptController extends AbstractController {
 	 */
 	@Log("删除部门")
 	@ApiOperation(value = "删除部门", notes = "权限编码（sys:dept:delete）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:dept:delete")
 	public JsonResponse delete(Long deptId){

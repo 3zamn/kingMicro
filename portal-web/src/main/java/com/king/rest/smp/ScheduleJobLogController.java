@@ -14,10 +14,13 @@ import com.king.api.smp.ScheduleJobService;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.Query;
+import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * 定时任务日志
@@ -37,6 +40,7 @@ public class ScheduleJobLogController {
 	 * 定时任务日志列表
 	 */
 	@ApiOperation(value = "定时任务日志列表", notes = "权限编码（sys:schedule:log）")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:log")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -50,6 +54,7 @@ public class ScheduleJobLogController {
 	 * 定时任务日志信息
 	 */
 	@ApiOperation(value = "定时任务日志信息")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
 	@GetMapping("/info/{logId}")
 	@RequiresPermissions("sys:scheduleLog:list")
 	public JsonResponse info(@PathVariable("logId") Object logId){
