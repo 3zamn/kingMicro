@@ -130,7 +130,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	    		Set<String> perms=shiroService.getUserPermissions(user.getUserId(), false,user.getToken());
 	        	Iterator<String> it = perms.iterator();  
 	        	while (it.hasNext()) {  
-	        	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
+	        	  redisUtils.sset(permKey, it.next(),Constant.PERMS_EXPIRE/1000);
 	        	} 
 	      	}	
 		}	
@@ -171,7 +171,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     	Set<String> perms=shiroService.getUserPermissions(userId, false,token);
     	Iterator<String> it = perms.iterator();  
     	while (it.hasNext()) {  
-    	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
+    	  redisUtils.sset(permKey, it.next(),Constant.PERMS_EXPIRE/1000);
     	}   
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put("token", token);
@@ -202,5 +202,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		String deptIds=sysDeptService.getSubDeptIdList(deptId);
 		String[] list= deptIds.split(",");
 		return sysUserDao.queryByDeptIds(list);
+	}
+
+	@Transactional(readOnly = true)
+	public List<SysUser> queryByRoleId(Object roleId) {
+		List<SysUser> sysUsers = queryByRoleId(roleId);
+		return sysUsers;
 	}
 }

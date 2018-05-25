@@ -48,4 +48,11 @@ public interface SysUserDao extends BaseDao<SysUser> {
 	 * @return
 	 */
 	List<SysUser> queryByDeptIds(Object[] deptIdList);
+	
+	/**
+	 * 根据角色Id查询用户
+	 * @param roleId
+	 * @return
+	 */
+	List<SysUser> queryByRoleId(Object roleId);
 }

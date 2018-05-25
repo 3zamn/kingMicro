@@ -115,7 +115,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	    		Set<String> perms=shiroService.getUserPermissions(userId, false,token);
 	        	Iterator<String> it = perms.iterator();  
 	        	while (it.hasNext()) {  
-	        	  redisUtils.sset(permKey, it.next(),Constant.TOKEN_EXPIRE/1000);
+	        	  redisUtils.sset(permKey, it.next(),Constant.PERMS_EXPIRE/1000);
 	        	} 
 	      	}	
 		}	
