@@ -66,6 +66,7 @@ var vm = new Vue({
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			var keyParam = new Array();
 		//	debugger
+			var createTime = {"begin":"2018-03-11","end":"2018-05-12"}
 			keyParam.push('username');
 			keyParam.push('ip');
 		/*	keyParam.push('status');*/

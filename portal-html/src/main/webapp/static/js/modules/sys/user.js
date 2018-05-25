@@ -14,7 +14,13 @@ $(function () {
 					'<span class="label label-danger">禁用</span>' : 
 					'<span class="label label-success">正常</span>';
 			}},
-			{ label: '创建时间', name: 'createTime', width: 85}
+			{ label: '创建时间', name: 'createTime', width: 85}/*,
+			{ label: '操作', name: '', width: 40, formatter: function(value, options, row){
+				return 	'<a v-if="hasPermission(\'sys:user:update\')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>' ;
+					
+						
+			}}*/
+			
         ],
 		viewrecords: true,
         height: 385,

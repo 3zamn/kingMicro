@@ -93,12 +93,15 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-2 control-label">状态</div>
-				<label class="radio-inline">
-					<input type="radio" name="status" value="0" v-model="user.status"/> 禁用
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="status" value="1" v-model="user.status"/> 正常
-				</label>
+				<label v-if="currentUserId&&currentUserId>0&&currentUserId==user.userId" class="label label-danger">不可修改本人状态</label>
+				<div v-else>
+					<label class="radio-inline">
+						<input type="radio" name="status" value="0" v-model="user.status"/> 禁用
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="status" value="1" v-model="user.status"/> 正常
+					</label>
+				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-sm-2 control-label"></div>
