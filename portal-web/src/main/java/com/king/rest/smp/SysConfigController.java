@@ -46,8 +46,7 @@ public class SysConfigController extends AbstractController {
 	 * 所有配置列表
 	 */
 	@Log("配置列表")
-	@ApiOperation(value = "配置列表", notes = "权限编码（sys:config:list）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "配置列表",response=Response.class, notes = "权限编码（sys:config:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:config:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -62,8 +61,7 @@ public class SysConfigController extends AbstractController {
 	 * 配置信息
 	 */
 	@Log("配置信息")
-	@ApiOperation(value = "配置信息", notes = "权限编码（sys:config:info）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "配置信息",response=Response.class, notes = "权限编码（sys:config:info）")
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
 	public JsonResponse info(@PathVariable("id") Object id){
@@ -76,8 +74,7 @@ public class SysConfigController extends AbstractController {
 	 * 保存配置
 	 */
 	@Log("保存配置")
-	@ApiOperation(value = "保存配置", notes = "权限编码（sys:config:save）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "保存配置",response=Response.class, notes = "权限编码（sys:config:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:config:save")
 	public JsonResponse save(@RequestBody SysConfig config){
@@ -92,8 +89,7 @@ public class SysConfigController extends AbstractController {
 	 * 修改配置
 	 */
 	@Log("修改配置")
-	@ApiOperation(value = "修改配置", notes = "权限编码（sys:config:update）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "修改配置",response=Response.class, notes = "权限编码（sys:config:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:config:update")
 	public JsonResponse update(@RequestBody SysConfig config){
@@ -108,8 +104,7 @@ public class SysConfigController extends AbstractController {
 	 * 删除配置
 	 */
 	@Log("删除配置")
-	@ApiOperation(value = "删除配置", notes = "权限编码（sys:config:delete）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "删除配置",response=Response.class, notes = "权限编码（sys:config:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
 	public JsonResponse delete(@RequestBody Object[] ids){

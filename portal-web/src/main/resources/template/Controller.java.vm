@@ -44,11 +44,10 @@ public class ${className}Controller extends AbstractController{
 	 * 列表
 	 */
 	@Log("${comments}列表页")
-	@ApiOperation(value = "列表页",notes = "权限编码（${permUrl}:list）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "列表页",response=Response.class,notes = "权限编码（${permUrl}:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("${permUrl}:list")
-	public JsonResponse list(@ApiParam(name="params",value="query string",required=true)@RequestParam Map<String, Object> params){
+	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params,${className}.class.getSimpleName());
 		Page page = ${classname}Service.getPage(query);
@@ -60,8 +59,7 @@ public class ${className}Controller extends AbstractController{
 	 * 信息
 	 */
 	@Log("${comments}查询信息")
-    @ApiOperation(value = "查询信息",notes = "权限编码（${permUrl}:info）")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+    @ApiOperation(value = "查询信息",response=Response.class,notes = "权限编码（${permUrl}:info）")
 	@GetMapping("/info/{${pk.attrname}}")
 	@RequiresPermissions("${permUrl}:info")
 	public JsonResponse info(@PathVariable("${pk.attrname}") Object ${pk.attrname}){
@@ -74,8 +72,7 @@ public class ${className}Controller extends AbstractController{
 	 * 保存
 	 */
 	@Log("${comments}保存")
-	@ApiOperation(value = "保存",notes = "权限编码（${permUrl}:save）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "保存",response=Response.class,notes = "权限编码（${permUrl}:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("${permUrl}:save")
 	public JsonResponse save(@RequestBody ${className} ${classname}){
@@ -88,8 +85,7 @@ public class ${className}Controller extends AbstractController{
 	 * 修改
 	 */
 	@Log("${comments}修改")
-	@ApiOperation(value = "修改",notes = "权限编码（${permUrl}:update）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "修改",response=Response.class,notes = "权限编码（${permUrl}:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("${permUrl}:update")
 	public JsonResponse update(@RequestBody ${className} ${classname}){
@@ -102,8 +98,7 @@ public class ${className}Controller extends AbstractController{
 	 * 删除
 	 */
 	@Log("${comments}删除")
-	@ApiOperation(value = "删除",notes = "权限编码（${permUrl}:delete）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "删除",response=Response.class,notes = "权限编码（${permUrl}:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("${permUrl}:delete")
 	public JsonResponse delete(@RequestBody Object[] ${pk.attrname}s){

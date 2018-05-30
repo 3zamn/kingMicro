@@ -58,8 +58,7 @@ public class SysRoleController extends AbstractController {
 	 * 角色列表
 	 */
 	@Log("角色列表")
-	@ApiOperation(value = "角色列表", notes = "权限编码（sys:role:list）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "角色列表",response=Response.class, notes = "权限编码（sys:role:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:role:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -77,8 +76,7 @@ public class SysRoleController extends AbstractController {
 	 * 角色选择
 	 */
 	@Log("角色选择")
-	@ApiOperation(value = "角色选择", notes = "权限编码（sys:role:select）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "角色选择",response=Response.class, notes = "权限编码（sys:role:select）")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:role:select")
 	public JsonResponse select(){
@@ -92,8 +90,7 @@ public class SysRoleController extends AbstractController {
 	 * 角色信息
 	 */
 	@Log("角色信息")
-	@ApiOperation(value = "角色信息", notes = "权限编码（sys:role:info）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "角色信息",response=Response.class, notes = "权限编码（sys:role:info）")
 	@GetMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")
 	public JsonResponse info(@PathVariable("roleId") Object roleId){
@@ -114,8 +111,7 @@ public class SysRoleController extends AbstractController {
 	 * 保存角色
 	 */
 	@Log("保存角色")
-	@ApiOperation(value = "保存角色", notes = "权限编码（sys:role:save）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "保存角色",response=Response.class, notes = "权限编码（sys:role:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:role:save")
 	public JsonResponse save(@RequestBody SysRole role){
@@ -130,8 +126,7 @@ public class SysRoleController extends AbstractController {
 	 * 修改角色
 	 */
 	@Log("修改角色")
-	@ApiOperation(value = "保存角色", notes = "权限编码（sys:role:update）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "保存角色",response=Response.class, notes = "权限编码（sys:role:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:role:update")
 	public JsonResponse update(@RequestBody SysRole role){
@@ -146,8 +141,7 @@ public class SysRoleController extends AbstractController {
 	 * 授权的用户
 	 */
 	@Log("查询授权的用户")
-	@ApiOperation(value = "查询授权的用户", notes = "权限编码（sys:role:grantUsers）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "查询授权的用户",response=Response.class, notes = "权限编码（sys:role:grantUsers）")
 	@PostMapping("/grantUsers")
 	@RequiresPermissions("sys:role:grantUsers")
 	public JsonResponse grantUsers(@RequestBody Object roleId){
@@ -159,8 +153,7 @@ public class SysRoleController extends AbstractController {
 	 * 删除角色
 	 */
 	@Log("删除角色")
-	@ApiOperation(value = "删除角色", notes = "权限编码（sys:role:delete）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "删除角色",response=Response.class, notes = "权限编码（sys:role:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:role:delete")
 	public JsonResponse delete(@RequestBody Object[] roleIds){

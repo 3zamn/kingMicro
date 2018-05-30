@@ -43,6 +43,10 @@ public class SwaggerConfig {
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
+    /**
+     * 系统管理
+     * @return
+     */
     @Bean
     public Docket smpApi(){  
     	String enableSwagger =sysConfigService.getValue("enableSwagger");
@@ -68,7 +72,7 @@ public class SwaggerConfig {
     private ApiInfo smpApiInfo() {
         return new ApiInfoBuilder()
             .title("King Fast Dev Platform")
-            .description("接口文档。提示：Try it out时请输入当前用户的token。分页查询接口传参约定；"
+            .description("接口文档。提示：Try it out时请输入当前用户的token。分页查询接口传参【query】约定；"
             + "page:页码，limit:每页大小，sidx:排序字段(非必填)，order:排序，searchKey:模糊查询内容，keyParam:模糊查询的属性列，"
             + "property(属性列):精确查询内容，property(属性列): {begin:范围查询开始,end:范围查询结束}。例子:"
             + "limit=10&page=1&sidx=id&order=asc&searchKey=&keyParam=[\"username\",\"ip\",\"operation\",\"method\"]&status=&createDate={\"begin\":\"2018-05-21\",\"end\":\"2018-05-25\"}")
@@ -109,13 +113,5 @@ public class SwaggerConfig {
             .build();
     }
     
-    
-    private List<Parameter> setHeaderToken() {
-        ParameterBuilder tokenPar = new ParameterBuilder();
-        List<Parameter> pars = new ArrayList<>();
-        tokenPar.name("X-Auth-Token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(true).build();
-        pars.add(tokenPar.build());
-        return pars;
-    }
 
 }

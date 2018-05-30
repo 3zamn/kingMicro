@@ -102,8 +102,7 @@ public class SysUserController extends AbstractController {
 	 * 所有用户列表
 	 */
 	@Log("查看用户列表")
-	@ApiOperation(value = "用户列表", notes = "权限编码（sys:user:list）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "用户列表",response=Response.class, notes = "权限编码（sys:user:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:user:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -117,7 +116,7 @@ public class SysUserController extends AbstractController {
 	 * 获取登录的用户信息
 	 */
 	@Log("当前登录信息")
-	@ApiOperation(value = "登录信息")
+	@ApiOperation(value = "登录信息",response=Response.class)
 	@GetMapping("/info")
 	public JsonResponse info(){
 		return JsonResponse.success(getUser());
@@ -127,7 +126,7 @@ public class SysUserController extends AbstractController {
 	 * 修改登录用户密码
 	 */
 	@Log("修改密码")
-	@ApiOperation(value = "修改密码")
+	@ApiOperation(value = "修改密码",response=Response.class)
 	@PostMapping("/password")
 	public JsonResponse password(String password, String newPassword){
 		Assert.isBlank(newPassword, "新密码不为能空");
@@ -150,8 +149,7 @@ public class SysUserController extends AbstractController {
 	 * 用户信息
 	 */
 	@Log("用户信息详情")
-	@ApiOperation(value = "用户信息", notes = "权限编码（sys:user:info）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "用户信息",response=Response.class, notes = "权限编码（sys:user:info）")
 	@GetMapping("/info/{userId}")
 	@RequiresPermissions("sys:user:info")
 	public JsonResponse info(@PathVariable("userId") Object userId){
@@ -168,8 +166,7 @@ public class SysUserController extends AbstractController {
 	 * 保存用户
 	 */
 	@Log("保存用户")
-	@ApiOperation(value = "保存用户", notes = "权限编码（sys:user:save）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "保存用户",response=Response.class, notes = "权限编码（sys:user:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:user:save")
 	public JsonResponse save(@RequestBody SysUser user){
@@ -184,7 +181,7 @@ public class SysUserController extends AbstractController {
 	 * 修改用户
 	 */
 	@Log("修改用户")
-	@ApiOperation(value = "修改用户", notes = "权限编码（sys:user:update）")
+	@ApiOperation(value = "修改用户",response=Response.class, notes = "权限编码（sys:user:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:user:update")
 	public JsonResponse update(@RequestBody SysUser user){
@@ -204,7 +201,7 @@ public class SysUserController extends AbstractController {
 	 * 删除用户
 	 */
 	@Log("删除用户")
-	@ApiOperation(value = "删除用户", notes = "权限编码（sys:user:delete）")
+	@ApiOperation(value = "删除用户",response=Response.class, notes = "权限编码（sys:user:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:user:delete")
 	public JsonResponse delete(@RequestBody Object[] userIds){

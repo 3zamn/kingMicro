@@ -39,8 +39,7 @@ public class ScheduleJobLogController {
 	/**
 	 * 定时任务日志列表
 	 */
-	@ApiOperation(value = "定时任务日志列表", notes = "权限编码（sys:schedule:log）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "定时任务日志列表",response=Response.class, notes = "权限编码（sys:schedule:log）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:log")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
@@ -53,8 +52,7 @@ public class ScheduleJobLogController {
 	/**
 	 * 定时任务日志信息
 	 */
-	@ApiOperation(value = "定时任务日志信息")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "定时任务日志信息",response=Response.class,notes = "权限编码（sys:scheduleLog:list）")
 	@GetMapping("/info/{logId}")
 	@RequiresPermissions("sys:scheduleLog:list")
 	public JsonResponse info(@PathVariable("logId") Object logId){

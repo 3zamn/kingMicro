@@ -52,8 +52,7 @@ public class SysLogController {
 	/**
 	 * 日志列表
 	 */
-	@ApiOperation(value = "日志列表", notes = "权限编码（sys:log:list）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "日志列表",response=Response.class, notes = "权限编码（sys:log:list）")
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("sys:log:list")
@@ -67,8 +66,7 @@ public class SysLogController {
 	/**
 	 * 系统异常列表
 	 */
-	@ApiOperation(value = "系统异常列表", notes = "权限编码（sys:exception:list）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "系统异常列表",response=Response.class, notes = "权限编码（sys:exception:list）")
 	@ResponseBody
 	@GetMapping("/exception")
 	@RequiresPermissions("sys:exception:list")
@@ -98,8 +96,7 @@ public class SysLogController {
 	/**
 	 * 系统异常详细
 	 */
-	@ApiOperation(value = "系统异常详细", notes = "权限编码（sys:exception:detail）")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "success",response=Response.class)})
+	@ApiOperation(value = "系统异常详细",response=Response.class, notes = "权限编码（sys:exception:detail）")
 	@ResponseBody
 	@GetMapping("/exceptionDetail/{id}")
 	@RequiresPermissions("sys:exception:detail")
