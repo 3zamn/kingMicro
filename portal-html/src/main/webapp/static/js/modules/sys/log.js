@@ -47,6 +47,7 @@ var vm = new Vue({
 		q:{
 			key: null
 		},
+		createDate:'',
 		selected: '',
 		logStatus:{}
 	},
@@ -65,8 +66,15 @@ var vm = new Vue({
 		reload: function (event) {
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			var keyParam = new Array();
-		//	debugger
-			var createTime = {"begin":"2018-03-11","end":"2018-05-12"}
+			
+			var begin='';				
+			var end='';
+			if(vm.createDate!=''){
+				begin=vm.createDate[0];
+				end=vm.createDate[1];
+			}			
+			var createTime = {"begin":begin,"end":end};
+//			debugger
 			keyParam.push('username');
 			keyParam.push('ip');
 		/*	keyParam.push('status');*/
@@ -74,7 +82,7 @@ var vm = new Vue({
 			keyParam.push('method');
 			var jsonString = JSON.stringify(keyParam);
 			$("#jqGrid").jqGrid('setGridParam',{ 
-				postData:{'searchKey': vm.q.key,'keyParam':jsonString,'status':vm.selected},
+				postData:{'searchKey': vm.q.key,'keyParam':jsonString,'status':vm.selected,'createDate':JSON.stringify(createTime)},
                 page:page
             }).trigger("reloadGrid");
 		}
