@@ -65,7 +65,7 @@ public class SysUserController extends AbstractController {
 	 */
 	@GetMapping("/test")
 	public JsonResponse test(){
-		int clientTotal = 60000;
+		int clientTotal = 100000;
 		// 同时并发执行的线程数
 		int threadTotal = 600;
 		 ExecutorService executorService = Executors.newCachedThreadPool();
@@ -91,9 +91,9 @@ public class SysUserController extends AbstractController {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+		    executorService.shutdown();
 		    Long end = new Date().getTime();  
 		    System.out.println("cast : " + (end - begin) / 1000 + " ms");  
-		    executorService.shutdown();
 			return JsonResponse.success("cast : " + (end - begin) / 1000 + " ms");
 		
 	}
