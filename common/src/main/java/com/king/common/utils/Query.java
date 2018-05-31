@@ -208,7 +208,7 @@ public class Query extends LinkedHashMap<String, Object> {
             String sidx = StringToolkit.getObjectString(params.get("sidx"));
             String order = StringToolkit.getObjectString(params.get("order"));
              sidx = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, sidx).getString("column");
-            this.put("sidx", SQLFilter.sqlInject(sidx));
+            this.put("sidx", sidx);
             if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
            	 order="";
             }
