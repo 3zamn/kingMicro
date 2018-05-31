@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+   <!-- 单机模式 -->
+   <!--  <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="hostName" value="${redis.host}"/>
         <property name="port" value="${redis.port}"/>
         <property name="password" value="${redis.password}"/>
@@ -17,6 +19,54 @@
         <property name="maxIdle" value="${redis.maxIdle}"/>
         <property name="maxTotal" value="${redis.maxTotal}"/>
         <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
+    </bean> -->
+    <!-- 哨兵模式 -->
+     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxTotal" value="${redis.maxTotal}" />  
+        <property name="maxIdle" value="${redis.maxIdle}" />  
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}" />  
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}" />  
+        <property name="minEvictableIdleTimeMillis" value="${redis.minEvictableIdleTimeMillis}" />  
+        <property name="softMinEvictableIdleTimeMillis" value="${redis.softMinEvictableIdleTimeMillis}" />  
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />  
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
+        <property name="testWhileIdle" value="${redis.testWhileIdle}" />  
+        <property name="testOnReturn" value="${redis.testOnReturn}" />  
+        <property name="jmxEnabled" value="${redis.jmxEnabled}" />  
+        <property name="blockWhenExhausted" value="${redis.blockWhenExhausted}" />  
+    </bean>  
+  
+    <bean id="redisSentinelConfiguration"  
+        class="org.springframework.data.redis.connection.RedisSentinelConfiguration">  
+        <property name="master">  
+            <bean class="org.springframework.data.redis.connection.RedisNode">  
+                <property name="name" value="${sentinel.master}">  
+                </property>  
+            </bean>  
+        </property>  
+        <property name="sentinels">  
+            <set>  
+                <bean class="org.springframework.data.redis.connection.RedisNode">  
+                    <constructor-arg name="host" value="${redis.host.1}" />  
+                    <constructor-arg name="port" value="${redis.port.1}" />  
+                </bean>  
+                <bean class="org.springframework.data.redis.connection.RedisNode">  
+                    <constructor-arg name="host" value="${redis.host.2}" />  
+                    <constructor-arg name="port" value="${redis.port.2}" />  
+                </bean>  
+                <bean class="org.springframework.data.redis.connection.RedisNode ">  
+                    <constructor-arg name="host" value="${redis.host.2}" />  
+                    <constructor-arg name="port" value="${redis.port.2}" />  
+                </bean>  
+            </set>  
+        </property>  
+    </bean>  
+    <bean id="redisConnectionFactory"  
+        class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  
+        p:password="${redis.password}">  
+        <constructor-arg name="sentinelConfig" ref="redisSentinelConfiguration"></constructor-arg>  
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>  
+        <property name="database" value="${redis.database}" />
     </bean>
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
