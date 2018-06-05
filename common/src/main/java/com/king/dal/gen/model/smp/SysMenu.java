@@ -52,6 +52,12 @@ public class SysMenu implements Serializable ,Comparable<SysMenu>{
 	 */
 	@ApiModelProperty("授权(多个用逗号分隔，如：user:list,user:create)")
 	private String perms;
+	
+	/**
+	 * 扩展参数，如：动态参数
+	 */
+	@ApiModelProperty("扩展参数(多个参数分号分隔，如动态列,name:列显示名,value:列：{'name1':'value1','name2':'value2'}")
+	private String params;
 
 	/**
 	 * 类型     0：目录   1：菜单   2：按钮
@@ -166,6 +172,14 @@ public class SysMenu implements Serializable ,Comparable<SysMenu>{
 		return icon;
 	}
 	
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+
 	/**
 	 * 设置：排序
 	 * @param orderNum 排序

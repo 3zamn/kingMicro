@@ -24,8 +24,8 @@ public  class EntityMapperResolver {
 	 * @param attribute
 	 * @return
 	 */
-	public  JSONObject getColumn(String enttyName,String attribute){
-		Object column = redisUtils.hget(RedisKeys.getEnttyKey(enttyName), attribute);
+	public  JSONObject getColumn(String entityName,String attribute){
+		Object column = redisUtils.hget(RedisKeys.getEnttyKey(entityName), attribute);
 		JSONObject column_json = new JSONObject();
 		if(column !=null){
 			column_json =JSONObject.parseObject(column.toString());
@@ -39,9 +39,9 @@ public  class EntityMapperResolver {
 	 * @param attribute
 	 * @return
 	 */
-	public Boolean isExistAttribute(String enttyName,String attribute){
+	public Boolean isExistAttribute(String entityName,String attribute){
 		Boolean isExist =false;
-		String key =RedisKeys.getEnttyKey(enttyName);
+		String key =RedisKeys.getEnttyKey(entityName);
 		Object column = redisUtils.hget(key.trim(),attribute.trim());
 		if(column !=null){
 			isExist =true;  
