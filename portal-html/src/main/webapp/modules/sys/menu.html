@@ -83,6 +83,13 @@
 					<input type="text" class="form-control" v-model="menu.perms" placeholder="多个用逗号分隔，如：user:list,user:create"/>
 				</div>
 			</div>
+			<div v-if="menu.type == 2" class="form-group">
+				<div class="col-sm-2 control-label">扩展参数</div>
+				<div class="col-sm-10">
+					<textarea rows="" cols="" class="form-control" v-model="menu.params" placeholder="json格式多个用分号分隔，如：{attribute,text}">
+					</textarea>
+				</div>
+			</div>
 			<div v-if="menu.type != 2" class="form-group">
 				<div class="col-sm-2 control-label">排序号</div>
 				<div class="col-sm-10">

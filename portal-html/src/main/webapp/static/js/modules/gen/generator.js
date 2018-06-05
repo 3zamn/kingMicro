@@ -91,7 +91,8 @@ var vm = new Vue({
 				return ;
 			}
 			var token = localStorage.getItem("token");
-			location.href = baseURL + "sys/generator/code?tables=" + JSON.stringify(tableNames)+"&token="+token+"&dataSource="+dataSource;
+			 var url= baseURL + "sys/generator/code?tables=" + JSON.stringify(tableNames)+"&token="+token+"&dataSource="+dataSource;
+			location.href=encodeURI(url)//转码下以免被高版本tomcat过滤特殊字符报错
 		},
 		reload: function () {
 			vm.showList = true;

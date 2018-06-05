@@ -69,7 +69,7 @@ var vm = new Vue({
 			
 			var begin='';				
 			var end='';
-			if(vm.createDate!=''){
+			if(vm.createDate!='' && vm.createDate!=null){
 				begin=vm.createDate[0];
 				end=vm.createDate[1];
 			}			
