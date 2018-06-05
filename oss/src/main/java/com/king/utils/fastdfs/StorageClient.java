@@ -10,7 +10,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Arrays;
 
-import com.king.common.utils.security.Base64;
+import com.king.common.utils.security.coder.Base64;
 
 /**
  * @author King chen

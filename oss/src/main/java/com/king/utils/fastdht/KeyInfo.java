@@ -3,7 +3,7 @@ package com.king.utils.fastdht;
 
 import java.io.UnsupportedEncodingException;
 
-import com.king.common.utils.security.Hash;
+import com.king.common.utils.security.coder.Hash;
 import com.king.utils.fastdfs.MyException;
 
 /**
