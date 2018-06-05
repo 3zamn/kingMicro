@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.king.api.smp.SysDicService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
-import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
-import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysDic;
 import com.king.dal.gen.model.smp.SysDicTerm;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.utils.AbstractController;
+import com.king.utils.Query;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

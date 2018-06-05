@@ -16,7 +16,7 @@ import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import com.google.gson.Gson;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
-import com.king.common.utils.security.ShiroUtils;
+import com.king.utils.ShiroUtils;
 import com.king.utils.TokenHolder;
 
 /**

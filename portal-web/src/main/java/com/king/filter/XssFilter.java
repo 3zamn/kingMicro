@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import com.king.utils.XssHttpServletRequestWrapper;
+import com.king.utils.pattern.XssHttpServletRequestWrapper;
 
 import java.io.IOException;
 

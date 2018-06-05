@@ -25,12 +25,12 @@ import com.google.gson.Gson;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
-import com.king.common.utils.Query;
 import com.king.common.utils.date.DateUtils;
 import com.king.common.utils.pattern.StringToolkit;
 import com.king.dal.gen.model.smp.SysConfig;
 import com.king.gen.service.SysGeneratorService;
-import com.king.utils.XssHttpServletRequestWrapper;
+import com.king.utils.Query;
+import com.king.utils.pattern.XssHttpServletRequestWrapper;
 
 import io.swagger.annotations.ApiOperation;
 

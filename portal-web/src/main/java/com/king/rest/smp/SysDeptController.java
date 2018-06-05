@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.king.api.smp.SysDeptService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
-import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.validator.ValidatorUtils;
 import com.king.common.utils.validator.group.AddGroup;
 import com.king.common.utils.validator.group.UpdateGroup;
-import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysDept;
+import com.king.utils.AbstractController;
+import com.king.utils.Query;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

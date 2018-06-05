@@ -18,11 +18,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.king.api.smp.SysLogService;
 import com.king.common.utils.pattern.StringToolkit;
-import com.king.common.utils.security.ShiroUtils;
 import com.king.dal.gen.model.smp.SysLog;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.utils.HttpContextUtils;
 import com.king.utils.IPUtils;
+import com.king.utils.ShiroUtils;
 
 import net.sf.json.JSONArray;
 

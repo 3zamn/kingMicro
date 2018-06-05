@@ -22,13 +22,13 @@ import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
-import com.king.common.utils.Query;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.validator.ValidatorUtils;
-import com.king.dal.gen.controller.AbstractController;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysRole;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.utils.AbstractController;
+import com.king.utils.Query;
 import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;

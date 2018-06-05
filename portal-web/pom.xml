@@ -12,9 +12,9 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.12.RELEASE</version>
+			<version>4.3.11.RELEASE</version>			
 		</dependency>
-			<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		
 		<dependency>
 		    <groupId>javax.servlet</groupId>
 		    <artifactId>javax.servlet-api</artifactId>
@@ -22,16 +22,10 @@
 		    <scope>provided</scope>
 		</dependency>
 	
-		<!-- <dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-			<scope>provided</scope>
-		</dependency> -->
 		<dependency>
 			<groupId>com.king</groupId>
 			<artifactId>interface-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -71,38 +65,68 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+           			 <artifactId>jackson-databind</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.7.0</version>
-		</dependency>
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.7.0</version>
 		</dependency>
+		
 		<dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-core</artifactId>
-          <version>2.8.7</version>
-        </dependency>
-    <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-databind</artifactId>
-          <version>2.8.7</version>
-       <!--    <scope>provided</scope> -->
-     </dependency>
-     <dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>3.6.3</version>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.7.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-webmvc</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>		
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+      				<artifactId>jackson-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+     				<artifactId>jackson-databind</artifactId>
+				</exclusion>
+				<exclusion>
+					 <groupId>org.springframework.plugin</groupId>
+     				 <artifactId>spring-plugin-core</artifactId>
+				</exclusion>
+				<exclusion>
+					 <groupId>org.springframework.plugin</groupId>
+      				 <artifactId>spring-plugin-metadata</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>io.swagger</groupId>
+	      			<artifactId>swagger-annotations</artifactId>
+				</exclusion>	
+				<exclusion>
+					 <groupId>com.google.guava</groupId>
+      				<artifactId>guava</artifactId>
+				</exclusion>		 
+		</exclusions>
 		</dependency>
-	 	<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.2.2</version>
-		</dependency>
+		
 		<dependency>
 		    <groupId>org.apache.shiro</groupId>
 		    <artifactId>shiro-core</artifactId>
@@ -112,7 +136,38 @@
 		    <groupId>org.apache.shiro</groupId>
 		    <artifactId>shiro-spring</artifactId>
 		    <version>1.3.2</version>
+		    <exclusions>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-webmvc</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>					
+				<exclusion>
+					 <groupId>log4j</groupId>
+            		<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+            		<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					 <groupId>org.slf4j</groupId>
+          			 <artifactId>jcl-over-slf4j</artifactId>
+				</exclusion>						 	
+		</exclusions>
 		</dependency>
+		
 	</dependencies>
 
 

@@ -23,10 +23,10 @@ import com.king.common.mongodb.log.model.ExceptionLogVO;
 import com.king.common.mongodb.log.repo.ExceptionLogRepo;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
-import com.king.common.utils.Query;
 import com.king.common.utils.pattern.StringToolkit;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysLog;
+import com.king.utils.Query;
 import com.mongodb.DBObject;
 
 import io.swagger.annotations.Api;

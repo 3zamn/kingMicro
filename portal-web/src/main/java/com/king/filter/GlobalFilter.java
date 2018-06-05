@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
-import com.king.common.utils.security.ShiroUtils;
+import com.king.utils.ShiroUtils;
 
 import java.io.IOException;
 

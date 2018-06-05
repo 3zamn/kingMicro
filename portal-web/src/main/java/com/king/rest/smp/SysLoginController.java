@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.shiro.crypto.hash.Sha256Hash;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,13 @@ import com.king.common.utils.constant.Constant;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.redis.TokenGenerator;
-import com.king.common.utils.security.ShiroUtils;
-import com.king.dal.gen.controller.AbstractController;
+import com.king.common.utils.security.crypto.Sha256Hash;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
+import com.king.utils.AbstractController;
 import com.king.utils.HttpContextUtils;
 import com.king.utils.IPUtils;
+import com.king.utils.ShiroUtils;
 import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;

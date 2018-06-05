@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.redis.RedisKeys;
+import com.king.common.utils.redis.RedisUtils;
 
 /**
  * shiro session dao
@@ -23,6 +24,8 @@ public class RedisShiroSession extends EnterpriseCacheSessionDAO {
     @SuppressWarnings("rawtypes")
 	@Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private RedisUtils redisUtils;
 
     //创建session
     @Override
