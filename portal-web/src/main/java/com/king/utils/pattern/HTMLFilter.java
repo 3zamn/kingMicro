@@ -1,4 +1,4 @@
-package com.king.utils;
+package com.king.utils.pattern;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

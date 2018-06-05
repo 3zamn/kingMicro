@@ -1,4 +1,4 @@
-package com.king.dal.gen.controller;
+package com.king.utils;
 
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;

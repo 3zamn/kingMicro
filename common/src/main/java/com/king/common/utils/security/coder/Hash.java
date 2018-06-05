@@ -6,13 +6,8 @@
 * Please visit the FastDFS Home Page http://www.csource.org/ for more detail.
 */
 
-package com.king.common.utils.security;
+package com.king.common.utils.security.coder;
 
-/**
-* name(key) and value pair model
-* @author Happy Fish / YuQing
-* @version Version 1.04
-*/
 public class Hash
 {
     protected Hash()

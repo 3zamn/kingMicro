@@ -1,4 +1,4 @@
-package com.king.common.utils;
+package com.king.utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -11,7 +11,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.king.common.utils.entityMapper.EntityMapperResolver;
 import com.king.common.utils.pattern.SQLFilter;
 import com.king.common.utils.pattern.StringToolkit;
-import com.king.common.utils.security.ShiroUtils;
 import com.king.common.utils.spring.SpringContextUtils;
 
 /**
@@ -21,10 +20,8 @@ import com.king.common.utils.spring.SpringContextUtils;
  * @data2018年2月27日
  */
 
-public class Query extends LinkedHashMap<String, Object> {
+ public class Query extends LinkedHashMap<String, Object> {
 
-	private static final long serialVersionUID = 6414037103985495948L;
-	
 	//当前页码
     private int page;
     //每页条数

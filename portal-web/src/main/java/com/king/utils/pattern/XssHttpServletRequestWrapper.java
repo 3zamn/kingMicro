@@ -1,4 +1,4 @@
-package com.king.utils;
+package com.king.utils.pattern;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

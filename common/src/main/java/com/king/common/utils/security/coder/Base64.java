@@ -1,4 +1,4 @@
-package com.king.common.utils.security;
+package com.king.common.utils.security.coder;
 
 import java.io.IOException;
 
