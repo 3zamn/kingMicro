@@ -9,6 +9,7 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="url" column="url" jdbcType="VARCHAR"/>
         <result property="perms" column="perms" jdbcType="VARCHAR"/>
+        <result property="params" column="params" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="icon" column="icon" jdbcType="VARCHAR"/>
         <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
@@ -25,6 +26,7 @@
 			`name`, 
 			`url`, 
 			`perms`, 
+			`params`, 
 			`type`, 
 			`icon`, 
 			`order_num`
@@ -36,6 +38,7 @@
 			#{name}, 
 			#{url}, 
 			#{perms}, 
+			#{params}, 
 			#{type}, 
 			#{icon}, 
 			#{orderNum}
@@ -86,6 +89,7 @@
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="url != null">`url` = #{url}, </if>
 			<if test="perms != null">`perms` = #{perms}, </if>
+			<if test="params != null">`params` = #{params}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="icon != null">`icon` = #{icon}, </if>
 			<if test="orderNum != null">`order_num` = #{orderNum}</if>

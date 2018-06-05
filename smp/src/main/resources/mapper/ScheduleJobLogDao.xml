@@ -19,7 +19,7 @@
 	</select> 
 
 	<select id="queryList" resultType="com.king.dal.gen.model.smp.ScheduleJobLog" >
-		select * from schedule_job_log  
+		select *  from schedule_job_log  
 		where log_id &lt;=(select log_id from schedule_job_log ORDER BY log_id DESC limit #{offset}, 1) 
 			<if test="jobId != null and jobId.trim() != ''">
 				and job_id = #{jobId}
