@@ -9,11 +9,10 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-
-
 /**
- * @author ShenHuaJie
- * @version 2016年5月20日 下午3:19:19
+ * @author King chen
+ * @emai 396885563@qq.com
+ * @data2018年6月7日
  */
 public final class Request2ModelUtil {
 	private Request2ModelUtil() {
@@ -192,7 +191,9 @@ public final class Request2ModelUtil {
 				String fileName = name.substring(3, 4).toLowerCase() + name.substring(4, name.length());
 				Object o = method.invoke(obj);
 				Method setMethod = Request2ModelUtil.setMethod(fileName, clazz);
-				setMethod.invoke(obiExtend, o);
+				if(setMethod!=null){
+					setMethod.invoke(obiExtend, o);
+				}				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
