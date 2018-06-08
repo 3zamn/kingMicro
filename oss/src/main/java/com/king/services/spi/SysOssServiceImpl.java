@@ -1,4 +1,4 @@
-package com.king.services.api;
+package com.king.services.spi;
 
 import org.springframework.stereotype.Service;
 import com.king.dal.gen.service.BaseServiceImpl;
