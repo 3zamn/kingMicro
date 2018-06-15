@@ -34,7 +34,7 @@ smp:打包成jar（建议用maven打包）、在java环境运行jar包即可。�
 
 分布式调度rpc：dubbo+zookeeper
 
-nosql：spring-data-redis。高可用建议哨兵模式：2个监控+1master+2slave
+nosql：spring-data-redis,高可用建议哨兵模式;mongodb存储操作日志、异常信息
 
 数据库：mysql、(已实现动态切面读写分离)
 
