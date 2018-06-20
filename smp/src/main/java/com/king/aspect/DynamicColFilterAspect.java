@@ -1,29 +1,21 @@
 package com.king.aspect;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
-import com.king.api.smp.SysDeptService;
-import com.king.common.utils.constant.Constant;
 import com.king.common.utils.entityMapper.EntityMapperResolver;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysUser;
-import com.king.dao.SysRoleDeptDao;
-import com.king.dao.SysUserRoleDao;
 
 /**
  * 列表页动态列数据过滤
@@ -38,7 +30,7 @@ public class DynamicColFilterAspect {
 
     @Pointcut("@annotation(com.king.common.annotation.DynamicCol)")
     public void dynamicColFilterCut() {
-
+    	// 列表页动态列数据切面
     }
 
     @Before("dynamicColFilterCut()")
@@ -66,13 +58,13 @@ public class DynamicColFilterAspect {
         MethodSignature signature = (MethodSignature) point.getSignature();
         com.king.common.annotation.DynamicCol dynamicCol = signature.getMethod().getAnnotation(com.king.common.annotation.DynamicCol.class);
         String entityName=dynamicCol.entity();
-        List<String> keyParam = new ArrayList<String>();
+        List<String> keyParam = new ArrayList<>();
         //测试
         keyParam.add("logId");
         keyParam.add("beanName");
         keyParam.add("methodName");
         keyParam.add("params");
-        List<String> atts = new ArrayList<String>();
+        List<String> atts = new ArrayList<>();
         StringBuilder filterSql = new StringBuilder();
  		for(Object o:keyParam){
  			if((SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).isExistAttribute(entityName, o.toString())){

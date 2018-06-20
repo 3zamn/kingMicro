@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ScheduleJobService;
-import com.king.common.annotation.DynamicCol;
 import com.king.common.utils.Page;
 import com.king.common.utils.constant.Constant;
 import com.king.dal.gen.model.smp.ScheduleJob;
@@ -54,16 +53,14 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 	public void save(ScheduleJob scheduleJob) {
 		scheduleJob.setCreateTime(new Date());
 		scheduleJob.setStatus(Constant.ScheduleStatus.NORMAL.getValue());
-        schedulerJobDao.save(scheduleJob);
-        
+        schedulerJobDao.save(scheduleJob);     
         ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
     }
 	
 	@Override
 	@Transactional
 	public void update(ScheduleJob scheduleJob) {
-        ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
-                
+        ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);            
         schedulerJobDao.update(scheduleJob);
     }
 
@@ -72,8 +69,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
     public void deleteBatch(Object[] jobIds) {
     	for(Object jobId : jobIds){
     		ScheduleUtils.deleteScheduleJob(scheduler, jobId);
-    	}
-    	
+    	}  	
     	//删除数据
     	schedulerJobDao.deleteBatch(jobIds);
 	}
@@ -110,36 +106,30 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
     	for(Object jobId : jobIds){
     		ScheduleUtils.resumeJob(scheduler, jobId);
     	}
-
     	updateBatch(jobIds, Constant.ScheduleStatus.NORMAL.getValue());
     }
 
 	@Transactional(readOnly = true)
 	public ScheduleJobLog queryScheduleJobLog(Object jobId) {
-		// TODO Auto-generated method stub
 		return scheduleJobLogDao.queryObject(jobId);
 	}
 
 	@Transactional(readOnly = true)
 	public List<ScheduleJobLog> queryScheduleJobLogList(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return scheduleJobLogDao.queryList(map);
 	}
 
 	@Transactional(readOnly = true)
 	public int queryScheduleJobLogTotal(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return scheduleJobLogDao.queryTotal();
 	}
 
 	@Override
 	public void save(ScheduleJobLog log) {
-		// TODO Auto-generated method stub
 		scheduleJobLogDao.save(log);
 	}
 	
 	@Transactional(readOnly = true)
-//	@DynamicCol(entity = "ScheduleJobLog")
 	public Page getPageScheduleJobLog(Map<String, Object> map) {
 		Page page = null;
 		if (map.get("limit") != null && map.get("page") != null) {

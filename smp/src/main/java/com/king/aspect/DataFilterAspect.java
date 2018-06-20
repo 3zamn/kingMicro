@@ -39,14 +39,13 @@ public class DataFilterAspect {
 
     @Pointcut("@annotation(com.king.common.annotation.DataFilter)")
     public void dataFilterCut() {
-
+    	//数据权限切面
     }
 
     @Before("dataFilterCut()")
     public void dataFilter(JoinPoint point) throws Throwable {
         Object params = point.getArgs()[0];
         if(params != null && params instanceof Map){
-       //     SysUser user = ShiroUtils.getUserEntity();
         	@SuppressWarnings("rawtypes")
 			Object object = ((Map)params).get("user");
         	if(object !=null && object instanceof SysUser){
@@ -74,7 +73,7 @@ public class DataFilterAspect {
         if(StringUtils.isNotBlank(tableAlias)){
             tableAlias +=  ".";
         }
-        Set<Long> deptIds = new HashSet<Long>();
+        Set<Long> deptIds = new HashSet<>();
         StringBuilder listSubDeptId = new StringBuilder();
         List<Long> list= sysUserRoleDao.queryRoleIdList(user.getUserId());
         for(Long roleId:list){
@@ -87,7 +86,7 @@ public class DataFilterAspect {
         }
         //获取子部门ID
         StringBuilder filterSql = new StringBuilder();
-        if(listSubDeptId!=null && listSubDeptId.length()>0){
+        if(listSubDeptId.length()>0){
         	  filterSql.append("and (");
               filterSql.append(tableAlias).append("dept_id in(").append(listSubDeptId.toString().replaceFirst(",", "")).append(")");
               filterSql.append(")");

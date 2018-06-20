@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -112,8 +113,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		sysUserDao.update(user);	
 		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
 		//保存用户与角色关系/不能修改当前用户角色
-		String tokenKey = RedisKeys.getTokenKey(user.getToken());
-		SysUserToken sysUserToken = redisUtils.get(tokenKey, SysUserToken.class);
+		SysUserToken sysUserToken = tokenGenerator.get(user.getToken());
 		if(sysUserToken!=null && !sysUserToken.getUserId().equals(user.getUserId())){
 			sysRoleService.saveOrUpdate_R_U(user.getUserId(), user.getRoleIdList());
 			String permKey =RedisKeys.getPermsKey(user.getUserId(),user.getToken()); 
@@ -148,10 +148,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 
 	@Override
-	public JsonResponse createToken(long userId) {
+	public JsonResponse createToken(long userId,String ip) {
 		//生成一个token
 		String token = TokenGenerator.generateValue();
-
+		SysUser sysUser=sysUserDao.queryObject(userId);
 		//当前时间
 		Date now = new Date();
 		//过期时间
@@ -159,8 +159,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 		//判断是否生成过token
 		SysUserToken tokenEntity =  new SysUserToken();
+		tokenEntity.setId(UUID.randomUUID().toString());
 		tokenEntity.setUserId(userId);
+		tokenEntity.setUserName(sysUser.getUsername());
 		tokenEntity.setToken(token);
+		tokenEntity.setIp(ip);
 		tokenEntity.setUpdateTime(now);
 		tokenEntity.setExpireTime(expireTime);
 		tokenGenerator.saveOrUpdate(tokenEntity);
@@ -176,9 +179,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put("token", token);
     	jsonObject.put("expire", Constant.TOKEN_EXPIRE/1000);
-		JsonResponse r = JsonResponse.success(jsonObject);
 
-		return r;
+		return JsonResponse.success(jsonObject);
 	}
 
 	@Override
@@ -206,7 +208,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 	@Transactional(readOnly = true)
 	public List<SysUser> queryByRoleId(Object roleId) {
-		List<SysUser> sysUsers = queryByRoleId(roleId);
-		return sysUsers;
+		
+		return queryByRoleId(roleId);
 	}
 }

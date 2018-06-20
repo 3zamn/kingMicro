@@ -50,16 +50,12 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	public String getSubDeptIdList(Object deptId){
 		//部门及子部门ID列表
 		List<Long> deptIdList = new ArrayList<>();
-
 		//获取子部门ID
 		List<Long> subIdList = queryDetpIdList(deptId);
 		getDeptTreeList(subIdList, deptIdList);
-
 		//添加本部门
 		deptIdList.add((Long)deptId);
-
-		String deptFilter = StringUtils.join(deptIdList, ",");
-		return deptFilter;
+		return StringUtils.join(deptIdList, ",");
 	}
 
 	/**
@@ -69,10 +65,9 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	private void getDeptTreeList(List<Long> subIdList, List<Long> deptIdList){
 		for(Long deptId : subIdList){
 			List<Long> list = queryDetpIdList(deptId);
-			if(list.size() > 0){
+			if(!list.isEmpty()){
 				getDeptTreeList(list, deptIdList);
 			}
-
 			deptIdList.add(deptId);
 		}
 	}
@@ -82,11 +77,9 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	public void saveOrUpdate_R_D(Object roleId, List<Long> deptIdList) {
 		//先删除角色与菜单关系
 		sysRoleDeptDao.delete(roleId);
-
-		if(deptIdList.size() == 0){
+		if(deptIdList.isEmpty()){
 			return ;
 		}
-
 		//保存角色与菜单关系
 		Map<String, Object> map = new HashMap<>();
 		map.put("roleId", roleId);

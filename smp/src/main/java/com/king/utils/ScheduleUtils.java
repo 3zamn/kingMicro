@@ -22,7 +22,8 @@ import com.king.dal.gen.model.smp.ScheduleJob;
  * @date 2017年12月29日
  */
 public class ScheduleUtils {
-    private final static String JOB_NAME = "TASK_";
+	
+	public final static String JOB_NAME = "TASK_";
     
     /**
      * 获取触发器key

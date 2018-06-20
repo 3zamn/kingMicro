@@ -20,14 +20,12 @@ public class SysDicServiceImpl extends BaseServiceImpl<SysDic> implements SysDic
     
 	@Transactional(readOnly = true)
 	public List<SysDicTerm> queryDicTerm(Object code) {
-		// TODO Auto-generated method stub
 		return sysDicDao.queryDicTerm(code);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public List<SysDic> queryParentList(Object parentId) {
-		// TODO Auto-generated method stub
 		return sysDicDao.queryParentList(parentId);
 	}
 	

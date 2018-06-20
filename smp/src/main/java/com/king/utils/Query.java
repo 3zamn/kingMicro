@@ -13,7 +13,6 @@ public class Query extends JavaUnsharedSerializer{
 
 	public Query(Class<?> cl) {
 		super(cl);
-		// TODO Auto-generated constructor stub
 	}
 
 }

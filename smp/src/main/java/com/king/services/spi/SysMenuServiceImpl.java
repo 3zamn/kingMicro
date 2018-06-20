@@ -90,7 +90,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	 */
 	@Transactional(readOnly = true)
 	private List<SysMenu> getMenuTreeList(List<SysMenu> menuList, List<Long> menuIdList){
-		List<SysMenu> subMenuList = new ArrayList<SysMenu>();
+		List<SysMenu> subMenuList = new ArrayList<>();
 		
 		for(SysMenu entity : menuList){
 			if(entity.getType() == Constant.MenuType.CATALOG.getValue()){//目录
@@ -105,8 +105,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 	public void saveOrUpdate_R_M(Object roleId, List<Long> menuIdList) {
 		//先删除角色与菜单关系
 		sysRoleMenuDao.delete(roleId);
-
-		if(menuIdList.size() == 0){
+		if(menuIdList.isEmpty()){
 			return ;
 		}
 

@@ -10,7 +10,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +17,6 @@ import com.king.api.smp.ShiroService;
 import com.king.api.smp.SysDeptService;
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysRoleService;
-import com.king.api.smp.SysUserService;
 import com.king.common.annotation.DataFilter;
 import com.king.common.utils.Page;
 import com.king.common.utils.constant.Constant;
@@ -26,8 +24,6 @@ import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysRole;
-import com.king.dal.gen.model.smp.SysUser;
-import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysRoleDao;
 import com.king.dao.SysUserRoleDao;
@@ -52,8 +48,6 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	private SysUserRoleDao sysUserRoleDao;
 	@Autowired
 	private ShiroService shiroService;
-	@Autowired
-	private SysUserService sysUserService;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -124,10 +118,6 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	@Override
 	public void saveOrUpdate_R_U(Object userId, List<Long> roleIdList) {
 		try {
-			/*if(roleIdList.size() == 0){
-				return ;
-			}*/
-			
 			//先删除用户与角色关系
 			sysUserRoleDao.delete(userId);
 			
@@ -135,7 +125,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 			Map<String, Object> map = new HashMap<>();
 			map.put("userId", userId);
 			map.put("roleIdList", roleIdList);
-			if(roleIdList.size()>0){
+			if(!roleIdList.isEmpty()){
 				sysUserRoleDao.save(map);
 				logger.info("角色修改成功");
 			}		
