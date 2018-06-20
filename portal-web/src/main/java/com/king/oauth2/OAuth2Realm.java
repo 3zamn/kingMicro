@@ -23,7 +23,7 @@ import com.king.common.utils.redis.TokenGenerator;
 import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
-import com.king.utils.TokenHolder;
+import com.king.utils.ShiroUtils;
 
 /**
  * shiro认证
@@ -53,9 +53,9 @@ public class OAuth2Realm extends AuthorizingRealm {
         Long userId = user.getUserId();
 
         //用户权限列表
-        Set<String> permsSet = shiroService.getUserPermissions(userId,true,TokenHolder.token.get());
+        Set<String> permsSet = shiroService.getUserPermissions(userId,true,ShiroUtils.getUserEntity().getToken());
         //刷新失效时间
-    	String permKey =RedisKeys.getPermsKey(userId,TokenHolder.token.get());
+    	String permKey =RedisKeys.getPermsKey(userId,ShiroUtils.getUserEntity().getToken());
     	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
     	redisUtils.expire(permKey, Constant.PERMS_EXPIRE/1000);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -81,6 +81,7 @@ public class OAuth2Realm extends AuthorizingRealm {
         
         //查询用户信息
         SysUser user = shiroService.queryUser(userToken.getUserId());
+        user.setToken(accessToken);
         //账号锁定
         if(user.getStatus() == 0){
             throw new LockedAccountException("账号已被锁定,请联系管理员");

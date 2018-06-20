@@ -9,12 +9,16 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author King chen
  * @emai 396885563@qq.com
  * @data2018年6月7日
  */
 public final class Request2ModelUtil {
+	private static Logger logger = LoggerFactory.getLogger(Request2ModelUtil.class);
 	private Request2ModelUtil() {
 	}
 
@@ -36,7 +40,7 @@ public final class Request2ModelUtil {
 			}
 			return obj;
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error(ex.getMessage());
 		}
 		return null;
 	}
@@ -115,7 +119,7 @@ public final class Request2ModelUtil {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 	}
@@ -143,7 +147,7 @@ public final class Request2ModelUtil {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 	}
@@ -170,7 +174,7 @@ public final class Request2ModelUtil {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 	}
@@ -195,7 +199,7 @@ public final class Request2ModelUtil {
 					setMethod.invoke(obiExtend, o);
 				}				
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		return obiExtend;
@@ -213,7 +217,7 @@ public final class Request2ModelUtil {
 			Method method = clazz.getMethod(sb.toString(), parameterTypes);
 			return method;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return null;
 	}
@@ -226,7 +230,7 @@ public final class Request2ModelUtil {
 		try {
 			return clazz.getMethod(sb.toString());
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return null;
 	}

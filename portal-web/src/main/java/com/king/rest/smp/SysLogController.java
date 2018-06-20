@@ -4,12 +4,14 @@ package com.king.rest.smp;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +29,9 @@ import com.king.common.utils.pattern.StringToolkit;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysLog;
 import com.king.utils.Query;
-import com.mongodb.DBObject;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  *  系统日志
@@ -71,25 +70,22 @@ public class SysLogController {
 	@GetMapping("/exception")
 	@RequiresPermissions("sys:exception:list")
 	public JsonResponse exceptionList(@RequestParam Map<String, Object> params){
-		//查全部数据量大有可能内存溢出--因此限制只查最后10000条
+		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
+		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")));
 		org.springframework.data.mongodb.core.query.Query  query= new org.springframework.data.mongodb.core.query.Query();
 		Sort sort = new Sort(Direction.DESC, "createTime");
-		query.limit(10000);
 		query.with(sort);	
 		String seriaNO= StringToolkit.getObjectString(params.get("seriaNo"));
 		if(StringUtils.isNotBlank(seriaNO)){//异常流水号精确查询
 			query.addCriteria(Criteria.where("seriaNo").is(seriaNO));
-		}
-		
-		Iterable<ExceptionLogVO> exceptionLogVO=exceptionLogRepo.findAll(query);
-		List<ExceptionLogVO> exceptionLog = Lists.newArrayList();	
-		//使用jdk8新特性Lambda表达式
-		exceptionLogVO.forEach(single ->{exceptionLog.add(single);});	
-		int totalCount= exceptionLog.size();
-		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
-		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")));
-		List<ExceptionLogVO> list = exceptionLog.subList((currPage-1)*pageSize, (currPage*pageSize)<=totalCount?currPage*pageSize:totalCount);
-		Page page = new Page(list, totalCount, pageSize, currPage);
+		}	
+		com.king.common.mongodb.mongo.Page pageable= new com.king.common.mongodb.mongo.Page();
+		pageable.setCurrPage(currPage);
+		pageable.setPageSize(pageSize);			
+		pageable.setSort(sort);
+		pageable.setOffset((currPage-1)*pageSize);
+		org.springframework.data.domain.Page<ExceptionLogVO> exceptionLogVO=exceptionLogRepo.findAll(query,pageable);
+		com.king.common.utils.Page   page = new Page(exceptionLogVO.getContent(), (int)exceptionLogVO.getTotalElements(), exceptionLogVO.getSize(), exceptionLogVO.getNumber());
 		return JsonResponse.success(page);
 	}
 	

@@ -1,13 +1,9 @@
 package com.king.rest.smp;
-
-
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.Set;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -26,21 +22,20 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.constant.Constant;
-import com.king.common.utils.redis.IdGenerator;
+import com.king.common.utils.pattern.StringToolkit;
+import com.king.common.utils.redis.RedisKeys;
+import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.validator.Assert;
 import com.king.common.utils.validator.ValidatorUtils;
 import com.king.common.utils.validator.group.AddGroup;
 import com.king.common.utils.validator.group.UpdateGroup;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysUser;
+import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.utils.AbstractController;
 import com.king.utils.Query;
-import com.king.utils.TokenHolder;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * 系统用户
@@ -57,47 +52,9 @@ public class SysUserController extends AbstractController {
 	@Autowired
 	private SysRoleService sysRoleService;	
 	@Autowired
-	private IdGenerator idGenerator;
+	private RedisUtils redisUtils;
 
-	/**
-	 * Id生成测试
-	 * @return
-	 */
-	@GetMapping("/test")
-	public JsonResponse test(){
-		int clientTotal = 100000;
-		// 同时并发执行的线程数
-		int threadTotal = 500;
-		 ExecutorService executorService = Executors.newCachedThreadPool();
-		    //信号量，此处用于控制并发的线程数
-		    final Semaphore semaphore = new Semaphore(threadTotal);
-		    //闭锁，可实现计数器递减
-		    final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
-		    Long begin = new Date().getTime();  
-		    for (int i = 0; i < clientTotal ; i++) {
-		      executorService.execute(() -> {
-		        try {//执行此方法用于获取执行许可，当总计未释放的许可数不超过60000时，	         	 
-		          semaphore.acquire(); //允许通行，否则线程阻塞等待，直到获取到许可。
-		          idGenerator.incrementHash("id", "value", null);         
-		          semaphore.release(); //释放许可
-		        } catch (Exception e) {
-		          e.printStackTrace();
-		        }       
-		        countDownLatch.countDown(); //闭锁减一
-		      });
-		    }
-		    try {
-				countDownLatch.await();//线程阻塞，直到闭锁值为0时，阻塞才释放，继续往下执行
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		    executorService.shutdown();
-		    Long end = new Date().getTime();  
-		    System.out.println("cast : " + (end - begin) / 1000 + " ms");  
-			return JsonResponse.success("cast : " + (end - begin) / 1000 + " ms");
-		
-	}
-
+	
 	/**
 	 * 所有用户列表
 	 */
@@ -110,6 +67,49 @@ public class SysUserController extends AbstractController {
 		Query query = new Query(params,SysUser.class.getSimpleName());
 		Page page = sysUserService.getPage(query);
 		return JsonResponse.success(page);
+	}
+	
+	/**
+	 * 在线用户列表
+	 * 在线用户不多、暂时内存中分页
+	 */
+	@Log(" 在线用户列表")
+	@ApiOperation(value = " 在线用户列表",response=Response.class, notes = "权限编码（sys:users:online）")
+	@GetMapping("/online")
+	@RequiresPermissions("sys:users:online")
+	public JsonResponse online(@RequestParam Map<String, Object> params){
+		//查询在线用户列表数据
+		Set<String> token = redisUtils.likeKey("token");
+		Iterator<String> its = token.iterator();
+		List<SysUserToken> list = new ArrayList<SysUserToken>();
+		while (its.hasNext()) {		
+			list.add(redisUtils.get(its.next(), SysUserToken.class));
+      	}
+		int totalCount= list.size();
+		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
+		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")));
+		Page page = new Page(list, totalCount, pageSize, currPage);
+		return JsonResponse.success(page);
+	}
+	
+	/**
+	 * 注销在线用户
+	 *
+	 */
+	@Log(" 注销在线用户")
+	@ApiOperation(value = " 注销在线用户",response=Response.class, notes = "权限编码（sys:users:offline）")
+	@PostMapping("/offline")
+	@RequiresPermissions("sys:users:offline")
+	public JsonResponse offline(@RequestBody String[] tokens){
+		String t =getUser().getToken();
+		if(ArrayUtils.contains(tokens, t)){
+			return JsonResponse.error("当前用户不能注销!");
+		}	
+		for(String token:tokens){
+			redisUtils.delete(RedisKeys.getTokenKey(token));
+		}
+		
+		return JsonResponse.success();
 	}
 	
 	/**
@@ -130,12 +130,10 @@ public class SysUserController extends AbstractController {
 	@PostMapping("/password")
 	public JsonResponse password(String password, String newPassword){
 		Assert.isBlank(newPassword, "新密码不为能空");
-
 		//原密码
 		password = new Sha256Hash(password, getUser().getSalt()).toHex();
 		//新密码
-		newPassword = new Sha256Hash(newPassword, getUser().getSalt()).toHex();
-				
+		newPassword = new Sha256Hash(newPassword, getUser().getSalt()).toHex();				
 		//更新密码
 		int count = sysUserService.updatePassword(getUserId(), password, newPassword);
 		if(count == 0){
@@ -154,7 +152,6 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:info")
 	public JsonResponse info(@PathVariable("userId") Object userId){
 		SysUser user = sysUserService.queryObject(userId);
-		
 		//获取用户所属的角色列表
 		List<Long> roleIdList = sysRoleService.queryRoleIdList(userId);
 		user.setRoleIdList(roleIdList);
@@ -170,8 +167,7 @@ public class SysUserController extends AbstractController {
 	@PostMapping("/save")
 	@RequiresPermissions("sys:user:save")
 	public JsonResponse save(@RequestBody SysUser user){
-		ValidatorUtils.validateEntity(user, AddGroup.class);
-		
+		ValidatorUtils.validateEntity(user, AddGroup.class);	
 		sysUserService.save(user);
 		
 		return JsonResponse.success();
@@ -191,7 +187,8 @@ public class SysUserController extends AbstractController {
 				return JsonResponse.error("系统管理员不能禁用!");
 			}
 		}
-		user.setToken(TokenHolder.token.get());
+		user.setSalt(sysUserService.queryObject(user.getUserId()).getSalt());
+		user.setToken(getUser().getToken());
 		sysUserService.update(user);
 		
 		return JsonResponse.success();
@@ -204,15 +201,13 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "删除用户",response=Response.class, notes = "权限编码（sys:user:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:user:delete")
-	public JsonResponse delete(@RequestBody Object[] userIds){
+	public JsonResponse delete(@RequestBody Long[] userIds){
 		if(ArrayUtils.contains(userIds, 1L)){
 			return JsonResponse.error("系统管理员不能删除!");
-		}
-		
+		}	
 		if(ArrayUtils.contains(userIds, getUserId())){
 			return JsonResponse.error("当前用户不能删除!");
-		}
-		
+		}	
 		sysUserService.deleteBatch(userIds);
 		
 		return JsonResponse.success();

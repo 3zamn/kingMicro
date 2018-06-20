@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.SysDeptService;
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysRoleService;
@@ -29,12 +28,9 @@ import com.king.dal.gen.model.smp.SysRole;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.utils.AbstractController;
 import com.king.utils.Query;
-import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * @author King chen
@@ -94,12 +90,10 @@ public class SysRoleController extends AbstractController {
 	@GetMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")
 	public JsonResponse info(@PathVariable("roleId") Object roleId){
-		SysRole role = sysRoleService.queryObject(roleId);
-		
+		SysRole role = sysRoleService.queryObject(roleId);	
 		//查询角色对应的菜单
 		List<Long> menuIdList = sysMenuService.queryMenuIdList(roleId);
 		role.setMenuIdList(menuIdList);
-
 		//查询角色对应的部门
 		List<Long> deptIdList = sysDeptService.queryDeptIdList(roleId);
 		role.setDeptIdList(deptIdList);
@@ -132,7 +126,7 @@ public class SysRoleController extends AbstractController {
 	public JsonResponse update(@RequestBody SysRole role){
 		ValidatorUtils.validateEntity(role);
 		
-		sysRoleService.update(role,TokenHolder.token.get());
+		sysRoleService.update(role,getUser().getToken());
 		
 		return JsonResponse.success();
 	}

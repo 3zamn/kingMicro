@@ -12,12 +12,11 @@ import org.apache.http.HttpStatus;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.king.common.utils.JsonResponse;
-import com.king.common.utils.constant.Constant;
-import com.king.utils.ShiroUtils;
-import com.king.utils.TokenHolder;
 
 /**
  * oauth2过滤器
@@ -26,16 +25,15 @@ import com.king.utils.TokenHolder;
  * @data2018年1月11日
  */
 public class OAuth2Filter extends AuthenticatingFilter {
-
+	 Logger logger = LoggerFactory.getLogger(getClass());
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
         //获取请求token
         String token = getRequestToken((HttpServletRequest) request);
-
         if(StringUtils.isBlank(token)){
             return null;
         }
-        TokenHolder.token.set(token);
+      //  TokenHolder.token.set(token);
         return new OAuth2Token(token);
     }
 
@@ -48,12 +46,10 @@ public class OAuth2Filter extends AuthenticatingFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         //获取请求token，如果token不存在，直接返回401
         String token = getRequestToken((HttpServletRequest) request);
-    //    long userid=ShiroUtils.getUserId();
         if(StringUtils.isBlank(token)){
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             String json = new Gson().toJson(JsonResponse.error(HttpStatus.SC_UNAUTHORIZED, "invalid token"));
             httpResponse.getWriter().print(json);
-
             return false;
         }
 
@@ -72,7 +68,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
             String json = new Gson().toJson(r);
             httpResponse.getWriter().print(json);
         } catch (IOException e1) {
-
+        	logger.error(e.getMessage());
         }
 
         return false;

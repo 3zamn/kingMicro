@@ -9,6 +9,9 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * @author King chen
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
  * @data2018年6月1日
  */
 public final class Request2ListUtil {
+	private static Logger logger = LoggerFactory.getLogger(Request2ListUtil.class);
+	
 	private Request2ListUtil() {
 	}
 
@@ -58,7 +63,7 @@ public final class Request2ListUtil {
 			}
 			return objectList;
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error(ex.getMessage());
 		}
 		return null;
 	}

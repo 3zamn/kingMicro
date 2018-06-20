@@ -1,19 +1,13 @@
 package com.king.gen.aspect;
 
-import java.lang.reflect.Method;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.king.common.utils.pattern.StringToolkit;
 
@@ -30,6 +24,7 @@ public class DataSourcesAspect {
 
 	@Pointcut("execution(* com.king.gen.service.impl.*.*(..))")
 	public void aspect() {
+		//数据源切面日志
 	}
 
 	/**
@@ -41,12 +36,10 @@ public class DataSourcesAspect {
 		try {
 			//根据第一个参数获取数据源
 			String dataSource=StringToolkit.getObjectString(args[0]);
-	//		logger.info("当前数据源:"+dataSource);
+			logger.debug("当前数据源:"+dataSource);
 			HandleGenDataSource.setDataSource(dataSource);
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage());
-			e.printStackTrace();
 		}
        
 	}

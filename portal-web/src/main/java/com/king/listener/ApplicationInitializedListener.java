@@ -1,5 +1,9 @@
 package com.king.listener;
 
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,13 +13,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public  class  ApplicationInitializedListener {
-//	@PostConstruct
+	 Logger logger = LoggerFactory.getLogger(getClass());
+	@PostConstruct
 	public  void loadEnttyMapper(){
-	//	  System.out.println(ShiroUtils.getUserEntity());      
-
-		System.out.println("spring容器启动完毕");
-		
-		
+		logger.info("spring容器启动完毕");
 	}
 
 }

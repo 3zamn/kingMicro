@@ -460,7 +460,12 @@ public final class TypeParseUtil {
 
 	/** 转换为数值型 */
 	public static final BigDecimal convertToBigDecimal(Object obj, int scale) {
-		return ((BigDecimal) convert(obj, "BigDecimal", null)).setScale(scale, 5);
+		Object o = convert(obj, "BigDecimal", null);
+		BigDecimal bigDecimal =null;
+		if(o !=null){
+			bigDecimal=((BigDecimal) o).setScale(scale, 5);
+		}
+		return bigDecimal;
 	}
 
 	/** 转换为日期型 */

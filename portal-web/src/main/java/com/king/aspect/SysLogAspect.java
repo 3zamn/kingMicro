@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,15 +36,16 @@ import net.sf.json.JSONArray;
  * @date 2017年12月29日
  */
 @Aspect
-//@EnableAspectJAutoProxy
 @Component
 public class SysLogAspect {
 	@Autowired
 	private SysLogService sysLogService;
-
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	@Pointcut("@annotation(com.king.common.annotation.Log)")
 	public void logPointCut() {
-
+		//日志切面
 	}
 
 	/**
@@ -57,12 +60,12 @@ public class SysLogAspect {
 		if (ShiroUtils.getSubject().getPrincipal() != null) {
 			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
 		}
-		String RRException =null;
+		String exception =null;
 		if(e.getMessage().contains("RRException")){
-			RRException =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
+			exception =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
 		}
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("data", RRException);
+		jsonObject.put("data", exception);
 		jsonObject.put("msg", "error");
 		saveSysLog(point, jsonObject, username,true);
 
@@ -79,7 +82,6 @@ public class SysLogAspect {
 		}
 		 try {//校验返回数据是否json格式。	
 			 JSONObject.parseObject(StringToolkit.getObjectString(JSONObject.toJSON(result)));
-			
 		        data =result;
 		   } catch (Exception e) {
 			   data= result;
@@ -136,7 +138,7 @@ public class SysLogAspect {
 			params = new Gson().toJson(args[0]);
 			sysLog.setParams(params);
 		} catch (Exception e) {
-
+			logger.info(e.getMessage());
 		}
 		// 获取request
 		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();

@@ -24,12 +24,9 @@ import com.king.common.utils.exception.RRException;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.SysMenu;
 import com.king.utils.AbstractController;
-import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 /**
  * 系统菜单
@@ -53,7 +50,7 @@ public class SysMenuController extends AbstractController {
 	@GetMapping("/nav")
 	public JsonResponse nav(){
 		List<SysMenu> menuList = sysMenuService.getUserMenuList(getUserId());
-		Set<String> permissions = shiroService.getUserPermissions(getUserId(),true,TokenHolder.token.get());
+		Set<String> permissions = shiroService.getUserPermissions(getUserId(),true,getUser().getToken());
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("menuList", menuList);
 		jsonObject.put("permissions", permissions);
@@ -156,7 +153,6 @@ public class SysMenuController extends AbstractController {
 		if(menuList.size() > 0){
 			return JsonResponse.error("请先删除子菜单或按钮");
 		}
-
 		sysMenuService.deleteBatch(new Object[]{menuId});
 		
 		return JsonResponse.success();
@@ -168,26 +164,22 @@ public class SysMenuController extends AbstractController {
 	private void verifyForm(SysMenu menu){
 		if(StringUtils.isBlank(menu.getName())){
 			throw new RRException("菜单名称不能为空");
-		}
-		
+		}		
 		if(menu.getParentId() == null){
 			throw new RRException("上级菜单不能为空");
-		}
-		
+		}	
 		//菜单
 		if(menu.getType() == Constant.MenuType.MENU.getValue()){
 			if(StringUtils.isBlank(menu.getUrl())){
 				throw new RRException("菜单URL不能为空");
 			}
-		}
-		
+		}		
 		//上级菜单类型
 		int parentType = Constant.MenuType.CATALOG.getValue();
 		if(menu.getParentId() != 0){
 			SysMenu parentMenu = sysMenuService.queryObject(menu.getParentId());
 			parentType = parentMenu.getType();
-		}
-		
+		}		
 		//目录、菜单
 		if(menu.getType() == Constant.MenuType.CATALOG.getValue() ||
 				menu.getType() == Constant.MenuType.MENU.getValue()){
@@ -195,8 +187,7 @@ public class SysMenuController extends AbstractController {
 				throw new RRException("上级菜单只能为目录类型");
 			}
 			return ;
-		}
-		
+		}	
 		//按钮
 		if(menu.getType() == Constant.MenuType.BUTTON.getValue()){
 			if(parentType != Constant.MenuType.MENU.getValue()){

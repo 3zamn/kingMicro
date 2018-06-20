@@ -14,11 +14,8 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import com.king.common.utils.constant.Constant;
 import com.king.utils.RedisShiroSession;
@@ -31,16 +28,7 @@ import com.king.utils.RedisShiroSession;
  */
 @Configuration
 public class ShiroConfig {
-	@Value("#{new Boolean('${king.redis.open}')}")
-//	@Value("${king.redis.open}") 
-	private Boolean redisOpen;
-	@Value("#{new Boolean('${king.shiro.redis}')}")
- //   @Value("${king.shiro.redis}")
-    private	Boolean shiroRedis;
-	@Value("#{new Boolean('${king.swagger.status}')}")
- //   @Value("${king.swagger.status}")
-    private	Boolean swagger;
-    
+	
 	@Bean("sessionManager")
     public SessionManager sessionManager(RedisShiroSession redisShiroSessionDAO ){	
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
@@ -75,7 +63,7 @@ public class ShiroConfig {
         filterMap.put("/druid/**", "anon");
         filterMap.put("/app/**", "anon");
         filterMap.put("/sys/login", "anon");
-    //    filterMap.put("/sys/user/test", "anon");
+  //      filterMap.put("/test/**", "anon");
         filterMap.put("/**/*.css", "anon");
         filterMap.put("/**/*.js", "anon");
         filterMap.put("/**/*.html", "anon");

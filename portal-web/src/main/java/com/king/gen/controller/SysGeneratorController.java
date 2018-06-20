@@ -10,29 +10,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
-import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.date.DateUtils;
 import com.king.common.utils.pattern.StringToolkit;
-import com.king.dal.gen.model.smp.SysConfig;
 import com.king.gen.service.SysGeneratorService;
 import com.king.utils.Query;
 import com.king.utils.pattern.XssHttpServletRequestWrapper;
-
-import io.swagger.annotations.ApiOperation;
 
 /**
  * 代码生成器
@@ -55,7 +49,6 @@ public class SysGeneratorController {
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据根据数据源
 		String dataSource = StringToolkit.getObjectString(params.get("dataSource"));
-		
 		Query query = new Query(params);
 		Page page = sysGeneratorService.getPage(dataSource,query);
 		return JsonResponse.success(page);
@@ -69,7 +62,6 @@ public class SysGeneratorController {
 	@RequiresPermissions("sys:generator:info")
 	public JsonResponse info(@PathVariable("dataSource") String dataSource,@PathVariable("id") String id){
 		List<Map<String, String>> columns= sysGeneratorService.queryColumns(dataSource,id);
-	//	JSONArray array = JSONArray.parseArray(columns.toString());
 		JSONArray jsonArray = new JSONArray();
 		for(Map<String, String> column: columns){
 			String jsonObject = JSONUtils.toJSONString(column);
@@ -86,8 +78,7 @@ public class SysGeneratorController {
 	 */
 	@GetMapping("/code")
 	@RequiresPermissions("sys:generator:code")
-	public void code(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		
+	public void code(HttpServletRequest request, HttpServletResponse response) throws IOException{	
 		HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);//不进行xss过滤
 		String tables = orgRequest.getParameter("tables");
 		String dataSource = orgRequest.getParameter("dataSource");

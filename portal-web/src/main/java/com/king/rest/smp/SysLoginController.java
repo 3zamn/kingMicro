@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,6 @@ import com.king.utils.AbstractController;
 import com.king.utils.HttpContextUtils;
 import com.king.utils.IPUtils;
 import com.king.utils.ShiroUtils;
-import com.king.utils.TokenHolder;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -67,7 +65,8 @@ public class SysLoginController extends AbstractController {
 	/**
 	 * 验证码
 	 */
-//	@Log("获取验证码")
+@SuppressWarnings("deprecation")
+	//	@Log("获取验证码")
 	@ApiOperation(value = "获取验证码")
 	@GetMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response)throws ServletException, IOException {
@@ -150,7 +149,8 @@ public class SysLoginController extends AbstractController {
 			redisUtils.delete(errorKey);
 		}
 		//生成token，并保存到redis
-		JsonResponse r = sysUserService.createToken(user.getUserId());		
+		JsonResponse r = sysUserService.createToken(user.getUserId(),ip);		
+		r.get("token");
 		return r;
 	}
 
@@ -163,9 +163,8 @@ public class SysLoginController extends AbstractController {
 	@PostMapping("/sys/logout")
 	public JsonResponse logout() {
 		String currentUser=getUser().getUsername();
-		SysUserToken sysUserToken = tokenGenerator.get(TokenHolder.token.get());
+		SysUserToken sysUserToken = tokenGenerator.get(getUser().getToken());
 		sysUserService.logout(sysUserToken);
-		TokenHolder.token.remove();//防止内存泄漏
 		ShiroUtils.logout();
 		return JsonResponse.success(currentUser);
 	}
