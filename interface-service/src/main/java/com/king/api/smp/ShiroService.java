@@ -4,7 +4,6 @@ package com.king.api.smp;
 import java.util.Set;
 
 import com.king.dal.gen.model.smp.SysUser;
-import com.king.dal.gen.model.smp.SysUserToken;
 
 /**
  * shiro相关接口

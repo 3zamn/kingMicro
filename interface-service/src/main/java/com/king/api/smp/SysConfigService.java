@@ -1,7 +1,4 @@
 package com.king.api.smp;
-import java.util.List;
-import java.util.Map;
-
 import com.king.dal.gen.model.smp.SysConfig;
 import com.king.dal.gen.service.BaseService;
 

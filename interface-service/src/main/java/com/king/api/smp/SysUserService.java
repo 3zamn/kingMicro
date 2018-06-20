@@ -1,9 +1,7 @@
 package com.king.api.smp;
 import java.util.List;
-import java.util.Map;
 
 import com.king.common.utils.JsonResponse;
-import com.king.dal.gen.model.smp.SysRole;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.dal.gen.service.BaseService;
@@ -43,9 +41,9 @@ public interface SysUserService extends BaseService<SysUser>{
 
 	/**
 	 * 生成token
-	 * @param userId  用户ID
+	 * @param userId  用户ID,String ip
 	 */
-	JsonResponse createToken(long userId);
+	JsonResponse createToken(long userId,String ip);
 
 	/**
 	 * 退出，修改token值
