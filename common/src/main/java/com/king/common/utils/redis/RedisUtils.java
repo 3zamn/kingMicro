@@ -158,7 +158,7 @@ public class RedisUtils {
    }
     
     /**
-     * 小心用keys查询大量数据-否则灾难
+     * 小心用keys查询大量数据-否则引发cup过高
      * @param hashKey
      * @return
      */

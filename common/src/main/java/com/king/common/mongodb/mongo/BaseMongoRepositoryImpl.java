@@ -136,6 +136,10 @@ public class BaseMongoRepositoryImpl<T, ID extends Serializable> implements Base
 		return (List<T>) mongoTemplate.find(query, clz, clz.getSimpleName());
 	}
 
+	public long count( Query query) {
+		return mongoTemplate.count(query, null, clz.getSimpleName());
+	}
+	
 	@Override
 	public long count() {
 		String collectionName = clz.getSimpleName();
@@ -179,6 +183,14 @@ public class BaseMongoRepositoryImpl<T, ID extends Serializable> implements Base
 	public Page<T> findAll(Pageable pageable) {
 		Long count = count();
 		List<T> list = findAll(new Query().with(pageable));
+
+		return new PageImpl<T>(list, pageable, count);
+	}
+	
+	@Override
+	public Page<T> findAll(Query query,Pageable pageable) {
+		Long count = count(query);
+		List<T> list = findAll(query.with(pageable));
 
 		return new PageImpl<T>(list, pageable, count);
 	}

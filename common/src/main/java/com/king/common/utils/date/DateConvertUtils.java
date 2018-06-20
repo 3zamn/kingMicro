@@ -17,7 +17,7 @@ public class DateConvertUtils {
     private int day;  
     private boolean leap;  
     final static String chineseNumber[] = {"一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"};  
-    static SimpleDateFormat chineseDateFormat = new SimpleDateFormat("yyyy-MM-dd");  
+    private SimpleDateFormat chineseDateFormat = new SimpleDateFormat("yyyy-MM-dd");  
     final static long[] lunarInfo = new long[]  
     {0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2,  
      0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977,  
@@ -185,6 +185,7 @@ public class DateConvertUtils {
   
     public static void main(String[] args) throws ParseException {  
         Calendar today = Calendar.getInstance();  
+        SimpleDateFormat chineseDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         today.setTime(chineseDateFormat.parse("2018-5-3"));  
         DateConvertUtils lunar = new DateConvertUtils(today);  
   

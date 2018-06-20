@@ -15,12 +15,16 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("系统用户Token")
 public class SysUserToken implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+	private String id;
+	//用户名
+	private String userName;
 	//用户ID
 	private Long userId;
 	//token
 	@ApiModelProperty("token")
 	private String token;
+	//IP
+	private String ip;
 	//过期时间
 	@ApiModelProperty("过期时间")
 	private Date expireTime;
@@ -28,6 +32,13 @@ public class SysUserToken implements Serializable {
 	@ApiModelProperty("更新时间")
 	private Date updateTime;
 
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	/**
 	 * 设置：用户ID
 	 */
@@ -76,4 +87,17 @@ public class SysUserToken implements Serializable {
 	public Date getUpdateTime() {
 		return updateTime;
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+	
 }

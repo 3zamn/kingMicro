@@ -126,7 +126,7 @@ public final strictfp class MathUtil {
 	 * @return
 	 */
 	public static final BigDecimal getRandom(int start, int end) {
-		return new BigDecimal(start + Math.random() * end);
+		return BigDecimal.valueOf(start + Math.random() * end);
 	}
 
 	/**

@@ -35,7 +35,7 @@ public interface BaseMongoRepository<T, ID extends Serializable>{
 	List<T> findAll(Query query);
 
 	long count();
-
+	long count( Query query);
 	void delete(ID id);
 	
 	void delete(T entity);
@@ -47,6 +47,8 @@ public interface BaseMongoRepository<T, ID extends Serializable>{
 	Iterable<T> findAll(Sort sort);
 	
 	Page<T> findAll(Pageable pageable);
+	
+	Page<T> findAll(Query query,Pageable pageable);
 
 	void insert(T entity);
 
