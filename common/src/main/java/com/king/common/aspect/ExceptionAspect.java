@@ -53,9 +53,11 @@ public class ExceptionAspect {
     	if(appcode==null) {
     		appcode=configs.getString("serverName");
     	}
-    
+    	if(serialNo==null){
+    		serialNo =UUID.randomUUID().toString();
+    	}
     	addExceptionLog(e.getMessage(), point,appcode!=null?appcode.toString():null, serialNo);
-        logger.error(String.format("错误流水号【%s】", serialNo==null?serialNo =UUID.randomUUID().toString():serialNo)+String.format("服务【%s】", appcode)+String.format("方法【%s】异常！", point.getSignature()));
+        logger.error(String.format("错误流水号【%s】", serialNo)+String.format("服务【%s】", appcode)+String.format("方法【%s】异常！", point.getSignature()));
         throw new RRException(String.format("服务调用时【%s】发生未知错误，错误流水号【%s】，请联系管理员", appcode,serialNo),500,e);
 
     }
