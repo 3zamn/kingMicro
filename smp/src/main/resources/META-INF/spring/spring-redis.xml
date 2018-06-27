@@ -55,8 +55,8 @@
                     <constructor-arg name="port" value="${redis.port.2}" />  
                 </bean>  
                 <bean class="org.springframework.data.redis.connection.RedisNode ">  
-                    <constructor-arg name="host" value="${redis.host.2}" />  
-                    <constructor-arg name="port" value="${redis.port.2}" />  
+                    <constructor-arg name="host" value="${redis.host.3}" />  
+                    <constructor-arg name="port" value="${redis.port.3}" />  
                 </bean>  
             </set>  
         </property>  
