@@ -17,7 +17,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import test.redis.IdGenerator;
 
-
+/**
+ * 
+ * 模拟高并发线程安全问题
+ * @author King chen
+ * @emai 396885563@qq.com
+ * @data2018年5月11日
+ */
 @RunWith(SpringJUnit4ClassRunner.class)  
 @WebAppConfiguration
 @ContextConfiguration({"classpath*:applicationContext.xml","classpath*:redis.xml"}) 
@@ -28,9 +34,9 @@ public class IdGen {
 	
 	@Test 
 	public void  test(){
-		int clientTotal = 100000;
+		int clientTotal = 500000;
 		// 同时并发执行的线程数
-		int threadTotal = 500;
+		int threadTotal = 100;
 		 ExecutorService executorService = Executors.newCachedThreadPool();
 		    //信号量，此处用于控制并发的线程数
 		    final Semaphore semaphore = new Semaphore(threadTotal);

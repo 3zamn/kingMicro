@@ -61,12 +61,12 @@ public class SysLogAspect {
 			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
 		}
 		String exception =null;
-		if(e.getMessage().contains("RRException")){
+		
+		if(e.toString().contains("RRException")){
 			exception =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
 		}
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("data", exception);
-		jsonObject.put("msg", "error");
+		jsonObject.put("msg", exception);
 		saveSysLog(point, jsonObject, username,true);
 
 	}
@@ -116,21 +116,26 @@ public class SysLogAspect {
 			sysLog.setOperation(log.value());
 		}
 		String data = null;
-		String msg = null;
+		String status=null;
 		if(formJson){
 			 JSONObject jsonObject = (JSONObject) JSONObject.toJSON(object);
 			 data = jsonObject.getString("data");
-			 msg = jsonObject.getString("msg");
+			 if(jsonObject.getString("msg").equals("success")){
+				 status="success";
+			 }else{
+				 data=jsonObject.getString("msg");
+				 status="error";
+			 }
 		}else{
 			data=StringToolkit.getObjectString(JSONArray.fromObject(object));
-			msg="success";
+			status="success";
 		}
 
 		// 请求的方法名
 		String methodName = signature.getName();
 		sysLog.setMethod(joinPoint.getSignature()+"");
 		sysLog.setResult(data);
-		sysLog.setStatus(msg);
+		sysLog.setStatus(status);
 		// 请求的参数
 		Object[] args = joinPoint.getArgs();
 		String params = null;

@@ -21,6 +21,54 @@
         <property name="maxWaitMillis" value="30000"/>
     </bean>
     
+     <!-- 哨兵模式 -->
+    <!--  <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxTotal" value="5000" />  
+        <property name="maxIdle" value="100" />  
+        <property name="numTestsPerEvictionRun" value="1024" />  
+        <property name="timeBetweenEvictionRunsMillis" value="30000" />  
+        <property name="minEvictableIdleTimeMillis" value="5000" />  
+        <property name="softMinEvictableIdleTimeMillis" value="5000" />  
+        <property name="maxWaitMillis" value="30000" />  
+        <property name="testOnBorrow" value="true" />  
+        <property name="testWhileIdle" value="true" />  
+        <property name="testOnReturn" value="false" />  
+        <property name="jmxEnabled" value="true" />  
+        <property name="blockWhenExhausted" value="false" />  
+    </bean>  
+  
+    <bean id="redisSentinelConfiguration"  
+        class="org.springframework.data.redis.connection.RedisSentinelConfiguration">  
+        <property name="master">  
+            <bean class="org.springframework.data.redis.connection.RedisNode">  
+                <property name="name" value="mymaster">  
+                </property>  
+            </bean>  
+        </property>  
+        <property name="sentinels">  
+            <set>  
+                <bean class="org.springframework.data.redis.connection.RedisNode">  
+                    <constructor-arg name="host" value="192.168.0.41" />  
+                    <constructor-arg name="port" value="17195" />  
+                </bean>  
+                <bean class="org.springframework.data.redis.connection.RedisNode">  
+                    <constructor-arg name="host" value="192.168.0.43" />  
+                    <constructor-arg name="port" value="17195" />  
+                </bean>  
+                <bean class="org.springframework.data.redis.connection.RedisNode ">  
+                    <constructor-arg name="host" value="192.168.0.44" />  
+                    <constructor-arg name="port" value="17195" />  
+                </bean>  
+            </set>  
+        </property>  
+    </bean>  
+    <bean id="redisConnectionFactory"  
+        class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"  
+        p:password="javen">  
+        <constructor-arg name="sentinelConfig" ref="redisSentinelConfiguration"></constructor-arg>  
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>  
+        <property name="database" value="15" />
+    </bean> -->
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="keySerializer">

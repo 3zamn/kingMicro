@@ -29,12 +29,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @data2018年1月11日
  */
 @Configuration
-/*@EnableWebMvc
-@ComponentScan(basePackages = {"com.king.rest"}) */
 @EnableSwagger2
 public class SwaggerConfig {	
-	/*@Value("#{new Boolean('${king.swagger.status}')}")
-	public boolean enableSwagger;*/
+/*	@Value("#{new Boolean('${king.swagger.status}')}")
+	public boolean enableSwagger;
+	@Value("#{new Boolean('${king.redis.open}')}")
+	//	@Value("${king.redis.open}") 
+		private Boolean redisOpen;
+		@Value("#{new Boolean('${king.shiro.redis}')}")
+	 //   @Value("${king.shiro.redis}")
+	    private	Boolean shiroRedis;
+		@Value("#{new Boolean('${king.swagger.status}')}")
+	 //   @Value("${king.swagger.status}")
+	    private	Boolean swagger;*/
 	@Autowired
 	private SysConfigService sysConfigService;
 	
