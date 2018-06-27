@@ -16,7 +16,7 @@
 	<context:component-scan base-package="com.king.common.mongodb"/>
 	
 	<!-- 配置Mongodb服务（集群使用 replica-set方式） -->
-    <mongo:mongo-client  host="${mongo.hostport}"  credentials="${mongo.username}:${mongo.password}@${mongo.dbname}"  id="mongo">  
+    <mongo:mongo-client  replica-set="${mongo.hostport}"  credentials="${mongo.username}:${mongo.password}@${mongo.dbname}"  id="mongo">  
 	 <mongo:client-options
 	        connections-per-host="${mongo.connectionsPerHost}"
 	        threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"
