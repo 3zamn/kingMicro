@@ -26,6 +26,7 @@ public class TestTask {
 				}
 			});
 		}
+		cachedThreadPool.shutdown();//释放掉
 	}
 
 	ExecutorService fixedThreadPool = Executors.newFixedThreadPool(50);
@@ -45,6 +46,6 @@ public class TestTask {
 				}
 			});
 		}
-
+		fixedThreadPool.shutdown();//释放掉
 	}
 }

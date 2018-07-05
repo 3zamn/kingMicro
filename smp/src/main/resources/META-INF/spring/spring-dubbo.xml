@@ -7,7 +7,7 @@
 	 http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
 	<!-- 提供方应用信息，用于计算依赖关系 -->
-	<dubbo:application name="smp-app" />
+	<dubbo:application name="${serverName}" />
 	<!-- 	使用simple或zookeeper注册中心 -->
 	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
 	<!-- 用dubbo协议在30880端口暴露服务 -->
@@ -28,19 +28,19 @@
 	<!-- 声明需要暴露的服务接口（interface是全路径名，不能自定义）group分组 group="smp-${hostname}"-->
 	
 	<!-- <dubbo:service   interface="com.king.api.smp.ScheduleJobLogService" ref="scheduleJobLogService" /> -->
-	<dubbo:service   interface="com.king.api.smp.ScheduleJobService" ref="scheduleJobService" /> 
-	<dubbo:service   interface="com.king.api.smp.SysConfigService" ref="sysConfigService" /> 
-	<dubbo:service   interface="com.king.api.smp.SysDicService" ref="sysDicService" /> 
-	<dubbo:service   interface="com.king.api.smp.SysDeptService" ref="sysDeptService" />
-	<dubbo:service   interface="com.king.api.smp.SysLogService" ref="sysLogService" />
-	<dubbo:service   interface="com.king.api.smp.SysMenuService" ref="sysMenuService" />
+	<dubbo:service   interface="com.king.api.smp.ScheduleJobService" ref="scheduleJobService"  group="${hostname}" version="${version}" /> 
+	<dubbo:service   interface="com.king.api.smp.SysConfigService" ref="sysConfigService"  group="${hostname}" version="${version}" /> 
+	<dubbo:service   interface="com.king.api.smp.SysDicService" ref="sysDicService"  group="${hostname}" version="${version}" /> 
+	<dubbo:service   interface="com.king.api.smp.SysDeptService" ref="sysDeptService"  group="${hostname}" version="${version}" />
+	<dubbo:service   interface="com.king.api.smp.SysLogService" ref="sysLogService"  group="${hostname}" version="${version}" />
+	<dubbo:service   interface="com.king.api.smp.SysMenuService" ref="sysMenuService"  group="${hostname}" version="${version}" />
 	<!-- <dubbo:service   interface="com.king.api.smp.SysRoleDeptService" ref="sysRoleDeptService" />
 	<dubbo:service   interface="com.king.api.smp.SysRoleMenuService" ref="sysRoleMenuService" /> -->
-	<dubbo:service   interface="com.king.api.smp.SysRoleService" ref="sysRoleService" />
+	<dubbo:service   interface="com.king.api.smp.SysRoleService" ref="sysRoleService"  group="${hostname}" version="${version}" />
 	<!-- <dubbo:service   interface="com.king.api.smp.SysUserRoleService" ref="sysUserRoleService" /> -->
 	<!-- protocol="hessian" --><!-- path="sysUserService" --> <!-- hessian协议测试  -->
-	<dubbo:service   interface="com.king.api.smp.SysUserService" ref="sysUserService" />  <!-- protocol="hessian" -->
-	<dubbo:service   interface="com.king.api.smp.ShiroService" ref="shiroService" />
+	<dubbo:service   interface="com.king.api.smp.SysUserService" ref="sysUserService"  group="${hostname}" version="${version}" />  <!-- protocol="hessian" -->
+	<dubbo:service   interface="com.king.api.smp.ShiroService" ref="shiroService"  group="${hostname}" version="${version}" />
 <!-- 	<dubbo:service   interface="com.king.api.smp.SysUserTokenService" ref="sysUserTokenService" />  -->
 	<!-- <dubbo:annotation package="com.king.services.spi" /> --><!-- 注解方式暴露接口 -->
 	<!-- 使用泛型GenericService实现暴露,动态匹配 --> <!-- path="smpGenericService"  --><!-- version="1.0"  -->
