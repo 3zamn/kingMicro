@@ -15,7 +15,9 @@
  	<context:component-scan base-package="com.king" />
  	<aop:aspectj-autoproxy proxy-target-class="true" />
 <!-- 引入property -->
-	 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<!--  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+		<!--  启用密码加密-->
+		<bean class="com.king.common.utils.spring.PropertyPlaceholderConfigurerExt">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<!-- 容许多次加载属性文件 -->
 		<property name="ignoreResourceNotFound" value="true" />
@@ -32,7 +34,7 @@
 		<property name="url" value="${smp.jdbc.salve.jdbcUrl}" />
 		<property name="driverClassName" value="${smp.jdbc.driverClass}" />
 		<property name="username" value="${smp.jdbc.salve.user}" />
-		<property name="password" value="${smp.jdbc.salve.password}" />
+		<property name="password" value="${smp.jdbc.salve.passwords}" />
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="${smp.druid.initialSize}" />
 		<!-- 连接池最小空闲 -->
@@ -41,8 +43,8 @@
 		<property name="maxActive" value="${smp.druid.maxActive}" />
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${smp.druid.maxWait}" />
-		<property name="poolPreparedStatements" value="true" /> <property 
-			name="maxPoolPreparedStatementPerConnectionSize" value="100" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="100" />
 		<property name="defaultReadOnly" value="true" />
 		<property name="validationQuery" value="SELECT 1" />
 		<property name="testOnBorrow" value="false" />
@@ -61,14 +63,16 @@
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
 		<!-- 开启Druid的监控统计、sql防注入功能 -->
-		<property name="filters" value="stat,wall" />
+		  <property name="filters" value="config,stat,wall"/>
+		  <!-- 使用加密 -->
+		  <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${publickey}" />
 		<!--<property name="filters" value="mergeStat" /> -->
-		<!-- Oracle连接是获取字段注释 -->
-		<property name="connectProperties">
+		<!-- Oracle连接是获取字段注释 -->		
+		<!-- <property name="connectProperties">
 			<props>
 				<prop key="remarksReporting">true</prop>
 			</props>
-		</property>
+		</property> -->
 	</bean>
 	
 	<!-- 	写库 -->
@@ -77,7 +81,7 @@
 		<property name="url" value="${smp.jdbc.master.jdbcUrl}" />
 		<property name="driverClassName" value="${smp.jdbc.driverClass}" />
 		<property name="username" value="${smp.jdbc.master.user}" />
-		<property name="password" value="${smp.jdbc.master.password}" />
+		<property name="password" value="${smp.jdbc.master.passwords}" />
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="${smp.druid.initialSize}" />
 		<!-- 连接池最小空闲 -->
@@ -86,8 +90,8 @@
 		<property name="maxActive" value="${smp.druid.maxActive}" />
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${smp.druid.maxWait}" />
-		<property name="poolPreparedStatements" value="true" /> <property 
-			name="maxPoolPreparedStatementPerConnectionSize" value="100" />
+		<property name="poolPreparedStatements" value="true" /> 
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="100" />
 		<property name="defaultReadOnly" value="false" />
 		<property name="validationQuery" value="SELECT 1" />
 		<property name="testOnBorrow" value="false" />
@@ -106,14 +110,16 @@
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
 		<!-- 开启Druid的监控统计功能 -->
-		<property name="filters" value="stat" />
+		 <property name="filters" value="config,stat,wall" />
+		  <!-- 使用加密 -->
+		 <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${publickey}" />
 		<!--<property name="filters" value="mergeStat" /> -->
-		<!-- Oracle连接是获取字段注释 -->
-		<property name="connectProperties">
+		<!-- Oracle连接是获取字段注释 -->	
+		<!-- <property name="connectProperties">
 			<props>
 				<prop key="remarksReporting">true</prop>
 			</props>
-		</property>
+		</property> -->
 	</bean>
 	
 	<!-- druid数据源配置 -->
@@ -140,9 +146,13 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 驼峰转换 -->
+	<bean id="config" class="org.apache.ibatis.session.Configuration">
+		<property name="mapUnderscoreToCamelCase" value="true"  /> 
+	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="configLocation" value="classpath:mybatis.xml" /> 
+		<property name="configuration" ref="config" /> 
 		<property name="mapperLocations" value="classpath:mapper/**/*.xml" /> 
 		<property name="dataSource" ref="dataSource" />
 	</bean>

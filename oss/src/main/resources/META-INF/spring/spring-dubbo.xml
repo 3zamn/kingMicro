@@ -7,7 +7,7 @@
 	 http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	
 	<!-- 提供方应用信息，用于计算依赖关系 -->
-	<dubbo:application name="oss-app" />
+	<dubbo:application name="${serverName}" />
 	<!-- 	使用simple或zookeeper注册中心 -->
 	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
 	<!-- 用dubbo协议在30880端口暴露服务 -->
@@ -25,8 +25,8 @@
     <dubbo:method name="findAllPerson" timeout="10000" retries="9" loadbalance="leastactive" actives="5" /> 
 	<dubbo:service/> -->
 	
-	<!-- 声明需要暴露的服务接口（interface是全路径名，不能自定义）group分组 group="smp-${hostname}"-->
+	<!-- 声明需要暴露的服务接口（interface是全路径名，不能自定义）group分组 group="${hostname}"-->
 	
-	<dubbo:service   interface="com.king.api.oss.SysOssService" ref="sysOssService" />
+	<dubbo:service   interface="com.king.api.oss.SysOssService" ref="sysOssService" group="${hostname}" version="${version}" />
 	
 </beans>
