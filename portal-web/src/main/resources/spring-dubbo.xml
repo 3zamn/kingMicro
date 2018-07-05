@@ -9,7 +9,9 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
 	http://code.alibabatech.com/schema/dubbo        
 	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> -->
+	<!--  启用密码加密-->
+	<bean class="com.king.common.utils.spring.PropertyPlaceholderConfigurerExt">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<!-- 容许多次加载属性文件 -->
 		<property name="ignoreResourceNotFound" value="true" />
@@ -20,7 +22,7 @@
 		</property>
 	</bean>
 	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
-	<dubbo:application name="portal-web" />
+	<dubbo:application name="${serverName}" />
 
 	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
 
@@ -29,21 +31,21 @@
 	<!-- <dubbo:reference   interface="com.king.api.smp.SmpGenericService" id="smpGenericService"  generic="true"/> --><!-- protocol="hessian" -->
 	<!-- protocol="hessian" url="hessian://192.168.4.11:8082/smpGenericService"  -->
 	<!-- <dubbo:reference   interface="com.king.api.smp.TestService" id="testService"  generic="true"/>  -->
-	<dubbo:reference   interface="com.king.api.smp.SysUserService" id="sysUserService" />
+	<dubbo:reference   interface="com.king.api.smp.SysUserService" id="sysUserService" group="${hostname}" version="${version}"  />
 <!-- 	<dubbo:reference   interface="com.king.api.smp.ScheduleJobLogService" id="scheduleJobLogService" /> -->
-	<dubbo:reference   interface="com.king.api.smp.ScheduleJobService" id="scheduleJobService" />
-	<dubbo:reference   interface="com.king.api.smp.SysConfigService" id="sysConfigService" />
-	<dubbo:reference   interface="com.king.api.smp.SysDicService" id="sysDicService" />
-	<dubbo:reference   interface="com.king.api.smp.SysDeptService" id="sysDeptService" />
-	<dubbo:reference   interface="com.king.api.smp.SysLogService" id="sysLogService" />
-	<dubbo:reference   interface="com.king.api.smp.SysMenuService" id="sysMenuService" />
+	<dubbo:reference   interface="com.king.api.smp.ScheduleJobService" id="scheduleJobService"  group="${hostname}" version="${version}" />
+	<dubbo:reference   interface="com.king.api.smp.SysConfigService" id="sysConfigService"  group="${hostname}" version="${version}" />
+	<dubbo:reference   interface="com.king.api.smp.SysDicService" id="sysDicService"  group="${hostname}" version="${version}" />
+	<dubbo:reference   interface="com.king.api.smp.SysDeptService" id="sysDeptService"  group="${hostname}" version="${version}" />
+	<dubbo:reference   interface="com.king.api.smp.SysLogService" id="sysLogService"  group="${hostname}" version="${version}" />
+	<dubbo:reference   interface="com.king.api.smp.SysMenuService" id="sysMenuService"  group="${hostname}" version="${version}" />
 	<!-- <dubbo:reference   interface="com.king.api.smp.SysRoleDeptService" id="sysRoleDeptService" />
 	<dubbo:reference   interface="com.king.api.smp.SysRoleMenuService" id="sysRoleMenuService" /> -->
-	<dubbo:reference   interface="com.king.api.smp.SysRoleService" id="sysRoleService" />
+	<dubbo:reference   interface="com.king.api.smp.SysRoleService" id="sysRoleService"  group="${hostname}" version="${version}" />
 	<!-- <dubbo:reference   interface="com.king.api.smp.SysUserRoleService" id="sysUserRoleService" /> -->
-	<dubbo:reference   interface="com.king.api.smp.ShiroService" id="shiroService" />
+	<dubbo:reference   interface="com.king.api.smp.ShiroService" id="shiroService"  group="${hostname}" version="${version}" />
 	<!-- <dubbo:reference   interface="com.king.api.smp.SysUserTokenService" id="sysUserTokenService" /> -->
 
 	<!-- OSS云盘服务 -->
-	<dubbo:reference   interface="com.king.api.oss.SysOssService" id="sysOssService" />
+	<dubbo:reference   interface="com.king.api.oss.SysOssService" id="sysOssService"  group="${hostname}" version="${version}" />
 </beans>

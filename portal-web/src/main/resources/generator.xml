@@ -21,7 +21,7 @@
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="locations">
 			<list>
-					<value>classpath:/generator.properties</value>
+					<value>classpath:/gen/generator.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -63,11 +63,11 @@
 		<property name="filters" value="stat" />
 		<!--<property name="filters" value="mergeStat" /> -->
 		<!-- Oracle连接是获取字段注释 -->
-		<property name="connectProperties">
+		<!-- <property name="connectProperties">
 			<props>
 				<prop key="remarksReporting">true</prop>
 			</props>
-		</property>
+		</property> -->
 	</bean>
 	
 	<!-- druid数据源配置 -->
@@ -107,21 +107,19 @@
 		<property name="filters" value="stat" />
 		<!--<property name="filters" value="mergeStat" /> -->
 		<!-- Oracle连接是获取字段注释 -->
-		<property name="connectProperties">
+		<!-- <property name="connectProperties">
 			<props>
 				<prop key="remarksReporting">true</prop>
 			</props>
-		</property>
+		</property> -->
 	</bean>
 
 	<!-- druid数据源配置 -->
 	<bean id="dataSource" class="com.king.gen.aspect.ChooseGenDataSource" lazy-init="true">
 		<description>数据源</description>
 		<property name="targetDataSources">
-			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
-				<!-- write -->
+			<map key-type="java.lang.String" value-type="javax.sql.DataSource">		
 				<entry key="king_smp" value-ref="dataSource_smp" />
-				<!-- read -->
 				<entry key="swt_crm" value-ref="dataSource_swt_crm" />
 			</map>
 		</property>
@@ -138,9 +136,13 @@
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 驼峰转换 -->
+	<bean id="config" class="org.apache.ibatis.session.Configuration">
+		<property name="mapUnderscoreToCamelCase" value="true"  /> 
+	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="configLocation" value="classpath:mybatis.xml" /> 
+		<property name="configuration" ref="config" /> 
 		<property name="mapperLocations" value="classpath:*/**/*Dao.xml" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>

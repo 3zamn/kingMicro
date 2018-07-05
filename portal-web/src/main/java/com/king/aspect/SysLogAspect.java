@@ -63,7 +63,12 @@ public class SysLogAspect {
 		String exception =null;
 		
 		if(e.toString().contains("RRException")){
-			exception =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
+			if(e.getMessage().contains("服务调用时")&&e.getMessage().contains("请联系管理员")){//由rpc异常返回
+				exception =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
+			}else{//本地异常
+				exception=e.getMessage();
+			}
+			
 		}
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("msg", exception);
