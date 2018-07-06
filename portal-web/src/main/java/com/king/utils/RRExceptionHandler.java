@@ -47,6 +47,12 @@ public class RRExceptionHandler {
 		logger.error(e.getMessage());
 		return JsonResponse.error(403, "没有权限，请联系管理员授权");
 	}
+	
+/*	@ExceptionHandler(NullPointerException.class)
+	public JsonResponse handleNullPointerException(NullPointerException e){
+		logger.error(e.getMessage());
+		return JsonResponse.error(404, e.toString());
+	}*/
 
 	@ExceptionHandler(Exception.class)
 	public JsonResponse handleException(Exception e){
@@ -61,7 +67,7 @@ public class RRExceptionHandler {
 			}		
 		}
 		logger.error("错误提示 "+"："+(e instanceof MethodArgumentTypeMismatchException? getException((MethodArgumentTypeMismatchException)e):""),e);
-		return JsonResponse.error(RRException!=null?RRException:"【服务调用内部错误】--"+e.getMessage());
+		return JsonResponse.error(RRException!=null?RRException:"【服务调用内部错误】--"+e.toString());
 	}
 	
 	

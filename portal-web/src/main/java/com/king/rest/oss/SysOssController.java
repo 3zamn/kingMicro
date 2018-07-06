@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,11 +40,12 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 文件上传
- * 
+ * 使用懒加载，使用时才初始化bean
  * @author king chen
  * @email 396885563@qq.com
  * @date 2018-05-23 14:25:16
  */
+@Lazy
 @RestController
 @Api(value = "文件上传", description = "文件上传")
 @RequestMapping("/sys/oss")

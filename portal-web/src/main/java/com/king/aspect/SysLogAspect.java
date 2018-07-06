@@ -1,16 +1,21 @@
 package com.king.aspect;
 
 import java.lang.reflect.Method;
+import java.net.InetAddress;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.joda.time.DateTimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,9 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.king.api.smp.SysLogService;
+import com.king.common.mongodb.log.model.ExceptionLogVO;
+import com.king.common.mongodb.log.repo.ExceptionLogRepo;
+import com.king.common.utils.exception.ExceptionUtils;
 import com.king.common.utils.pattern.StringToolkit;
 import com.king.dal.gen.model.smp.SysLog;
 import com.king.dal.gen.model.smp.SysUser;
@@ -40,7 +48,10 @@ import net.sf.json.JSONArray;
 public class SysLogAspect {
 	@Autowired
 	private SysLogService sysLogService;
-	
+	@Autowired
+	private ExceptionLogRepo exceptionLogRepo;
+	private static String ipAddress = "127.0.0.1";
+	private static Configuration configs;
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Pointcut("@annotation(com.king.common.annotation.Log)")
@@ -53,27 +64,37 @@ public class SysLogAspect {
 	 * @param point
 	 * @param e
 	 */
-	@AfterThrowing(pointcut = "logPointCut()", throwing = "e")
+	@AfterThrowing(pointcut = "execution(* com.king.rest.*.*.*(..))", throwing = "e")
 	public void afterThrowing(JoinPoint point, Exception e) {
 		// 执行方法
+		String exception = null;
+		String stackTrace = null;
 		String username = null;
-		if (ShiroUtils.getSubject().getPrincipal() != null) {
-			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
-		}
-		String exception =null;
-		
-		if(e.toString().contains("RRException")){
-			if(e.getMessage().contains("服务调用时")&&e.getMessage().contains("请联系管理员")){//由rpc异常返回
-				exception =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
-			}else{//本地异常
-				exception=e.getMessage();
+		try {
+			if (ShiroUtils.getSubject().getPrincipal() != null) {
+				username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
 			}
+			if (e.toString().contains("RRException")) {//自定义异常
+				if (e.getMessage().contains("服务调用时") && e.getMessage().contains("请联系管理员")) {// 由rpc异常返回
+					exception = e.getMessage().substring(e.getMessage().indexOf("服务调用时"),
+							e.getMessage().indexOf("，请联系管理员"));
+				} else {
+					stackTrace = ExceptionUtils.makeStackTrace(e);
+					exception = e.toString();
+				}
+			} else {// 本地异常
+				stackTrace = ExceptionUtils.makeStackTrace(e);
+				exception = e.toString();
+				addExceptionLog(stackTrace, point, "portal-web", UUID.randomUUID().toString());
+			}
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("msg", exception);
+			saveSysLog(point, jsonObject, username, true);
 			
+		} catch (Throwable e1) {
+			logger.error("未知错误", e1);
+		//	e1.printStackTrace();
 		}
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("msg", exception);
-		saveSysLog(point, jsonObject, username,true);
-
 	}
 
 	@AfterReturning(pointcut = "logPointCut()", returning = "result")
@@ -125,7 +146,7 @@ public class SysLogAspect {
 		if(formJson){
 			 JSONObject jsonObject = (JSONObject) JSONObject.toJSON(object);
 			 data = jsonObject.getString("data");
-			 if(jsonObject.getString("msg").equals("success")){
+			 if(jsonObject.getString("msg")!=null?jsonObject.getString("msg").equals("success"):false){
 				 status="success";
 			 }else{
 				 data=jsonObject.getString("msg");
@@ -167,5 +188,53 @@ public class SysLogAspect {
 		sysLog.setCreateDate(new Date());
 		// 保存系统日志
 		sysLogService.save(sysLog);
+	}
+	
+
+	/**
+	 * 异常保存
+	 * @param errMsg
+	 * @param joinPoint
+	 * @param appcode
+	 * @param serialNo
+	 * @throws Throwable
+	 */
+	private void addExceptionLog(String errMsg, JoinPoint joinPoint,String appcode, String serialNo) throws Throwable {
+		try {
+			ExceptionLogVO vo = new ExceptionLogVO();
+			
+			String apiName = joinPoint.getTarget().getClass().getName() + "#" + joinPoint.getSignature().getName();
+			Object[] args = joinPoint.getArgs();
+			try {
+				String params = new Gson().toJson(args[0]);
+				vo.setOutputData(StringToolkit.getObjectString(joinPoint.getTarget()));
+				vo.setInputData(params);
+			} catch (Exception e) {
+
+			}
+			String logCode = appcode + "-" + DateTimeUtils.currentTimeMillis();
+			vo.setAppCode(appcode);
+			vo.setSeriaNo(serialNo);
+			vo.setApiName(apiName);
+			vo.setCreateTime(new Date());
+			vo.setIp(ipAddress);
+			vo.setLogCode(logCode);
+			vo.setExceptionMsg(errMsg);
+			exceptionLogRepo.insert(vo);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//本机IP
+	static {
+		try {
+			InetAddress inetAddress = InetAddress.getLocalHost();
+			ipAddress = inetAddress.getHostAddress();
+			configs = new PropertiesConfiguration("settings.properties");
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
 	}
 }
