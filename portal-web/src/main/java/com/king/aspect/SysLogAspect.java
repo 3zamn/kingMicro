@@ -169,7 +169,7 @@ public class SysLogAspect {
 			params = new Gson().toJson(args[0]);
 			sysLog.setParams(params);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+		//	logger.info(e.getMessage());
 		}
 		// 获取request
 		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
