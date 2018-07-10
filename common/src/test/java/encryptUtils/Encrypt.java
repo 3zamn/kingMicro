@@ -32,21 +32,33 @@ import javax.crypto.Cipher;
  */
 public class Encrypt {
 
-	private static final String DEFAULT_PRIVATE_KEY_STRING = "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAocbCrurZGbC5GArEHKlAfDSZi7gFBnd4yxOt0rwTqKBFzGyhtQLu5PRKjEiOXVa95aeIIBJ6OhC2f8FjqFUpawIDAQABAkAPejKaBYHrwUqUEEOe8lpnB6lBAsQIUFnQI/vXU4MV+MhIzW0BLVZCiarIQqUXeOhThVWXKFt8GxCykrrUsQ6BAiEA4vMVxEHBovz1di3aozzFvSMdsjTcYRRo82hS5Ru2/OECIQC2fAPoXixVTVY7bNMeuxCP4954ZkXp7fEPDINCjcQDywIgcc8XLkkPcs3Jxk7uYofaXaPbg39wuJpEmzPIxi3k0OECIGubmdpOnin3HuCP/bbjbJLNNoUdGiEmFL5hDI4UdwAdAiEAtcAwbm08bKN7pwwvyqaCBC//VnEWaq39DCzxr+Z2EIk=";
-	public static final String DEFAULT_PUBLIC_KEY_STRING = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKHGwq7q2RmwuRgKxBypQHw0mYu4BQZ3eMsTrdK8E6igRcxsobUC7uT0SoxIjl1WveWniCASejoQtn/BY6hVKWsCAwEAAQ==";
+	private static final String DEFAULT_PRIVATE_KEY_STRING = "MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAsa2crSsRhUpi7I5CTiep8GS0CpI2Q2o7dgpIMoFdYIzGGAGcPVzWMUncvdkGtYVykZ32NBUvww7tlBEUlVz/QQIDAQABAkAFUmjt+utEbcz2vvAXfTKm461M38JGVKlBSN+Ou7c7TA9T6gLZ2CQI7p2CpwI8ggW53pxyDF3jkqJPqkO1UwLtAiEA6IzsQXZnSjVuRJc60ekwI2uTaqpLfHPMsRw10dVBY5cCIQDDmDX9B4O2W8G3BhPaWtcrbfwomXY+mSJuPy6tFyEu5wIhAN6LReibo9sraLvxMZQCIVQ0NZ4lHBocQ23WflaxS2M/AiA+fsfhTSFchvziSeLWBehyS/Yh0sbhQXSq3S1AyP8lSQIhAJ3JB7qpLIxj1yfWhEFw+46K7z2mDs9ifR9jaDbj2t42";
+	public static final String DEFAULT_PUBLIC_KEY_STRING = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALGtnK0rEYVKYuyOQk4nqfBktAqSNkNqO3YKSDKBXWCMxhgBnD1c1jFJ3L3ZBrWFcpGd9jQVL8MO7ZQRFJVc/0ECAwEAAQ==";
 
 	public static void main(String[] args) throws Exception {
-        String password = args[0];
+		/*  String password = args[0];
         String[] arr = genKeyPair(512);
         System.out.println("privateKey:" + arr[0]);
         System.out.println("publicKey:" + arr[1]);
-        System.out.println("password:" + encrypt(arr[0], password));
+        System.out.println("password:" + encrypt(arr[0], password));*/
     	/*String key="MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIV0h9JHs9PfwQ92FKoGbSoIZfRkX3fDJtReDErYyFDsrLPaycG1e+cO/0yARBGVxEkCAxO0V2K+CpI76xoH/6cCAwEAAQ==";
 		String key= args[0];
 		PublicKey publicKey = getPublicKey(key);
 		String cipherText=args[1];
 		String cipherText="ByyBUSo2FkBZiPPhacmTA3S7iGqzUQjjOuugQ+KEb4+kptdG2yF80q6uDlI0tiAQwcYK1NTOloTuOYWDxcMsgw==";
 		System.out.println("password:"+decrypt(publicKey, cipherText));*/
+		String password = "123456";
+		String[] arr = genKeyPair(512);
+		// System.out.println("privateKey:" + arr[0]);
+		// System.out.println("publicKey:" + arr[1]);
+		System.out.println("password:" + encrypt((String) null, password));
+		// String
+		// key="MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIV0h9JHs9PfwQ92FKoGbSoIZfRkX3fDJtReDErYyFDsrLPaycG1e+cO/0yARBGVxEkCAxO0V2K+CpI76xoH/6cCAwEAAQ==";
+		// String key= args[0];
+		PublicKey publicKey = getPublicKey(DEFAULT_PUBLIC_KEY_STRING);
+		// String cipherText=args[1];
+		String cipherText = "fnLjx6AccckAlAHDMeA52R3Np18CByes1PWSQmTWPvoN7dEooRJwKiRVuJl2ifCOUG3iPdY2ADfLbj19kccuHg==";
+		System.out.println("password:" + decrypt(publicKey, cipherText));
 	}
 
 	public static String decrypt(String cipherText) throws Exception {
