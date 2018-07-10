@@ -31,18 +31,18 @@
 	<!-- 读库 -->
 	<bean name="readDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="name" value="${salve.hostname}" />
-		<property name="url" value="${smp.jdbc.salve.jdbcUrl}" />
-		<property name="driverClassName" value="${smp.jdbc.driverClass}" />
-		<property name="username" value="${smp.jdbc.salve.user}" />
-		<property name="password" value="${smp.jdbc.salve.passwords}" />
+		<property name="url" value="${oss.jdbc.salve.jdbcUrl}" />
+		<property name="driverClassName" value="${oss.jdbc.driverClass}" />
+		<property name="username" value="${oss.jdbc.salve.user}" />
+		<property name="password" value="${oss.jdbc.salve.password}" />
 		<!-- 初始化连接大小 -->
-		<property name="initialSize" value="${smp.druid.initialSize}" />
+		<property name="initialSize" value="${oss.druid.initialSize}" />
 		<!-- 连接池最小空闲 -->
-		<property name="minIdle" value="${smp.druid.minIdle}" />
+		<property name="minIdle" value="${oss.druid.minIdle}" />
 		<!-- 连接池最大使用连接数量 -->
-		<property name="maxActive" value="${smp.druid.maxActive}" />
+		<property name="maxActive" value="${oss.druid.maxActive}" />
 		<!-- 获取连接最大等待时间 -->
-		<property name="maxWait" value="${smp.druid.maxWait}" />
+		<property name="maxWait" value="${oss.druid.maxWait}" />
 		<property name="poolPreparedStatements" value="true" />
 		<property name="maxPoolPreparedStatementPerConnectionSize" value="100" />
 		<property name="defaultReadOnly" value="true" />
@@ -63,9 +63,9 @@
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
 		<!-- 开启Druid的监控统计、sql防注入功能 -->
-		  <property name="filters" value="config,stat,wall"/>
+		  <property name="filters" value="stat,wall"/>
 		  <!-- 使用加密 -->
-		  <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${publickey}" />
+		 <!--  <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${publickey}" /> -->
 		<!--<property name="filters" value="mergeStat" /> -->
 		<!-- Oracle连接是获取字段注释 -->		
 		<!-- <property name="connectProperties">
@@ -78,18 +78,18 @@
 	<!-- 	写库 -->
 	<bean name="writeDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="name" value="${master.hostname}" />
-		<property name="url" value="${smp.jdbc.master.jdbcUrl}" />
-		<property name="driverClassName" value="${smp.jdbc.driverClass}" />
-		<property name="username" value="${smp.jdbc.master.user}" />
-		<property name="password" value="${smp.jdbc.master.passwords}" />
+		<property name="url" value="${oss.jdbc.master.jdbcUrl}" />
+		<property name="driverClassName" value="${oss.jdbc.driverClass}" />
+		<property name="username" value="${oss.jdbc.master.user}" />
+		<property name="password" value="${oss.jdbc.master.password}" />
 		<!-- 初始化连接大小 -->
-		<property name="initialSize" value="${smp.druid.initialSize}" />
+		<property name="initialSize" value="${oss.druid.initialSize}" />
 		<!-- 连接池最小空闲 -->
-		<property name="minIdle" value="${smp.druid.minIdle}" />
+		<property name="minIdle" value="${oss.druid.minIdle}" />
 		<!-- 连接池最大使用连接数量 -->
-		<property name="maxActive" value="${smp.druid.maxActive}" />
+		<property name="maxActive" value="${oss.druid.maxActive}" />
 		<!-- 获取连接最大等待时间 -->
-		<property name="maxWait" value="${smp.druid.maxWait}" />
+		<property name="maxWait" value="${oss.druid.maxWait}" />
 		<property name="poolPreparedStatements" value="true" /> 
 		<property name="maxPoolPreparedStatementPerConnectionSize" value="100" />
 		<property name="defaultReadOnly" value="false" />
@@ -110,9 +110,9 @@
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
 		<!-- 开启Druid的监控统计功能 -->
-		 <property name="filters" value="config,stat,wall" />
+		 <property name="filters" value="stat,wall" />
 		  <!-- 使用加密 -->
-		 <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${publickey}" />
+		<!--  <property name="connectionProperties" value="config.decrypt=true;config.decrypt.key=${publickey}" /> -->
 		<!--<property name="filters" value="mergeStat" /> -->
 		<!-- Oracle连接是获取字段注释 -->	
 		<!-- <property name="connectProperties">
