@@ -130,7 +130,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	    		Set<String> perms=shiroService.getUserPermissions(user.getUserId(), false,user.getToken());
 	        	Iterator<String> it = perms.iterator();  
 	        	while (it.hasNext()) {  
-	        	  redisUtils.sset(permKey, it.next(),Constant.PERMS_EXPIRE/1000);
+	        	  redisUtils.sset(permKey, it.next(),Constant.PERMS_EXPIRE);
 	        	} 
 	      	}	
 		}	
@@ -174,11 +174,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     	Set<String> perms=shiroService.getUserPermissions(userId, false,token);
     	Iterator<String> it = perms.iterator();  
     	while (it.hasNext()) {  
-    	  redisUtils.sset(permKey, it.next(),Constant.PERMS_EXPIRE/1000);
+    	  redisUtils.sset(permKey, it.next(),Constant.PERMS_EXPIRE);
     	}   
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put("token", token);
-    	jsonObject.put("expire", Constant.TOKEN_EXPIRE/1000);
+    	jsonObject.put("expire", Constant.HALF_HOUR);
 
 		return JsonResponse.success(jsonObject);
 	}
