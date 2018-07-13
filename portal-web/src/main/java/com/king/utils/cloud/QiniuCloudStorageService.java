@@ -7,6 +7,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.king.common.utils.exception.RRException;
 import com.king.dal.gen.model.oss.CloudStorageConfig;
+import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
@@ -74,4 +75,15 @@ public class QiniuCloudStorageService extends CloudStorageService {
     public String uploadSuffix(InputStream inputStream, String suffix) {
         return upload(inputStream, getPath(config.getQiniuPrefix(), suffix));
     }
+
+	@Override
+	public void delete(String deleteObject) {
+		try {
+			bucketMgr.delete(config.getQiniuBucketName(), deleteObject);
+		} catch (QiniuException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

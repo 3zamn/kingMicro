@@ -17,7 +17,7 @@ import com.king.dal.gen.model.oss.CloudStorageConfig;
  */
 public abstract class CloudStorageService {
     /** 云存储配置信息 */
-    CloudStorageConfig config;
+   public CloudStorageConfig config;
 
     /**
      * 文件路径
@@ -69,5 +69,11 @@ public abstract class CloudStorageService {
      * @return             返回http地址
      */
     public abstract String uploadSuffix(InputStream inputStream, String suffix);
+    
+    /**
+     * 删除指定的文件
+     * @param deleteObject
+     */
+    public abstract void delete(String deleteObject);
 
 }

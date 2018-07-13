@@ -6,7 +6,7 @@
 			http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 单机模式 -->
-   <!--  <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+    <!-- <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="hostName" value="${redis.host}"/>
         <property name="port" value="${redis.port}"/>
         <property name="password" value="${redis.password}"/>

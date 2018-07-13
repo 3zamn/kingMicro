@@ -21,6 +21,11 @@ public class IdGenerator {
 	@SuppressWarnings("rawtypes")
 	@Autowired
 	private RedisTemplate redisTemplate;
+	
+	@SuppressWarnings("unchecked")
+	public void set(String key,String value,long timeout){
+		redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
+	}
 
 	/**
 	 * @Title: set

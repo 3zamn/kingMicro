@@ -10,6 +10,7 @@ import com.king.common.utils.exception.RRException;
 import com.king.dal.gen.model.oss.CloudStorageConfig;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
+import com.qcloud.cos.request.DelFileRequest;
 import com.qcloud.cos.request.UploadFileRequest;
 import com.qcloud.cos.sign.Credentials;
 
@@ -81,4 +82,11 @@ public class QcloudCloudStorageService extends CloudStorageService {
     public String uploadSuffix(InputStream inputStream, String suffix) {
         return upload(inputStream, getPath(config.getQcloudPrefix(), suffix));
     }
+
+	@Override
+	public void delete(String deleteObject) {
+		DelFileRequest request = new DelFileRequest(config.getQcloudBucketName(), deleteObject);
+		client.delFile(request);
+		
+	}
 }

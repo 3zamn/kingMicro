@@ -23,12 +23,12 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
-import com.king.api.smp.SysLogService;
 import com.king.common.mongodb.log.model.ExceptionLogVO;
+import com.king.common.mongodb.log.model.SysLogVO;
 import com.king.common.mongodb.log.repo.ExceptionLogRepo;
+import com.king.common.mongodb.log.repo.SysLogRepo;
 import com.king.common.utils.exception.ExceptionUtils;
 import com.king.common.utils.pattern.StringToolkit;
-import com.king.dal.gen.model.smp.SysLog;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.utils.HttpContextUtils;
 import com.king.utils.IPUtils;
@@ -47,7 +47,7 @@ import net.sf.json.JSONArray;
 @Component
 public class SysLogAspect {
 	@Autowired
-	private SysLogService sysLogService;
+	private SysLogRepo sysLogRepo;
 	@Autowired
 	private ExceptionLogRepo exceptionLogRepo;
 	private static String ipAddress = "127.0.0.1";
@@ -134,7 +134,7 @@ public class SysLogAspect {
 	private void saveSysLog(JoinPoint joinPoint, Object object, String username,Boolean formJson) {
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
-		SysLog sysLog = new SysLog();
+		SysLogVO sysLog = new SysLogVO();
 
 		com.king.common.annotation.Log log = method.getAnnotation(com.king.common.annotation.Log.class);
 		if (log != null) {
@@ -187,7 +187,7 @@ public class SysLogAspect {
 		}
 		sysLog.setCreateDate(new Date());
 		// 保存系统日志
-		sysLogService.save(sysLog);
+		sysLogRepo.insert(sysLog);
 	}
 	
 

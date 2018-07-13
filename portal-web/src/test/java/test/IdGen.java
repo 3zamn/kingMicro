@@ -1,6 +1,7 @@
 package test;
 
 import java.util.Date;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,7 +35,7 @@ public class IdGen {
 	
 	@Test 
 	public void  test(){
-		int clientTotal = 500000;
+		int clientTotal = 50000;
 		// 同时并发执行的线程数
 		int threadTotal = 100;
 		 ExecutorService executorService = Executors.newCachedThreadPool();
@@ -47,6 +48,7 @@ public class IdGen {
 		      executorService.execute(() -> {
 		        try {//执行此方法用于获取执行许可，当总计未释放的许可数不超过60000时，	         	 
 		          semaphore.acquire(); //允许通行，否则线程阻塞等待，直到获取到许可。
+		   //       idGenerator.set("test:"+UUID.randomUUID().toString(), UUID.randomUUID().toString(), 300);
 		          idGenerator.incrementHash("id", "value", null);         
 		          semaphore.release(); //释放许可
 		        } catch (Exception e) {

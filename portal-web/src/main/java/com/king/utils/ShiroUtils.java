@@ -60,7 +60,7 @@ public class ShiroUtils {
 		getSession().setAttribute(key, value);
 		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
 		String sessionId = RedisKeys.getKaptchaKey(getSession().getId().toString());
-		redisUtils.set(sessionId, value,Constant.TOKEN_EXPIRE/1000);
+		redisUtils.set(sessionId, value,Constant.HALF_HOUR);
 	}
 
 	public static Object getSessionAttribute(Object key) {

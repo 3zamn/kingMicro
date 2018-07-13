@@ -57,7 +57,7 @@ public class OAuth2Realm extends AuthorizingRealm {
         //刷新失效时间
     	String permKey =RedisKeys.getPermsKey(userId,ShiroUtils.getUserEntity().getToken());
     	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
-    	redisUtils.expire(permKey, Constant.PERMS_EXPIRE/1000);
+    	redisUtils.expire(permKey, Constant.PERMS_EXPIRE);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
         return info;
