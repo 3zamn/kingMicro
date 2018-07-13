@@ -76,7 +76,7 @@ var vm = new Vue({
 			$.get(baseURL + "sys/generator/info/"+dataSource+"/"+id, function(r){
                 vm.showList = false;
             //    debugger
-                vm.title = "配置";
+                vm.title = "配置(未完成。。)";
                 vm.columns = r.data.columns;
                 
             });

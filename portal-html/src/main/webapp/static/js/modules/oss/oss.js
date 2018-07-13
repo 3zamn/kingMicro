@@ -4,12 +4,13 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', width: 20, key: true ,hidden:true},
-			{ label: '文件名', name: 'name', width: 60},
-            { label: 'URL地址', name: 'url', width: 200 ,formatter:function(value,row,index) {
+			{ label: '文件名', name: 'name', width: 50},
+			{ label: '大小', name: 'size', width: 30},
+            { label: 'URL地址', name: 'url', width: 220 ,formatter:function(value,row,index) {
 				return '<a href=\''+value+'\' target=\'_blank\'>'+value+'</a>';
 			}},
 			{ label: '创建者', name: 'creator', width: 20 },
-			{ label: '创建时间', name: 'createDate', width: 60 }
+			{ label: '创建时间', name: 'createDate', width: 50 }
         ],
 		viewrecords: true,
         height: 385,
