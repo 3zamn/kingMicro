@@ -32,7 +32,7 @@ public interface BaseDao<T> {
 	
 	List<T> queryList(Map<String, Object> map);
 	
-	List<T> queryList(Object id);
+	List<T> queryBatch(Object[] id);
 	
 	int queryTotal(Map<String, Object> map);
 

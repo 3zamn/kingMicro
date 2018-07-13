@@ -87,4 +87,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		}	
 		return page;
 	}
+	
+	@Transactional(readOnly = true)
+	public List<T> queryBatch(Object[] ids) {
+		List<T> list =getBaseDao().queryBatch(ids);
+		return list;
+	}
 }

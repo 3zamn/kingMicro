@@ -68,7 +68,7 @@ public class TokenGenerator {
         String key = RedisKeys.getTokenKey(token.getToken()); 
         Date expireTime = new Date(System.currentTimeMillis()+Constant.TOKEN_EXPIRE);    //半小时失效
         token.setExpireTime(expireTime);
-        redisUtils.set(key, token,Constant.TOKEN_EXPIRE/1000);
+        redisUtils.set(key, token,Constant.HALF_HOUR);
     }
 
     public void delete(String tokenKey) {

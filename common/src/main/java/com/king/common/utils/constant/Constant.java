@@ -11,10 +11,11 @@ public class Constant {
 
 	/*token失效时长*/
 	public static final long TOKEN_EXPIRE =30 * 60 *1000;//半小时失效
+	public static final long HALF_HOUR =1800;//半小时
 	
 	public static final long SHIRO_SESSION_EXPIRE =30 * 60 * 1000;//半小时
 	
-	public static final long PERMS_EXPIRE =48 *60 * 60 * 1000;//权限48小时后权限失效，需重新登录
+	public static final long PERMS_EXPIRE =48 *60 * 60;//权限48小时后权限失效，需重新登录
 	
 	public static final long SERIALNO_EXPIRE =30;//秒
 	public static final long LOGIN_IP_COUNT =30;//同一个IP同一个帐号

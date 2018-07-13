@@ -33,6 +33,9 @@ public class SysOss implements Serializable {
 	//创建者
 	@ApiModelProperty("创建者")
 	private String creator;
+	//文件大小
+	@ApiModelProperty("文件大小")
+	private String size;
 	//创建时间
 	@ApiModelProperty("创建时间")
 	private Date createDate;
@@ -104,4 +107,11 @@ public class SysOss implements Serializable {
 	public Date getCreateDate() {
 		return createDate;
 	}
+	public String getSize() {
+		return size;
+	}
+	public void setSize(String size) {
+		this.size = size;
+	}
+	
 }

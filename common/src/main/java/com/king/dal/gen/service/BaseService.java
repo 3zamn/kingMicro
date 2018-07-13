@@ -64,5 +64,10 @@ public interface BaseService<T> {
 	 * 分页查询列表
 	 */
 	public Page getPage(Map<String, Object> map); 
+	
+	/**
+	 * 根据ids批量查询
+	 */
+	public List<T> queryBatch(Object[] ids);
 
 }

@@ -24,11 +24,12 @@ public class ExceptionLogVO implements Serializable{
 	@Id
 	private String id;
 	private String userCode;
+	@Indexed
 	private String seriaNo;
 	private String appCode;
-	@Indexed
 	private String logCode;
 	private String apiName;
+	@Indexed
 	private Date createTime;
 	private String inputData;
 	private String outputData;

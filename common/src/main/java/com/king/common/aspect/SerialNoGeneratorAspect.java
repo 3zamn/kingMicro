@@ -28,9 +28,9 @@ import com.king.common.utils.thread.SerialNoHolder;
  * @emai 396885563@qq.com
  * @data2018年3月30日
  */
-@Aspect
-@Order(2)
-@Component
+//@Aspect
+//@Order(2)
+//@Component
 public class SerialNoGeneratorAspect {
 	private static Configuration configs ;
 	 private Logger logger = LoggerFactory.getLogger(getClass());
@@ -42,11 +42,12 @@ public class SerialNoGeneratorAspect {
 	    //	 logger.info("getSignature方法："+point.getSignature());
 	            try{
 	            	String serialNo= SerialNoHolder.serialNo.get();
+	            	SerialNoHolder.appCode.set(configs.getString("serverName"));
 	            	if(serialNo ==null){
 	            		serialNo =UUID.randomUUID().toString();
 	            		 SerialNoHolder.serialNo.set(serialNo);
-	            		 String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
-	                 	redisUtils.hset(serialNoKey, "appcode", configs!=null?configs.getString("serverName"):null,Constant.SERIALNO_EXPIRE);
+	            	//	 String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
+	                // 	redisUtils.hset(serialNoKey, "appcode", configs!=null?configs.getString("serverName"):null,Constant.SERIALNO_EXPIRE);
 	            	}	         
 	            }catch (Exception e){
 	                logger.error("服务异常");
@@ -63,6 +64,7 @@ public class SerialNoGeneratorAspect {
 	    public void after(JoinPoint point) throws Throwable {
 
 	    	 SerialNoHolder.serialNo.remove();
+	    	 SerialNoHolder.appCode.remove();
 	    }
 	    
 	    

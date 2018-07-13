@@ -19,11 +19,9 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.king.common.mongodb.log.model.ExceptionLogVO;
 import com.king.common.mongodb.log.repo.ExceptionLogRepo;
+import com.king.common.utils.exception.ExceptionUtils;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.pattern.StringToolkit;
-import com.king.common.utils.redis.RedisKeys;
-import com.king.common.utils.redis.RedisUtils;
-import com.king.common.utils.thread.SerialNoHolder;
 
 
 /**
@@ -40,23 +38,14 @@ public class ExceptionAspect {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
 	private ExceptionLogRepo exceptionLogRepo;
-    @Autowired
-    private RedisUtils redisUtils;
 	private static String ipAddress = "127.0.0.1";	
 	private static Configuration configs ;
 	
 	@AfterThrowing(pointcut="execution(* com.king.dal.gen.service.*.*(..)) || execution(* com.king.services.spi.*.*(..))", throwing = "e")
 	public void afterThrowing(JoinPoint  point,Exception e) throws Throwable  {
-        String serialNo= SerialNoHolder.serialNo.get();           	
-    	String serialNoKey = RedisKeys.getSerialNoKey(serialNo);
-    	Object appcode= redisUtils.hget(serialNoKey, "appcode");
-    	if(appcode==null) {
-    		appcode=configs.getString("serverName");
-    	}
-    	if(serialNo==null){
-    		serialNo =UUID.randomUUID().toString();
-    	}
-    	addExceptionLog(e.getMessage(), point,appcode!=null?appcode.toString():null, serialNo);
+        String serialNo =UUID.randomUUID().toString(); 	
+    	String appcode=configs.getString("serverName");
+    	addExceptionLog(ExceptionUtils.makeStackTrace(e), point,appcode!=null?appcode.toString():null, serialNo);
         logger.error(String.format("错误流水号【%s】", serialNo)+String.format("服务【%s】", appcode)+String.format("方法【%s】异常！", point.getSignature()));
         throw new RRException(String.format("服务调用时【%s】发生未知错误，错误流水号【%s】，请联系管理员", appcode,serialNo),500,e);
 

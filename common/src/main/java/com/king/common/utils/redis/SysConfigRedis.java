@@ -24,7 +24,7 @@ public class SysConfigRedis {
             return ;
         }
         String key = RedisKeys.getSysConfigKey(config.getKey());
-        redisUtils.set(key, config,-1);
+        redisUtils.set(key, config);
     }
 
     public void delete(String configKey) {

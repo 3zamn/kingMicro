@@ -42,7 +42,7 @@ public class RedisUtils {
     private final static Gson gson = new Gson();
 
     @SuppressWarnings("unchecked")
-	public String getset(String key, Object value, long expire){
+	public  String getset(String key, Object value, long expire){
     	String oldervalue = valueOperations.getAndSet(key, toJson(value));
         if(expire != NOT_EXPIRE){
             redisTemplate.expire(key, expire, TimeUnit.SECONDS);
@@ -50,16 +50,12 @@ public class RedisUtils {
         return oldervalue;
     }
     
-    @SuppressWarnings("unchecked")
-	public void set(String key, Object value, long expire){
-        valueOperations.set(key, toJson(value));
-        if(expire != NOT_EXPIRE){
-            redisTemplate.expire(key, expire, TimeUnit.SECONDS);
-        }
+	public  void set(String key, Object value, long expire){
+        valueOperations.set(key, toJson(value), expire, TimeUnit.SECONDS);     
     }
 
     public void set(String key, Object value){
-        set(key, value, DEFAULT_EXPIRE);
+    	valueOperations.set(key, toJson(value));
     }
 
     @SuppressWarnings("unchecked")
