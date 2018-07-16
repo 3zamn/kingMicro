@@ -123,7 +123,7 @@
 	</bean>
 	
 	<!-- druid数据源配置 -->
-	<bean id="dataSource" class="com.king.common.aspect.ChooseDataSource" lazy-init="true">
+	<bean id="dataSource" class="com.king.common.dataSource.ChooseDataSource" lazy-init="true">
 		<description>数据源</description>
 		<property name="targetDataSources">
 			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
