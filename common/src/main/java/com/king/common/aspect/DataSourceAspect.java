@@ -14,6 +14,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.king.common.dataSource.HandleDataSource;
+
 /**
  * 切换数据源--读写分离
  * @author King chen

@@ -1,10 +1,8 @@
-package com.king.common.aspect;
+package com.king.common.dataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-
-import com.king.common.enumeration.DataSourceType;
 
 /**
  * 获取数据源

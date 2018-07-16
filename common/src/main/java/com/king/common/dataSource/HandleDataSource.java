@@ -1,6 +1,4 @@
-package com.king.common.aspect;
-
-import com.king.common.enumeration.DataSourceType;
+package com.king.common.dataSource;
 
 /**
  * 数据源线程级别处理
