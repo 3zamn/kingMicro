@@ -63,7 +63,7 @@
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
 		<!-- 开启Druid的监控统计、sql防注入功能 -->
-		<property name="filters" value="stat,wall" />
+	<!-- 	<property name="filters" value="stat,wall" /> -->
 		<!--<property name="filters" value="mergeStat" /> -->
 		<!-- Oracle连接是获取字段注释 -->
 		<!-- <property name="connectProperties">
@@ -108,7 +108,7 @@
 		<!-- 关闭abanded连接时输出错误日志 -->
 		<property name="logAbandoned" value="true" />
 		<!-- 开启Druid的监控统计功能 -->
-		<property name="filters" value="wall,stat"/>
+		<!-- <property name="filters" value="wall,stat"/> -->
 		<!--<property name="filters" value="mergeStat" /> -->
 		<!-- Oracle连接是获取字段注释 -->
 	<!-- 	<property name="connectProperties">
