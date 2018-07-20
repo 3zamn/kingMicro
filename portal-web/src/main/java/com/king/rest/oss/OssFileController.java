@@ -52,8 +52,8 @@ import io.swagger.annotations.ApiOperation;
 @Lazy
 @RestController
 @Api(value = "文件云盘", description = "文件云盘")
-@RequestMapping("/sys/oss")
-public class SysOssController extends AbstractController{
+@RequestMapping("/oss/file")
+public class OssFileController extends AbstractController{
 	@Autowired
 	private SysOssService sysOssService;
 	@Autowired
@@ -63,9 +63,9 @@ public class SysOssController extends AbstractController{
 	 * 列表
 	 */
 	@Log("文件上传列表")
-	@ApiOperation(value = "列表",notes = "权限编码（sys:oss:list）")
+	@ApiOperation(value = "列表",notes = "权限编码（oss:file:list）")
 	@GetMapping("/list")
-	@RequiresPermissions("sys:oss:list")
+	@RequiresPermissions("oss:file:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params,SysOss.class.getSimpleName());
@@ -78,9 +78,9 @@ public class SysOssController extends AbstractController{
 	 * 信息
 	 */
 	@Log("文件上传查询信息")
-    @ApiOperation(value = "查询信息",notes = "权限编码（sys:oss:info）")
+    @ApiOperation(value = "查询信息",notes = "权限编码（oss:file:info）")
 	@GetMapping("/info/{id}")
-	@RequiresPermissions("sys:oss:info")
+	@RequiresPermissions("oss:file:info")
 	public JsonResponse info(@PathVariable("id") Object id){
 		SysOss sysOss = sysOssService.queryObject(id);
 		
@@ -92,9 +92,9 @@ public class SysOssController extends AbstractController{
 	 * 修改
 	 */
 	@Log("文件上传修改")
-	@ApiOperation(value = "修改",notes = "权限编码（sys:oss:update）")
+	@ApiOperation(value = "修改",notes = "权限编码（oss:file:update）")
 	@PostMapping("/update")
-	@RequiresPermissions("sys:oss:update")
+	@RequiresPermissions("oss:file:update")
 	public JsonResponse update(@RequestBody SysOss sysOss){
 		sysOssService.update(sysOss);
 		
@@ -105,9 +105,9 @@ public class SysOssController extends AbstractController{
 	 * 删除本地文件并循环删除云文件
 	 */
 	@Log("文件上传删除")
-	@ApiOperation(value = "删除",notes = "权限编码（sys:oss:delete）")
+	@ApiOperation(value = "删除",notes = "权限编码（oss:file:delete）")
 	@PostMapping("/delete")
-	@RequiresPermissions("sys:oss:delete")
+	@RequiresPermissions("oss:file:delete")
 	public JsonResponse delete(@RequestBody Object[] ids){
 		CloudStorageConfig config = sysConfigService.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
 		String yunPath=null;
@@ -152,9 +152,9 @@ public class SysOssController extends AbstractController{
      * 云存储配置信息
      */
 	@Log("云存储配置信息")
-	@ApiOperation(value = "云存储配置信息",notes = "权限编码（sys:oss:all）")
+	@ApiOperation(value = "云存储配置信息",notes = "权限编码（oss:file:config）")
     @RequestMapping("/config")
-    @RequiresPermissions("sys:oss:all")
+    @RequiresPermissions("oss:file:config")
     public JsonResponse config(){
         CloudStorageConfig config = sysConfigService.getConfigObject(KEY, CloudStorageConfig.class);
         return JsonResponse.success(config);
@@ -165,9 +165,9 @@ public class SysOssController extends AbstractController{
 	 * 保存云存储配置信息
 	 */
     @Log("保存云存储配置信息")
-	@ApiOperation(value = "保存云存储配置信息",notes = "权限编码（sys:oss:all）")
+	@ApiOperation(value = "保存云存储配置信息",notes = "权限编码（oss:file:config）")
 	@RequestMapping("/saveConfig")
-	@RequiresPermissions("sys:oss:all")
+	@RequiresPermissions("oss:file:config")
 	public JsonResponse saveConfig(@RequestBody CloudStorageConfig config){
 		//校验类型
 		ValidatorUtils.validateEntity(config);
@@ -189,10 +189,9 @@ public class SysOssController extends AbstractController{
 	/**
 	 * 上传文件
 	 */
-	@Log("文件上传")
-	@ApiOperation(value = "文件上传",notes = "权限编码（sys:oss:all）")
+	@ApiOperation(value = "文件上传",notes = "权限编码（oss:file:upload）")
 	@RequestMapping("/upload")
-	@RequiresPermissions("sys:oss:all")
+	@RequiresPermissions("oss:file:upload")
 	public JsonResponse upload(@RequestParam("file") MultipartFile file) throws Exception {
 		if (file.isEmpty()) {
 			throw new RRException("上传文件不能为空");

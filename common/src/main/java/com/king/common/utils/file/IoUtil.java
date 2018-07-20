@@ -73,7 +73,7 @@ public class IoUtil {
   
   /**
    * 将字节数组写入文件
-   * add by liushd at 2016.1.28
+   * 
    * @param content
    * @param filePath
  * @throws IOException 
@@ -91,7 +91,7 @@ public class IoUtil {
   
   /**
    * 从文件读取字节数组
-   * add by liushd at 2016.1.30
+   * 
    * @param content
    * @param filePath
  * @throws IOException 

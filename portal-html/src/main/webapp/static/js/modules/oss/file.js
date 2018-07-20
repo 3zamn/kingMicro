@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'sys/oss/list',
+        url: baseURL + 'oss/file/list',
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', width: 20, key: true ,hidden:true},
@@ -39,7 +39,7 @@ $(function () {
     });
 
     new AjaxUpload('#upload', {
-        action: baseURL + 'sys/oss/upload?token=' + token,
+        action: baseURL + 'oss/file/upload?token=' + token,
         name: 'file',
         autoSubmit:true,
         responseType:"json",
@@ -81,32 +81,11 @@ var vm = new Vue({
 			vm.reload();
 		},
 		getConfig: function () {
-            $.getJSON(baseURL + "sys/oss/config", function(r){
+            $.getJSON(baseURL + "oss/file/config", function(r){
 				vm.config = r.data;
             });
         },
-		addConfig: function(){
-			vm.showList = false;
-			vm.title = "云存储配置";
-		},
-		saveOrUpdate: function () {
-			var url = baseURL + "sys/oss/saveConfig";
-			$.ajax({
-				type: "POST",
-			    url: url,
-                contentType: "application/json",
-			    data: JSON.stringify(vm.config),
-			    success: function(r){
-			    	if(r.code === 200){
-						alert('操作成功', function(){
-							vm.reload();
-						});
-					}else{
-						alert(r.msg);
-					}
-				}
-			});
-		},
+		
         del: function () {
             var ossIds = getSelectedRows();
             if(ossIds == null){
@@ -116,7 +95,7 @@ var vm = new Vue({
             confirm('确定要删除选中的记录？', function(){
                 $.ajax({
                     type: "POST",
-                    url: baseURL + "sys/oss/delete",
+                    url: baseURL + "oss/file/delete",
                     contentType: "application/json",
                     data: JSON.stringify(ossIds),
                     success: function(r){
