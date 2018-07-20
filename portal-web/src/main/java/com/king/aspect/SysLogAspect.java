@@ -143,20 +143,24 @@ public class SysLogAspect {
 		}
 		String data = null;
 		String status=null;
-		if(formJson){
-			 JSONObject jsonObject = (JSONObject) JSONObject.toJSON(object);
-			 data = jsonObject.getString("data");
-			 if(jsonObject.getString("msg")!=null?jsonObject.getString("msg").equals("success"):false){
-				 status="success";
-			 }else{
-				 data=jsonObject.getString("msg");
-				 status="error";
-			 }
-		}else{
-			data=StringToolkit.getObjectString(JSONArray.fromObject(object));
-			status="success";
+		if(object!=null){
+			if(formJson){
+				 JSONObject jsonObject = (JSONObject) JSONObject.toJSON(object);
+				 if(jsonObject!=null){
+					 data = jsonObject.getString("data");
+				 }
+				 if(jsonObject.getString("msg")!=null?jsonObject.getString("msg").equals("success"):false){
+					 status="success";
+				 }else{
+					 data=jsonObject.getString("msg");
+					 status="error";
+				 }
+			}else{
+				data=StringToolkit.getObjectString(JSONArray.fromObject(object));
+				status="success";
+			}
 		}
-
+		
 		// 请求的方法名
 		String methodName = signature.getName();
 		sysLog.setMethod(joinPoint.getSignature()+"");

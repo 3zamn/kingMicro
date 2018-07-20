@@ -133,10 +133,8 @@ public class SysMenuController extends AbstractController {
 	@RequiresPermissions("sys:menu:update")
 	public JsonResponse update(@RequestBody SysMenu menu){
 		//数据校验
-		verifyForm(menu);
-				
+		verifyForm(menu);			
 		sysMenuService.update(menu);
-		
 		return JsonResponse.success();
 	}
 	
