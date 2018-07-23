@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 import javax.imageio.ImageIO;
 
 /**
- * 利用Java代码给图片加水印
+ * 利用Java代码给图片加文字水印
  * @author King chen
  * @emai 396885563@qq.com
  * @data 2018年7月20日

@@ -17,7 +17,7 @@ import javax.net.ssl.HttpsURLConnection;
   
 
 /**
- * 文档图片水印处理 --本地图片文件/文件夹或网络图片
+ * 文档图片去水印处理 --本地图片文件/文件夹或网络图片
  * @author King chen
  * @emai 396885563@qq.com
  * @data 2018年7月20日

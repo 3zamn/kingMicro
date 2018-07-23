@@ -45,6 +45,25 @@
 	        <artifactId>jodconverter-local</artifactId>
 	        <version>4.2.0</version>
    		 </dependency>
+   		 <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+		<dependency>
+		    <groupId>com.itextpdf</groupId>
+		    <artifactId>itextpdf</artifactId>
+		    <version>5.5.13</version>
+		</dependency>
+		   		 
+   		 <!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
+   		 <!-- 二维码生成/解析 -->
+		<dependency>
+		    <groupId>com.google.zxing</groupId>
+		    <artifactId>core</artifactId>
+		    <version>3.3.3</version>
+		</dependency>	   		 
+		<dependency>
+		  <groupId>com.google.zxing</groupId>
+		  <artifactId>javase</artifactId>
+		  <version>3.3.0</version>
+		</dependency>
 		<dependency>
 			<groupId>com.github.axet</groupId>
 			<artifactId>kaptcha</artifactId>
