@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @date 2018-05-23 14:25:16
  */
  @ApiModel("文件上传")
-public class SysOss implements Serializable {
+public class OssFile implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//

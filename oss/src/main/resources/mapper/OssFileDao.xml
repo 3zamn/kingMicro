@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.king.dao.SysOssDao">
+<mapper namespace="com.king.dao.OssFileDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.king.dal.gen.model.oss.SysOss" id="BaseResultMap">
+    <resultMap type="com.king.dal.gen.model.oss.OssFile" id="BaseResultMap">
         <result property="id" column="id" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="VARCHAR"/>
@@ -14,13 +14,13 @@
         <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-	<select id="queryObject" resultType="com.king.dal.gen.model.oss.SysOss">
-		select * from sys_oss where id = #{value}
+	<select id="queryObject" resultType="com.king.dal.gen.model.oss.OssFile">
+		select * from oss_file where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.king.dal.gen.model.oss.SysOss">
+	<select id="queryList" resultType="com.king.dal.gen.model.oss.OssFile">
 	<!-- 数据量大时,此分页效率不高。建议改为:select * from table where id &lt;=(select id from table order by id  desc limit #{offset}, 1) order by id desc limit #{limit}) -->
-		select * from sys_oss
+		select * from oss_file
 		<where>
 			<if test="searchSql!= null and searchSql.trim() != ''">
 			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
@@ -41,7 +41,7 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from sys_oss 
+		select count(*) from oss_file 
 		<where>
 			<if test="searchSql!= null and searchSql.trim() != ''">
 			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
@@ -50,8 +50,8 @@
 		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.king.dal.gen.model.oss.SysOss" useGeneratedKeys="true" keyProperty="id">
-		insert into sys_oss
+	<insert id="save" parameterType="com.king.dal.gen.model.oss.OssFile" useGeneratedKeys="true" keyProperty="id">
+		insert into oss_file
 		(	
 			`name`, 
 			`type`, 
@@ -71,8 +71,8 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.king.dal.gen.model.oss.SysOss">
-		update sys_oss 
+	<update id="update" parameterType="com.king.dal.gen.model.oss.OssFile">
+		update oss_file 
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="type != null">`type` = #{type}, </if>
@@ -85,18 +85,18 @@
 	</update>
 	
 	<delete id="delete">
-		delete from sys_oss where id = #{value}
+		delete from oss_file where id = #{value}
 	</delete>
 	
 	<delete id="deleteBatch">
-		delete from sys_oss where id in 
+		delete from oss_file where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>
 	
-	<select id="queryBatch" resultType="com.king.dal.gen.model.oss.SysOss">
-	  select * from sys_oss where id in 
+	<select id="queryBatch" resultType="com.king.dal.gen.model.oss.OssFile">
+	  select * from oss_file where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

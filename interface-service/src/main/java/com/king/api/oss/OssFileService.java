@@ -1,6 +1,6 @@
 package com.king.api.oss;
 
-import com.king.dal.gen.model.oss.SysOss;
+import com.king.dal.gen.model.oss.OssFile;
 import com.king.dal.gen.service.BaseService;
 
 
@@ -11,7 +11,7 @@ import com.king.dal.gen.service.BaseService;
  * @email 396885563@qq.com
  * @date 2018-05-23 14:25:16
  */
-public interface SysOssService extends BaseService<SysOss>{
+public interface OssFileService extends BaseService<OssFile>{
 	
 	
 }

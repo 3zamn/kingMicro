@@ -1,6 +1,6 @@
 package com.king.dao;
 
-import com.king.dal.gen.model.oss.SysOss;
+import com.king.dal.gen.model.oss.OssFile;
 import com.king.dal.gen.dao.BaseDao;
 
 
@@ -11,6 +11,6 @@ import com.king.dal.gen.dao.BaseDao;
  * @email 396885563@qq.com
  * @date 2018-05-23 14:25:16
  */
-public interface SysOssDao extends BaseDao<SysOss> {
+public interface OssFileDao extends BaseDao<OssFile> {
 	
 }

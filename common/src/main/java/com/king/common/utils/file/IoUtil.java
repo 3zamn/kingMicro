@@ -10,7 +10,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * @author King chen
@@ -141,4 +143,34 @@ public class IoUtil {
       // Exception is silently ignored
     }
   }
+  
+	/**
+	 * 获取文件流
+	 * @param urlPath
+	 * @return
+	 */
+	public static InputStream getFileStream(String urlPath) {
+		InputStream inputStream = null;
+		try {
+			try {
+				String strUrl = urlPath.trim();
+				URL url = new URL(strUrl);
+				// 打开请求连接
+				URLConnection connection = url.openConnection();
+				HttpURLConnection httpURLConnection = (HttpURLConnection) connection;
+				httpURLConnection.setRequestProperty("User-Agent",
+						"Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+				// 取得输入流，并使用Reader读取
+				inputStream = httpURLConnection.getInputStream();
+				return inputStream;
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				inputStream = null;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			inputStream = null;
+		}
+		return inputStream;
+	}
 }
