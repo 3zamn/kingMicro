@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.king.dao.OssDoc2pdfDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.king.dal.gen.model.oss.OssDoc2pdf" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="pdf" column="pdf" jdbcType="VARCHAR"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="size" column="size" jdbcType="VARCHAR"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.king.dal.gen.model.oss.OssDoc2pdf">
+		select * from oss_doc2pdf where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.king.dal.gen.model.oss.OssDoc2pdf">
+	<!-- 数据量大时,此分页效率不高。建议改为:select * from table where id &lt;=(select id from table order by id  desc limit #{offset}, 1) order by id desc limit #{limit}) -->
+		select * from oss_doc2pdf
+		<where>
+			<if test="searchSql!= null and searchSql.trim() != ''">
+			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
+				${searchSql}
+			</if>
+		</where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from oss_doc2pdf 
+		<where>
+			<if test="searchSql!= null and searchSql.trim() != ''">
+			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
+				${searchSql}
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.king.dal.gen.model.oss.OssDoc2pdf" useGeneratedKeys="true" keyProperty="id">
+		insert into oss_doc2pdf
+		(
+			`name`, 
+			`type`, 
+			`url`, 
+			`pdf`, 
+			`img`, 
+			`size`, 
+			`creator`, 
+			`create_date`
+		)
+		values
+		(
+			#{name}, 
+			#{type}, 
+			#{url}, 
+			#{pdf}, 
+			#{img}, 
+			#{size}, 
+			#{creator}, 
+			#{createDate}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.king.dal.gen.model.oss.OssDoc2pdf">
+		update oss_doc2pdf 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="url != null">`url` = #{url}, </if>
+			<if test="pdf != null">`pdf` = #{pdf}, </if>
+			<if test="img != null">`img` = #{img}, </if>
+			<if test="size != null">`size` = #{size}, </if>
+			<if test="creator != null">`creator` = #{creator}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from oss_doc2pdf where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from oss_doc2pdf where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="queryBatch" resultType="com.king.dal.gen.model.oss.OssDoc2pdf">
+	  select * from oss_doc2pdf where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+</mapper>
