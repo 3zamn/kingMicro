@@ -25,36 +25,15 @@ import javax.net.ssl.HttpsURLConnection;
 public class ImageConverter { 
     private static List<File> fileList = new ArrayList<File>(); 
   
-    public static void main(String[] args) { 
-        /*System.out.println("输入需要去水印的图片所在的根目录回车（支持递归子目录）："); 
-        Scanner input = new Scanner(System.in); 
-        String dir = input.nextLine().trim(); 
+   
   
-        System.out.println("输入转换后的存储目录："); 
-        String saveDir = input.nextLine().trim(); 
-  
-        System.out.println("输入y开始"); 
-        String comfrm = input.nextLine().trim(); 
-        if (comfrm.equals("y")) { 
-            convertAllImages(dir, saveDir); 
-        } else { 
-            System.out.println("您输入的不是y程序,程序退出"); 
-        } */
-  
-     //   String dir = "E:\\data\\Desktop"; 
-      //  String saveDir = "E:\\data\\Desktop-convert"; 
-  
-      //  replaceFolderImages(dir); 
-      //  String srcFile = "F:\\test\\123.png"; 
-        String srcFile = "http://www.oicqzone.com/img/allimg/170620/1_170620092535_1.png"; 
-        String dstFile = "F:\\test\\310.png"; 
-        long begin = System.currentTimeMillis(); 
-        convertAllImages(srcFile, dstFile); 
-        long time = System.currentTimeMillis() - begin; 
-        System.out.println("耗时:"+time+"秒！"); 
-    } 
-  
-    private static void convertAllImages(String dir, String saveDir) { 
+
+    /**
+     * 去水印
+     * @param dir 目标地址本地文件或网络地址
+     * @param saveDir 本地保存路径
+     */
+    private static void removeWater(String dir, String saveDir) { 
        if(dir.contains("http")){//判断是本地图片还是网络图片
     	   replaceColor(dir, saveDir); 
        }else{
@@ -72,21 +51,12 @@ public class ImageConverter {
            } 
        }
     } 
-  /*  private static void convertAllImages(String dir, String saveDir) { 
-        File dirFile = new File(dir); 
-        File saveDirFile = new File(saveDir); 
-        dir = dirFile.getAbsolutePath(); 
-        saveDir = saveDirFile.getAbsolutePath(); 
-        loadImages(new File(dir)); 
-        for (File file : fileList) { 
-            String filePath = file.getAbsolutePath(); 
+
   
-            String dstPath = saveDir + filePath.substring(filePath.indexOf(dir) + dir.length(), filePath.length()); 
-            System.out.println("converting: " + filePath); 
-            replaceColor(file.getAbsolutePath(), dstPath); 
-        } 
-    } */
-  
+    /**
+     * 加载图片
+     * @param f
+     */
     public static void loadImages(File f) { 
         if (f != null) { 
             if (f.isDirectory()) { 
@@ -182,5 +152,14 @@ public class ImageConverter {
         bi.flush(); 
         ios.flush(); 
         ios.close(); 
+    } 
+    
+    public static void main(String[] args) { 
+        String srcFile = "http://www.oicqzone.com/img/allimg/170620/1_170620092535_1.png"; 
+        String dstFile = "F:\\test\\310.png"; 
+        long begin = System.currentTimeMillis(); 
+        removeWater(srcFile, dstFile); 
+        long time = System.currentTimeMillis() - begin; 
+        System.out.println("耗时:"+time+"秒！"); 
     } 
 } 

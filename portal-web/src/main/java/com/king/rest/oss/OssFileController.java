@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
-import com.king.api.oss.SysOssService;
+import com.king.api.oss.OssFileService;
 import com.king.api.smp.SysConfigService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
@@ -32,7 +32,7 @@ import com.king.common.utils.validator.group.AliyunGroup;
 import com.king.common.utils.validator.group.QcloudGroup;
 import com.king.common.utils.validator.group.QiniuGroup;
 import com.king.dal.gen.model.oss.CloudStorageConfig;
-import com.king.dal.gen.model.oss.SysOss;
+import com.king.dal.gen.model.oss.OssFile;
 import com.king.utils.AbstractController;
 import com.king.utils.Query;
 import com.king.utils.cloud.CloudStorageService;
@@ -55,7 +55,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/oss/file")
 public class OssFileController extends AbstractController{
 	@Autowired
-	private SysOssService sysOssService;
+	private OssFileService ossFileService;
 	@Autowired
 	private SysConfigService sysConfigService;
 	private final static String KEY = ConfigConstant.CLOUD_STORAGE_CONFIG_KEY;
@@ -68,8 +68,8 @@ public class OssFileController extends AbstractController{
 	@RequiresPermissions("oss:file:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params,SysOss.class.getSimpleName());
-		Page page = sysOssService.getPage(query);
+        Query query = new Query(params,OssFile.class.getSimpleName());
+		Page page = ossFileService.getPage(query);
 		return JsonResponse.success(page);
 	}
 	
@@ -82,7 +82,7 @@ public class OssFileController extends AbstractController{
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("oss:file:info")
 	public JsonResponse info(@PathVariable("id") Object id){
-		SysOss sysOss = sysOssService.queryObject(id);
+		OssFile sysOss = ossFileService.queryObject(id);
 		
 		return JsonResponse.success(sysOss);
 	}
@@ -95,8 +95,8 @@ public class OssFileController extends AbstractController{
 	@ApiOperation(value = "修改",notes = "权限编码（oss:file:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("oss:file:update")
-	public JsonResponse update(@RequestBody SysOss sysOss){
-		sysOssService.update(sysOss);
+	public JsonResponse update(@RequestBody OssFile sysOss){
+		ossFileService.update(sysOss);
 		
 		return JsonResponse.success();
 	}
@@ -112,8 +112,8 @@ public class OssFileController extends AbstractController{
 		CloudStorageConfig config = sysConfigService.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
 		String yunPath=null;
 		String deleteObject =null;
-		List<SysOss> list = sysOssService.queryBatch(ids);
-		for(SysOss oss:list){
+		List<OssFile> list = ossFileService.queryBatch(ids);
+		for(OssFile oss:list){
 			switch (config.getType()) {
 			case 1:
 				yunPath=config.getQiniuDomain()+"/";
@@ -143,7 +143,7 @@ public class OssFileController extends AbstractController{
 				break;
 			}
 		}
-		sysOssService.deleteBatch(ids);	
+		ossFileService.deleteBatch(ids);	
 		return JsonResponse.success();
 	}
 	
@@ -203,14 +203,14 @@ public class OssFileController extends AbstractController{
 		String url = cloudStorage.uploadSuffix(file.getBytes(), suffix);
 		String size=new BigDecimal(file.getSize()).divide(new BigDecimal(1024),RoundingMode.HALF_UP)+" KB";
 		//保存文件信息
-		SysOss oss = new SysOss();
+		OssFile oss = new OssFile();
 		oss.setType(config.getType()+"");
 		oss.setSize(size);
 		oss.setUrl(url);
 		oss.setName(file.getOriginalFilename());
 		oss.setCreator(getUser().getUsername());
 		oss.setCreateDate(new Date());
-		sysOssService.save(oss);
+		ossFileService.save(oss);
 		return JsonResponse.success(url);
 	}
 

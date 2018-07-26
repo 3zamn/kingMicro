@@ -89,5 +89,12 @@
 			#{${pk.attrname}}
 		</foreach>
 	</delete>
+	
+	<select id="queryBatch">
+		  select * from ${tableName} where id in 
+		<foreach item="${pk.attrname}" collection="array" open="(" separator="," close=")">
+			#{${pk.attrname}}
+		</foreach>
+	</select>
 
 </mapper>

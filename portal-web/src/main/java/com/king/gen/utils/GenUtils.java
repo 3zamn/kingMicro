@@ -187,7 +187,7 @@ public class GenUtils {
 	 */
 	public static Configuration getConfig(){
 		try {
-			return new PropertiesConfiguration("generator.properties");
+			return new PropertiesConfiguration("gen/generator.properties");
 		} catch (ConfigurationException e) {
 			throw new RRException("获取配置文件失败，", e);
 		}

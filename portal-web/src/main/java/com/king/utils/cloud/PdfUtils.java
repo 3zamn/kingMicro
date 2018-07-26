@@ -1,4 +1,4 @@
-package test;
+package com.king.utils.cloud;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;

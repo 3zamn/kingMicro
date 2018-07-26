@@ -35,7 +35,7 @@ public class IdGen {
 	
 	@Test 
 	public void  test(){
-		int clientTotal = 50000;
+		int clientTotal = 1000000;
 		// 同时并发执行的线程数
 		int threadTotal = 100;
 		 ExecutorService executorService = Executors.newCachedThreadPool();
@@ -65,6 +65,6 @@ public class IdGen {
 			}
 		    executorService.shutdown();
 		    Long end = new Date().getTime();  
-		    System.out.println("cast : " + (end - begin) / 1000 + " ms");  		
+		    System.out.println("cast : " + (end - begin) / 1000 + "s");  		
 	}
 }

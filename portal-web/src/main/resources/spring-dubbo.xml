@@ -47,5 +47,6 @@
 	<!-- <dubbo:reference   interface="com.king.api.smp.SysUserTokenService" id="sysUserTokenService" /> -->
 
 	<!-- OSS云盘服务 -->
-	<dubbo:reference   interface="com.king.api.oss.SysOssService" id="sysOssService"  group="${hostname}" version="${version}" />
+	<dubbo:reference   interface="com.king.api.oss.OssFileService" id="ossFileService"  group="${hostname}" version="${version}" />
+	<dubbo:reference   interface="com.king.api.oss.OssDoc2pdfService" id="ossDoc2pdfService"  group="${hostname}" version="${version}" />
 </beans>
