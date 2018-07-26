@@ -24,6 +24,7 @@
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
 		<div class="grid-btn">
+			<a class="btn btn-primary" @click="reload"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
 			<a v-if="hasPermission('oss:pdf:upload')"  class="btn btn-primary" id="upload"><i class="fa fa-plus"></i>&nbsp;上传文件</a>
 			<a v-if="hasPermission('oss:pdf:delete')"  class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		</div>

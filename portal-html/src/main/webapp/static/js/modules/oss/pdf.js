@@ -10,7 +10,7 @@ $(function () {
 				return '<a href=\''+value+'\' target=\'_blank\'>'+value+'</a>';
 			}},
 			 { label: '操作', name: 'type', width: 20 ,formatter:function(value,row,index) {
-					return '<a href=\''+'../../pdf/web/viewer.html'+'\' >'+"预览"+'</a>';
+					return '<a href=\''+'../../pdf/web/viewer.html?file='+index.pdf+'\' >'+"预览"+'</a>';
 					/*return '<a href=\''+'../../pdf/web/viewer.html'+'\' target=\'_parent\'>'+"预览"+'</a>';*/
 				}},
 			{ label: '创建者', name: 'creator', width: 20 },
