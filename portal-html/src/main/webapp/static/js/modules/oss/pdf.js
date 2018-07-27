@@ -42,7 +42,7 @@ $(function () {
         }
     });
 
-    new AjaxUpload('#upload', {
+ /*   new AjaxUpload('#upload', {
         action: baseURL + 'oss/pdf/upload?token=' + token,
         name: 'file',
         autoSubmit:true,
@@ -52,10 +52,10 @@ $(function () {
                 alert("云存储配置未配置");
                 return false;
             }
-           /* if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
+            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
                 alert('只支持jpg、png、gif格式的图片！');
                 return false;
-            }*/
+            }
         },
         onComplete : function(file, r){
         	 if(r.code == 200){
@@ -66,9 +66,31 @@ $(function () {
                  alert(r.msg);
              }
         }
-    });
+    });*/
 
 });
+
+
+var Main = {
+	    data() {
+	      return {
+	        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+	      };
+	    },
+	    methods: {
+	      submitUpload() {
+	        this.$refs.upload.submit();
+	      },
+	      handleRemove(file, fileList) {
+	        console.log(file, fileList);
+	      },
+	      handlePreview(file) {
+	        console.log(file);
+	      }
+	    }
+	  }
+	var Ctor = Vue.extend(Main)
+	new Ctor().$mount('#app')
 
 var vm = new Vue({
 	el:'#rrapp',
@@ -84,6 +106,11 @@ var vm = new Vue({
 		query: function () {
 			vm.reload();
 		},
+		upload: function(){
+	            vm.showList = false;
+	            vm.title = "上传office文档";
+	           
+	        },
 		getConfig: function () {
             $.getJSON(baseURL + "oss/file/config", function(r){
 				vm.config = r.data;

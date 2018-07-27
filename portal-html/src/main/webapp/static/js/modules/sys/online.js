@@ -4,14 +4,13 @@ $(function () {
         datatype: "json",
         colModel: [
         	{ label: 'ID', name: 'Id',  width: 45, key: true,hidden:true },
-			{ label: '用户ID', name: 'userId',  width: 45 },
 			{ label: '用户名', name: 'userName', width: 45 },
             { label: 'token', name: 'token', width: 150 },
-            { label: '登录ip', name: 'ip', width: 80 },
+            { label: '登录ip', name: 'ip', width: 60 },
+            { label: '登录地点', name: 'address', width: 60 },
+            { label: '登录终端', name: 'userAgent', width: 80 },
         	{ label: '登录时间', name: 'updateTime', width: 80 },
-			{ label: '失效时间', name: 'expireTime', width: 80 }
-		
-			
+			{ label: '失效时间', name: 'expireTime', width: 80 }				
         ],
 		viewrecords: true,
         height: 385,
