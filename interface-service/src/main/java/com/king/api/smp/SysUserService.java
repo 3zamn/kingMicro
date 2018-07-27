@@ -43,7 +43,7 @@ public interface SysUserService extends BaseService<SysUser>{
 	 * 生成token
 	 * @param userId  用户ID,String ip
 	 */
-	JsonResponse createToken(long userId,String ip);
+	JsonResponse createToken(long userId,String ip,String userAgent);
 
 	/**
 	 * 退出，修改token值
