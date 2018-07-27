@@ -24,6 +24,7 @@ import com.king.common.annotation.DataFilter;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.constant.Constant;
+import com.king.common.utils.network.AddressUtils;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.redis.TokenGenerator;
@@ -148,7 +149,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
 
 	@Override
-	public JsonResponse createToken(long userId,String ip) {
+	public JsonResponse createToken(long userId,String ip,String userAgent) {
 		//生成一个token
 		String token = TokenGenerator.generateValue();
 		SysUser sysUser=sysUserDao.queryObject(userId);
@@ -166,6 +167,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		tokenEntity.setIp(ip);
 		tokenEntity.setUpdateTime(now);
 		tokenEntity.setExpireTime(expireTime);
+		tokenEntity.setAddress(AddressUtils.getRealAddressByIP(ip));
+		tokenEntity.setUserAgent(userAgent);
 		tokenGenerator.saveOrUpdate(tokenEntity);
 		//缓存权限
 		String permKey =RedisKeys.getPermsKey(userId,token);
