@@ -25,6 +25,10 @@ public class SysUserToken implements Serializable {
 	private String token;
 	//IP
 	private String ip;
+	//终端
+    private String  userAgent;
+  //地址
+    private String address;
 	//过期时间
 	@ApiModelProperty("过期时间")
 	private Date expireTime;
@@ -99,5 +103,18 @@ public class SysUserToken implements Serializable {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+	public String getUserAgent() {
+		return userAgent;
+	}
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
 	
 }

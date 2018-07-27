@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 返回数据格式定义
+ * swagger返回数据格式定义
  * @author King chen
  * @emai 396885563@qq.com
  * @data2018年5月25日

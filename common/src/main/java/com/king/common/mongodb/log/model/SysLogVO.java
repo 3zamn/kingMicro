@@ -21,7 +21,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Document(collection = "SysLogVO")
 @CompoundIndexes({//模糊查询索引
-    @CompoundIndex(name = "username_operation_method", def = "{'username': 1, 'operation': 1,'method': 1}")
+    @CompoundIndex(name = "username_operation_method", def = "{'username': 1, 'operation': 1,'method': 1}"),
+    @CompoundIndex(name = "ip_username_createDate", def = "{'ip': 1,'username': 1,'createDate': 1}")
 })
 public class SysLogVO implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -13,6 +13,8 @@ import java.util.List;
 
 import com.king.common.utils.pattern.StringToolkit;
 
+import nl.bitwalker.useragentutils.UserAgent;
+
 
 /**
  * @author King chen
@@ -219,6 +221,26 @@ public class NetUtils {
 		} catch (IOException e) {
 		}
 		return address;
+	}
+	  
+	/**
+	 * 获取终端信息
+	 * @param userAgent
+	 * @return
+	 */
+	public static String getUserAgent(String userAgent) {
+		try {
+			UserAgent userAgentStr = UserAgent.parseUserAgentString(userAgent);
+			// 获取客户端操作系统
+			String os = userAgentStr.getOperatingSystem().getName();
+			// 获取客户端浏览器
+			String browser = userAgentStr.getBrowser().getName();
+			return os + "/" + browser;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+			// TODO: handle exception
+		}
 	}
 
 	/**

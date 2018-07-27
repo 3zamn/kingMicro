@@ -29,7 +29,7 @@ public class Page implements Pageable{
 	}
 
 	@Override
-	public int getOffset() {
+	public long getOffset() {
 		// TODO Auto-generated method stub
 		return offset;
 	}
