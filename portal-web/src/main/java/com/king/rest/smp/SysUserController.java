@@ -73,8 +73,8 @@ public class SysUserController extends AbstractController {
 	 * 在线用户列表
 	 * 在线用户不多、暂时内存中分页
 	 */
-	@Log(" 在线用户列表")
-	@ApiOperation(value = " 在线用户列表",response=Response.class, notes = "权限编码（sys:users:online）")
+	@Log(" 当前在线用户列表")
+	@ApiOperation(value = " 当前在线用户列表",response=Response.class, notes = "权限编码（sys:users:online）")
 	@GetMapping("/online")
 	@RequiresPermissions("sys:users:online")
 	public JsonResponse online(@RequestParam Map<String, Object> params){
@@ -104,7 +104,10 @@ public class SysUserController extends AbstractController {
 		String t =getUser().getToken();
 		if(ArrayUtils.contains(tokens, t)){
 			return JsonResponse.error("当前用户不能注销!");
-		}	
+		}
+		if(getUser().getUserId() == Constant.SUPER_ADMIN){
+			return JsonResponse.error("系统管理员不能注销!");
+		}
 		for(String token:tokens){
 			redisUtils.delete(RedisKeys.getTokenKey(token));
 		}

@@ -26,6 +26,7 @@ import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
+import com.king.common.utils.network.NetUtils;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.redis.TokenGenerator;
@@ -65,7 +66,7 @@ public class SysLoginController extends AbstractController {
 	/**
 	 * 验证码
 	 */
-@SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation")
 	//	@Log("获取验证码")
 	@ApiOperation(value = "获取验证码")
 	@GetMapping("captcha.jpg")
@@ -104,6 +105,7 @@ public class SysLoginController extends AbstractController {
 		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
 		// 获取IP地址
 		String ip =IPUtils.getIpAddr(request);
+		String userAgent=NetUtils.getUserAgent(request.getHeader("User-Agent"));
 		String errorIPKey= RedisKeys.getErrorIPKey(ip, username);
 		String value=redisUtils.get(errorIPKey);
 		String errorKey= RedisKeys.getLoginKey(username);
@@ -149,7 +151,7 @@ public class SysLoginController extends AbstractController {
 			redisUtils.delete(errorKey);
 		}
 		//生成token，并保存到redis
-		JsonResponse r = sysUserService.createToken(user.getUserId(),ip);		
+		JsonResponse r = sysUserService.createToken(user.getUserId(),ip,userAgent);		
 		r.get("token");
 		return r;
 	}
