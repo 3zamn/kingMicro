@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.king.dao.OssWaterSettingDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.king.dal.gen.model.oss.OssWaterSetting" id="BaseResultMap">
+        <result property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="enable" column="enable" jdbcType="BOOLEAN"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="fontSize" column="font_size" jdbcType="VARCHAR"/>
+        <result property="waterColor" column="water_color" jdbcType="INTEGER"/>
+        <result property="waterContent" column="water_content" jdbcType="VARCHAR"/>
+        <result property="waterPosition" column="water_position" jdbcType="VARCHAR"/>
+        <result property="waterWidth" column="water_width" jdbcType="INTEGER"/>
+        <result property="waterHeigth" column="water_heigth" jdbcType="INTEGER"/>
+        <result property="marginX" column="margin_x" jdbcType="INTEGER"/>
+        <result property="marginY" column="margin_y" jdbcType="INTEGER"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="DATE"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.king.dal.gen.model.oss.OssWaterSetting">
+		select * from oss_water_setting where id = #{value}
+	</select>
+	
+	<select id="queryByUser" resultType="com.king.dal.gen.model.oss.OssWaterSetting">
+		select * from oss_water_setting where user_id = #{userId} and enable=true
+	</select>
+
+	<select id="queryList" resultType="com.king.dal.gen.model.oss.OssWaterSetting">
+	<!-- 数据量大时,此分页效率不高。建议改为:select * from table where id &lt;=(select id from table order by id  desc limit #{offset}, 1) order by id desc limit #{limit}) -->
+		select * from oss_water_setting
+		<where>
+			<if test="searchSql!= null and searchSql.trim() != ''">
+			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
+				${searchSql}
+			</if>
+		</where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from oss_water_setting 
+		<where>
+			<if test="searchSql!= null and searchSql.trim() != ''">
+			<!-- 多字段模糊查询、多列精确查询、范围查询的组合查询sql -->
+				${searchSql}
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.king.dal.gen.model.oss.OssWaterSetting" useGeneratedKeys="true" keyProperty="id">
+		insert into oss_water_setting
+		(
+			`user_id`, 
+			`enable`, 
+			`type`, 
+			`font_size`, 
+			`water_color`, 
+			`water_content`, 
+			`water_position`, 
+			`water_width`, 
+			`water_heigth`, 
+			`margin_x`, 
+			`margin_y`, 
+			`creator`, 
+			`create_time`
+		)
+		values
+		(
+			#{userId}, 
+			#{enable}, 
+			#{type}, 
+			#{fontSize}, 
+			#{waterColor}, 
+			#{waterContent}, 
+			#{waterPosition}, 
+			#{waterWidth}, 
+			#{waterHeigth}, 
+			#{marginX}, 
+			#{marginY}, 
+			#{creator}, 
+			#{createTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.king.dal.gen.model.oss.OssWaterSetting">
+		update oss_water_setting 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="enable != null">`enable` = #{enable}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="fontSize != null">`font_size` = #{fontSize}, </if>
+			<if test="waterColor != null">`water_color` = #{waterColor}, </if>
+			<if test="waterContent != null">`water_content` = #{waterContent}, </if>
+			<if test="waterPosition != null">`water_position` = #{waterPosition}, </if>
+			<if test="waterWidth != null">`water_width` = #{waterWidth}, </if>
+			<if test="waterHeigth != null">`water_heigth` = #{waterHeigth}, </if>
+			<if test="marginX != null">`margin_x` = #{marginX}, </if>
+			<if test="marginY != null">`margin_y` = #{marginY}, </if>
+			<if test="creator != null">`creator` = #{creator}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from oss_water_setting where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from oss_water_setting where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="queryBatch">
+		  select * from oss_water_setting where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</select>
+
+</mapper>
