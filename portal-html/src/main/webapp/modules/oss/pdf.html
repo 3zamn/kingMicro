@@ -8,44 +8,139 @@
 <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../static/css/font-awesome.min.css">
 <link rel="stylesheet" href="../../static/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../../static/plugins/ztree/css/metroStyle/metroStyle.css">
 <link rel="stylesheet" href="../../static/css/main.css">
-<link rel="stylesheet" href="../../static/plugins/element-ui-2.3.9/lib/theme-chalk/index.css">
 <script src="../../static/libs/jquery.min.js"></script>
 <script src="../../static/plugins/layer/layer.js"></script>
 <script src="../../static/libs/bootstrap.min.js"></script>
 <script src="../../static/libs/vue.min.js"></script>
 <script src="../../static/plugins/jqgrid/grid.locale-cn.js"></script>
 <script src="../../static/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../../static/plugins/ztree/jquery.ztree.all.min.js"></script>
 <script src="../../static/js/common.js"></script>
 <script src="../../static/libs/ajaxupload.js"></script>
-<script src="../../static/plugins/element-ui-2.3.9/lib/index.js"></script>
 </head>
 <body>
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
 		<div class="grid-btn">
 			<a class="btn btn-primary" @click="reload"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
-			<!-- <a v-if="hasPermission('oss:pdf:upload')"  class="btn btn-primary" id="upload"><i class="fa fa-plus"></i>&nbsp;上传文件</a> -->
-			<a v-if="hasPermission('oss:pdf:upload')"  class="btn btn-primary" @click="upload"><i class="fa fa-plus"></i>&nbsp;上传文件</a>
+			<a v-if="hasPermission('oss:pdf:upload')"  class="btn btn-primary" id="upload"><i class="fa fa-plus"></i>&nbsp;上传文件</a>
+			<a v-if="hasPermission('oss:water:setting')"  class="btn btn-primary" @click="setWater"><i class="fa fa-sun-o"></i>&nbsp;水印设置</a>
 			<a v-if="hasPermission('oss:pdf:delete')"  class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>
     </div>
-		<div v-show="!showList" class="panel panel-default">
-			<div class="panel-heading">{{title}}</div>
-			<div id="app">
-				<el-upload class="upload-demo" ref="upload"
-					action="https://jsonplaceholder.typicode.com/posts/"
-					:on-preview="handlePreview" :on-remove="handleRemove"
-					:file-list="fileList" :auto-upload="false"> <el-button
-					slot="trigger" size="small" type="primary">选取文件</el-button> <el-button
-					style="margin-left: 10px;" size="small" type="success"
-					@click="submitUpload">上传到服务器</el-button>
-				<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-				</el-upload>
+	 <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-2 control-label">水印类型</div>
+				<div >
+					<label class="radio-inline">
+						<input type="radio" name="type" value="1" v-model="water.type"/> 二维码
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="type" value="2" v-model="water.type"/> 文字
+					</label>
+				</div>
 			</div>
-		</div>
+			<div v-show="water.type ==null || water.type==1">
+				<div class="form-group">
+					<div class="col-sm-2 control-label">水印位置</div>
+					<div class="col-sm-10">
+					<select v-model="water.waterPosition" class="form-control"  name="waterPosition" id="waterPosition" >
+				      	<option v-for="(item,index) in dicSelect"  :value="item.value">{{ item.text }}</option>
+					</select>
+				</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">水印高</div>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" v-model="water.waterHeigth" placeholder="水印高"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">水印宽</div>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" v-model="water.waterWidth" placeholder="水印宽"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">X轴边距</div>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" v-model="water.marginX" placeholder="X轴边距"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">Y轴边距</div>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" v-model="water.marginY" placeholder="Y轴边距"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">水印内容</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="water.waterContent" placeholder="水印内容"/>
+						
+					</div>
+				</div>
+			</div>
+			<div v-show="water.type == 2">
+				<div class="form-group">
+					<div class="col-sm-2 control-label">水印位置</div>
+					<div class="col-sm-10">
+					<select v-model="water.waterPosition" class="form-control"  name="waterPosition" id="waterPosition" >
+				      	<option v-for="(item,index) in dicSelect"  :value="item.value">{{ item.text }}</option>
+					</select>
+				</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">水印颜色</div>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" v-model="water.waterColor" placeholder="水印颜色argb值"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">字体大小</div>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" v-model="water.fontSize" placeholder="字体大小"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">X轴边距</div>
+					<div class="col-sm-10">
+						<input type="number" class="form-control" v-model="water.marginX" placeholder="X轴边距"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-2 control-label">水印内容</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="water.waterContent" placeholder="水印内容"/>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label">状态</div>
+				<div >
+					<label class="radio-inline">
+						<input type="radio" name="enable" value="false" v-model="water.enable"/> 禁用
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="enable" value="true" v-model="water.enable"/> 启用 
+					</label>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>	
 	</div>
 
 <script src="../../static/js/modules/oss/pdf.js"></script>

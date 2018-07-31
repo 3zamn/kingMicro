@@ -42,7 +42,7 @@ $(function () {
         }
     });
 
- /*   new AjaxUpload('#upload', {
+    new AjaxUpload('#upload', {
         action: baseURL + 'oss/pdf/upload?token=' + token,
         name: 'file',
         autoSubmit:true,
@@ -52,8 +52,8 @@ $(function () {
                 alert("云存储配置未配置");
                 return false;
             }
-            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
-                alert('只支持jpg、png、gif格式的图片！');
+            if (!(extension && /^(doc|docx|xls|xlsx|ppt|pptx|png|svg|rtf)$/.test(extension.toLowerCase()))){
+                alert('只支持doc,docx,xls,xlsx,ppt,pptx,png,svg,rtf格式的图片！');
                 return false;
             }
         },
@@ -66,37 +66,17 @@ $(function () {
                  alert(r.msg);
              }
         }
-    });*/
+    });
 
 });
-
-
-var Main = {
-	    data() {
-	      return {
-	        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
-	      };
-	    },
-	    methods: {
-	      submitUpload() {
-	        this.$refs.upload.submit();
-	      },
-	      handleRemove(file, fileList) {
-	        console.log(file, fileList);
-	      },
-	      handlePreview(file) {
-	        console.log(file);
-	      }
-	    }
-	  }
-	var Ctor = Vue.extend(Main)
-	new Ctor().$mount('#app')
 
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		showList: true,
 		title: null,
+		water: {},
+		dicSelect:{},
         config: {}
 	},
     created: function(){
@@ -106,16 +86,54 @@ var vm = new Vue({
 		query: function () {
 			vm.reload();
 		},
+		 getDic: function () {//下拉选项字典查询
+			 $.get(baseURL + "sys/dic/query/"+"water", function(r){
+			        vm.dicSelect = r.data;
+			   });
+		},
 		upload: function(){
 	            vm.showList = false;
-	            vm.title = "上传office文档";
-	           
+	            vm.title = "上传office文档";           
 	        },
 		getConfig: function () {
             $.getJSON(baseURL + "oss/file/config", function(r){
 				vm.config = r.data;
             });
         },
+        getWater: function () {
+            $.getJSON(baseURL + "oss/pdf/water", function(r){
+            	if(r.data==null){
+            		  vm.water = {type:1,enable:0};
+            	}else{
+            		vm.water = r.data;
+            	}
+				
+            });
+        },
+		setWater: function(){
+			vm.showList = false;
+			vm.title = "水印配置";
+			vm.getDic();
+			vm.getWater();
+		},
+		saveOrUpdate: function () {
+			var url = baseURL + "oss/pdf/waterSetting";
+			$.ajax({
+				type: "POST",
+			    url: url,
+                contentType: "application/json",
+			    data: JSON.stringify(vm.water),
+			    success: function(r){
+			    	if(r.code === 200){
+						alert('操作成功', function(){
+							vm.reload();
+						});
+					}else{
+						alert(r.msg);
+					}
+				}
+			});
+		},
 		
         del: function () {
             var ossIds = getSelectedRows();
