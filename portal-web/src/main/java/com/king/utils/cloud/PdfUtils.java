@@ -37,11 +37,11 @@ public class PdfUtils {
 	 * @param imageUrl 二维码图片路径
 	 * @param imageWidth 图片高
 	 * @param imageHeigth 图片宽
-	 * @param x 二维码放置的X轴边距
-	 * @param y 二维码放置的Y轴边距
+	 * @param margin_x 二维码放置的X轴边距
+	 * @param margin_y 二维码放置的Y轴边距
 	 * @param position 对齐方式：left_top、right_top、left_bottom、right_bottom、middle
 	 */
-	public static void setImageWater(String sourceFilePath, String fileWaterMarkPath, String imageUrl, int imageWidth,int imageHeigth, int x, int y, Position position) {
+	public static void setImageWater(String sourceFilePath, String fileWaterMarkPath, String imageUrl, int imageWidth,int imageHeigth, int margin_x, int margin_y, Position position) {
 		PdfReader reader=null;
 		PdfStamper stamp=null;
 		try {
@@ -57,22 +57,22 @@ public class PdfUtils {
 				float heigth = reader.getPageSize(i).getHeight();// 每页高
 				switch (position) {// 水印位置
 				case LEFT_TOP:
-					img.setAbsolutePosition(x, heigth - imageHeigth - y);
+					img.setAbsolutePosition(margin_x, heigth - imageHeigth - margin_y);
 					break;
 				case LEFT_BUTTOM:
-					img.setAbsolutePosition(x, y);
+					img.setAbsolutePosition(margin_x, margin_y);
 					break;
 				case RIGHT_TOP:
-					img.setAbsolutePosition(width - imageWidth - x, heigth - imageHeigth - y);
+					img.setAbsolutePosition(width - imageWidth - margin_x, heigth - imageHeigth - margin_y);
 					break;
 				case RIGHT_BUTTOM:
-					img.setAbsolutePosition(width - imageWidth - x, y);
+					img.setAbsolutePosition(width - imageWidth - margin_x, margin_y);
 					break;
 				case MIDDLE:
-					img.setAbsolutePosition(width / 2 - imageWidth / 2 - x, heigth / 2 - imageHeigth / 2 - y);
+					img.setAbsolutePosition(width / 2 - imageWidth / 2 - margin_x, heigth / 2 - imageHeigth / 2 - margin_y);
 					break;
 				default:// 默认右下
-					img.setAbsolutePosition(width - imageWidth - x, y);
+					img.setAbsolutePosition(width - imageWidth - margin_x, margin_y);
 					break;
 				}
 				content = stamp.getOverContent(i);// 在内容上方加水印
@@ -108,7 +108,7 @@ public class PdfUtils {
 	 * @param position 水印位置
 	 * @param offset_x 水印位置偏移量
 	 */
-	public static void addTextWater(String sourceFilePath, String fileWaterMarkPath, String waterMarkContent,BaseColor markContentColor,float fontSize,Position position,int offset_x) {
+	public static void addTextWater(String sourceFilePath, String fileWaterMarkPath, String waterMarkContent,BaseColor markContentColor,float fontSize,Position position,int margin_x) {
 		PdfReader reader=null;
 		PdfStamper stamp=null;
 		try {
@@ -131,11 +131,11 @@ public class PdfUtils {
 					y= 5;//边距5
 					break;
 				case RIGHT_TOP:
-					x= width-offset_x;
+					x= width-margin_x;
 					y= heigth-5;
 					break;
 				case RIGHT_BUTTOM:
-					x= width-offset_x;
+					x= width-margin_x;
 					y= 5;
 					break;
 				case MIDDLE:
@@ -143,7 +143,7 @@ public class PdfUtils {
 					y= heigth/2;
 					break;
 				default:// 默认右下
-					x= width-offset_x;
+					x= width-margin_x;
 					y= 5;
 					break;
 				}
@@ -207,6 +207,28 @@ public class PdfUtils {
 			image.flush();
 		}
 		document.dispose();
+	}
+	
+	/**
+	 * 转换
+	 * @param postion
+	 * @return
+	 */
+	public static Position convert(String postion){
+		if(postion.equals(Position.LEFT_TOP.toString())){
+			return Position.LEFT_TOP;
+		}else if(postion.equals(Position.LEFT_BUTTOM.toString())){
+			return Position.LEFT_BUTTOM;
+		}else if(postion.equals(Position.RIGHT_TOP.toString())){
+			return Position.RIGHT_TOP;
+		}else if(postion.equals(Position.MIDDLE.toString())){
+			return Position.MIDDLE;
+		}else if(postion.equals(Position.RIGHT_BUTTOM.toString())){
+			return Position.RIGHT_BUTTOM;
+		}else{
+			return Position.LEFT_BUTTOM;
+		}
+
 	}
 	
 	public static void main(String[] args) {

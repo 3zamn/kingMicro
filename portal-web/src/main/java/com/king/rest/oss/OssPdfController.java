@@ -2,6 +2,7 @@ package com.king.rest.oss;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
@@ -35,22 +36,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
+import com.itextpdf.text.BaseColor;
 import com.king.api.oss.OssDoc2pdfService;
 import com.king.api.smp.SysConfigService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.constant.ConfigConstant;
+import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.file.IoUtil;
 import com.king.common.utils.pattern.StringToolkit;
+import com.king.common.utils.validator.ValidatorUtils;
+import com.king.common.utils.validator.group.AliyunGroup;
+import com.king.common.utils.validator.group.QcloudGroup;
+import com.king.common.utils.validator.group.QiniuGroup;
 import com.king.dal.gen.model.oss.CloudStorageConfig;
 import com.king.dal.gen.model.oss.OssDoc2pdf;
+import com.king.dal.gen.model.oss.OssWaterSetting;
 import com.king.utils.AbstractController;
 import com.king.utils.Query;
 import com.king.utils.cloud.CloudStorageService;
 import com.king.utils.cloud.DocConverter;
 import com.king.utils.cloud.OSSFactory;
+import com.king.utils.cloud.PdfUtils;
+import com.king.utils.cloud.QrCodeUtil;
 import com.king.utils.pattern.XssHttpServletRequestWrapper;
 
 import io.swagger.annotations.Api;
@@ -89,30 +100,35 @@ public class OssPdfController extends AbstractController {
 	}
 
 	/**
-	 * 信息
+	 * 获取水印信息
 	 */
-	@Log("文件上传查询信息")
-	@ApiOperation(value = "查询信息", notes = "权限编码（oss:pdf:info）")
-	@GetMapping("/info/{id}")
-	@RequiresPermissions("oss:pdf:info")
-	public JsonResponse info(@PathVariable("id") Object id) {
-		OssDoc2pdf ossDoc2pdf = ossDoc2pdfService.queryObject(id);
+	@Log("获取水印信息")
+	@ApiOperation(value = "获取水印信息", notes = "权限编码（oss:water:getting）")
+	@GetMapping("/water")
+	@RequiresPermissions("oss:water:getting")
+	public JsonResponse info() {
+		OssWaterSetting ossWaterSetting = ossDoc2pdfService.queryWaterSetting(getUserId());
 
-		return JsonResponse.success(ossDoc2pdf);
+		return JsonResponse.success(ossWaterSetting);
 	}
 
 	/**
-	 * 修改
+	 * 修改水印
 	 */
-	@Log("文件上传修改")
-	@ApiOperation(value = "修改", notes = "权限编码（oss:pdf:update）")
-	@PostMapping("/update")
-	@RequiresPermissions("oss:pdf:update")
-	public JsonResponse update(@RequestBody OssDoc2pdf ossDoc2pdf) {
-		ossDoc2pdfService.update(ossDoc2pdf);
+	@Log("修改水印")
+	@ApiOperation(value = "修改", notes = "权限编码（oss:water:setting）")
+	@PostMapping("/waterSetting")
+	@RequiresPermissions("oss:water:setting")
+	public JsonResponse saveOrUpdate(@RequestBody OssWaterSetting ossWaterSetting) {
+		ossWaterSetting.setUserId(getUserId());
+		ossWaterSetting.setCreator(getUser().getUsername());
+		ossWaterSetting.setCreateTime(new Date());
+		ossDoc2pdfService.saveOrUpdate(ossWaterSetting);
 
 		return JsonResponse.success();
 	}
+	
+	
 
 	/**
 	 * 删除本地文件并循环删除云文件
@@ -204,9 +220,23 @@ public class OssPdfController extends AbstractController {
 	    	try {
 	    		@SuppressWarnings("rawtypes")
 				Map data=queue.poll(); 		
-	    		dest= StringToolkit.getObjectString(data.get("filePath"));   	
-	    		if(DocConverter.docConvertPdf(new File(dest),dest.substring(0, dest.lastIndexOf("."))+".pdf")){//转换成pdf
-					File pdf= new File(dest.substring(0, dest.lastIndexOf("."))+".pdf");
+	    		dest= StringToolkit.getObjectString(data.get("filePath")); 
+	    		String pdfPath=dest.substring(0, dest.lastIndexOf("."))+".pdf";
+	    		String newPdf=dest.substring(0, dest.lastIndexOf("."))+new Date().getTime()+".pdf";
+	    		if(DocConverter.docConvertPdf(new File(dest),pdfPath)){//转换成pdf			
+					//添加水印
+					OssWaterSetting ossWaterSetting = ossDoc2pdfService.queryWaterSetting(getUserId());
+					if(ossWaterSetting!=null){
+						if(ossWaterSetting.getType().intValue()==1){//二维码水印							
+							if(QrCodeUtil.createQrCode(new FileOutputStream(new File(dest.substring(0, dest.lastIndexOf("."))+"qrcode.jpg")), ossWaterSetting.getWaterContent(), ossWaterSetting.getWaterWidth(), "JPEG")){
+								PdfUtils.setImageWater(pdfPath, newPdf, dest.substring(0, dest.lastIndexOf("."))+"qrcode.jpg", ossWaterSetting.getWaterWidth(), ossWaterSetting.getWaterHeigth(), ossWaterSetting.getMarginX(), ossWaterSetting.getMarginY(), PdfUtils.convert(ossWaterSetting.getWaterPosition()));
+							}				
+						}else{//文字水印
+							BaseColor color = new BaseColor(ossWaterSetting.getWaterColor());
+							PdfUtils.addTextWater(pdfPath, newPdf, ossWaterSetting.getWaterContent(), BaseColor.BLACK, Float.valueOf(ossWaterSetting.getFontSize()), PdfUtils.convert(ossWaterSetting.getWaterPosition()), ossWaterSetting.getMarginX());
+						}			
+					}
+					File pdf= new File(newPdf);
 					// 上传文件
 					String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 					CloudStorageService cloudStorage = OSSFactory.build();// 初始化获取配置

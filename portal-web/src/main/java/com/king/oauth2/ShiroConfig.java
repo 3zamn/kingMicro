@@ -78,6 +78,7 @@ public class ShiroConfig {
         filterMap.put("/", "anon");
         filterMap.put("/monitoring/**", "anon");
         filterMap.put("/oss/pdf/view/**", "anon");//测试
+        filterMap.put("/downlod**", "anon");//测试
         filterMap.put("/**", "oauth2");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 

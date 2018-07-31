@@ -100,7 +100,7 @@ public class QrCodeUtil {
      */
     public static void main(String[] args) throws IOException, WriterException {  
         
-        createQrCode(new FileOutputStream(new File("D:\\pdftest1\\qrcode.jpg")),"http://chenhx.cn/portal-html/login.html",60,"JPEG");
+        createQrCode(new FileOutputStream(new File("D:\\pdftest1\\qrcode.jpg")),"http://chenhx.cn/portal-html/login.html",88,"JPEG");
         System.out.println(readQrCode(new FileInputStream(new File("D:\\pdftest1\\qrcode.jpg"))));  
     }  
   

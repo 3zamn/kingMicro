@@ -167,7 +167,7 @@ public class OssFileController extends AbstractController{
     @Log("保存云存储配置信息")
 	@ApiOperation(value = "保存云存储配置信息",notes = "权限编码（oss:file:config）")
 	@RequestMapping("/saveConfig")
-	@RequiresPermissions("oss:file:config")
+	@RequiresPermissions("oss:file:saveConfig")
 	public JsonResponse saveConfig(@RequestBody CloudStorageConfig config){
 		//校验类型
 		ValidatorUtils.validateEntity(config);
