@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @email 396885563@qq.com
  * @date 2018-07-30 10:51:12
  */
- @ApiModel("")
+ @ApiModel("水印设置")
 public class OssWaterSetting implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -24,6 +24,9 @@ public class OssWaterSetting implements Serializable {
 	//启用状态,0:否，1:是
 	@ApiModelProperty("启用状态,0:否，1:是")
 	private Boolean enable;
+	//是否生成图片,0:否，1:是
+	@ApiModelProperty("启用状态,0:否，1:是")
+	private Boolean isConvertImg;
 	//水印类型，1:二维码水印，2:文字水印
 	@ApiModelProperty("水印类型，1:二维码水印，2:文字水印")
 	private Integer type;
@@ -93,6 +96,13 @@ public class OssWaterSetting implements Serializable {
 	 */
 	public Boolean getEnable() {
 		return enable;
+	}
+	
+	public Boolean getIsConvertImg() {
+		return isConvertImg;
+	}
+	public void setIsConvertImg(Boolean isConvertImg) {
+		this.isConvertImg = isConvertImg;
 	}
 	/**
 	 * 设置：水印类型，1:二维码水印，2:文字水印

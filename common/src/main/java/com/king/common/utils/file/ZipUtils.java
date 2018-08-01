@@ -17,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
+ * 文件压缩
  * @author King chen
  * @emai 396885563@qq.com
  * @data2018年4月20日
@@ -114,13 +115,13 @@ public class ZipUtils {
 					paramArrayOfFile[i].getName());
 	}
 
-	public static String zipDir(String paramString) throws IOException {
-		String str = paramString + ".zip";
-		zip(str, new File(paramString));
+	public static String zipDir(String desDir) throws IOException {
+		String str = desDir+ ".zip";
+		zip(str, new File(desDir));
 		return str;
 	}
 
-	public static void zipDir(String paramString1, String paramString2)
+	public static void zipDirs(String paramString1, String paramString2)
 			throws IOException {
 		zip(paramString2, new File(paramString1));
 	}
@@ -159,7 +160,9 @@ public class ZipUtils {
 	}
 
 	public static void main(String[] args) throws Exception{
-		String filePath = "C:\\Users\\Administrator\\Desktop\\commons_core.zip";
-		unzip(filePath, "d:\\codegen\\commons_core");
+		/*String filePath = "C:\\Users\\Administrator\\Desktop\\commons_core.zip";
+		unzip(filePath, "d:\\codegen\\commons_core");*/
+		String desDir="D:\\chx\\workspace_kingMicro\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\portal-web\\WEB-INF\\classes\\gen\\天猫Java并发编程常识";
+		zipDir(desDir);
 	}
 }
