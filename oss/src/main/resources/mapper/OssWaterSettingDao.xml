@@ -8,6 +8,7 @@
         <result property="id" column="id" jdbcType="BIGINT"/>
         <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="enable" column="enable" jdbcType="BOOLEAN"/>
+        <result property="isConvertImg" column="is_convert_img" jdbcType="BOOLEAN"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="fontSize" column="font_size" jdbcType="VARCHAR"/>
         <result property="waterColor" column="water_color" jdbcType="INTEGER"/>
@@ -66,6 +67,7 @@
 		(
 			`user_id`, 
 			`enable`, 
+			`is_convert_img`, 
 			`type`, 
 			`font_size`, 
 			`water_color`, 
@@ -82,6 +84,7 @@
 		(
 			#{userId}, 
 			#{enable}, 
+			#{isConvertImg}, 
 			#{type}, 
 			#{fontSize}, 
 			#{waterColor}, 
@@ -101,6 +104,7 @@
 		<set>
 			<if test="userId != null">`user_id` = #{userId}, </if>
 			<if test="enable != null">`enable` = #{enable}, </if>
+			<if test="isConvertImg != null">`is_convert_img` = #{isConvertImg}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="fontSize != null">`font_size` = #{fontSize}, </if>
 			<if test="waterColor != null">`water_color` = #{waterColor}, </if>
