@@ -11,13 +11,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +26,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSON;
 import com.itextpdf.text.BaseColor;
 import com.king.api.oss.OssDoc2pdfService;
 import com.king.api.smp.SysConfigService;
@@ -44,14 +40,9 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.constant.ConfigConstant;
-import com.king.common.utils.constant.Constant;
-import com.king.common.utils.exception.RRException;
 import com.king.common.utils.file.IoUtil;
+import com.king.common.utils.file.ZipUtils;
 import com.king.common.utils.pattern.StringToolkit;
-import com.king.common.utils.validator.ValidatorUtils;
-import com.king.common.utils.validator.group.AliyunGroup;
-import com.king.common.utils.validator.group.QcloudGroup;
-import com.king.common.utils.validator.group.QiniuGroup;
 import com.king.dal.gen.model.oss.CloudStorageConfig;
 import com.king.dal.gen.model.oss.OssDoc2pdf;
 import com.king.dal.gen.model.oss.OssWaterSetting;
@@ -84,7 +75,7 @@ public class OssPdfController extends AbstractController {
 	@Autowired
 	private SysConfigService sysConfigService;
 //	BlockingQueue<String> queue = new LinkedBlockingQueue<String>(10);
-	BlockingQueue<Map> queue = new LinkedBlockingQueue<Map>(20);
+	volatile BlockingQueue<Map> queue = new LinkedBlockingQueue<Map>(20);
 
 	/**
 	 * 列表
@@ -133,7 +124,7 @@ public class OssPdfController extends AbstractController {
 	/**
 	 * 删除本地文件并循环删除云文件
 	 */
-	@Log("文件上传删除")
+	@Log("文件删除")
 	@ApiOperation(value = "删除", notes = "权限编码（oss:pdf:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("oss:pdf:delete")
@@ -178,14 +169,14 @@ public class OssPdfController extends AbstractController {
 	}
 
 	/**
-	 * 上传文件
+	 * 上传文件--暂时用异步，以后改成同步队列
 	 * Text documents (odt, doc, docx, rtf, etc.) 
 	 * Spreadsheet documents (ods, xls, xlsx, csv, etc.)
 	 * Spreadsheet documents (odp, ppt, pptx, etc.) 
 	 * Drawing documents (odg, png, svg, etc.)
 	 */
 	@ApiOperation(value = "文件上传", notes = "权限编码（oss:pdf:upload）")
-	@RequestMapping("/upload")
+	@PostMapping("/upload")
 	@RequiresPermissions("oss:pdf:upload")
 	public JsonResponse upload(@RequestParam("file") MultipartFile file) throws Exception {
 		if (file.isEmpty()) {	
@@ -221,12 +212,16 @@ public class OssPdfController extends AbstractController {
 	    		@SuppressWarnings("rawtypes")
 				Map data=queue.poll(); 		
 	    		dest= StringToolkit.getObjectString(data.get("filePath")); 
-	    		String pdfPath=dest.substring(0, dest.lastIndexOf("."))+".pdf";
-	    		String newPdf=dest.substring(0, dest.lastIndexOf("."))+new Date().getTime()+".pdf";
+	    		String path=dest.substring(0, dest.lastIndexOf("."));
+	    		String pdfPath=path+".pdf";
+	    		String newPdf=path+new Date().getTime()+".pdf";
+	    		String imgPath=path+File.separator;
+	    		CloudStorageService cloudStorage = OSSFactory.build();// 初始化获取配置
+				CloudStorageConfig config = cloudStorage.config;
 	    		if(DocConverter.docConvertPdf(new File(dest),pdfPath)){//转换成pdf			
 					//添加水印
 					OssWaterSetting ossWaterSetting = ossDoc2pdfService.queryWaterSetting(getUserId());
-					if(ossWaterSetting!=null){
+					if(ossWaterSetting!=null && ossWaterSetting.getEnable()){
 						if(ossWaterSetting.getType().intValue()==1){//二维码水印							
 							if(QrCodeUtil.createQrCode(new FileOutputStream(new File(dest.substring(0, dest.lastIndexOf("."))+"qrcode.jpg")), ossWaterSetting.getWaterContent(), ossWaterSetting.getWaterWidth(), "JPEG")){
 								PdfUtils.setImageWater(pdfPath, newPdf, dest.substring(0, dest.lastIndexOf("."))+"qrcode.jpg", ossWaterSetting.getWaterWidth(), ossWaterSetting.getWaterHeigth(), ossWaterSetting.getMarginX(), ossWaterSetting.getMarginY(), PdfUtils.convert(ossWaterSetting.getWaterPosition()));
@@ -234,18 +229,23 @@ public class OssPdfController extends AbstractController {
 						}else{//文字水印
 							BaseColor color = new BaseColor(ossWaterSetting.getWaterColor());
 							PdfUtils.addTextWater(pdfPath, newPdf, ossWaterSetting.getWaterContent(), BaseColor.BLACK, Float.valueOf(ossWaterSetting.getFontSize()), PdfUtils.convert(ossWaterSetting.getWaterPosition()), ossWaterSetting.getMarginX());
-						}			
+						}
+						pdfPath= newPdf;
+					}		
+					OssDoc2pdf oss = new OssDoc2pdf();
+					if(ossWaterSetting!=null && ossWaterSetting.getIsConvertImg()){//生成图片
+						PdfUtils.pdf2Pic(pdfPath, imgPath);			
+						String imgZip=ZipUtils.zipDir(path);//压缩
+						String img_url = cloudStorage.uploadSuffix(new FileInputStream(imgZip),".zip" );//上传图片压缩包
+						oss.setImg(img_url);//保存云端图片压缩文件地址
 					}
-					File pdf= new File(newPdf);
+					File pdf= new File(pdfPath);				
 					// 上传文件
-					String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-					CloudStorageService cloudStorage = OSSFactory.build();// 初始化获取配置
-					CloudStorageConfig config = cloudStorage.config;
+					String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));				
 					String doc_url = cloudStorage.uploadSuffix(new FileInputStream(dest), suffix);
 					String pdf_url = cloudStorage.uploadSuffix(new FileInputStream(pdf), ".pdf");
 					String size = new BigDecimal(file.getSize()).divide(new BigDecimal(1024), RoundingMode.HALF_UP) + " KB";
-					// 保存文件信息
-					OssDoc2pdf oss = new OssDoc2pdf();
+					// 保存文件信息			
 					oss.setType(config.getType() + "");
 					oss.setSize(size);
 					oss.setUrl(doc_url);

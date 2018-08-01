@@ -2,15 +2,11 @@ package com.king.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-
 import com.king.api.smp.SysConfigService;
-
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -83,6 +79,38 @@ public class SwaggerConfig {
             + "page:页码，limit:每页大小，sidx:排序字段(非必填)，order:排序，searchKey:模糊查询内容，keyParam:模糊查询的属性列，"
             + "property(属性列):精确查询内容，property(属性列): {begin:范围查询开始,end:范围查询结束}。例子:"
             + "limit=10&page=1&sidx=id&order=asc&searchKey=&keyParam=[\"username\",\"ip\",\"operation\",\"method\"]&status=&createDate={\"begin\":\"2018-05-21\",\"end\":\"2018-05-25\"}")
+            .termsOfServiceUrl("https://github.com/3zamn/kingMicro")
+            .version("1.0.0")
+            .build();
+    }
+    
+    /**
+     * 云盘服务
+     * @return
+     */
+    @Bean
+    public Docket ossApi(){  
+    	String enableSwagger =sysConfigService.getValue("enableSwagger");
+        ParameterBuilder tokenPar = new ParameterBuilder();  
+        List<Parameter> pars = new ArrayList<Parameter>();  
+        tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
+        pars.add(tokenPar.build());  
+        return new Docket(DocumentationType.SWAGGER_2)  
+        	.groupName("ossApi")  
+        	.enable(enableSwagger!=null?enableSwagger.equals("true"):false)
+            .select()  
+            .apis(RequestHandlerSelectors.basePackage("com.king.rest.oss"))  
+            .paths(PathSelectors.any())
+            .build()  
+            .globalOperationParameters(pars)  
+            .apiInfo(ossApiInfo());
+          //  .enable(enableSwagger);  
+    } 
+  
+    private ApiInfo ossApiInfo() {
+        return new ApiInfoBuilder()
+            .title("OSS云服务")
+            .description("接口文档。提示：Try it out时请输入当前用户的token")
             .termsOfServiceUrl("https://github.com/3zamn/kingMicro")
             .version("1.0.0")
             .build();

@@ -153,7 +153,7 @@ public class OssFileController extends AbstractController{
      */
 	@Log("云存储配置信息")
 	@ApiOperation(value = "云存储配置信息",notes = "权限编码（oss:file:config）")
-    @RequestMapping("/config")
+	@GetMapping("/config")
     @RequiresPermissions("oss:file:config")
     public JsonResponse config(){
         CloudStorageConfig config = sysConfigService.getConfigObject(KEY, CloudStorageConfig.class);
@@ -166,7 +166,7 @@ public class OssFileController extends AbstractController{
 	 */
     @Log("保存云存储配置信息")
 	@ApiOperation(value = "保存云存储配置信息",notes = "权限编码（oss:file:config）")
-	@RequestMapping("/saveConfig")
+    @PostMapping("/saveConfig")
 	@RequiresPermissions("oss:file:saveConfig")
 	public JsonResponse saveConfig(@RequestBody CloudStorageConfig config){
 		//校验类型
@@ -190,7 +190,7 @@ public class OssFileController extends AbstractController{
 	 * 上传文件
 	 */
 	@ApiOperation(value = "文件上传",notes = "权限编码（oss:file:upload）")
-	@RequestMapping("/upload")
+	@PostMapping("/upload")
 	@RequiresPermissions("oss:file:upload")
 	public JsonResponse upload(@RequestParam("file") MultipartFile file) throws Exception {
 		if (file.isEmpty()) {

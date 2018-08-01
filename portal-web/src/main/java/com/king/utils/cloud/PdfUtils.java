@@ -124,7 +124,7 @@ public class PdfUtils {
 				switch (position) {// 水印位置
 				case LEFT_TOP:
 					x= 5;
-					y= heigth-5;
+					y= heigth-15;
 					break;
 				case LEFT_BUTTOM:
 					x= 5;//边距5
@@ -132,7 +132,7 @@ public class PdfUtils {
 					break;
 				case RIGHT_TOP:
 					x= width-margin_x;
-					y= heigth-5;
+					y= heigth-15;
 					break;
 				case RIGHT_BUTTOM:
 					x= width-margin_x;
@@ -186,6 +186,10 @@ public class PdfUtils {
 	 */
 	public static void pdf2Pic(String pdfPath, String savePath) {
 		Document document = new Document();
+		File dir= new File(savePath);
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
 		document.setFile(pdfPath);
 		// 缩放比例、像素
 		float scale = 5.5f;

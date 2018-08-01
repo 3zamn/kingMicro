@@ -8,88 +8,105 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<dependencies>	
+	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>5.0.7.RELEASE</version>			
+			<version>5.0.7.RELEASE</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-	<dependency>
-		<groupId>org.apache.logging.log4j</groupId>
-		<artifactId>log4j-api</artifactId>
-		<version>2.10.0</version>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.logging.log4j</groupId>
-		<artifactId>log4j-core</artifactId>
-		<version>2.10.0</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-core</artifactId>
-	    <version>2.9.6</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-databind</artifactId>
-	    <version>2.9.6</version>
-	</dependency>
-	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
-	<dependency>
-	    <groupId>com.fasterxml.jackson.core</groupId>
-	    <artifactId>jackson-annotations</artifactId>
-	    <version>2.9.6</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.apache.logging.log4j</groupId>
-		<artifactId>log4j-web</artifactId>
-		<version>2.9.1</version>
-	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->	
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
+			<version>2.9.1</version>
+		</dependency>
+		<!-- office转pdf -->
+		<dependency>
+			<groupId>org.icepdf.pdf</groupId>
+			<artifactId>icepdf-core</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/icepdf-core.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.icepdf.pdf</groupId>
+			<artifactId>icepdf-core</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/icepdf-core.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.icepdf.pdf</groupId>
+			<artifactId>icepdf-pro</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/icepdf-pro.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.icepdf.pdf</groupId>
+			<artifactId>icepdf-pro-intl</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/icepdf-pro-intl.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.icepdf.pdf</groupId>
+			<artifactId>icepdf-viewer</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/icepdf-viewer.jar</systemPath>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.redisson/redisson -->
 		<!-- 测试 -->
-		<dependency>
-		    <groupId>org.redisson</groupId>
-		    <artifactId>redisson</artifactId>
-		    <version>3.7.5</version>
-		</dependency>
+	<!-- 	<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>3.7.5</version>
+		</dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
-		<dependency>
-		    <groupId>org.apache.curator</groupId>
-		    <artifactId>curator-framework</artifactId>
-		    <version>4.0.1</version>
-		</dependency>
+		<!-- <dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+			<version>4.0.1</version>
+		</dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-recipes -->
-		<dependency>
-		    <groupId>org.apache.curator</groupId>
-		    <artifactId>curator-recipes</artifactId>
-		    <version>4.0.1</version>
-		</dependency>
+		<!-- <dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-recipes</artifactId>
+			<version>4.0.1</version>
+		</dependency> -->
 		<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-client -->
+		<!-- <dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-client</artifactId>
+			<exclusions>		
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.zookeeper</groupId>
+		    		<artifactId>zookeeper</artifactId>
+				</exclusion>
+			</exclusions>
+			<version>4.0.1</version>
+		</dependency> -->
+
 		<dependency>
-		    <groupId>org.apache.curator</groupId>
-		    <artifactId>curator-client</artifactId>
-		    <version>4.0.1</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>5.0.7.RELEASE</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-test</artifactId>
-		    <version>5.0.7.RELEASE</version>		
-		    <scope>test</scope>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
 		</dependency>
-		
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>javax.servlet-api</artifactId>
-		    <version>4.0.1</version>
-		    <scope>provided</scope>
-		</dependency>
-	
+
 		<dependency>
 			<groupId>com.king</groupId>
 			<artifactId>interface-service</artifactId>
@@ -97,37 +114,37 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-core -->
 		<dependency>
-		    <groupId>org.jodconverter</groupId>
-		    <artifactId>jodconverter-core</artifactId>
-		    <version>4.2.0</version>
+			<groupId>org.jodconverter</groupId>
+			<artifactId>jodconverter-core</artifactId>
+			<version>4.2.0</version>
 		</dependency>
-		 <dependency>
-	        <groupId>org.jodconverter</groupId>
-	        <artifactId>jodconverter-local</artifactId>
-	        <version>4.2.0</version>
-   		 </dependency>
-   		 <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
 		<dependency>
-		    <groupId>com.itextpdf</groupId>
-		    <artifactId>itextpdf</artifactId>
-		    <version>5.5.13</version>
+			<groupId>org.jodconverter</groupId>
+			<artifactId>jodconverter-local</artifactId>
+			<version>4.2.0</version>
 		</dependency>
-		 <dependency>
-		    <groupId>com.itextpdf</groupId>
-		    <artifactId>itext-asian</artifactId>
-		    <version>5.2.0</version>
-		</dependency> 		 
-   		 <!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
-   		 <!-- 二维码生成/解析 -->
+		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
 		<dependency>
-		    <groupId>com.google.zxing</groupId>
-		    <artifactId>core</artifactId>
-		    <version>3.3.3</version>
-		</dependency>	   		 
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13</version>
+		</dependency>
 		<dependency>
-		  <groupId>com.google.zxing</groupId>
-		  <artifactId>javase</artifactId>
-		  <version>3.3.0</version>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-asian</artifactId>
+			<version>5.2.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
+		<!-- 二维码生成/解析 -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.axet</groupId>
@@ -152,14 +169,14 @@
 		<!-- 代码生成器所需jar -->
 		<dependency>
 			<artifactId>velocity</artifactId>
-            <groupId>org.apache.velocity</groupId>
+			<groupId>org.apache.velocity</groupId>
 			<version>1.7</version>
 		</dependency>
 		<!-- javamelody服务器性能监控 -->
 		<dependency>
-		    <groupId>net.bull.javamelody</groupId>
-		    <artifactId>javamelody-core</artifactId>
-		    <version>1.70.0</version>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-core</artifactId>
+			<version>1.70.0</version>
 		</dependency>
 
 		<dependency>
@@ -169,7 +186,7 @@
 			<exclusions>
 				<exclusion>
 					<groupId>com.fasterxml.jackson.core</groupId>
-           			 <artifactId>jackson-databind</artifactId>
+					<artifactId>jackson-databind</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -179,11 +196,64 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.7.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.7.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+      				<artifactId>guava</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-webmvc</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.plugin</groupId>
+					<artifactId>spring-plugin-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.plugin</groupId>
+					<artifactId>spring-plugin-metadata</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>io.swagger</groupId>
+					<artifactId>swagger-annotations</artifactId>
+				</exclusion>		
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.4.0</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>spring-core</artifactId>
@@ -200,82 +270,29 @@
 				<exclusion>
 					<artifactId>spring-context</artifactId>
 					<groupId>org.springframework</groupId>
-				</exclusion>		
-				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-      				<artifactId>jackson-core</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>com.fasterxml.jackson.core</groupId>
-     				<artifactId>jackson-databind</artifactId>
-				</exclusion>
-				<exclusion>
-					 <groupId>org.springframework.plugin</groupId>
-     				 <artifactId>spring-plugin-core</artifactId>
-				</exclusion>
-				<exclusion>
-					 <groupId>org.springframework.plugin</groupId>
-      				 <artifactId>spring-plugin-metadata</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>io.swagger</groupId>
-	      			<artifactId>swagger-annotations</artifactId>
-				</exclusion>	
-				<exclusion>
-					 <groupId>com.google.guava</groupId>
-      				<artifactId>guava</artifactId>
-				</exclusion>		 
-		</exclusions>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.apache.shiro</groupId>
-		    <artifactId>shiro-core</artifactId>
-		    <version>1.4.0</version>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.shiro</groupId>
-		    <artifactId>shiro-spring</artifactId>
-		    <version>1.4.0</version>
-		    <exclusions>
-				<exclusion>
-					<artifactId>spring-core</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-web</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-webmvc</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>spring-context</artifactId>
-					<groupId>org.springframework</groupId>
-				</exclusion>					
-				<exclusion>
-					 <groupId>log4j</groupId>
-            		<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
-            		<artifactId>slf4j-log4j12</artifactId>
+					<artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
 				<exclusion>
-					 <groupId>org.slf4j</groupId>
-          			 <artifactId>jcl-over-slf4j</artifactId>
-				</exclusion>						 	
-		</exclusions>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jcl-over-slf4j</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		
+
 	</dependencies>
 
 
 	<build>
-    <sourceDirectory>src/main/java </sourceDirectory>
-    <plugins>
-      <plugin>
+		<sourceDirectory>src/main/java </sourceDirectory>
+		<plugins>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -283,8 +300,12 @@
 					<compilerVersion>1.8</compilerVersion>
 					<source>1.8</source>
 					<target>1.8</target>
+					<compilerArguments>
+						<extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>
+						<bootclasspath>${java.home}\lib\rt.jar;${java.home}\lib\jce.jar</bootclasspath>
+					</compilerArguments>
 				</configuration>
 			</plugin>
-    </plugins>
-  </build>
+		</plugins>
+	</build>
 </project>

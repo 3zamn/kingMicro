@@ -2,11 +2,11 @@ package test.rock;
 
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.curator.RetryPolicy;
+/*import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
-import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.curator.retry.ExponentialBackoffRetry;*/
 
 
 /**
@@ -35,7 +35,7 @@ public class ZLock {
     
     public static void main(String[] args) throws Exception {
         
-        //1 重试策略：初试时间为1s 重试10次
+     /*   //1 重试策略：初试时间为1s 重试10次
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 10);
         //2 通过工厂创建连接
         CuratorFramework cf = CuratorFrameworkFactory.builder()
@@ -76,6 +76,6 @@ public class ZLock {
             },"t" + i).start();
         }
         Thread.sleep(100);
-        countdown.countDown();
+        countdown.countDown();*/
     }
 }

@@ -34,6 +34,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * @emai 396885563@qq.com
  * @data 2018年7月23日
  */
+@SuppressWarnings("restriction")
 public class ImageUtils {
 	  private static List<File> fileList = new ArrayList<File>(); 
 	  

@@ -17,6 +17,7 @@ import com.king.app.resolver.LoginUserHandlerMethodArgumentResolver;
  * @emai 396885563@qq.com
  * @data2018年4月23日
  */
+@SuppressWarnings("deprecation")
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
