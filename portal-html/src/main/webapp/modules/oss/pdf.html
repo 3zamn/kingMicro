@@ -122,6 +122,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="form-group">
 				<div class="col-sm-2 control-label">状态</div>
 				<div >
@@ -133,7 +134,17 @@
 					</label>
 				</div>
 			</div>
-			
+			<div class="form-group">
+				<div class="col-sm-2 control-label">生成图片</div>
+				<div >
+					<label class="radio-inline">
+						<input type="radio" name="isConvertImg" value="false" v-model="water.isConvertImg"/> 否
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="isConvertImg" value="true" v-model="water.isConvertImg"/> 是
+					</label>
+				</div>
+			</div>
 			<div class="form-group">
 				<div class="col-sm-2 control-label"></div> 
 				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>

@@ -6,11 +6,16 @@ $(function () {
 			{ label: 'id', name: 'id', width: 20, key: true ,hidden:true},
 			{ label: '文件名', name: 'name', width: 50},
 			{ label: '大小', name: 'size', width: 30},
-            { label: 'URL地址', name: 'url', width: 220 ,formatter:function(value,row,index) {
+            { label: 'URL地址', name: 'url', width: 200 ,formatter:function(value,row,index) {
 				return '<a href=\''+value+'\' target=\'_blank\'>'+value+'</a>';
 			}},
-			 { label: '操作', name: 'type', width: 20 ,formatter:function(value,row,index) {
-					return '<a href=\''+'../../static/plugins/pdf/web/viewer.html?file='+index.pdf+'\' target=\'_blank\'>'+"预览"+'</a>';
+			 { label: '操作', name: 'type', width: 40 ,formatter:function(value,row,index) {
+				 	if(index.img!=null){
+				 		return '<a href=\''+'../../static/plugins/pdf/web/viewer.html?file='+index.pdf+'\' target=\'_blank\'>'+"预览"+'</a><a href=\''+index.img+'\' target=\'_blank\'>'+"|下载图片"+'</a>';
+				 	}else{
+				 		return '<a href=\''+'../../static/plugins/pdf/web/viewer.html?file='+index.pdf+'\' target=\'_blank\'>'+"预览"+'</a>';
+				 	}
+					
 					/*return '<a href=\''+'../../pdf/web/viewer.html'+'\' target=\'_parent\'>'+"预览"+'</a>';*/
 				}},
 			{ label: '创建者', name: 'creator', width: 20 },
