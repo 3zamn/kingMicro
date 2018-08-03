@@ -44,22 +44,40 @@ public class CrawingController {
 	        ResponseWrap r = http.execute(); //执行请求
 	        String line=null;      
 			PrintWriter pw=null;
-	        String regex= "<a target=\"_blank\" href=\"/item.*?\" class=\"j-vda\"";
-	        String begin="<a target=\"_blank\" href=\"";
-	        String end="\" class=\"j-vda\"";
+			//  String regex= " href=\"/item/.*?\" ";
+			String host_new="<div class=\"goods-list new-list fl clearfix\">";//热销、新款爆款
+			String search="<i class=\"isRecommd isRecommd_1\"></i>";//搜索商品
+	        String regex= " href=\"/item/.*?\" ";
+	        String begin=" href=\"";
+	        String end="\" ";
 	        Pattern pattern=Pattern.compile(regex);
 	        BufferedReader br=r.getBufferedReader();    
 	        String tempPath=IoUtil.getFile("gen").getPath()+File.separator+"URL.txt";//临时目录
 			pw = new PrintWriter(new FileWriter(tempPath),true);
+			boolean start=false;
+			int i=1;
 			while((line=br.readLine())!=null){
-				Matcher matcher=pattern.matcher(line);
-				while(matcher.find()){
-					String str=matcher.group();
-					str=str.replace(begin, "https://www.vvic.com");
-					str=str.replace(end, "");
-					pw.println(str);
-				}			
+				if(start==false){
+					if(line.contains(host_new) || line.contains(search)){
+						start=true;
+					}
+				}else{
+					Matcher matcher=pattern.matcher(line);
+					
+					while(matcher.find()){
+						String str=matcher.group();
+						str=str.replace(begin, "https://www.vvic.com");
+						str=str.replace(end, "");
+						if(!str.contains("{=item.item_id}")){
+							if(i<=80){//只取80条记录
+								i=i+1;
+								pw.println(str);							
+							}				
+						}						
+					}
+				}									
 			}       
+			start=false;
 	        http.shutdown();
 	        InputStream inStream = new FileInputStream(tempPath);// 文件的存放路径
 	        response.reset();
