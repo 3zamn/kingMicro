@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
 
 import com.king.common.utils.validator.group.AddGroup;
 import com.king.common.utils.validator.group.UpdateGroup;
@@ -22,6 +23,7 @@ public class SysDept implements Serializable ,Comparable<SysDept>{
 	private static final long serialVersionUID = 1L;
 	
 	//部门ID
+	@Id
 	@ApiModelProperty("部门ID")
 	private Long deptId;
 	//上级部门ID，一级部门为0

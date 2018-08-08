@@ -3,6 +3,8 @@ package com.king.dal.gen.model.smp;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -19,6 +21,7 @@ public class ScheduleJobLog implements Serializable {
 	/**
 	 * 日志id
 	 */
+	@Id
 	@ApiModelProperty("任务日志id")
 	private Long logId;
 	

@@ -4,6 +4,8 @@ package com.king.dal.gen.model.smp;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -20,6 +22,7 @@ public class SysMenu implements Serializable ,Comparable<SysMenu>{
 	/**
 	 * 菜单ID
 	 */
+	@Id
 	@ApiModelProperty("菜单ID")
 	private Long menuId;
 

@@ -1000,7 +1000,6 @@ public class HttpUtils {
     }
     
     public static void main(String[] args) throws Exception{
-        //登录印章系统
         String url = "http://localhost:8888/portal-web/test.do?TextUserName=admin&TextPassword=111111";
         HttpUtils http = HttpUtils.post(url);
         http.setContentType("application/x-www-form-urlencoded", Consts.UTF_8);

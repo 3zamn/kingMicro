@@ -2,6 +2,9 @@ package com.king.dal.gen.model.oss;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import org.springframework.data.annotation.Id;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -15,8 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class OssWaterSetting implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//
-	@ApiModelProperty("")
+	@Id
 	private Long id;
 	//用户Id
 	@ApiModelProperty("用户Id")

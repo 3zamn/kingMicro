@@ -4,6 +4,7 @@ package com.king.dal.gen.model.smp;
 import java.io.Serializable;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +21,7 @@ public class SysConfig implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Id
 	private Long id;
 	@ApiModelProperty("key")
 	@NotBlank(message="参数名不能为空")

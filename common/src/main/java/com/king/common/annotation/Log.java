@@ -17,4 +17,14 @@ import java.lang.annotation.Target;
 public @interface Log {
 
 	String value() default "";
+	
+	/*更新操作--记录改前后值*/
+	boolean update() default false;
+	
+	/*删除操作--记录删除前记录*/
+	boolean delete() default false;
+	
+	/*所在模块*/
+	String module() default "";
+	Class serviceClass() default Log.class;
 }

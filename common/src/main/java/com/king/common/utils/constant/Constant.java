@@ -20,6 +20,8 @@ public class Constant {
 	public static final long SERIALNO_EXPIRE =30;//秒
 	public static final long LOGIN_IP_COUNT =30;//同一个IP同一个帐号
 	public static final long LOGIN_COUNT =100;//同一个帐号
+	public final static String CLOUD_STORAGE_CONFIG = "CLOUD_STORAGE_CONFIG";//云盘配置
+	
     public enum MenuType {
         /**
          * 目录

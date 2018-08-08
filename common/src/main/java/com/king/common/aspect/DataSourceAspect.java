@@ -54,16 +54,11 @@ public class DataSourceAspect {
 			 }else{
 				 HandleDataSource.write();
 			//	 logger.info("切换--写库");
-			 }
-			
+			 }			
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage());
-			e.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage());
-			e.printStackTrace();
 		}
        
 	}

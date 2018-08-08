@@ -3,6 +3,8 @@ package com.king.dal.gen.model.smp;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -16,6 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class SysRoleMenu implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private Long id;
 
 	/**

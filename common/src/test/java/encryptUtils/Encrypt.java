@@ -47,7 +47,7 @@ public class Encrypt {
 		String cipherText=args[1];
 		String cipherText="ByyBUSo2FkBZiPPhacmTA3S7iGqzUQjjOuugQ+KEb4+kptdG2yF80q6uDlI0tiAQwcYK1NTOloTuOYWDxcMsgw==";
 		System.out.println("password:"+decrypt(publicKey, cipherText));*/
-		String password = "123456";
+		String password = "zamn396885563";
 		String[] arr = genKeyPair(512);
 		// System.out.println("privateKey:" + arr[0]);
 		// System.out.println("publicKey:" + arr[1]);

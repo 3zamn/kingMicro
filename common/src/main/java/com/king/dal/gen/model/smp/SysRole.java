@@ -2,6 +2,7 @@ package com.king.dal.gen.model.smp;
 
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,6 +25,7 @@ public class SysRole implements Serializable {
 	/**
 	 * 角色ID
 	 */
+	@Id
 	@ApiModelProperty("角色Id")
 	private Long roleId;
 

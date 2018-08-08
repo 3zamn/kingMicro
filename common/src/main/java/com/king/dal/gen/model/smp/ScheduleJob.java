@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,6 +27,7 @@ public class ScheduleJob implements Serializable {
 	/**
 	 * 任务id
 	 */
+    @Id
     @ApiModelProperty("任务id")
 	private Long jobId;
 

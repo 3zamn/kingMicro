@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.king.common.utils.validator.group.AddGroup;
@@ -34,6 +35,7 @@ public class SysUser implements Serializable {
 	/**
 	 * 用户ID
 	 */
+	@Id
 	@ApiModelProperty("用户id")
 	private Long userId;
 
@@ -48,14 +50,14 @@ public class SysUser implements Serializable {
 	/**
 	 * 密码
 	 */
-	@ApiModelProperty("密码")
+//	@ApiModelProperty("密码")
 	@NotBlank(message="密码不能为空", groups = AddGroup.class)
 	private String password;
 
 	/**
 	 * 盐
 	 */
-	@ApiModelProperty("盐")
+//	@ApiModelProperty("盐")
 	private String salt;
 
 	/**
@@ -82,6 +84,7 @@ public class SysUser implements Serializable {
 	/**
 	 * 角色ID列表
 	 */
+	@ApiModelProperty("角色ID列表")
 	private List<Long> roleIdList;
 
 	/**

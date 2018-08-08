@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -20,8 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class SysDic implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//
-	@ApiModelProperty("")
+	@Id
 	private Long id;
 	//字典名称
 	@ApiModelProperty("字典名称")

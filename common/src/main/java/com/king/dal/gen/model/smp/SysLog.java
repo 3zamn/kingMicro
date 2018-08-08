@@ -3,6 +3,8 @@ package com.king.dal.gen.model.smp;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -16,8 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class SysLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//
-	@ApiModelProperty("id")
+	@Id
 	private Long id;
 	//用户名
 	@ApiModelProperty("用户名")
