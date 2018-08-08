@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.ShiroService;
+import com.king.api.smp.SysDicService;
 import com.king.api.smp.SysMenuService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
@@ -127,7 +128,7 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 修改
 	 */
-	@Log("修改菜单")
+	@Log(value="修改菜单",update=true,serviceClass=SysMenuService.class)
 	@ApiOperation(value = "修改菜单",response=Response.class, notes = "权限编码（sys:menu:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:menu:update")
@@ -141,7 +142,7 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 删除
 	 */
-	@Log("删除菜单")
+	@Log(value="删除菜单",delete=true,serviceClass=SysMenuService.class)
 	@ApiOperation(value = "删除菜单",response=Response.class, notes = "权限编码（sys:menu:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:menu:delete")

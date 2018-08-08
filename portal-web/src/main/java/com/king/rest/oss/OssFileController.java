@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.alibaba.fastjson.JSON;
 import com.king.api.oss.OssFileService;
 import com.king.api.smp.SysConfigService;
@@ -103,7 +104,7 @@ public class OssFileController extends AbstractController{
 	/**
 	 * 删除本地文件并循环删除云文件
 	 */
-	@Log("文件上传删除")
+	@Log(value="文件上传删除",delete=true,serviceClass=OssFileService.class)
 	@ApiOperation(value = "删除",notes = "权限编码（oss:file:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("oss:file:delete")

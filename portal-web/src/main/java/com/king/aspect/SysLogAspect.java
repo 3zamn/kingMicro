@@ -330,7 +330,7 @@ public class SysLogAspect {
 					break;//只取第一个主键注解
 				}
 			}		
-			if(log.update()){//更新
+			if(log.update() && old_object!=null){//更新
 				Field[] fs = old_object.getClass().getDeclaredFields();	
 				for (Field field : fs) {
 					field.setAccessible(true); // 设置些属性是可以访问的

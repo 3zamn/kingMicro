@@ -83,7 +83,7 @@ public class ScheduleJobController {
 	/**
 	 * 修改定时任务
 	 */
-	@Log("修改定时任务")
+	@Log(value="修改定时任务",update=true,serviceClass=ScheduleJobService.class)
 	@ApiOperation(value = "修改定时任务",response=Response.class, notes = "权限编码（sys:schedule:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:schedule:update")
@@ -98,7 +98,7 @@ public class ScheduleJobController {
 	/**
 	 * 删除定时任务
 	 */
-	@Log("删除定时任务")
+	@Log(value="删除定时任务",delete=true,serviceClass=ScheduleJobService.class)
 	@ApiOperation(value = "删除定时任务",response=Response.class, notes = "权限编码（sys:schedule:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:schedule:delete")

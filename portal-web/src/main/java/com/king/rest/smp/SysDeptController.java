@@ -126,7 +126,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 修改
 	 */
-	@Log("保存部门")
+	@Log(value="保存部门",update=true,serviceClass=SysDeptService.class)
 	@ApiOperation(value = "修改部门",response=Response.class, notes = "权限编码（sys:dept:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:dept:update")
@@ -140,7 +140,7 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 删除
 	 */
-	@Log("删除部门")
+	@Log(value="删除部门",delete=true,serviceClass=SysDeptService.class)
 	@ApiOperation(value = "删除部门",response=Response.class, notes = "权限编码（sys:dept:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:dept:delete")

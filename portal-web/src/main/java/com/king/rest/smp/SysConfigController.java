@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysConfigService;
+import com.king.api.smp.SysUserService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
@@ -86,7 +87,7 @@ public class SysConfigController extends AbstractController {
 	/**
 	 * 修改配置
 	 */
-	@Log("修改配置")
+	@Log(value ="修改配置",update=true,serviceClass=SysConfigService.class)
 	@ApiOperation(value = "修改配置",response=Response.class, notes = "权限编码（sys:config:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:config:update")
@@ -101,7 +102,7 @@ public class SysConfigController extends AbstractController {
 	/**
 	 * 删除配置
 	 */
-	@Log("删除配置")
+	@Log(value ="删除配置",delete=true,serviceClass=SysConfigService.class)
 	@ApiOperation(value = "删除配置",response=Response.class, notes = "权限编码（sys:config:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")

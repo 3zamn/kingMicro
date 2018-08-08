@@ -106,7 +106,7 @@ public class OssPdfController extends AbstractController {
 	/**
 	 * 修改水印
 	 */
-	@Log("修改水印")
+	@Log(value="修改水印",update=true,serviceClass=OssDoc2pdfService.class)
 	@ApiOperation(value = "修改", notes = "权限编码（oss:water:setting）")
 	@PostMapping("/waterSetting")
 	@RequiresPermissions("oss:water:setting")
@@ -124,7 +124,7 @@ public class OssPdfController extends AbstractController {
 	/**
 	 * 删除本地文件并循环删除云文件
 	 */
-	@Log("文件删除")
+	@Log(value="文件删除",delete=true,serviceClass=OssDoc2pdfService.class)
 	@ApiOperation(value = "删除", notes = "权限编码（oss:pdf:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("oss:pdf:delete")

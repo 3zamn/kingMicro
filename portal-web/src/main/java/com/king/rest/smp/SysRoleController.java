@@ -119,7 +119,7 @@ public class SysRoleController extends AbstractController {
 	/**
 	 * 修改角色
 	 */
-	@Log("修改角色")
+	@Log(value="修改角色",update=true,serviceClass=SysRoleService.class)
 	@ApiOperation(value = "保存角色",response=Response.class, notes = "权限编码（sys:role:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:role:update")
@@ -146,7 +146,7 @@ public class SysRoleController extends AbstractController {
 	/**
 	 * 删除角色
 	 */
-	@Log("删除角色")
+	@Log(value="删除角色",delete=true,serviceClass=SysRoleService.class)
 	@ApiOperation(value = "删除角色",response=Response.class, notes = "权限编码（sys:role:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:role:delete")

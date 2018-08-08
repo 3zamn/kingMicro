@@ -130,7 +130,7 @@ public class SysDicController extends AbstractController{
 	/**
 	 * 修改
 	 */
-	@Log("数据字典修改")
+	@Log(value="数据字典修改",update=true,serviceClass=SysDicService.class)
 	@ApiOperation(value = "修改",response=Response.class,notes = "权限编码（sysdic:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:dic:update")
@@ -146,7 +146,7 @@ public class SysDicController extends AbstractController{
 	/**
 	 * 删除
 	 */
-	@Log("数据字典删除")
+	@Log(value="数据字典删除",delete=true,serviceClass=SysDicService.class)
 	@ApiOperation(value = "删除",response=Response.class,notes = "权限编码（sysdic:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:dic:delete")
