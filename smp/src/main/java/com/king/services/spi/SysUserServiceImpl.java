@@ -182,7 +182,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put("token", token);
     	jsonObject.put("expire", Constant.HALF_HOUR);
-
+    	jsonObject.put("userName", sysUser.getUsername());
 		return JsonResponse.success(jsonObject);
 	}
 

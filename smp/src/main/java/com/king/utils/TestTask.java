@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component("testTask")
 public class TestTask {
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	ExecutorService cachedThreadPool = Executors.newFixedThreadPool(10);
+	ExecutorService cachedThreadPool = Executors.newFixedThreadPool(10);//后面可以适当调整大小
 
 	public void test(final String params) {
 		for (int i = 0; i < 10; i++) {

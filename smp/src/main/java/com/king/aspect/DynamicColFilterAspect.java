@@ -28,7 +28,7 @@ import com.king.dal.gen.model.smp.SysUser;
 public class DynamicColFilterAspect {
  
 
-    @Pointcut("@annotation(com.king.common.annotation.DynamicCol)")
+    @Pointcut("@annotation(com.king.common.annotation.Property)")
     public void dynamicColFilterCut() {
     	// 列表页动态列数据切面
     }
@@ -56,7 +56,7 @@ public class DynamicColFilterAspect {
      */
     private String getColFilter(SysUser user, JoinPoint point){
         MethodSignature signature = (MethodSignature) point.getSignature();
-        com.king.common.annotation.DynamicCol dynamicCol = signature.getMethod().getAnnotation(com.king.common.annotation.DynamicCol.class);
+        com.king.common.annotation.Property dynamicCol = signature.getMethod().getAnnotation(com.king.common.annotation.Property.class);
         String entityName=dynamicCol.entity();
         List<String> keyParam = new ArrayList<>();
         //测试
