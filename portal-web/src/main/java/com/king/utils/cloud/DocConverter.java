@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.jodconverter.JodConverter;
 import org.jodconverter.office.LocalOfficeManager;
 import org.jodconverter.office.OfficeException;
@@ -21,6 +23,7 @@ import org.slf4j.LoggerFactory;
 public class DocConverter {  
 	
 	static Logger logger = LoggerFactory.getLogger(DocConverter.class);
+	private static Configuration configs ;
 	
 	/**
 	 * 文档转pdf
@@ -36,7 +39,9 @@ public class DocConverter {
 		// 输出文件目录
 		File outputFile = new File(savePath);
 		// 连接OpenOffice/LibreOffice服务
-		OfficeManager officeManager = LocalOfficeManager.builder().officeHome("C:\\Program Files\\LibreOffice").install().build();
+		String libreoffice=configs.getString("libreoffice");
+		libreoffice=libreoffice.replace(".", File.separator);
+		OfficeManager officeManager = LocalOfficeManager.builder().officeHome(libreoffice).install().build();
 		try {
 			if(!officeManager.isRunning()){
 				officeManager.start();
@@ -74,6 +79,13 @@ public class DocConverter {
 		}
 		
 	}
+	static {
+		try {
 
+			configs = new PropertiesConfiguration("settings.properties");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
   
 }  

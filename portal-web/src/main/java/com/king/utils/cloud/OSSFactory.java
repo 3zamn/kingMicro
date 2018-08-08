@@ -2,7 +2,6 @@ package com.king.utils.cloud;
 
 
 import com.king.api.smp.SysConfigService;
-import com.king.common.utils.constant.ConfigConstant;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.oss.CloudStorageConfig;
@@ -23,7 +22,7 @@ public final class OSSFactory {
 
     public static CloudStorageService build(){
         //获取云存储配置信息
-        CloudStorageConfig config = sysConfigService.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
+        CloudStorageConfig config = sysConfigService.getConfigObject(Constant.CLOUD_STORAGE_CONFIG, CloudStorageConfig.class);
 
         if(config.getType() == Constant.CloudService.QINIU.getValue()){
             return new QiniuCloudStorageService(config);

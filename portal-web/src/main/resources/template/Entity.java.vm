@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
+import org.springframework.data.annotation.Id;
 #if(${hasBigDecimal})
 import java.math.BigDecimal;
 #end
@@ -23,6 +23,9 @@ public class ${className} implements Serializable {
 	
 #foreach ($column in $columns)
 	//$column.comments
+#if(${pk.attrname}==${column.attrname})
+	@Id
+#end
 	@ApiModelProperty("$column.comments")
 	private $column.attrType $column.attrname;
 #end

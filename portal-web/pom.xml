@@ -155,17 +155,46 @@
 			<groupId>com.qiniu</groupId>
 			<artifactId>qiniu-java-sdk</artifactId>
 			<version>[7.2.0, 7.2.99]</version>
+			 <exclusions>
+				<exclusion>
+					  <groupId>org.apache.httpcomponents</groupId>
+            		  <artifactId>httpclient</artifactId>
+				</exclusion>				
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.aliyun.oss</groupId>
 			<artifactId>aliyun-sdk-oss</artifactId>
 			<version>2.5.0</version>
+			 <exclusions>
+				<exclusion>
+					  <groupId>org.apache.httpcomponents</groupId>
+            		  <artifactId>httpclient</artifactId>
+				</exclusion>				
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.qcloud</groupId>
 			<artifactId>cos_api</artifactId>
 			<version>4.4</version>
+			 <exclusions>
+				<exclusion>
+					  <groupId>org.apache.httpcomponents</groupId>
+            		  <artifactId>httpclient</artifactId>
+				</exclusion>		
+				<exclusion>
+					    <groupId>org.apache.httpcomponents</groupId>
+            			<artifactId>httpcore</artifactId>
+				</exclusion>				
+			</exclusions>
 		</dependency>
+		<!-- 百度orc api -->
+		<!-- <dependency>
+		    <groupId>com.baidu.aip</groupId>
+		    <artifactId>java-sdk</artifactId>
+		    <version>4.3.2</version>
+		</dependency> -->
+				
 		<!-- 代码生成器所需jar -->
 		<dependency>
 			<artifactId>velocity</artifactId>
@@ -302,7 +331,7 @@
 					<target>1.8</target>
 					<compilerArguments>
 						<extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>
-						<bootclasspath>${java.home}\lib\rt.jar;${java.home}\lib\jce.jar</bootclasspath>
+						<bootclasspath>${java.home}\lib\rt.jar;${java.home}\lib\jce.jar</bootclasspath><!-- 需要配置环境变量 -->
 					</compilerArguments>
 				</configuration>
 			</plugin>

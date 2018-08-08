@@ -202,7 +202,6 @@ public class PdfUtils {
 			RenderedImage rendImage = image;
 			try {
 				String imgName = i + ".png";
-				System.out.println(imgName);
 				File file = new File(savePath + imgName);
 				ImageIO.write(rendImage, "png", file);
 			} catch (IOException e) {
@@ -233,6 +232,35 @@ public class PdfUtils {
 			return Position.LEFT_BUTTOM;
 		}
 
+	}
+	
+	/**
+	 * 递归删除文件、文件夹
+	 * @param pathname
+	 */
+	public static void deleteFile(String pathname) {
+		File file = new File(pathname);
+		if (file.exists()) {
+			if (file.isDirectory()) {
+				File[] files=file.listFiles();
+				int size=files.length;
+				for (File f : files) {
+					size=size-1;
+					try {
+						deleteFile(f.getCanonicalPath());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					if(size==0){
+						file.delete();
+					}
+				}
+				
+			} else {
+				file.delete();
+			}
+
+		}
 	}
 	
 	public static void main(String[] args) {

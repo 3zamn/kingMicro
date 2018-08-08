@@ -24,7 +24,6 @@ import com.king.api.smp.SysConfigService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
-import com.king.common.utils.constant.ConfigConstant;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.validator.ValidatorUtils;
@@ -58,7 +57,7 @@ public class OssFileController extends AbstractController{
 	private OssFileService ossFileService;
 	@Autowired
 	private SysConfigService sysConfigService;
-	private final static String KEY = ConfigConstant.CLOUD_STORAGE_CONFIG_KEY;
+	private final static String KEY = Constant.CLOUD_STORAGE_CONFIG;
 	/**
 	 * 列表
 	 */
@@ -109,7 +108,7 @@ public class OssFileController extends AbstractController{
 	@PostMapping("/delete")
 	@RequiresPermissions("oss:file:delete")
 	public JsonResponse delete(@RequestBody Object[] ids){
-		CloudStorageConfig config = sysConfigService.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
+		CloudStorageConfig config = sysConfigService.getConfigObject(Constant.CLOUD_STORAGE_CONFIG, CloudStorageConfig.class);
 		String yunPath=null;
 		String deleteObject =null;
 		List<OssFile> list = ossFileService.queryBatch(ids);

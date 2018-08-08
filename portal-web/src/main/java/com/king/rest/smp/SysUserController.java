@@ -153,7 +153,7 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "用户信息",response=Response.class, notes = "权限编码（sys:user:info）")
 	@GetMapping("/info/{userId}")
 	@RequiresPermissions("sys:user:info")
-	public JsonResponse info(@PathVariable("userId") Object userId){
+	public JsonResponse info(@PathVariable("userId") Long userId){
 		SysUser user = sysUserService.queryObject(userId);
 		//获取用户所属的角色列表
 		List<Long> roleIdList = sysRoleService.queryRoleIdList(userId);
@@ -179,7 +179,7 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 修改用户
 	 */
-	@Log("修改用户")
+	@Log(value="修改用户",update=true,serviceClass=SysUserService.class)
 	@ApiOperation(value = "修改用户",response=Response.class, notes = "权限编码（sys:user:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:user:update")
@@ -200,7 +200,7 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 删除用户
 	 */
-	@Log("删除用户")
+	@Log(value="删除用户",delete=true,serviceClass=SysUserService.class)
 	@ApiOperation(value = "删除用户",response=Response.class, notes = "权限编码（sys:user:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:user:delete")

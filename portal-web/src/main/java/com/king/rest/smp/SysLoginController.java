@@ -151,8 +151,7 @@ public class SysLoginController extends AbstractController {
 			redisUtils.delete(errorKey);
 		}
 		//生成token，并保存到redis
-		JsonResponse r = sysUserService.createToken(user.getUserId(),ip,userAgent);		
-		r.get("token");
+		JsonResponse r = sysUserService.createToken(user.getUserId(),ip,userAgent);
 		return r;
 	}
 

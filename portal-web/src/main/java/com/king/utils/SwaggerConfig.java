@@ -52,7 +52,7 @@ public class SwaggerConfig {
      */
     @Bean
     public Docket smpApi(){  
-    	String enableSwagger =sysConfigService.getValue("enableSwagger");
+    	String enableSwagger =sysConfigService.getValue("SWAGGER_ENABLE");
         ParameterBuilder tokenPar = new ParameterBuilder();  
         List<Parameter> pars = new ArrayList<Parameter>();  
         tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
@@ -90,7 +90,7 @@ public class SwaggerConfig {
      */
     @Bean
     public Docket ossApi(){  
-    	String enableSwagger =sysConfigService.getValue("enableSwagger");
+    	String enableSwagger =sysConfigService.getValue("SWAGGER_ENABLE");
         ParameterBuilder tokenPar = new ParameterBuilder();  
         List<Parameter> pars = new ArrayList<Parameter>();  
         tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
@@ -119,7 +119,7 @@ public class SwaggerConfig {
     //第三方应用api
     @Bean
     public Docket thirdappApi(){  
-    	String enableSwagger =sysConfigService.getValue("enableSwagger");
+    	String enableSwagger =sysConfigService.getValue("SWAGGER_ENABLE");
         ParameterBuilder tokenPar = new ParameterBuilder();  
         List<Parameter> pars = new ArrayList<Parameter>();  
         tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  

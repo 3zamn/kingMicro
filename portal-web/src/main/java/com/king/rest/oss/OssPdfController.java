@@ -39,7 +39,7 @@ import com.king.api.smp.SysConfigService;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
-import com.king.common.utils.constant.ConfigConstant;
+import com.king.common.utils.constant.Constant;
 import com.king.common.utils.file.IoUtil;
 import com.king.common.utils.file.ZipUtils;
 import com.king.common.utils.pattern.StringToolkit;
@@ -129,7 +129,7 @@ public class OssPdfController extends AbstractController {
 	@PostMapping("/delete")
 	@RequiresPermissions("oss:pdf:delete")
 	public JsonResponse delete(@RequestBody Object[] ids) {
-		CloudStorageConfig config = sysConfigService.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY,
+		CloudStorageConfig config = sysConfigService.getConfigObject(Constant.CLOUD_STORAGE_CONFIG,
 				CloudStorageConfig.class);
 		String yunPath = null;
 		String deleteObject = null;
@@ -192,7 +192,7 @@ public class OssPdfController extends AbstractController {
 		HashMap<Object, Object> map = new HashMap<>();
 		map.put("filePath", dest);
 		queue.offer(map, 2, TimeUnit.SECONDS);//2秒内加入队列、否则失败
-		ExecutorService service = Executors.newCachedThreadPool();	
+		ExecutorService service = Executors.newSingleThreadExecutor();//因为libraoffice只能单线程转换文档
 		service.execute(new Consumer(file, dest));
 		return JsonResponse.success();
 	}
@@ -216,16 +216,19 @@ public class OssPdfController extends AbstractController {
 	    		String pdfPath=path+".pdf";
 	    		String newPdf=path+new Date().getTime()+".pdf";
 	    		String imgPath=path+File.separator;
+	    		String imgZip=null;
 	    		CloudStorageService cloudStorage = OSSFactory.build();// 初始化获取配置
 				CloudStorageConfig config = cloudStorage.config;
 	    		if(DocConverter.docConvertPdf(new File(dest),pdfPath)){//转换成pdf			
 					//添加水印
 					OssWaterSetting ossWaterSetting = ossDoc2pdfService.queryWaterSetting(getUserId());
 					if(ossWaterSetting!=null && ossWaterSetting.getEnable()){
-						if(ossWaterSetting.getType().intValue()==1){//二维码水印							
-							if(QrCodeUtil.createQrCode(new FileOutputStream(new File(dest.substring(0, dest.lastIndexOf("."))+"qrcode.jpg")), ossWaterSetting.getWaterContent(), ossWaterSetting.getWaterWidth(), "JPEG")){
+						if(ossWaterSetting.getType().intValue()==1){//二维码水印		
+							FileOutputStream qrcode=new FileOutputStream(new File(dest.substring(0, dest.lastIndexOf("."))+"qrcode.jpg"));
+							if(QrCodeUtil.createQrCode(qrcode, ossWaterSetting.getWaterContent(), ossWaterSetting.getWaterWidth(), "JPEG")){
 								PdfUtils.setImageWater(pdfPath, newPdf, dest.substring(0, dest.lastIndexOf("."))+"qrcode.jpg", ossWaterSetting.getWaterWidth(), ossWaterSetting.getWaterHeigth(), ossWaterSetting.getMarginX(), ossWaterSetting.getMarginY(), PdfUtils.convert(ossWaterSetting.getWaterPosition()));
-							}				
+							}
+							qrcode.close();
 						}else{//文字水印
 							BaseColor color = new BaseColor(ossWaterSetting.getWaterColor());
 							PdfUtils.addTextWater(pdfPath, newPdf, ossWaterSetting.getWaterContent(), BaseColor.BLACK, Float.valueOf(ossWaterSetting.getFontSize()), PdfUtils.convert(ossWaterSetting.getWaterPosition()), ossWaterSetting.getMarginX());
@@ -235,15 +238,19 @@ public class OssPdfController extends AbstractController {
 					OssDoc2pdf oss = new OssDoc2pdf();
 					if(ossWaterSetting!=null && ossWaterSetting.getIsConvertImg()){//生成图片
 						PdfUtils.pdf2Pic(pdfPath, imgPath);			
-						String imgZip=ZipUtils.zipDir(path);//压缩
-						String img_url = cloudStorage.uploadSuffix(new FileInputStream(imgZip),".zip" );//上传图片压缩包
+						imgZip=ZipUtils.zipDir(path);//压缩
+						FileInputStream fileInputStream= new FileInputStream(imgZip);
+						String img_url = cloudStorage.uploadSuffix(fileInputStream,".zip" );//上传图片压缩包
 						oss.setImg(img_url);//保存云端图片压缩文件地址
+						fileInputStream.close();
 					}
 					File pdf= new File(pdfPath);				
 					// 上传文件
-					String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));				
-					String doc_url = cloudStorage.uploadSuffix(new FileInputStream(dest), suffix);
-					String pdf_url = cloudStorage.uploadSuffix(new FileInputStream(pdf), ".pdf");
+					String suffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));		
+					FileInputStream destFile = new FileInputStream(dest);
+					String doc_url = cloudStorage.uploadSuffix(destFile, suffix);
+					FileInputStream pdfFile = new FileInputStream(pdf);
+					String pdf_url = cloudStorage.uploadSuffix(pdfFile, ".pdf");
 					String size = new BigDecimal(file.getSize()).divide(new BigDecimal(1024), RoundingMode.HALF_UP) + " KB";
 					// 保存文件信息			
 					oss.setType(config.getType() + "");
@@ -254,15 +261,19 @@ public class OssPdfController extends AbstractController {
 					oss.setCreator(getUser().getUsername());
 					oss.setCreateDate(new Date());
 					ossDoc2pdfService.save(oss);
+					destFile.close();
+					pdfFile.close();
+					PdfUtils.deleteFile(dest);
+					PdfUtils.deleteFile(path);
+					PdfUtils.deleteFile(path+".pdf");
+					PdfUtils.deleteFile(newPdf);
+					PdfUtils.deleteFile(path+"qrcode.jpg");
+					PdfUtils.deleteFile(imgZip);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				// TODO: handle exception
-			}
-	       
-	    }
-	 
-	
+			}       
+	    }	
 	}
 
 	@ApiOperation(value = "pdf预览", notes = "权限编码（oss:pdf:view）")
