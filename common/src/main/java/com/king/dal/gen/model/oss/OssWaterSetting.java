@@ -18,9 +18,10 @@ import io.swagger.annotations.ApiModelProperty;
 public class OssWaterSetting implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	
 	private Long id;
 	//用户Id
+	@Id
 	@ApiModelProperty("用户Id")
 	private Long userId;
 	//启用状态,0:否，1:是
