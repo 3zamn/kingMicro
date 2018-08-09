@@ -214,4 +214,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		
 		return queryByRoleId(roleId);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public SysUser queryObject(Object userId){
+		SysUser user= sysUserDao.queryObject(userId);
+		List<Long> roleIdList = sysRoleService.queryRoleIdList(userId);
+		user.setRoleIdList(roleIdList);
+		return user;
+	}
 }
