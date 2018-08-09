@@ -26,5 +26,10 @@ public @interface Log {
 	
 	/*所在模块*/
 	String module() default "";
+	
+	/*接口*/
 	Class serviceClass() default Log.class;
+	
+	/*方法*/
+	String method() default "queryObject";
 }

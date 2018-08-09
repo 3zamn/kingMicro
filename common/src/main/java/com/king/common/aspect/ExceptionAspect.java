@@ -46,8 +46,8 @@ public class ExceptionAspect {
         String serialNo =UUID.randomUUID().toString(); 	
     	String appcode=configs.getString("serverName");
     	addExceptionLog(ExceptionUtils.makeStackTrace(e), point,appcode!=null?appcode.toString():null, serialNo);
-        logger.error(String.format("错误流水号【%s】", serialNo)+String.format("服务【%s】", appcode)+String.format("方法【%s】异常！", point.getSignature()));
-        throw new RRException(String.format("服务调用时【%s】发生未知错误，错误流水号【%s】，请联系管理员", appcode,serialNo),500,e);
+        logger.error(String.format("异常流水号【%s】", serialNo)+String.format("服务【%s】", appcode)+String.format("方法【%s】异常！", point.getSignature()));
+        throw new RRException(String.format("服务调用时【%s】发生未知异常，异常流水号【%s】，请联系管理员", appcode,serialNo),500,e);
 
     }
     
