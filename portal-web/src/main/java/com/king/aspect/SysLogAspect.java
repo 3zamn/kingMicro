@@ -97,7 +97,7 @@ public class SysLogAspect {
 			} else {// 本地异常
 				stackTrace = ExceptionUtils.makeStackTrace(e);			
 				seriNO=UUID.randomUUID().toString();
-				exception = "异常"+"【"+seriNO+"】"+e.toString();
+				exception = "发生未知异常，异常流水号"+"【"+seriNO+"】"+e.toString();
 				addExceptionLog(stackTrace, point, "portal-web", seriNO);
 			}
 			JSONObject jsonObject = new JSONObject();
@@ -201,51 +201,55 @@ public class SysLogAspect {
 			String data = null;
 			String status=null;
 			String params = null;
-			if(object!=null){
-				if(formJson){
-					 JSONObject jsonObject = (JSONObject) JSONObject.toJSON(object);
-					 if(jsonObject!=null){
-						 data = jsonObject.getString("data");
-					 }
-					 if(jsonObject.getString("msg")!=null?jsonObject.getString("msg").equals("success"):false){
-						 status="success";
-						 if(jsonObject.getString("result")!=null){
-							 data=jsonObject.getString("result");
-						 }					 
-					 }else{
-						 data=jsonObject.getString("msg");
-						 status="error";
-					 }
-				}else{
-					data=StringToolkit.getObjectString(JSONArray.fromObject(object));
-					status="success";
-				}
-			}
-			Object[] args = joinPoint.getArgs();
 			try {
-				params = new Gson().toJson(args[0]);
-				sysLog.setParams(params);
-			} catch (Exception e) {
-			//	logger.error(e.getMessage());
-			}
-			String methodName = signature.getName();
-			sysLog.setMethod(joinPoint.getSignature()+"");
-			sysLog.setResult(data);
-			sysLog.setStatus(status);	
-			sysLog.setIp(ip);
-			if (username == null) {
-				if (params != null) {// 登录
-					sysLog.setUsername(params.replaceAll("\"", ""));
-				} else if (data != null && methodName.equals("logout")) {// 退出登录
-					sysLog.setUsername(data);
-				}else if (data != null && methodName.equals("login")) {//登录
-					sysLog.setUsername(StringToolkit.getObjectString(args[0]));
+				if(object!=null){
+					if(formJson){
+						 JSONObject jsonObject = (JSONObject) JSONObject.toJSON(object);
+						 if(jsonObject!=null){
+							 data = jsonObject.getString("data");
+						 }
+						 if(jsonObject.getString("msg")!=null?jsonObject.getString("msg").equals("success"):false){
+							 status="success";
+							 if(jsonObject.getString("result")!=null){
+								 data=jsonObject.getString("result");
+							 }					 
+						 }else{
+							 data=jsonObject.getString("msg");
+							 status="error";
+						 }
+					}else{
+						data=StringToolkit.getObjectString(JSONArray.fromObject(object));
+						status="success";
+					}
 				}
-			} else {
-				sysLog.setUsername(username);
-			}
-			sysLog.setCreateDate(new Date());
-			sysLogRepo.insert(sysLog);		
+				Object[] args = joinPoint.getArgs();
+				try {//强制转换
+					params = new Gson().toJson(args[0]);
+					sysLog.setParams(params);
+				} catch (Exception e) {
+				//	logger.error(e.getMessage());
+				}
+				String methodName = signature.getName();
+				sysLog.setMethod(joinPoint.getSignature()+"");
+				sysLog.setResult(data);
+				sysLog.setStatus(status);	
+				sysLog.setIp(ip);
+				if (username == null) {
+					if (params != null) {// 登录
+						sysLog.setUsername(params.replaceAll("\"", ""));
+					} else if (data != null && methodName.equals("logout")) {// 退出登录
+						sysLog.setUsername(data);
+					}else if (data != null && methodName.equals("login")) {//登录
+						sysLog.setUsername(StringToolkit.getObjectString(args[0]));
+					}
+				} else {
+					sysLog.setUsername(username);
+				}
+				sysLog.setCreateDate(new Date());
+				sysLogRepo.insert(sysLog);		
+			} catch (Exception e) {
+				logger.error("日志保存出现未知错误:"+e.getMessage());
+			}			
 		}		
 	}
 	
@@ -317,7 +321,7 @@ public class SysLogAspect {
 	 * @param new_object
 	 * @return
 	 */
-	@SuppressWarnings({"rawtypes" })
+	@SuppressWarnings({"rawtypes", "unchecked" })
 	public <T> String record(Object new_object, BaseService service,Log log) {
 		StringBuffer result= new StringBuffer();
 		try {
@@ -326,7 +330,9 @@ public class SysLogAspect {
 			for (Field field : fields) {
 				field.setAccessible(true); // 设置些属性是可以访问的
 				if (field.getAnnotation(Id.class) != null) {//主键Id
-					old_object = service.queryObject(field.get(new_object));
+					Method method=SpringContextUtils.getBean(log.serviceClass()).getClass().getMethod(log.method(), new Class [] { Object.class });
+					old_object =method.invoke(SpringContextUtils.getBean(log.serviceClass()),field.get(new_object));
+				//	old_object = service.queryObject(field.get(new_object));
 					break;//只取第一个主键注解
 				}
 			}		
@@ -338,7 +344,7 @@ public class SysLogAspect {
 					Object val_new = field.get(new_object);// 得到此属性的修改后值	
 					if(val_old!=null&&val_new!=null&&!val_old.equals(val_new)){
 						ApiModelProperty attr=field.getAnnotation(ApiModelProperty.class);
-						result.append("【"+attr.value()+"】"+"从"+"【"+val_old+"】"+"改为了"+"【"+val_new+"】;");
+						result.append("【"+attr.value()+"】"+"从"+"【"+val_old+"】"+"改为"+"【"+val_new+"】;");
 					//	System.getProperty("line.separator");//换行
 					}			
 				}
@@ -358,7 +364,7 @@ public class SysLogAspect {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("反射执行方法未知错误："+e.getMessage());
 		}
 
 		return result.toString();
@@ -395,7 +401,7 @@ public class SysLogAspect {
 			vo.setExceptionMsg(errMsg);
 			exceptionLogRepo.insert(vo);
 		} catch(Exception e) {
-			e.printStackTrace();
+			logger.error("日志保存出错："+e.getMessage());
 		}
 	}
 	

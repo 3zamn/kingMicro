@@ -64,7 +64,7 @@ public class RRExceptionHandler {
 				RRException =e.getMessage().substring(e.getMessage().indexOf("服务调用时"), e.getMessage().indexOf("，请联系管理员"));
 			}		
 		}
-		logger.error("错误提示 "+"："+(e instanceof MethodArgumentTypeMismatchException? getException((MethodArgumentTypeMismatchException)e):""),e);
+		logger.error("异常提示 "+"："+(e instanceof MethodArgumentTypeMismatchException? getException((MethodArgumentTypeMismatchException)e):""),e);
 		return JsonResponse.error(RRException!=null?RRException:"【服务调用内部错误】--"+e.toString());
 	}
 	

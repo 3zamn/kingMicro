@@ -106,7 +106,7 @@ public class OssPdfController extends AbstractController {
 	/**
 	 * 修改水印
 	 */
-	@Log(value="修改水印",update=true,serviceClass=OssDoc2pdfService.class)
+	@Log(value="修改水印",update=true,serviceClass=OssDoc2pdfService.class,method="queryWaterSetting")
 	@ApiOperation(value = "修改", notes = "权限编码（oss:water:setting）")
 	@PostMapping("/waterSetting")
 	@RequiresPermissions("oss:water:setting")
