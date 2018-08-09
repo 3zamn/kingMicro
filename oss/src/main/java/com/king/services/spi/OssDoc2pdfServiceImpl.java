@@ -23,8 +23,6 @@ public class OssDoc2pdfServiceImpl extends BaseServiceImpl<OssDoc2pdf> implement
 		
 	}
 
-
-
 	@Override
 	public OssWaterSetting queryWaterSetting(Object userId) {
 		return ossWaterSettingDao.queryByUser(userId);
