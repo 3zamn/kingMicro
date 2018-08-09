@@ -16,7 +16,7 @@ public interface OssDoc2pdfService extends BaseService<OssDoc2pdf>{
 	/**
 	 * 根据ID，查询
 	 */
-	 OssWaterSetting queryWaterSetting(Object id);
+	 OssWaterSetting queryWaterSetting(Object userId);
 	/**
 	 * 更新
 	 */
