@@ -70,13 +70,14 @@ public class ShiroConfig {
         filterMap.put("/fonts/**", "anon");
         filterMap.put("/plugins/**", "anon");
         filterMap.put("/swagger/**", "anon");
-        filterMap.put("/v2/api-docs", "anon");
+        filterMap.put("/v2/**", "anon");
         filterMap.put("/swagger-ui.html", "anon");
         filterMap.put("/swagger-resources/**", "anon");
         filterMap.put("/favicon.ico", "anon");
         filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/", "anon");
         filterMap.put("/monitoring/**", "anon");
+        filterMap.put("/exportDoc**", "anon");//导出swagger接口文档
         filterMap.put("/oss/pdf/view/**", "anon");//测试
         filterMap.put("/downlod**", "anon");//测试
         filterMap.put("/**", "oauth2");

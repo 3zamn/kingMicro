@@ -1,4 +1,4 @@
-package com.king.gen.aspect;
+package com.king.utils.gen.aspect;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

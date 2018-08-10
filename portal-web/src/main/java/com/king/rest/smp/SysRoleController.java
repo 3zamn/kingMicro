@@ -150,7 +150,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "删除角色",response=Response.class, notes = "权限编码（sys:role:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:role:delete")
-	public JsonResponse delete(@RequestBody Object[] roleIds){
+	public JsonResponse delete(@RequestBody Long[] roleIds){
 		for(Object roleId:roleIds){
 			List<Long> list=sysRoleService.queryUserIdList(roleId);
 			if(list!=null && !list.isEmpty()){

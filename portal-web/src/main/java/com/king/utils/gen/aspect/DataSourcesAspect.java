@@ -1,4 +1,4 @@
-package com.king.gen.aspect;
+package com.king.utils.gen.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -22,7 +22,7 @@ import com.king.common.utils.pattern.StringToolkit;
 public class DataSourcesAspect {
 	 private Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Pointcut("execution(* com.king.gen.service.impl.*.*(..))")
+	@Pointcut("execution(* com.king.utils.gen.service.impl.*.*(..))")
 	public void aspect() {
 		//数据源切面日志
 	}

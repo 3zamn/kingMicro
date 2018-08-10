@@ -45,7 +45,6 @@ public class ImageUtils {
      * @param targerPath 目标图片路径  
      * @param degree 水印图片旋转角度  
      */  
-    @SuppressWarnings("restriction")
 	public static void addWaterWithIcon(String iconPath, String srcImgPath,String targerPath, Integer degree) {  
     	
     	OutputStream os = null;   
@@ -97,7 +96,6 @@ public class ImageUtils {
      * @param txt 需要添加水印的文字信息
      * @param realPath 添加水印后存储的路径
      */
-    @SuppressWarnings("restriction")
 	public static void  addWaterWithText(String srcImgPath,String txt,String realPath) {  
        FileOutputStream fos=null;
     	try  { 

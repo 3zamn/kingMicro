@@ -47,7 +47,8 @@
 		<property name="maxUploadSize" value="1000000000" />
 	</bean>
 	<mvc:view-resolvers>
-	    <mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" />  
+	    <mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" 
+	      view-class="org.springframework.web.servlet.view.JstlView"/>  
 	</mvc:view-resolvers>
     <mvc:resources location="/" mapping="index.html"/>
 </beans>

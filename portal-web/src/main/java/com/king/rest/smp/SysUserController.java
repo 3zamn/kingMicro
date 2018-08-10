@@ -86,8 +86,8 @@ public class SysUserController extends AbstractController {
 			list.add(redisUtils.get(its.next(), SysUserToken.class));
       	}
 		int totalCount= list.size();
-		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
-		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")));
+		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")!=null?params.get("limit"):1));
+		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")!=null?params.get("page"):1));
 		Page page = new Page(list, totalCount, pageSize, currPage);
 		return JsonResponse.success(page);
 	}

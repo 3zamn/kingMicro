@@ -12,7 +12,7 @@
 		http://www.springframework.org/schema/aop
 		http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<description>system center platform</description>
- 	<context:component-scan base-package="com.king" />
+ 	<context:component-scan base-package="com.king.utils" />
  <!-- 	<aop:aspectj-autoproxy proxy-target-class="true" /> -->
 <!-- 引入property -->
 	 <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -115,7 +115,7 @@
 	</bean>
 
 	<!-- druid数据源配置 -->
-	<bean id="dataSource" class="com.king.gen.aspect.ChooseGenDataSource" lazy-init="true">
+	<bean id="dataSource" class="com.king.utils.gen.aspect.ChooseGenDataSource" lazy-init="true">
 		<description>数据源</description>
 		<property name="targetDataSources">
 			<map key-type="java.lang.String" value-type="javax.sql.DataSource">		
@@ -148,7 +148,7 @@
 	</bean>
 
 	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.king.*.dao" />
+		<property name="basePackage" value="com.king.utils.*.dao,com.king.*.dao" />
 	</bean>
 
 </beans>

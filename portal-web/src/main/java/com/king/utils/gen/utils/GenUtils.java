@@ -1,4 +1,4 @@
-package com.king.gen.utils;
+package com.king.utils.gen.utils;
 
 
 import java.io.File;
@@ -25,8 +25,8 @@ import org.apache.velocity.app.Velocity;
 
 import com.king.common.utils.date.DateUtils;
 import com.king.common.utils.exception.RRException;
-import com.king.gen.entity.ColumnEntity;
-import com.king.gen.entity.TableEntity;
+import com.king.utils.gen.entity.ColumnEntity;
+import com.king.utils.gen.entity.TableEntity;
 
 /**
  * 代码生成器   工具类

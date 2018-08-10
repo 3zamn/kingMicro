@@ -106,7 +106,7 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "删除配置",response=Response.class, notes = "权限编码（sys:config:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
-	public JsonResponse delete(@RequestBody Object[] ids){
+	public JsonResponse delete(@RequestBody Long[] ids){
 		sysConfigService.deleteBatch(ids);
 		
 		return JsonResponse.success();

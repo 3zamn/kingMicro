@@ -1,4 +1,4 @@
-package com.king.gen.controller;
+package com.king.utils.gen.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,7 +24,7 @@ import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.date.DateUtils;
 import com.king.common.utils.pattern.StringToolkit;
-import com.king.gen.service.SysGeneratorService;
+import com.king.utils.gen.service.SysGeneratorService;
 import com.king.utils.Query;
 import com.king.utils.pattern.XssHttpServletRequestWrapper;
 
@@ -35,7 +35,7 @@ import com.king.utils.pattern.XssHttpServletRequestWrapper;
  * @data2018年3月12日
  */
 @RestController
-@RequestMapping("/sys/generator")
+@RequestMapping("/generator")
 public class SysGeneratorController {
 	@Autowired
 	private SysGeneratorService sysGeneratorService;

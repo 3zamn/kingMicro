@@ -58,7 +58,7 @@ public class SwaggerConfig {
         tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
         pars.add(tokenPar.build());  
         return new Docket(DocumentationType.SWAGGER_2)  
-        	.groupName("smpApi")  
+        	.groupName("1_smpApi")  
         	.enable(enableSwagger!=null?enableSwagger.equals("true"):false)
             .select()  
         //    .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)) 
@@ -96,7 +96,7 @@ public class SwaggerConfig {
         tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
         pars.add(tokenPar.build());  
         return new Docket(DocumentationType.SWAGGER_2)  
-        	.groupName("ossApi")  
+        	.groupName("2_ossApi")  
         	.enable(enableSwagger!=null?enableSwagger.equals("true"):false)
             .select()  
             .apis(RequestHandlerSelectors.basePackage("com.king.rest.oss"))  
@@ -125,7 +125,7 @@ public class SwaggerConfig {
         tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
         pars.add(tokenPar.build());  
         return new Docket(DocumentationType.SWAGGER_2)  
-        	.groupName("thirdappApi")  
+        	.groupName("3_thirdappApi")  
         	.enable(enableSwagger!=null?enableSwagger.equals("true"):false)
             .select()  
         //    .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class)) 

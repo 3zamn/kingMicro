@@ -1,4 +1,4 @@
-package com.king.gen.dao;
+package com.king.utils.gen.dao;
 
 import java.util.List;
 import java.util.Map;

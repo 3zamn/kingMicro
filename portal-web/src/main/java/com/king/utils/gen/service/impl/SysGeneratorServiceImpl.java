@@ -1,4 +1,4 @@
-package com.king.gen.service.impl;
+package com.king.utils.gen.service.impl;
 
 
 import java.io.ByteArrayOutputStream;
@@ -9,27 +9,17 @@ import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.king.common.utils.Page;
-import com.king.gen.dao.SysGeneratorDao;
-import com.king.gen.service.SysGeneratorService;
-import com.king.gen.utils.GenUtils;
+import com.king.utils.gen.dao.SysGeneratorDao;
+import com.king.utils.gen.service.SysGeneratorService;
+import com.king.utils.gen.utils.GenUtils;
 
 @Service("sysGeneratorService")
 public class SysGeneratorServiceImpl implements SysGeneratorService {
 	@Autowired
 	private SysGeneratorDao sysGeneratorDao;
 
-/*	@Override
-	public List<Map<String, Object>> queryList(Map<String, Object> map) {
-		return sysGeneratorDao.queryList(map);
-	}
-
-	@Override
-	public int queryTotal(Map<String, Object> map) {
-		return sysGeneratorDao.queryTotal(map);
-	}*/
 
 	@Override
 	public Map<String, String> queryTable(String dataSource,String tableName) {

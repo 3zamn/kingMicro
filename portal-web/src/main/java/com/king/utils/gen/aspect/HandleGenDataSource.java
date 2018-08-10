@@ -1,4 +1,4 @@
-package com.king.gen.aspect;
+package com.king.utils.gen.aspect;
 
 /**
  * 数据源线程级别处理

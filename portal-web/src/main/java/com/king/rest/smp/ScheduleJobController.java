@@ -102,7 +102,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "删除定时任务",response=Response.class, notes = "权限编码（sys:schedule:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:schedule:delete")
-	public JsonResponse delete(@ApiParam(name="jobIds",value="定时任务Id",required=true) @RequestBody Object[] jobIds){
+	public JsonResponse delete(@ApiParam(name="jobIds",value="定时任务Id",required=true) @RequestBody Long[] jobIds){
 		scheduleJobService.deleteBatch(jobIds);
 		
 		return JsonResponse.success();
@@ -115,7 +115,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "立即执行任务",response=Response.class, notes = "权限编码（sys:schedule:run）")
 	@PostMapping("/run")
 	@RequiresPermissions("sys:schedule:run")
-	public JsonResponse run(@ApiParam(name="jobIds",value="定时任务Id",required=true) @RequestBody Object[] jobIds){
+	public JsonResponse run(@ApiParam(name="jobIds",value="定时任务Id",required=true) @RequestBody Long[] jobIds){
 		scheduleJobService.run(jobIds);
 		
 		return JsonResponse.success();
@@ -128,7 +128,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "暂停执行任务",response=Response.class, notes = "权限编码（sys:schedule:pause）")
 	@PostMapping("/pause")
 	@RequiresPermissions("sys:schedule:pause")
-	public JsonResponse pause(@ApiParam(name="jobIds",value="定时任务Id",required=true) @RequestBody Object[] jobIds){
+	public JsonResponse pause(@ApiParam(name="jobIds",value="定时任务Id",required=true) @RequestBody Long[] jobIds){
 		scheduleJobService.pause(jobIds);
 		
 		return JsonResponse.success();
@@ -141,7 +141,7 @@ public class ScheduleJobController {
 	@ApiOperation(value = "恢复定时任务",response=Response.class, notes = "权限编码（sys:schedule:resume）")
 	@PostMapping("/resume")
 	@RequiresPermissions("sys:schedule:resume")
-	public JsonResponse resume(@ApiParam(name="jobIds",value="定时任务Id",required=true) @RequestBody Object[] jobIds){
+	public JsonResponse resume(@ApiParam(name="jobIds",value="定时任务Id",required=true) @RequestBody Long[] jobIds){
 		scheduleJobService.resume(jobIds);
 		
 		return JsonResponse.success();

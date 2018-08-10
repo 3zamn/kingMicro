@@ -1,4 +1,4 @@
-package com.king.gen.entity;
+package com.king.utils.gen.entity;
 
 /**
  *  列的属性

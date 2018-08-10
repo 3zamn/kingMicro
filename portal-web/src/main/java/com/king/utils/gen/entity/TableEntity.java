@@ -1,4 +1,4 @@
-package com.king.gen.entity;
+package com.king.utils.gen.entity;
 
 import java.util.List;
 

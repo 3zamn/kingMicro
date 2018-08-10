@@ -128,7 +128,7 @@ public class OssPdfController extends AbstractController {
 	@ApiOperation(value = "删除", notes = "权限编码（oss:pdf:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("oss:pdf:delete")
-	public JsonResponse delete(@RequestBody Object[] ids) {
+	public JsonResponse delete(@RequestBody Long[] ids) {
 		CloudStorageConfig config = sysConfigService.getConfigObject(Constant.CLOUD_STORAGE_CONFIG,
 				CloudStorageConfig.class);
 		String yunPath = null;

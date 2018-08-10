@@ -57,8 +57,8 @@ public class SysLogController {
 	@RequiresPermissions("sys:log:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
-		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")));
+		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")!=null?params.get("limit"):1));
+		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")!=null?params.get("page"):1));
 		org.springframework.data.mongodb.core.query.Query  query= new org.springframework.data.mongodb.core.query.Query();
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		query.with(sort);	
@@ -112,8 +112,8 @@ public class SysLogController {
 	@GetMapping("/exception")
 	@RequiresPermissions("sys:exception:list")
 	public JsonResponse exceptionList(@RequestParam Map<String, Object> params){
-		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
-		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")));
+		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")!=null?params.get("limit"):1));
+		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")!=null?params.get("page"):1));
 		org.springframework.data.mongodb.core.query.Query  query= new org.springframework.data.mongodb.core.query.Query();
 		Sort sort = new Sort(Direction.DESC, "createTime");
 		query.with(sort);	

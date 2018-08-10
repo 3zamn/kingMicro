@@ -1,4 +1,4 @@
-package com.king.gen.service;
+package com.king.utils.gen.service;
 
 import java.util.List;
 import java.util.Map;
@@ -13,10 +13,6 @@ import com.king.common.utils.Page;
  * @data2018年3月12日
  */
 public interface SysGeneratorService {
-	
-	/*List<Map<String, Object>> queryList(Map<String, Object> map);
-	
-	int queryTotal(Map<String, Object> map);*/
 	
 	Map<String, String> queryTable(String dataSource,String tableName);
 	
