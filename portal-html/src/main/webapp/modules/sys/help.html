@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>帮组说明</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+    <script src="../../static/libs/jquery.min.js"></script>
+<script src="../../static/libs/FileSaver.js"></script>
+<script src="../../static/libs/jquery.wordexport.js"></script>
+</head>
+<body>
+<div class="panel panel-default">
+    <div class="panel-heading" style="padding-top: 0px;height: 35px;" align="center"> &nbsp; <a href="/portal-web/exportDoc" style="float: left;" class="word-export btn btn-danger"> 下载接口文档 </a></div>
+    <div id="page-content" style="padding: 10px 0 20px 10px;">
+        <h3>&nbsp;&nbsp;&nbsp;项目介绍</h3>
+        <ul>
+            <li>一个轻量级的微服务快速开发平台</li>
+            <li>目录结构清晰规范，程序健壮</li>
+	    <li>友好的代码结构及注释，便于阅读及二次开发</li>
+            <li>使用dubbo、zookeeper实现了分布式rpc调度</li>   
+            <li>完善的XSS防范及脚本过滤，彻底杜绝XSS攻击</li>
+            <li>实现前后端分离，通过token进行数据交互</li>	    
+	    <li>利用swagger生成格式良好的api、可在线调试接口</li>
+	    <li>完善的系统异常处理、跟踪并支持在线查询异常信息</li>
+	    <li>实现了高可用,可集群水平扩展每个节点；redis实现了哨兵模式、mysql实现了读写分离</li>
+            <li>提供在线生成包括controller、service、dao/dao.xml、entity、及页面的html、js，生成标准的crud代码</li>
+            <li>包括四大功能模块：系统管理、云盘服务(开发中)、个人邮箱(暂未开发完)、运维监控</li>
+            <li>云盘服务:支持七牛云、腾讯云、阿里云、本地私有云/fastdhf(小文件)/hdhf（大文件支持断点续传),orc转换识别,提供ppt、pdf在线转图片云服务等</li>
+            <li>运维监控:支持SQL健康监控、系统内存、cpu等实时数据检测。同时提供对nginx实时流量数据展示等、后续集成docker实现DevOps</li>
+        </ul>
+
+        <h3>&nbsp;&nbsp;&nbsp;获取帮助</h3>
+        <ul>
+            <li>Git地址：<a href="https://github.com/3zamn/kingMicro.git" target="_blank">https://github.com/3zamn/kingMicro.git</a></li>
+            <li>如需关注项目最新动态，请Watch、Star项目，同时也是对项目最好的支持</li>
+            <li>生命有限、少写重复代码</li>
+        </ul>  
+    </div>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+$("a.word-export").click(function(event) {
+$("#page-content").wordExport();
+});
+});
+</script>
+</body>
+</html>

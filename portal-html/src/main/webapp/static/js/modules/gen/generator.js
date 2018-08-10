@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'sys/generator/list',
+        url: baseURL + 'generator/list',
         datatype: "json",
         colModel: [			 	
 			{ label: '表名', name: 'tableName', width: 100, key: true },
@@ -73,7 +73,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			$.get(baseURL + "sys/generator/info/"+dataSource+"/"+id, function(r){
+			$.get(baseURL + "generator/info/"+dataSource+"/"+id, function(r){
                 vm.showList = false;
             //    debugger
                 vm.title = "配置(未完成。。)";
@@ -91,7 +91,7 @@ var vm = new Vue({
 				return ;
 			}
 			var token = localStorage.getItem("token");
-			 var url= baseURL + "sys/generator/code?tables=" + JSON.stringify(tableNames)+"&token="+token+"&dataSource="+dataSource;
+			 var url= baseURL + "generator/code?tables=" + JSON.stringify(tableNames)+"&token="+token+"&dataSource="+dataSource;
 			location.href=encodeURI(url)//转码下以免被高版本tomcat过滤特殊字符报错
 		},
 		reload: function () {
