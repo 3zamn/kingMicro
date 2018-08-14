@@ -4,10 +4,10 @@ $(function () {
         datatype: "json",
         colModel: [
         	{ label: 'id', name: 'id', width: 20, key: true },
-			{ label: '异常流水号', name: 'seriaNo', width: 120},
+			{ label: '异常流水号', name: 'seriaNo', width: 100},
 			{ label: '服务', name: 'appCode', width: 30 }, 			
 		/*	{ label: '日志编码', name: 'logCode', width: 50 }, 			*/
-			{ label: '异常接口', name: 'apiName', width: 70 }, 			
+			{ label: '异常接口', name: 'apiName', width: 80 }, 			
 			{ label: '请求参数', name: 'inputData', width: 60 },
 		/*	{ label: '返回结果', name: 'outputData', width: 60 },*/
 			{ label: '服务IP', name: 'ip', width: 45 }, 			
