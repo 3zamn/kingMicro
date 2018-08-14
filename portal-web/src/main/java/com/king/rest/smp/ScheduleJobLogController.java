@@ -39,7 +39,6 @@ public class ScheduleJobLogController {
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:log")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		//查询列表数据
 		Query query = new Query(params,ScheduleJobLog.class.getSimpleName());	
 		Page page = scheduleJobService.getPageScheduleJobLog(query);
 		return JsonResponse.success(page);

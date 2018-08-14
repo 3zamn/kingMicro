@@ -53,7 +53,6 @@ public class SysDicController extends AbstractController{
 	@GetMapping("/list")
 	@RequiresPermissions("sys:dic:list")
 	public List<SysDic> list(@RequestParam Map<String, Object> params){
-		//查询列表数据
 		List<SysDic> dics = null;
         Query query = new Query(params,SysDic.class.getSimpleName());
 		dics = sysDicService.queryList(query);
@@ -106,8 +105,7 @@ public class SysDicController extends AbstractController{
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:dic:info")
 	public JsonResponse info(@PathVariable("id") Object id){
-		SysDic sysDic = sysDicService.queryObject(id);
-		
+		SysDic sysDic = sysDicService.queryObject(id);		
 		return JsonResponse.success(sysDic);
 	}
 	
@@ -118,12 +116,11 @@ public class SysDicController extends AbstractController{
 	@ApiOperation(value = "保存",response=Response.class,notes = "权限编码（sysdic:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dic:save")
-	public JsonResponse save(@RequestBody SysDic sysDic){
+	public JsonResponse save(@RequestBody(required = false) SysDic sysDic){
 		sysDic.setCreateBy(getUser().getUsername());
 		sysDic.setCreateTime(new Date());
 		verifyForm(sysDic);
-		sysDicService.save(sysDic);
-		
+		sysDicService.save(sysDic);	
 		return JsonResponse.success();
 	}
 	
@@ -134,12 +131,11 @@ public class SysDicController extends AbstractController{
 	@ApiOperation(value = "修改",response=Response.class,notes = "权限编码（sysdic:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:dic:update")
-	public JsonResponse update(@RequestBody SysDic sysDic){
+	public JsonResponse update(@RequestBody(required = false) SysDic sysDic){
 		verifyForm(sysDic);
 		sysDic.setUpdateBy(getUser().getUsername());
 		sysDic.setUpdateTime(new Date());
-		sysDicService.update(sysDic);
-		
+		sysDicService.update(sysDic);	
 		return JsonResponse.success();
 	}
 	

@@ -43,12 +43,10 @@ public class ${className}Controller extends AbstractController{
 	/**
 	 * 列表
 	 */
-	@Log("${comments}列表页")
 	@ApiOperation(value = "列表页",response=Response.class,notes = "权限编码（${permUrl}:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("${permUrl}:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		//查询列表数据
         Query query = new Query(params,${className}.class.getSimpleName());
 		Page page = ${classname}Service.getPage(query);
 		return JsonResponse.success(page);
@@ -63,8 +61,7 @@ public class ${className}Controller extends AbstractController{
 	@GetMapping("/info/{${pk.attrname}}")
 	@RequiresPermissions("${permUrl}:info")
 	public JsonResponse info(@PathVariable("${pk.attrname}") Long ${pk.attrname}){
-		${className} ${classname} = ${classname}Service.queryObject(${pk.attrname});
-		
+		${className} ${classname} = ${classname}Service.queryObject(${pk.attrname});	
 		return JsonResponse.success(${classname});
 	}
 	
@@ -76,8 +73,8 @@ public class ${className}Controller extends AbstractController{
 	@PostMapping("/save")
 	@RequiresPermissions("${permUrl}:save")
 	public JsonResponse save(@RequestBody ${className} ${classname}){
-		${classname}Service.save(${classname});
-		
+		ValidatorUtils.validateEntity(${classname});
+		${classname}Service.save(${classname});	
 		return JsonResponse.success();
 	}
 	
@@ -89,8 +86,8 @@ public class ${className}Controller extends AbstractController{
 	@PostMapping("/update")
 	@RequiresPermissions("${permUrl}:update")
 	public JsonResponse update(@RequestBody ${className} ${classname}){
-		${classname}Service.update(${classname});
-		
+		ValidatorUtils.validateEntity(${classname});
+		${classname}Service.update(${classname});	
 		return JsonResponse.success();
 	}
 	
@@ -102,8 +99,7 @@ public class ${className}Controller extends AbstractController{
 	@PostMapping("/delete")
 	@RequiresPermissions("${permUrl}:delete")
 	public JsonResponse delete(@RequestBody Long[] ${pk.attrname}s){
-		${classname}Service.deleteBatch(${pk.attrname}s);
-		
+		${classname}Service.deleteBatch(${pk.attrname}s);	
 		return JsonResponse.success();
 	}
 	

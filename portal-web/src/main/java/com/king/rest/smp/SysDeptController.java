@@ -44,14 +44,12 @@ public class SysDeptController extends AbstractController {
 	/**
 	 * 列表
 	 */
-	@Log("部门列表")
 	@ApiOperation(value = "部门列表", notes = "权限编码（sys:dept:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:dept:list")
 	public  List<SysDept> list(){
 		Query query = new Query(new HashMap<String, Object>());
 		List<SysDept> deptList = sysDeptService.queryList(query);
-
 		return deptList;
 	}
 
@@ -65,7 +63,6 @@ public class SysDeptController extends AbstractController {
 	public JsonResponse select(){
 		Query query = new Query(new HashMap<String, Object>());
 		List<SysDept> deptList = sysDeptService.queryList(query);
-
 		//添加一级部门
 		if(getUserId().equals(Constant.SUPER_ADMIN)){
 			SysDept root = new SysDept();
@@ -75,7 +72,6 @@ public class SysDeptController extends AbstractController {
 			root.setOpen(true);
 			deptList.add(root);
 		}
-
 		return JsonResponse.success(deptList);
 	}
 
@@ -92,7 +88,6 @@ public class SysDeptController extends AbstractController {
 			SysDept dept = sysDeptService.queryObject(getDeptId());
 			deptId = dept.getParentId();
 		}
-
 		return JsonResponse.success(deptId);
 	}
 	
@@ -104,8 +99,7 @@ public class SysDeptController extends AbstractController {
 	@GetMapping("/info/{deptId}")
 	@RequiresPermissions("sys:dept:info")
 	public JsonResponse info(@PathVariable("deptId") Object deptId){
-		SysDept dept = sysDeptService.queryObject(deptId);
-		
+		SysDept dept = sysDeptService.queryObject(deptId);	
 		return JsonResponse.success(dept);
 	}
 	
@@ -116,10 +110,9 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "保存部门",response=Response.class, notes = "权限编码（sys:dept:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dept:save")
-	public JsonResponse save(@RequestBody SysDept dept){
+	public JsonResponse save(@RequestBody(required = false) SysDept dept){
 		ValidatorUtils.validateEntity(dept, AddGroup.class);
-		sysDeptService.save(dept);
-		
+		sysDeptService.save(dept);	
 		return JsonResponse.success();
 	}
 	
@@ -130,10 +123,9 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "修改部门",response=Response.class, notes = "权限编码（sys:dept:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:dept:update")
-	public JsonResponse update(@RequestBody SysDept dept){
+	public JsonResponse update(@RequestBody(required = false) SysDept dept){
 		ValidatorUtils.validateEntity(dept, UpdateGroup.class);
 		sysDeptService.update(dept);
-		
 		return JsonResponse.success();
 	}
 	
@@ -150,9 +142,7 @@ public class SysDeptController extends AbstractController {
 		if(deptList.size() > 0){
 			return JsonResponse.error("请先删除子部门");
 		}
-
 		sysDeptService.delete(deptId);
-		
 		return JsonResponse.success();
 	}
 	

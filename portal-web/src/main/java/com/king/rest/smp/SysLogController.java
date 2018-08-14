@@ -56,7 +56,6 @@ public class SysLogController {
 	@GetMapping("/list")
 	@RequiresPermissions("sys:log:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		//查询列表数据
 		int pageSize= Integer.parseInt(StringToolkit.getObjectString(params.get("limit")!=null?params.get("limit"):1));
 		int currPage= Integer.parseInt(StringToolkit.getObjectString(params.get("page")!=null?params.get("page"):1));
 		org.springframework.data.mongodb.core.query.Query  query= new org.springframework.data.mongodb.core.query.Query();

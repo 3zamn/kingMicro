@@ -44,12 +44,10 @@ public class SysConfigController extends AbstractController {
 	/**
 	 * 所有配置列表
 	 */
-	@Log("配置列表")
 	@ApiOperation(value = "配置列表",response=Response.class, notes = "权限编码（sys:config:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:config:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		//查询列表数据
 		Query query = new Query(params,SysConfig.class.getSimpleName());
 		Page page = sysConfigService.getPage(query);	
 		return JsonResponse.success(page);
@@ -64,8 +62,7 @@ public class SysConfigController extends AbstractController {
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:config:info")
 	public JsonResponse info(@PathVariable("id") Object id){
-		SysConfig config = sysConfigService.queryObject(id);
-		
+		SysConfig config = sysConfigService.queryObject(id);	
 		return JsonResponse.success(config);
 	}
 	
@@ -76,11 +73,9 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "保存配置",response=Response.class, notes = "权限编码（sys:config:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:config:save")
-	public JsonResponse save(@RequestBody SysConfig config){
+	public JsonResponse save(@RequestBody(required = false) SysConfig config){
 		ValidatorUtils.validateEntity(config);
-
-		sysConfigService.save(config);
-		
+		sysConfigService.save(config);		
 		return JsonResponse.success();
 	}
 	
@@ -91,11 +86,9 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "修改配置",response=Response.class, notes = "权限编码（sys:config:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:config:update")
-	public JsonResponse update(@RequestBody SysConfig config){
-		ValidatorUtils.validateEntity(config);
-		
-		sysConfigService.update(config);
-		
+	public JsonResponse update(@RequestBody(required = false) SysConfig config){
+		ValidatorUtils.validateEntity(config);	
+		sysConfigService.update(config);	
 		return JsonResponse.success();
 	}
 	
@@ -106,9 +99,8 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "删除配置",response=Response.class, notes = "权限编码（sys:config:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:config:delete")
-	public JsonResponse delete(@RequestBody Long[] ids){
-		sysConfigService.deleteBatch(ids);
-		
+	public JsonResponse delete(@RequestBody(required = false) Long[] ids){
+		sysConfigService.deleteBatch(ids);	
 		return JsonResponse.success();
 	}
 

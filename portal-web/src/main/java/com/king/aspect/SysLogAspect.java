@@ -35,12 +35,14 @@ import com.king.common.mongodb.log.model.SysLogVO;
 import com.king.common.mongodb.log.repo.ExceptionLogRepo;
 import com.king.common.mongodb.log.repo.SysLogRepo;
 import com.king.common.utils.exception.ExceptionUtils;
+import com.king.common.utils.exception.RRException;
 import com.king.common.utils.pattern.StringToolkit;
 import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.service.BaseService;
 import com.king.utils.HttpContextUtils;
 import com.king.utils.IPUtils;
+import com.king.utils.RRExceptionHandler;
 import com.king.utils.ShiroUtils;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -97,7 +99,8 @@ public class SysLogAspect {
 			} else {// 本地异常
 				stackTrace = ExceptionUtils.makeStackTrace(e);			
 				seriNO=UUID.randomUUID().toString();
-				exception = "发生未知异常，异常流水号"+"【"+seriNO+"】"+e.toString();
+				String exceptionMsg=RRExceptionHandler.getExceptionType(e).getString("msg");
+				exception = exceptionMsg+"异常流水号"+"【"+seriNO+"】"+e.toString();
 				addExceptionLog(stackTrace, point, "portal-web", seriNO);
 			}
 			JSONObject jsonObject = new JSONObject();
@@ -268,6 +271,8 @@ public class SysLogAspect {
 		com.king.common.annotation.Log log = method.getAnnotation(com.king.common.annotation.Log.class);
 		if (log != null) {
 			sysLog.setOperation(log.value());
+		}else{
+			sysLog.setOperation("无操作标识");
 		}
 		String data = null;
 		String status=null;

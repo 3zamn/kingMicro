@@ -61,7 +61,6 @@ public class SysMenuController extends AbstractController {
 	/**
 	 * 所有菜单列表
 	 */
-	@Log("菜单列表")
 	@ApiOperation(value = "菜单列表", notes = "权限编码（sys:menu:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:menu:list")
@@ -84,9 +83,7 @@ public class SysMenuController extends AbstractController {
 	@GetMapping("/select")
 	@RequiresPermissions("sys:menu:select")
 	public JsonResponse select(){
-		//查询列表数据
 		List<SysMenu> menuList = sysMenuService.queryNotButtonList();
-		
 		//添加顶级菜单
 		SysMenu root = new SysMenu();
 		root.setMenuId(0L);
@@ -116,12 +113,10 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "保存菜单",response=Response.class, notes = "权限编码（sys:menu:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:menu:save")
-	public JsonResponse save(@RequestBody SysMenu menu){
+	public JsonResponse save(@RequestBody(required = false) SysMenu menu){
 		//数据校验
-		verifyForm(menu);
-		
-		sysMenuService.save(menu);
-		
+		verifyForm(menu);		
+		sysMenuService.save(menu);	
 		return JsonResponse.success();
 	}
 	
@@ -132,7 +127,7 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "修改菜单",response=Response.class, notes = "权限编码（sys:menu:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:menu:update")
-	public JsonResponse update(@RequestBody SysMenu menu){
+	public JsonResponse update(@RequestBody(required = false) SysMenu menu){
 		//数据校验
 		verifyForm(menu);			
 		sysMenuService.update(menu);

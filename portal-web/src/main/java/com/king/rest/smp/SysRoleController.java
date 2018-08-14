@@ -53,7 +53,6 @@ public class SysRoleController extends AbstractController {
 	/**
 	 * 角色列表
 	 */
-	@Log("角色列表")
 	@ApiOperation(value = "角色列表",response=Response.class, notes = "权限编码（sys:role:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:role:list")
@@ -62,7 +61,6 @@ public class SysRoleController extends AbstractController {
 		if(getUserId() != Constant.SUPER_ADMIN){
 			params.put("createUserId", getUserId());
 		}	
-		//查询列表数据
 		Query query = new Query(params,SysRole.class.getSimpleName());
 		Page page = sysRoleService.getPage(query);
 		return JsonResponse.success(page);
@@ -77,8 +75,7 @@ public class SysRoleController extends AbstractController {
 	@RequiresPermissions("sys:role:select")
 	public JsonResponse select(){
 		Query query = new Query(new HashMap<String, Object>());
-		List<SysRole> list = sysRoleService.queryList(query);
-		
+		List<SysRole> list = sysRoleService.queryList(query);	
 		return JsonResponse.success(list);
 	}
 	
@@ -96,8 +93,7 @@ public class SysRoleController extends AbstractController {
 		role.setMenuIdList(menuIdList);
 		//查询角色对应的部门
 		List<Long> deptIdList = sysDeptService.queryDeptIdList(roleId);
-		role.setDeptIdList(deptIdList);
-		
+		role.setDeptIdList(deptIdList);	
 		return JsonResponse.success(role);
 	}
 	
@@ -108,11 +104,9 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "保存角色",response=Response.class, notes = "权限编码（sys:role:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:role:save")
-	public JsonResponse save(@RequestBody SysRole role){
-		ValidatorUtils.validateEntity(role);
-		
-		sysRoleService.save(role);
-		
+	public JsonResponse save(@RequestBody(required = false) SysRole role){
+		ValidatorUtils.validateEntity(role);	
+		sysRoleService.save(role);	
 		return JsonResponse.success();
 	}
 	
@@ -123,11 +117,9 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "保存角色",response=Response.class, notes = "权限编码（sys:role:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:role:update")
-	public JsonResponse update(@RequestBody SysRole role){
-		ValidatorUtils.validateEntity(role);
-		
-		sysRoleService.update(role,getUser().getToken());
-		
+	public JsonResponse update(@RequestBody(required = false) SysRole role){
+		ValidatorUtils.validateEntity(role);	
+		sysRoleService.update(role,getUser().getToken());	
 		return JsonResponse.success();
 	}
 	
@@ -138,7 +130,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "查询授权的用户",response=Response.class, notes = "权限编码（sys:role:grantUsers）")
 	@PostMapping("/grantUsers")
 	@RequiresPermissions("sys:role:grantUsers")
-	public JsonResponse grantUsers(@RequestBody Object roleId){
+	public JsonResponse grantUsers(@RequestBody Long roleId){
 		List<SysUser> sysUsers = sysUserService.queryByRoleId(roleId);
 		return JsonResponse.success(sysUsers);
 	}
@@ -150,7 +142,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "删除角色",response=Response.class, notes = "权限编码（sys:role:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:role:delete")
-	public JsonResponse delete(@RequestBody Long[] roleIds){
+	public JsonResponse delete(@RequestBody(required = false) Long[] roleIds){
 		for(Object roleId:roleIds){
 			List<Long> list=sysRoleService.queryUserIdList(roleId);
 			if(list!=null && !list.isEmpty()){

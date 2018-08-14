@@ -2,6 +2,7 @@ package ${package}.dal.gen.model.${module};
 
 import java.io.Serializable;
 import java.util.Date;
+import org.hibernate.validator.constraints.NotBlank;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
@@ -25,6 +26,9 @@ public class ${className} implements Serializable {
 	//$column.comments
 #if(${pk.attrname}==${column.attrname})
 	@Id
+#end
+#if(${pk.attrname}!=${column.attrname} && ${column.isNullable}=="NO")
+	@NotBlank(message="$column.comments不能为空")
 #end
 	@ApiModelProperty("$column.comments")
 	private $column.attrType $column.attrname;

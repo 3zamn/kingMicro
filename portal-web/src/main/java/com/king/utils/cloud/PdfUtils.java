@@ -239,27 +239,29 @@ public class PdfUtils {
 	 * @param pathname
 	 */
 	public static void deleteFile(String pathname) {
-		File file = new File(pathname);
-		if (file.exists()) {
-			if (file.isDirectory()) {
-				File[] files=file.listFiles();
-				int size=files.length;
-				for (File f : files) {
-					size=size-1;
-					try {
-						deleteFile(f.getCanonicalPath());
-					} catch (IOException e) {
-						e.printStackTrace();
+		if(pathname!=null){
+			File file = new File(pathname);
+			if (file.exists()) {
+				if (file.isDirectory()) {
+					File[] files=file.listFiles();
+					int size=files.length;
+					for (File f : files) {
+						size=size-1;
+						try {
+							deleteFile(f.getCanonicalPath());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						if(size==0){
+							file.delete();
+						}
 					}
-					if(size==0){
-						file.delete();
-					}
+					
+				} else {
+					file.delete();
 				}
-				
-			} else {
-				file.delete();
-			}
 
+			}
 		}
 	}
 	

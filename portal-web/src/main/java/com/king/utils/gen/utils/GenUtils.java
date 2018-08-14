@@ -90,7 +90,7 @@ public class GenUtils {
 			if("PRI".equalsIgnoreCase(column.get("columnKey")) && tableEntity.getPk() == null){
 				tableEntity.setPk(columnEntity);
 			}
-			
+			columnEntity.setIsNullable(column.get("isNullable"));
 			columsList.add(columnEntity);
 		}
 		tableEntity.setColumns(columsList);

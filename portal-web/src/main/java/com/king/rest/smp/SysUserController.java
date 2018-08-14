@@ -58,12 +58,10 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 所有用户列表
 	 */
-	@Log("查看用户列表")
 	@ApiOperation(value = "用户列表",response=Response.class, notes = "权限编码（sys:user:list）")
 	@GetMapping("/list")
 	@RequiresPermissions("sys:user:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		//查询列表数据
 		Query query = new Query(params,SysUser.class.getSimpleName());
 		Page page = sysUserService.getPage(query);
 		return JsonResponse.success(page);
@@ -100,7 +98,7 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = " 注销在线用户",response=Response.class, notes = "权限编码（sys:users:offline）")
 	@PostMapping("/offline")
 	@RequiresPermissions("sys:users:offline")
-	public JsonResponse offline(@RequestBody String[] tokens){
+	public JsonResponse offline(@RequestBody(required = false) String[] tokens){
 		String t =getUser().getToken();
 		if(ArrayUtils.contains(tokens, t)){
 			return JsonResponse.error("当前用户不能注销!");
@@ -111,7 +109,6 @@ public class SysUserController extends AbstractController {
 		for(String token:tokens){
 			redisUtils.delete(RedisKeys.getTokenKey(token));
 		}
-		
 		return JsonResponse.success();
 	}
 	
@@ -141,8 +138,7 @@ public class SysUserController extends AbstractController {
 		int count = sysUserService.updatePassword(getUserId(), password, newPassword);
 		if(count == 0){
 			return JsonResponse.error("原密码不正确");
-		}
-		
+		}	
 		return JsonResponse.success();
 	}
 	
@@ -157,8 +153,7 @@ public class SysUserController extends AbstractController {
 		SysUser user = sysUserService.queryObject(userId);
 		//获取用户所属的角色列表
 		List<Long> roleIdList = sysRoleService.queryRoleIdList(userId);
-		user.setRoleIdList(roleIdList);
-		
+		user.setRoleIdList(roleIdList);	
 		return JsonResponse.success(user);
 	}
 	
@@ -169,10 +164,9 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "保存用户",response=Response.class, notes = "权限编码（sys:user:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:user:save")
-	public JsonResponse save(@RequestBody SysUser user){
+	public JsonResponse save(@RequestBody(required = false) SysUser user){
 		ValidatorUtils.validateEntity(user, AddGroup.class);	
-		sysUserService.save(user);
-		
+		sysUserService.save(user);	
 		return JsonResponse.success();
 	}
 	
@@ -183,7 +177,7 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "修改用户",response=Response.class, notes = "权限编码（sys:user:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("sys:user:update")
-	public JsonResponse update(@RequestBody SysUser user){
+	public JsonResponse update(@RequestBody(required = false) SysUser user){
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
 		if(user.getUserId() == Constant.SUPER_ADMIN){
 			if(user.getStatus()==0){
@@ -192,8 +186,7 @@ public class SysUserController extends AbstractController {
 		}
 		user.setSalt(sysUserService.queryObject(user.getUserId()).getSalt());
 		user.setToken(getUser().getToken());
-		sysUserService.update(user);
-		
+		sysUserService.update(user);	
 		return JsonResponse.success();
 	}
 	
@@ -204,15 +197,14 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "删除用户",response=Response.class, notes = "权限编码（sys:user:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("sys:user:delete")
-	public JsonResponse delete(@RequestBody Long[] userIds){
+	public JsonResponse delete(@RequestBody(required = false) Long[] userIds){
 		if(ArrayUtils.contains(userIds, 1L)){
 			return JsonResponse.error("系统管理员不能删除!");
 		}	
 		if(ArrayUtils.contains(userIds, getUserId())){
 			return JsonResponse.error("当前用户不能删除!");
 		}	
-		sysUserService.deleteBatch(userIds);
-		
+		sysUserService.deleteBatch(userIds);		
 		return JsonResponse.success();
 	}
 }

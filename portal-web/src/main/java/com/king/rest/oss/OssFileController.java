@@ -95,7 +95,7 @@ public class OssFileController extends AbstractController{
 	@ApiOperation(value = "修改",notes = "权限编码（oss:file:update）")
 	@PostMapping("/update")
 	@RequiresPermissions("oss:file:update")
-	public JsonResponse update(@RequestBody OssFile sysOss){
+	public JsonResponse update(@RequestBody(required = false) OssFile sysOss){
 		ossFileService.update(sysOss);
 		
 		return JsonResponse.success();
@@ -108,7 +108,7 @@ public class OssFileController extends AbstractController{
 	@ApiOperation(value = "删除",notes = "权限编码（oss:file:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("oss:file:delete")
-	public JsonResponse delete(@RequestBody Long[] ids){
+	public JsonResponse delete(@RequestBody(required = false) Long[] ids){
 		CloudStorageConfig config = sysConfigService.getConfigObject(Constant.CLOUD_STORAGE_CONFIG, CloudStorageConfig.class);
 		String yunPath=null;
 		String deleteObject =null;
@@ -168,7 +168,7 @@ public class OssFileController extends AbstractController{
 	@ApiOperation(value = "保存云存储配置信息",notes = "权限编码（oss:file:config）")
     @PostMapping("/saveConfig")
 	@RequiresPermissions("oss:file:saveConfig")
-	public JsonResponse saveConfig(@RequestBody CloudStorageConfig config){
+	public JsonResponse saveConfig(@RequestBody(required = false) CloudStorageConfig config){
 		//校验类型
 		ValidatorUtils.validateEntity(config);
 		if(config.getType() == Constant.CloudService.QINIU.getValue()){
@@ -192,7 +192,7 @@ public class OssFileController extends AbstractController{
 	@ApiOperation(value = "文件上传",notes = "权限编码（oss:file:upload）")
 	@PostMapping("/upload")
 	@RequiresPermissions("oss:file:upload")
-	public JsonResponse upload(@RequestParam("file") MultipartFile file) throws Exception {
+	public JsonResponse upload(@RequestParam(value="file",required=false) MultipartFile file) throws Exception {
 		if (file.isEmpty()) {
 			throw new RRException("上传文件不能为空");
 		}

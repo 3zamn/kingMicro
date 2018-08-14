@@ -110,7 +110,7 @@ public class OssPdfController extends AbstractController {
 	@ApiOperation(value = "修改", notes = "权限编码（oss:water:setting）")
 	@PostMapping("/waterSetting")
 	@RequiresPermissions("oss:water:setting")
-	public JsonResponse saveOrUpdate(@RequestBody OssWaterSetting ossWaterSetting) {
+	public JsonResponse saveOrUpdate(@RequestBody(required = false) OssWaterSetting ossWaterSetting) {
 		ossWaterSetting.setUserId(getUserId());
 		ossWaterSetting.setCreator(getUser().getUsername());
 		ossWaterSetting.setCreateTime(new Date());
@@ -128,7 +128,7 @@ public class OssPdfController extends AbstractController {
 	@ApiOperation(value = "删除", notes = "权限编码（oss:pdf:delete）")
 	@PostMapping("/delete")
 	@RequiresPermissions("oss:pdf:delete")
-	public JsonResponse delete(@RequestBody Long[] ids) {
+	public JsonResponse delete(@RequestBody(required = false) Long[] ids) {
 		CloudStorageConfig config = sysConfigService.getConfigObject(Constant.CLOUD_STORAGE_CONFIG,
 				CloudStorageConfig.class);
 		String yunPath = null;
@@ -178,7 +178,7 @@ public class OssPdfController extends AbstractController {
 	@ApiOperation(value = "文件上传", notes = "权限编码（oss:pdf:upload）")
 	@PostMapping("/upload")
 	@RequiresPermissions("oss:pdf:upload")
-	public JsonResponse upload(@RequestParam("file") MultipartFile file) throws Exception {
+	public JsonResponse upload(@RequestParam(value="file",required=false) MultipartFile file) throws Exception {
 		if (file.isEmpty()) {	
 			return JsonResponse.error("上传文件不能为空");
 		}else if(file.getOriginalFilename().endsWith("doc")||file.getOriginalFilename().endsWith("docx")||file.getOriginalFilename().endsWith("xls")

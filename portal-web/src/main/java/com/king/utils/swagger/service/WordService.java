@@ -4,6 +4,8 @@ package com.king.utils.swagger.service;
 import java.util.List;
 
 import com.king.utils.swagger.entity.Body;
+import com.king.utils.swagger.entity.Head;
+import com.king.utils.swagger.entity.Info;
 
 /**
  * @author King chen
@@ -11,5 +13,7 @@ import com.king.utils.swagger.entity.Body;
  * @data 2018年8月10日
  */
 public interface WordService {
-    List<Body> tableList();
+    List<Body> bodyList();
+    List<Head> headList();
+    Info getinfo();
 }

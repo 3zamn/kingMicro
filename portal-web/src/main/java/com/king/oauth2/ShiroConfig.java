@@ -77,7 +77,7 @@ public class ShiroConfig {
         filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/", "anon");
         filterMap.put("/monitoring/**", "anon");
-        filterMap.put("/exportDoc**", "anon");//导出swagger接口文档
+    //    filterMap.put("/exportDoc**", "anon");//导出swagger接口文档
         filterMap.put("/oss/pdf/view/**", "anon");//测试
         filterMap.put("/downlod**", "anon");//测试
         filterMap.put("/**", "oauth2");

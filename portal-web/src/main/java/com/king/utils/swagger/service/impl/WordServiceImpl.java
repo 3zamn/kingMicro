@@ -1,5 +1,7 @@
 package com.king.utils.swagger.service.impl;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -8,19 +10,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.king.api.smp.SysConfigService;
+import com.king.common.utils.exception.RRException;
+import com.king.common.utils.pattern.StringToolkit;
 import com.king.utils.ShiroUtils;
 import com.king.utils.swagger.entity.Body;
+import com.king.utils.swagger.entity.Head;
+import com.king.utils.swagger.entity.Info;
 import com.king.utils.swagger.entity.Request;
 import com.king.utils.swagger.entity.Response;
 import com.king.utils.swagger.service.WordService;
@@ -38,10 +46,55 @@ public class WordServiceImpl implements WordService {
     @Autowired
 	private SysConfigService sysConfigService;
     private Logger logger = LoggerFactory.getLogger(getClass());
+ 
+    
+    @Override
+	public Info getinfo() {
+    	if(StringUtils.isBlank(sysConfigService.getValue("SWAGGER_ENABLE")) || !sysConfigService.getValue("SWAGGER_ENABLE").equals("true")){
+      		return null;//未启用
+      	}
+    	String swaggerUrl = sysConfigService.getValue("SWAGGER_URL");
+		@SuppressWarnings("unchecked")
+		Map<String, Object> map = restTemplate.getForObject(swaggerUrl, Map.class);
+		@SuppressWarnings("unchecked")
+		Map<String, Object> infoMap=(Map<String, Object>)map.get("info");
+		Info info = new Info();
+		info.setVersion(StringToolkit.getObjectString(infoMap.get("version")));
+		info.setBasePath(StringToolkit.getObjectString(map.get("basePath")));
+		info.setDate(new Date());
+		info.setDescription(StringToolkit.getObjectString(infoMap.get("description")));
+		info.setTitle(StringToolkit.getObjectString(infoMap.get("title")));
+		info.setHost(StringToolkit.getObjectString(map.get("host")));
+		Configuration config = getConfig();
+		info.setAuthor(config.getString("author", "King Chen"));
+		info.setEmail(config.getString("email", "396885563@qq.com"));
+		info.setTermsOfService(StringToolkit.getObjectString(infoMap.get("termsOfService")));
+		return info;
+	}
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+  	@Override
+      public List<Head> headList() {
+      	if(StringUtils.isBlank(sysConfigService.getValue("SWAGGER_ENABLE")) || !sysConfigService.getValue("SWAGGER_ENABLE").equals("true")){
+      		return null;//未启用
+      	}
+		String swaggerUrl = sysConfigService.getValue("SWAGGER_URL");
+		Map<String, Object> map = restTemplate.getForObject(swaggerUrl, Map.class);
+		List<Head> list = new LinkedList();
+		// 解析tags
+		List<HashMap<String, String>> headList = (List<HashMap<String, String>>) map.get("tags");
+		for (HashMap<String, String> m : headList) {
+			Head head = new Head();
+			head.setName(m.get("name"));
+			head.setDescription(m.get("description"));
+			list.add(head);
+		}    
+          return list;
+      }
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-    public List<Body> tableList() {
+    public List<Body> bodyList() {
     	if(StringUtils.isBlank(sysConfigService.getValue("SWAGGER_ENABLE")) || !sysConfigService.getValue("SWAGGER_ENABLE").equals("true")){
     		return null;//未启用
     	}
@@ -75,7 +128,7 @@ public class WordServiceImpl implements WordService {
                 }
 
                 Iterator<Map.Entry<String, LinkedHashMap>> it2 = value.entrySet().iterator();
-                //不管有几种请求方式，都只解析第一种
+                //只解析第一种请求方式(所以接口建议用@GetMapping、@PostMapping.代替@RequestMapping)
                 Map.Entry<String, LinkedHashMap> firstRequestType = it2.next();
                 LinkedHashMap content = firstRequestType.getValue();
                 title = String.valueOf(((List) content.get("tags")).get(0));
@@ -237,14 +290,14 @@ public class WordServiceImpl implements WordService {
                     	}                    
                         break;
                     case "integer":
-                    	if(name.equals("params")){                		
-                   		 map.put(name, "limit=10&page=1");
-                    	}else{
-                    		  map.put(name, 0);
-                    	}                
+                    	map.put(name, 0);
                         break;
                     case "object":
-                        map.put(name, 0);
+                    	if(name.equals("params")){                		
+                      		 map.put(name, "limit=10&page=1");
+                       	}else{
+                       		  map.put(name, 0);
+                       	}                                
                         break;
                     case "file":
                         map.put(name, null);
@@ -275,4 +328,16 @@ public class WordServiceImpl implements WordService {
         }
         return map;
     }
+    
+    
+	/**
+	 * 获取配置信息
+	 */
+	public static Configuration getConfig(){
+		try {
+			return new PropertiesConfiguration("gen"+File.separator+"generator.properties");
+		} catch (ConfigurationException e) {
+			throw new RRException("获取配置文件失败，", e);
+		}
+	}
 }

@@ -13,7 +13,8 @@ public class ColumnEntity {
     private String dataType;
     //列名备注
     private String comments;
-    
+    //是否允许为空
+    private String isNullable;
     //属性名称(第一个字母大写)，如：user_name => UserName
     private String attrName;
     //属性名称(第一个字母小写)，如：user_name => userName
@@ -34,6 +35,12 @@ public class ColumnEntity {
 	}
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
+	}
+	public String getIsNullable() {
+		return isNullable;
+	}
+	public void setIsNullable(String isNullable) {
+		this.isNullable = isNullable;
 	}
 	public String getComments() {
 		return comments;
