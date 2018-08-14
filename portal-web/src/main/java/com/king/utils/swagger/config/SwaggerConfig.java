@@ -1,4 +1,4 @@
-package com.king.utils;
+package com.king.utils.swagger.config;
 
 import java.util.ArrayList;
 import java.util.List;
