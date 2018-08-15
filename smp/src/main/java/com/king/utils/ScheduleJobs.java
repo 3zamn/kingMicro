@@ -59,8 +59,8 @@ public class ScheduleJobs extends QuartzJobBean {
 			//任务执行总时长
 			long times = System.currentTimeMillis() - startTime;
 			log.setTimes((int)times);
-			//任务状态    0：成功    1：失败
-			log.setStatus(0);
+			//任务状态    0：失败    1：成功
+			log.setStatus(true);
 			
 			logger.info("任务执行完毕，任务ID：" + scheduleJob.getJobId() + "  总共耗时：" + times + "毫秒");
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class ScheduleJobs extends QuartzJobBean {
 			log.setTimes((int)times);
 			
 			//任务状态    0：成功    1：失败
-			log.setStatus(1);
+			log.setStatus(false);
 			log.setError(StringUtils.substring(e.toString(), 0, 2000));
 		}finally {
 			scheduleJobService.save(log);

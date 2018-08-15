@@ -6,7 +6,7 @@
         <result property="id" column="id" jdbcType="BIGINT"/>
         <result property="key" column="key" jdbcType="VARCHAR"/>
         <result property="value" column="value" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysConfig">
@@ -47,7 +47,7 @@
 
 	<!-- 根据key，查询value -->
 	<select id="queryByKey" parameterType="string" resultType="com.king.dal.gen.model.smp.SysConfig">
-		select * from sys_config where `key` = #{key}
+		select * from sys_config where `key` = #{key} and status =true
 	</select>
 	
 	<delete id="deleteBatch" parameterType="int">

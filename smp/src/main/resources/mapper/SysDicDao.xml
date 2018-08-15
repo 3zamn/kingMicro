@@ -13,8 +13,8 @@
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
         <result property="sortNo" column="sort_no" jdbcType="INTEGER"/>
-        <result property="editable" column="editable" jdbcType="TINYINT"/>
-        <result property="enable" column="enable" jdbcType="TINYINT"/>
+        <result property="editable" column="editable" jdbcType="BOOLEAN"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -75,7 +75,7 @@
 			`parent_id`, 
 			`sort_no`, 
 			`editable`, 
-			`enable`, 
+			`status`, 
 			`remark`, 
 			`create_by`, 
 			`create_time`, 
@@ -92,7 +92,7 @@
 			#{parentId}, 
 			#{sortNo}, 
 			#{editable}, 
-			#{enable}, 
+			#{status}, 
 			#{remark}, 
 			#{createBy}, 
 			#{createTime}, 
@@ -112,7 +112,7 @@
 			<if test="parentId != null">`parent_id` = #{parentId}, </if>
 			<if test="sortNo != null">`sort_no` = #{sortNo}, </if>
 			<if test="editable != null">`editable` = #{editable}, </if>
-			<if test="enable != null">`enable` = #{enable}, </if>
+			<if test="status != null">`status` = #{status}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
 			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
@@ -134,7 +134,7 @@
 	</delete>
 
 	<select id="queryDicTerm" resultType="com.king.dal.gen.model.smp.SysDicTerm">
-		SELECT p.text,p.value,p.sort_no from sys_dic p WHERE type =1 and enable =1 and  parent_id = (SELECT u.id from sys_dic u WHERE code = #{code} and enable =1) order by sort_no asc
+		SELECT p.text,p.value,p.sort_no from sys_dic p WHERE type =1 and status =true and  parent_id = (SELECT u.id from sys_dic u WHERE code = #{code} and status =true) order by sort_no asc
 		 
 	</select>
 	

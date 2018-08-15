@@ -9,7 +9,7 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
         <result property="manager" column="manager" jdbcType="INTEGER"/>
-        <result property="delFlag" column="del_flag" jdbcType="TINYINT"/>
+        <result property="delFlag" column="del_flag" jdbcType="BOOLEAN"/>
     </resultMap>
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysDept">
 		select * from sys_dept where dept_id = #{value} and del_flag = 0

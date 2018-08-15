@@ -32,7 +32,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 	@Autowired
 	private ScheduleJobLogDao scheduleJobLogDao;
 	/**
-	 * 项目启动时，初始化定时器
+	 * spring容器启动后，初始化定时器
 	 */
 	@PostConstruct
 	public void init(){
@@ -75,7 +75,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 	}
 
 	@Override
-    public int updateBatch(Object[] jobIds, int status){
+    public int updateBatch(Object[] jobIds, Boolean status){
     	Map<String, Object> map = new HashMap<>();
     	map.put("list", jobIds);
     	map.put("status", status);

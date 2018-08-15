@@ -10,7 +10,7 @@
         <result property="salt" column="salt" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
         <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
         <result property="position" column="position" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="DATE"/>

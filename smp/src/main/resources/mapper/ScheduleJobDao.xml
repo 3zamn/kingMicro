@@ -8,7 +8,7 @@
         <result property="methodName" column="method_name" jdbcType="VARCHAR"/>
         <result property="params" column="params" jdbcType="VARCHAR"/>
         <result property="cronExpression" column="cron_expression" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="DATE"/>
     </resultMap>
