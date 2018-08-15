@@ -7,7 +7,7 @@
     <resultMap type="com.king.dal.gen.model.oss.OssWaterSetting" id="BaseResultMap">
         <result property="id" column="id" jdbcType="BIGINT"/>
         <result property="userId" column="user_id" jdbcType="BIGINT"/>
-        <result property="enable" column="enable" jdbcType="BOOLEAN"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
         <result property="isConvertImg" column="is_convert_img" jdbcType="BOOLEAN"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="fontSize" column="font_size" jdbcType="VARCHAR"/>
@@ -27,7 +27,7 @@
 	</select>
 	
 	<select id="queryByUser" resultType="com.king.dal.gen.model.oss.OssWaterSetting">
-		select * from oss_water_setting where user_id = #{userId} and enable=true
+		select * from oss_water_setting where user_id = #{userId} and status=true
 	</select>
 
 	<select id="queryList" resultType="com.king.dal.gen.model.oss.OssWaterSetting">
@@ -66,7 +66,7 @@
 		insert into oss_water_setting
 		(
 			`user_id`, 
-			`enable`, 
+			`status`, 
 			`is_convert_img`, 
 			`type`, 
 			`font_size`, 
@@ -83,7 +83,7 @@
 		values
 		(
 			#{userId}, 
-			#{enable}, 
+			#{status}, 
 			#{isConvertImg}, 
 			#{type}, 
 			#{fontSize}, 
@@ -103,7 +103,7 @@
 		update oss_water_setting 
 		<set>
 			<if test="userId != null">`user_id` = #{userId}, </if>
-			<if test="enable != null">`enable` = #{enable}, </if>
+			<if test="status != null">`status` = #{status}, </if>
 			<if test="isConvertImg != null">`is_convert_img` = #{isConvertImg}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="fontSize != null">`font_size` = #{fontSize}, </if>
