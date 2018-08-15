@@ -6,6 +6,11 @@ $(function () {
 			{ label: 'ID', name: 'id', width: 30, key: true },
 			{ label: '参数名', name: 'key', width: 60 },
 			{ label: '参数值', name: 'value', width: 100 },
+			{ label: '状态', name: 'status', width: 40, formatter: function(value, options, row){
+				return value === false ? 
+					'<span class="label label-danger">禁用</span>' : 
+					'<span class="label label-success">正常</span>';
+			}},
 			{ label: '备注', name: 'remark', width: 80 }
         ],
 		viewrecords: true,

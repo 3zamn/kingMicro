@@ -44,7 +44,7 @@ var vm = new Vue({
         add: function(){
             vm.showList = false;
             vm.title = "新增";
-            vm.sysDic = {parentName:null,parentId:0,enable:1,sortNo:0,type:1};
+            vm.sysDic = {parentName:null,parentId:0,status:1,sortNo:0,type:1};
             vm.getDirectory();
         },
         update: function () {
@@ -192,13 +192,10 @@ Dic.initColumn = function () {
                 return '<span class="label label-success">字典项</span>';
             }          
         }},
-        {title: '启用状态', field: 'enable', align: 'center', valign: 'middle', sortable: true, width: '40px', formatter: function(item, index){
-            if(item.enable === 0){
-                return '<span class="label label-danger">禁用</span>';
-            }
-            if(item.enable === 1){
-                return '<span class="label label-success">启用</span>';
-            }          
+        {title: '启用状态', field: 'status', align: 'center', valign: 'middle', sortable: true, width: '40px', formatter: function(value,item, index){
+			return value === false ? 
+					'<span class="label label-danger">禁用</span>' : 
+					'<span class="label label-success">正常</span>';    
         }},
         {title: '备注', field: 'remark', align: 'center', valign: 'middle', sortable: true, width: '60px'},
       /*  {title: '创建者', field: 'createBy', align: 'center', valign: 'middle', sortable: true, width: '40px'},*/

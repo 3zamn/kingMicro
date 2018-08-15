@@ -10,7 +10,7 @@ $(function () {
 			{ label: 'cron表达式 ', name: 'cronExpression', width: 100 },
 			{ label: '备注 ', name: 'remark', width: 100 },
 			{ label: '状态', name: 'status', width: 60, formatter: function(value, options, row){
-				return value === 0 ? 
+				return value === true ? 
 					'<span class="label label-success">正常</span>' : 
 					'<span class="label label-danger">暂停</span>';
 			}}
