@@ -84,19 +84,19 @@ public class Constant {
         /**
          * 正常
          */
-    	NORMAL(0),
+    	NORMAL(true),
         /**
          * 暂停
          */
-    	PAUSE(1);
+    	PAUSE(false);
 
-        private int value;
+        private Boolean value;
 
-        private ScheduleStatus(int value) {
+        private ScheduleStatus(Boolean value) {
             this.value = value;
         }
         
-        public int getValue() {
+        public Boolean getValue() {
             return value;
         }
     }

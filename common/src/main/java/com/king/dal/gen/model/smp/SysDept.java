@@ -43,8 +43,8 @@ public class SysDept implements Serializable ,Comparable<SysDept>{
 	@ApiModelProperty("部门负责人")
 	private Integer manager;
 	//是否删除  -1：已删除  0：正常
-	@ApiModelProperty("是否删除  -1：已删除  0：正常")
-	private Integer delFlag;
+	@ApiModelProperty("是否删除  0：已删除  1：正常")
+	private Boolean delFlag;
 	/**
 	 * ztree属性
 	 */
@@ -129,11 +129,11 @@ public class SysDept implements Serializable ,Comparable<SysDept>{
 		this.list = list;
 	}
 
-	public Integer getDelFlag() {
+	public Boolean getDelFlag() {
 		return delFlag;
 	}
 
-	public void setDelFlag(Integer delFlag) {
+	public void setDelFlag(Boolean delFlag) {
 		this.delFlag = delFlag;
 	}
 

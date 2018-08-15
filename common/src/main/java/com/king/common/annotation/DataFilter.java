@@ -3,7 +3,7 @@ package com.king.common.annotation;
 import java.lang.annotation.*;
 
 /**
- *  数据过滤
+ *   数据权限过滤注解
  * @author King chen
  * @date 2017年12月25日
  */

@@ -26,7 +26,7 @@ public class OssWaterSetting implements Serializable {
 	private Long userId;
 	//启用状态,0:否，1:是
 	@ApiModelProperty("启用状态,0:否，1:是")
-	private Boolean enable;
+	private Boolean status;
 	//是否生成图片,0:否，1:是
 	@ApiModelProperty("启用状态,0:否，1:是")
 	private Boolean isConvertImg;
@@ -91,14 +91,14 @@ public class OssWaterSetting implements Serializable {
 	/**
 	 * 设置：启用状态,0:否，1:是
 	 */
-	public void setEnable(Boolean enable) {
-		this.enable = enable;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 	/**
 	 * 获取：启用状态,0:否，1:是
 	 */
-	public Boolean getEnable() {
-		return enable;
+	public Boolean getStatus() {
+		return status;
 	}
 	
 	public Boolean getIsConvertImg() {

@@ -61,8 +61,8 @@ public class ScheduleJob implements Serializable {
 	/**
 	 * 任务状态
 	 */
-	@ApiModelProperty("任务状态  0：正常  1：暂停")
-	private Integer status;
+	@ApiModelProperty("任务状态  0：暂停  1：正常")
+	private Boolean status;
 
 	/**
 	 * 备注
@@ -128,7 +128,7 @@ public class ScheduleJob implements Serializable {
 	 * 设置：任务状态
 	 * @param status 任务状态
 	 */
-	public void setStatus(Integer status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 
@@ -136,7 +136,7 @@ public class ScheduleJob implements Serializable {
 	 * 获取：任务状态
 	 * @return String
 	 */
-	public Integer getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 	

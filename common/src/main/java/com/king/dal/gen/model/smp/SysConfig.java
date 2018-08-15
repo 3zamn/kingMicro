@@ -33,7 +33,7 @@ public class SysConfig implements Serializable{
 	
 	//状态   0：隐藏   1：显示
 	@ApiModelProperty("状态   0：隐藏   1：显示")
-	private Integer status;
+	private Boolean status;
 	
 	@ApiModelProperty("备注")
 	private String remark;
@@ -62,10 +62,10 @@ public class SysConfig implements Serializable{
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Integer getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
-	public void setStatus(Integer status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 	

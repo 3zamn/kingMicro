@@ -53,7 +53,7 @@ public class ScheduleJobLog implements Serializable {
 	 * 任务状态    0：成功    1：失败
 	 */
 	@ApiModelProperty("任务状态    0：成功    1：失败")
-	private Integer status;
+	private Boolean status;
 	
 	/**
 	 * 失败信息
@@ -113,11 +113,11 @@ public class ScheduleJobLog implements Serializable {
 		this.params = params;
 	}
 
-	public Integer getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 

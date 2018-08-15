@@ -50,10 +50,10 @@ public class SysDic implements Serializable {
 	private Integer sortNo;
 	//是否可编辑。1：是。0：否
 	@ApiModelProperty("是否可编辑。1：是。0：否")
-	private Integer editable;
+	private Boolean editable;
 	//状态。1启用。0禁用
 	@ApiModelProperty("状态。1启用。0禁用")
-	private Integer enable;
+	private Boolean status;
 	//备注
 	@ApiModelProperty("备注")
 	private String remark;
@@ -184,26 +184,26 @@ public class SysDic implements Serializable {
 	/**
 	 * 设置：是否可编辑。1：是。0：否
 	 */
-	public void setEditable(Integer editable) {
+	public void setEditable(Boolean editable) {
 		this.editable = editable;
 	}
 	/**
 	 * 获取：是否可编辑。1：是。0：否
 	 */
-	public Integer getEditable() {
+	public Boolean getEditable() {
 		return editable;
 	}
 	/**
 	 * 设置：状态。1启用。0禁用
 	 */
-	public void setEnable(Integer enable) {
-		this.enable = enable;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 	/**
 	 * 获取：状态。1启用。0禁用
 	 */
-	public Integer getEnable() {
-		return enable;
+	public Boolean getStatus() {
+		return status;
 	}
 	/**
 	 * 设置：备注

@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.king.common.annotation.PropertyExt;
 import com.king.common.utils.validator.group.AddGroup;
 import com.king.common.utils.validator.group.UpdateGroup;
 
@@ -37,6 +38,7 @@ public class SysUser implements Serializable {
 	 */
 	@Id
 	@ApiModelProperty("用户id")
+	@PropertyExt(isExport=false)
 	private Long userId;
 
 	/**
@@ -45,6 +47,7 @@ public class SysUser implements Serializable {
 	@ApiModelProperty("用户名")
 	@NotBlank(message="用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
 	@Length(max=20)
+	@PropertyExt
 	private String username;
 
 	/**
@@ -66,6 +69,7 @@ public class SysUser implements Serializable {
 	@ApiModelProperty("邮箱")
 	@NotBlank(message="邮箱不能为空", groups = {AddGroup.class, UpdateGroup.class})
 	@Email(message="邮箱格式不正确", groups = {AddGroup.class, UpdateGroup.class})
+	@PropertyExt
 	private String email;
 
 	/**
@@ -73,25 +77,21 @@ public class SysUser implements Serializable {
 	 */
 	@ApiModelProperty("手机号")
 	@Length(max=20)
+	@PropertyExt
 	private String mobile;
 
 	/**
 	 * 状态  0：禁用   1：正常
 	 */
 	@ApiModelProperty("状态  0：禁用   1：正常")
-	private Integer status;
+	@PropertyExt
+	private Boolean status;
 	
 	/**
 	 * 角色ID列表
 	 */
 	@ApiModelProperty("角色ID列表")
 	private List<Long> roleIdList;
-
-	/**
-	 * 创建时间
-	 */
-	@ApiModelProperty("创建时间")
-	private Date createTime;
 
 	/**
 	 * 部门ID
@@ -104,13 +104,22 @@ public class SysUser implements Serializable {
 	 * 部门名称
 	 */
 	@ApiModelProperty("部门名称")
+	@PropertyExt(isExport=false)
 	private String deptName;
 	
 	/**
 	 * 职位
 	 */
 	@ApiModelProperty("职位")
+	@PropertyExt
 	private String position;
+	
+	/**
+	 * 创建时间
+	 */
+	@ApiModelProperty("创建时间")
+	@PropertyExt
+	private Date createTime;
 	
 	private String token;
 
@@ -199,7 +208,7 @@ public class SysUser implements Serializable {
 	 * 设置：状态  0：禁用   1：正常
 	 * @param status 状态  0：禁用   1：正常
 	 */
-	public void setStatus(Integer status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 
@@ -207,7 +216,7 @@ public class SysUser implements Serializable {
 	 * 获取：状态  0：禁用   1：正常
 	 * @return Integer
 	 */
-	public Integer getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 	
