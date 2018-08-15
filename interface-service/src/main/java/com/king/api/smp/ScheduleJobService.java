@@ -54,7 +54,7 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
 	/**
 	 * 批量更新定时任务状态
 	 */
-	int updateBatch(Object[] jobIds, int status);
+	int updateBatch(Object[] jobIds, Boolean status);
 	
 	/**
 	 * 立即执行
