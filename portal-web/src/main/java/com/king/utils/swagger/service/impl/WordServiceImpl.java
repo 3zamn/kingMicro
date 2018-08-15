@@ -101,7 +101,6 @@ public class WordServiceImpl implements WordService {
     	String swaggerUrl =sysConfigService.getValue("SWAGGER_URL");
         Map<String, Object> map = restTemplate.getForObject(swaggerUrl, Map.class);
         List<Body> list = new LinkedList();
-       // String host = StringUtils.substringBefore(swaggerUrl, ":") + String.valueOf(map.get("host"));
         String host=StringUtils.substringBefore(swaggerUrl, ":")+"://"+String.valueOf(map.get("host"))+String.valueOf(map.get("basePath"));
         //解析paths
         LinkedHashMap<String, LinkedHashMap> paths = (LinkedHashMap) map.get("paths");

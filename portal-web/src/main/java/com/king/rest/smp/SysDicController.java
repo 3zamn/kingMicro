@@ -82,7 +82,7 @@ public class SysDicController extends AbstractController{
 		//查询目录类型数据
 		Map<String, Object> params = new HashMap<>();
 		params.put("type", 0);
-		params.put("enable", 1);
+		params.put("status", true);
 		 Query query = new Query(params,SysDic.class.getSimpleName());
 		List<SysDic> menuList = sysDicService.queryList(query);
 		

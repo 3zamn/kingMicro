@@ -139,7 +139,7 @@ public class SysLoginController extends AbstractController {
 			return JsonResponse.error(405,"账号或密码不正确","用户:"+username+",IP:"+ip+"连续登录错误数次："+error_count);
 		}
 		//账号锁定
-		if(user.getStatus() == 0){
+		if(user.getStatus() == false){
 			return JsonResponse.error(405,"账号已被锁定,请联系管理员",user.getUsername()+"：该账号已被锁定,请联系管理员");
 		}
 		if(value!=null) {//登录成功清除错误次数

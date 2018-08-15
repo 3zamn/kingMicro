@@ -180,7 +180,7 @@ public class SysUserController extends AbstractController {
 	public JsonResponse update(@RequestBody(required = false) SysUser user){
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
 		if(user.getUserId() == Constant.SUPER_ADMIN){
-			if(user.getStatus()==0){
+			if(user.getStatus()==false){
 				return JsonResponse.error("系统管理员不能禁用!");
 			}
 		}

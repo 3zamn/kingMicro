@@ -222,7 +222,7 @@ public class OssPdfController extends AbstractController {
 	    		if(DocConverter.docConvertPdf(new File(dest),pdfPath)){//转换成pdf			
 					//添加水印
 					OssWaterSetting ossWaterSetting = ossDoc2pdfService.queryWaterSetting(getUserId());
-					if(ossWaterSetting!=null && ossWaterSetting.getEnable()){
+					if(ossWaterSetting!=null && ossWaterSetting.getStatus()){
 						if(ossWaterSetting.getType().intValue()==1){//二维码水印		
 							FileOutputStream qrcode=new FileOutputStream(new File(dest.substring(0, dest.lastIndexOf("."))+"qrcode.jpg"));
 							if(QrCodeUtil.createQrCode(qrcode, ossWaterSetting.getWaterContent(), ossWaterSetting.getWaterWidth(), "JPEG")){
