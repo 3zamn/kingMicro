@@ -45,13 +45,14 @@ public class ImportBigDB {
 		//获取数据库连接
 		Connection conn = DriverManager.getConnection(url, user,password);   
 		Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);   
-		String sql = "select * from schedule_job_log limit 5000000";   //500万测试数据
+		String sql = "select * from schedule_job_log limit 6000000";   //600万测试数据
 		ResultSet rs = stmt.executeQuery(sql);  
 		
 		ResultSetMetaData rsmd = rs.getMetaData();
 		long  startTime = System.currentTimeMillis();	//开始时间
 		System.out.println("strat execute time: " + startTime);
-			
+		/*List<String> list = new ArrayList<String>();	
+		list.clear();*/
 		int rowNo = 0;		//总行号
 		int pageRowNo = 0;	//页行号
 			
