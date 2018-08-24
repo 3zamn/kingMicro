@@ -95,6 +95,8 @@ app或第三方应用端：API模块用jwt的token做安全校验
 		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("queryScheduleJobLogList", Map.class);
 		export.exportExcel("定时任务日志", "定时任务日志", ScheduleJobService.class, method, query,response);
   
+
+
     
     生命有限！少写重复代码！
      
