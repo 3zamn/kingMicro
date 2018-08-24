@@ -41,13 +41,41 @@ $(function () {
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
+    
+    new AjaxUpload('#upload', {
+        action: baseURL + 'sys/scheduleLog/upload?token=' + token,
+        name: 'file',
+        autoSubmit:true,
+        responseType:"json",
+        onSubmit:function(file, extension){
+         /*   if(vm.config.type == null){
+                alert("云存储配置未配置");
+                return false;
+            }*/
+           /* if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
+                alert('只支持jpg、png、gif格式的图片！');
+                return false;
+            }*/
+        },
+        onComplete : function(file, r){
+        	 if(r.code == 200){
+                 alert('上传成功', function(){
+                     vm.reload();
+                 });
+             }else{
+                 alert(r.msg);
+             }
+        }
+    });
 });
+
+
 
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		q:{
-			jobId: null
+			jobId: ''
 		}
 	},
 	methods: {
@@ -56,6 +84,11 @@ var vm = new Vue({
                 postData:{'jobId': vm.q.jobId},
                 page:1 
             }).trigger("reloadGrid");
+		},
+		exportExcel: function () {
+			var token = localStorage.getItem("token");
+			 var url= baseURL + "sys/scheduleLog/export?jobId=" + vm.q.jobId+"&token="+token+"&limit="+2000000+"&page="+1;
+			location.href=encodeURI(url)//转码下以免被高版本tomcat过滤特殊字符报错
 		},
 		showError: function(logId) {
 			$.get(baseURL + "sys/scheduleLog/info/"+logId, function(r){

@@ -18,15 +18,18 @@
 <script src="../../static/plugins/jqgrid/jquery.jqGrid.min.js"></script>
 <script src="../../static/plugins/ztree/jquery.ztree.all.min.js"></script>
 <script src="../../static/js/common.js"></script>
+<script src="../../static/libs/ajaxupload.js"></script>
 </head>
 <body>
-<div id="rrapp">
+<div id="rrapp" v-cloak>
 	<div class="grid-btn">
+			<a class="btn btn-primary" id="upload"><i class="fa fa-plus"></i>&nbsp;上传文件</a>
 		<div class="form-group col-sm-2">
 			<input type="text" class="form-control" v-model="q.jobId" @keyup.enter="query" placeholder="任务ID">
 		</div>
 		<a class="btn btn-default" @click="query">查询</a>
 		&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="exportExcel" value="导出"/>
 	</div>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
