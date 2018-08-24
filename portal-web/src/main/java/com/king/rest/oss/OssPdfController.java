@@ -48,12 +48,12 @@ import com.king.dal.gen.model.oss.OssDoc2pdf;
 import com.king.dal.gen.model.oss.OssWaterSetting;
 import com.king.utils.AbstractController;
 import com.king.utils.Query;
+import com.king.utils.XssHttpServletRequestWrapper;
 import com.king.utils.cloud.CloudStorageService;
 import com.king.utils.cloud.DocConverter;
 import com.king.utils.cloud.OSSFactory;
 import com.king.utils.cloud.PdfUtils;
 import com.king.utils.cloud.QrCodeUtil;
-import com.king.utils.pattern.XssHttpServletRequestWrapper;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

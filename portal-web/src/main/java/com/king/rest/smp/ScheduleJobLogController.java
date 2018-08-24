@@ -1,21 +1,34 @@
 package com.king.rest.smp;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.king.api.smp.ScheduleJobService;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
+import com.king.common.utils.exception.RRException;
+import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 import com.king.utils.Query;
+import com.king.utils.excel.ExcelUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,4 +68,41 @@ public class ScheduleJobLogController {
 		
 		return JsonResponse.success(log);
 	}
+	
+	/**
+	 * 导入测试
+	 */
+	@PostMapping("/upload")
+	public JsonResponse upload(@RequestParam(value="file",required=false) MultipartFile file) throws Exception {
+		if (file.isEmpty()) {
+			throw new RRException("上传文件不能为空");
+		}
+		LinkedHashMap<Field, Object> map= new LinkedHashMap<>();
+		/*map.put(ScheduleJobLog.class.getField("jobId"), null);
+		map.put(ScheduleJobLog.class.getField("beanName"), null);
+		map.put(ScheduleJobLog.class.getField("methodName"), null);
+		map.put(ScheduleJobLog.class.getField("params"), null);
+		map.put(ScheduleJobLog.class.getField("status"), null);
+		map.put(ScheduleJobLog.class.getField("error"), null);
+		map.put(ScheduleJobLog.class.getField("times"), null);
+		map.put(ScheduleJobLog.class.getField("createTime"), null);*/
+	
+		List<ScheduleJobLog> list = new ArrayList<ScheduleJobLog>();
+	//	Object object=SpringContextUtils.getBean(ScheduleJobService.class);
+	//	Method method=object.getClass().getMethod("save", new Class [] { ScheduleJobLog.class });
+		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("saveBatch", List.class);
+		ExcelUtil<ScheduleJobLog> upload = new ExcelUtil<>(ScheduleJobLog.class);
+		JsonResponse result=upload.importExcel(1, file, map, ScheduleJobService.class, method);	
+		
+		return result;
+	}
+
+	@GetMapping("/export")
+	public void exportExcel(@RequestParam Map<String, Object> params,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Query query = new Query(params,ScheduleJobLog.class.getSimpleName());
+		ExcelUtil<ScheduleJobLog> upload = new ExcelUtil<>(ScheduleJobLog.class);
+		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("queryScheduleJobLogList", Map.class);
+		upload.exportExcel("定时任务日志", "定时任务日志", ScheduleJobService.class, method, query,response);
+	}
+	
 }

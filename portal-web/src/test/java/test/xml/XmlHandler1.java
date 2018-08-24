@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import com.king.utils.xml.handler.XmlHandler;
-
+import test.xml.handler.XmlHandler;
 import test.xml.vo.Car;
 
 
@@ -32,7 +31,7 @@ public class XmlHandler1 implements XmlHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			String url = "jdbc:mysql://localhost:3306/king_smp?characterEncoding=UTF-8&useSSL=false";
+			String url = "jdbc:mysql://localhost:3306/king_smp?characterEncoding=UTF-8&useSSL=false&rewriteBatchedStatements=true";
 			String user = "root";
 			String password = "123456";
 			// 获取数据库连接

@@ -26,7 +26,7 @@ import com.king.common.utils.date.DateUtils;
 import com.king.common.utils.pattern.StringToolkit;
 import com.king.utils.gen.service.SysGeneratorService;
 import com.king.utils.Query;
-import com.king.utils.pattern.XssHttpServletRequestWrapper;
+import com.king.utils.XssHttpServletRequestWrapper;
 
 /**
  * 代码生成器

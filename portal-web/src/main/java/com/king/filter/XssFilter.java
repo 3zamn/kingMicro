@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.king.utils.pattern.XssHttpServletRequestWrapper;
+import com.king.utils.XssHttpServletRequestWrapper;
 
 import java.io.IOException;
 

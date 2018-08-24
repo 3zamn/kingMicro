@@ -22,7 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.king.common.utils.file.IoUtil;
 import com.king.common.utils.network.HttpUtils;
 import com.king.common.utils.network.ResponseWrap;
-import com.king.utils.pattern.XssHttpServletRequestWrapper;
+import com.king.utils.XssHttpServletRequestWrapper;
 
 /**
  * 帮朋友抓取热卖店铺

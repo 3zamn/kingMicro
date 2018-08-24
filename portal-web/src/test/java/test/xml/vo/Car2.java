@@ -1,9 +1,9 @@
 package test.xml.vo;
 import java.util.List;
 
-import com.king.utils.xml.annotation.Column;
-import com.king.utils.xml.annotation.Root;
-import com.king.utils.xml.base.XmlBase;
+import test.xml.annotation.Column;
+import test.xml.annotation.Root;
+import test.xml.base.XmlBase;
 
 
 @Root(name="Car")

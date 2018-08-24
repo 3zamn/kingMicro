@@ -1,7 +1,7 @@
 package test.xml.vo;
 
-import com.king.utils.xml.annotation.Column;
-import com.king.utils.xml.base.XmlBase;
+import test.xml.annotation.Column;
+import test.xml.base.XmlBase;
 
 public class CarEngine extends XmlBase {
 

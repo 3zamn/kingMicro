@@ -1,7 +1,7 @@
 package test.xml.vo;
 import java.util.List;
 
-import com.king.utils.xml.base.XmlBase;
+import test.xml.base.XmlBase;
 
 
 
@@ -9,7 +9,7 @@ public class Car extends XmlBase{
 	public String type;
 	public String product;
 	public Double price;
-     public List<CarEngine> carEngine;
+    public List<CarEngine> carEngine;
 	
 	
 	

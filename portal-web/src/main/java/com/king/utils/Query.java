@@ -200,13 +200,14 @@ import com.king.common.utils.spring.SpringContextUtils;
             this.limit = Integer.parseInt(StringToolkit.getObjectString(params.get("limit")));
             this.put("offset", (page - 1) * limit);
             this.put("page", page);
-            this.put("limit", limit>200?200:limit);//分页过载保护、最大每页200
+            this.put("limit", limit);
+        //    this.put("limit", limit>200?200:limit);//分页过载保护、最大每页200
           //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
             String sidx = StringToolkit.getObjectString(params.get("sidx"));
             String order = StringToolkit.getObjectString(params.get("order"));
-             sidx = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, sidx).getString("column");
+             sidx = sidx!=null?(SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, sidx).getString("column"):null;
             this.put("sidx", sidx);
-            if(!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
+            if(order!=null &&!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
            	 order="";
             }
             this.put("order", order);
