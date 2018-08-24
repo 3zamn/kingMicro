@@ -64,4 +64,13 @@
 		)
 	</insert>
 	
+	<insert id="saveBatch" parameterType="java.util.List">
+
+           <foreach collection="list" item="item" index="index" separator=";" >
+              	insert into schedule_job_log (job_id,bean_name,method_name,params,status,error,times,create_time) VALUES
+               ( #{item.jobId}, #{item.beanName}, #{item.methodName}, #{item.params}, #{item.status}, #{item.error}, #{item.times}, #{item.createTime})
+           </foreach>
+
+       </insert>
+
 </mapper>

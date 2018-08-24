@@ -139,5 +139,11 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 		}
 		return page;
 	}
+
+	@Override
+	public int saveBatch(List<ScheduleJobLog> list) {
+		
+		return scheduleJobLogDao.saveBatch(list);
+	}
     
 }

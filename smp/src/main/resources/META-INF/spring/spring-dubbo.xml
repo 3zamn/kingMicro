@@ -13,7 +13,7 @@
 	<!-- 用dubbo协议在30880端口暴露服务 -->
 <!-- 	<dubbo:protocol name="dubbo" port="9090" server="netty" client="netty" codec="dubbo" serialization="hessian2" charset="UTF-8" threadpool="fixed" threads="100" queues="0" iothreads="9" buffer="8192" accepts="1000" payload="8388608" />
  -->	
-	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}"  threads="${dubbo.threads}"/>
+	<dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}"  threads="${dubbo.threads}" payload="${dubbo.payload}" />
 	<!-- <dubbo:protocol name="hessian" port="8082" /> -->
 	<!--  <dubbo:protocol name="hessian" port="8082" /> --> <!-- 文件云盘传输使用hessian -->
 <!-- 	<dubbo:provider protocol="hessian"  timeout="${dubbo.provider.timeout}"/> -->
