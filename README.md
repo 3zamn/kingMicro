@@ -3,7 +3,7 @@ kingMicro 是一套实现分布式、完全前后端分离基础框架。
 
 项目目录结构：
 
-portal-web：系统请求入口、用springmvc处理resfull请求/权限安全校验等。作为消费者、通过rpc调度提供者的服务。
+portal-web：系统请求入口、用springmvc处理resfull请求/权限安全校验等。
 
 portal-html：前端文件、建议单独部署在nginx。
 
@@ -26,7 +26,8 @@ portal-web：部署在web容器、例如tomcat
 portal-html:用nginx代理即可
 
 smp:打包成jar（建议用maven打包）、在java环境运行jar包即可。开发环境用dubbo的main方法启动spring容器、运行app类main方法即可。
-开发其他子系统或模块同smp子系统一样单独jar包部署、、、、
+开发其他子系统或模块同smp子系统一样单独jar包部署。例子：nohup java -jar smp.jar >smp.log 
+
 
 架构选型：
 
@@ -34,7 +35,7 @@ smp:打包成jar（建议用maven打包）、在java环境运行jar包即可。�
 
 分布式调度rpc：dubbo+zookeeper
 
-nosql：spring-data-redis,高可用建议哨兵模式;mongodb存储操作日志、异常信息
+nosql：spring-data-redis,高可用哨兵模式;mongodb存储操作日志、异常信息
 
 数据库：mysql、(已实现动态切面读写分离)
 
@@ -78,11 +79,13 @@ app或第三方应用端：API模块用jwt的token做安全校验
 
 10.引入Hibernate Validator校验框架，轻松实现后端校验
 
-11.引入云存储服务，已支持：七牛云、阿里云、腾讯云及本地分布式文件存储fastdfs、fastdhf等
+10.使用自定义注解、aop等实现列表动态列。满足不同用户可自定义列展示列表信息。
 
-12.引入springfox+swagger2支持API接口生成、管理,导出api离线文档（帮助说明模块）
+12.引入云存储服务，已支持：七牛云、阿里云、腾讯云及本地分布式文件存储fastdfs、fastdhf等。提供office在线转换高清质量的pdf（使用libreoffice转换）、及可选生成高清图片，同时可灵活设置文字水印、二维码水印。支持在线预览pdf、下载等功能。
 
-13.封装了大数据Excel导入、导出组件（本地测试200万条数据导出100秒左右、500万条记录导入耗时850秒左右），2007版本及以上的采用分页分段解析xml方式读取Excel文件、导出使用SXSSF方式写入文件，避免读写大数据时内存溢出。使用例子：
+13.引入springfox+swagger2支持API接口生成、管理,导出api离线文档（帮助说明模块）
+
+14.封装了大数据Excel导入、导出组件（本地测试200万条数据导出100秒左右、500万条记录导入耗时850秒左右），2007版本及以上的采用分页分段解析xml方式读取Excel文件、导出使用SXSSF方式写入文件，避免读写大数据时内存溢出。使用例子：
 
     导入：
     LinkedHashMap<Field, Object> map= new LinkedHashMap<>();//可自定义校验
