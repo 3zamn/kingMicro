@@ -26,7 +26,7 @@
 
 	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
 
-	<dubbo:consumer timeout="60000" cluster="failfast"  loadbalance="leastactive"  retries="0"></dubbo:consumer>
+	<dubbo:consumer timeout="${dubbo.consumer.timeout}" cluster="failfast"  loadbalance="leastactive"  retries="0"></dubbo:consumer>
 	<!-- 调用服务 -->
 	<!-- <dubbo:reference   interface="com.king.api.smp.SmpGenericService" id="smpGenericService"  generic="true"/> --><!-- protocol="hessian" -->
 	<!-- protocol="hessian" url="hessian://192.168.4.11:8082/smpGenericService"  -->

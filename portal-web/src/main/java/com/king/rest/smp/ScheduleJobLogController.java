@@ -70,39 +70,34 @@ public class ScheduleJobLogController {
 	}
 	
 	/**
-	 * 导入测试
+	 * 导入
 	 */
+	@ApiOperation(value = "导入定时任务日志",response=Response.class,notes = "权限编码（sys:scheduleLog:upload）")
 	@PostMapping("/upload")
+	@RequiresPermissions("sys:scheduleLog:upload")
 	public JsonResponse upload(@RequestParam(value="file",required=false) MultipartFile file) throws Exception {
 		if (file.isEmpty()) {
 			throw new RRException("上传文件不能为空");
 		}
-		LinkedHashMap<Field, Object> map= new LinkedHashMap<>();
-		/*map.put(ScheduleJobLog.class.getField("jobId"), null);
-		map.put(ScheduleJobLog.class.getField("beanName"), null);
-		map.put(ScheduleJobLog.class.getField("methodName"), null);
-		map.put(ScheduleJobLog.class.getField("params"), null);
-		map.put(ScheduleJobLog.class.getField("status"), null);
-		map.put(ScheduleJobLog.class.getField("error"), null);
-		map.put(ScheduleJobLog.class.getField("times"), null);
-		map.put(ScheduleJobLog.class.getField("createTime"), null);*/
-	
-		List<ScheduleJobLog> list = new ArrayList<ScheduleJobLog>();
-	//	Object object=SpringContextUtils.getBean(ScheduleJobService.class);
-	//	Method method=object.getClass().getMethod("save", new Class [] { ScheduleJobLog.class });
+		LinkedHashMap<Field, Object> map= new LinkedHashMap<>();//可自定义校验
 		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("saveBatch", List.class);
 		ExcelUtil<ScheduleJobLog> upload = new ExcelUtil<>(ScheduleJobLog.class);
 		JsonResponse result=upload.importExcel(1, file, map, ScheduleJobService.class, method);	
 		
 		return result;
 	}
-
+	
+	/**
+	 * 导出
+	 */
+	@ApiOperation(value = "导入定时任务日志",response=Response.class,notes = "权限编码（sys:scheduleLog:export）")
 	@GetMapping("/export")
+	@RequiresPermissions("sys:scheduleLog:export")
 	public void exportExcel(@RequestParam Map<String, Object> params,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Query query = new Query(params,ScheduleJobLog.class.getSimpleName());
-		ExcelUtil<ScheduleJobLog> upload = new ExcelUtil<>(ScheduleJobLog.class);
+		ExcelUtil<ScheduleJobLog> export = new ExcelUtil<>(ScheduleJobLog.class);
 		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("queryScheduleJobLogList", Map.class);
-		upload.exportExcel("定时任务日志", "定时任务日志", ScheduleJobService.class, method, query,response);
+		export.exportExcel("定时任务日志", "定时任务日志", ScheduleJobService.class, method, query,response);
 	}
 	
 }
