@@ -97,7 +97,15 @@ app或第三方应用端：API模块用jwt的token做安全校验
 		ExcelUtil<ScheduleJobLog> export = new ExcelUtil<>(ScheduleJobLog.class);
 		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("queryScheduleJobLogList", Map.class);
 		export.exportExcel("定时任务日志", "定时任务日志", ScheduleJobService.class, method, query,response);
-     
+     
+提醒：在web-inf/lib下的crypt.jar工具用于加解密配置文件中的密码,例子：
+  
+    加密：java -cp crypt.ja com.Encrypt 密码 
+    解密：java -cp crypt.ja com.Decrypt 密文
+
+ 
+
+
 开发计划：
 
 一：加入两种分布式事务解决方案：1.最大一致性（rocketmq异步事务）、最终一致性（TCC）
