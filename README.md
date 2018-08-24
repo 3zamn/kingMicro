@@ -80,7 +80,19 @@ app或第三方应用端：API模块用jwt的token做安全校验
 
 11.引入云存储服务，已支持：七牛云、阿里云、腾讯云及本地分布式文件存储fastdfs、fastdhf等
 
-12.引入springfox+swagger2支持API接口生成、管理
+12.引入springfox+swagger2支持API接口生成、管理,导出api离线文档（帮助说明模块）
+
+13.封装了大数据Excel导入、导出组件（本地测试200万条数据导出100秒左右、500万条记录导入耗时850秒左右），2007版本及以上的采用分页分段解析xml方式读取Excel文件、导出使用SXSSF方式写入文件，避免读写大数据时内存溢出。使用简单、例子：
+    导入：
+    LinkedHashMap<Field, Object> map= new LinkedHashMap<>();//可自定义校验
+		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("saveBatch", List.class);
+		ExcelUtil<ScheduleJobLog> upload = new ExcelUtil<>(ScheduleJobLog.class);
+		JsonResponse result=upload.importExcel(1, file, map, ScheduleJobService.class, method);	
+    导出：
+    Query query = new Query(params,ScheduleJobLog.class.getSimpleName());
+		ExcelUtil<ScheduleJobLog> export = new ExcelUtil<>(ScheduleJobLog.class);
+		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("queryScheduleJobLogList", Map.class);
+		export.exportExcel("定时任务日志", "定时任务日志", ScheduleJobService.class, method, query,response);
   
      生命有限！少写重复代码！
      
