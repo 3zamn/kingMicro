@@ -33,7 +33,7 @@ smp:打包成jar（建议用maven打包）、在java环境运行jar包即可。�
 
 权限安全：shiro
 
-分布式调度rpc：dubbo+zookeeper
+分布式调度rpc：dubbo2.6.0+zookeeper
 
 nosql：spring-data-redis,高可用哨兵模式;mongodb存储操作日志、异常信息
 
