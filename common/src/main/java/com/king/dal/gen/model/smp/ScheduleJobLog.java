@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 
+import com.king.common.annotation.PropertyExt;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -23,54 +25,63 @@ public class ScheduleJobLog implements Serializable {
 	 */
 	@Id
 	@ApiModelProperty("任务日志id")
+	@PropertyExt(isExport=false)
 	private Long logId;
 	
 	/**
 	 * 任务id
 	 */
 	@ApiModelProperty("任务id")
+	@PropertyExt
 	private Long jobId;
 	
 	/**
 	 * spring bean名称
 	 */
 	@ApiModelProperty("spring bean名称")
+	@PropertyExt
 	private String beanName;
 	
 	/**
 	 * 方法名
 	 */
 	@ApiModelProperty("方法名")
+	@PropertyExt
 	private String methodName;
 	
 	/**
 	 * 参数
 	 */
 	@ApiModelProperty("参数")
+	@PropertyExt
 	private String params;
 	
 	/**
 	 * 任务状态    0：成功    1：失败
 	 */
 	@ApiModelProperty("任务状态    0：成功    1：失败")
+	@PropertyExt
 	private Boolean status;
 	
 	/**
 	 * 失败信息
 	 */
 	@ApiModelProperty("失败信息")
+	@PropertyExt
 	private String error;
 	
 	/**
 	 * 耗时(单位：毫秒)
 	 */
 	@ApiModelProperty("耗时(单位：毫秒)")
+	@PropertyExt
 	private Integer times;
 	
 	/**
 	 * 创建时间
 	 */
 	@ApiModelProperty("创建时间")
+	@PropertyExt
 	private Date createTime;
 
 	public Long getLogId() {

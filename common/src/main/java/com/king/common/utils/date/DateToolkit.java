@@ -22,10 +22,25 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 public class DateToolkit {
 	
 	public static final String[] NORMAL_DATEFORMATS = new String[]{"yyyy-MM-dd HH:mm:ss","yyyy-MM-dd","yyyy-MM-dd HH:mm:ss.SSS","yyyyMMdd","yyyyMMddHHmmss","yyyy-MM-dd a","HH:mm:ss"};
-	
-	public static final String DEFAULT_DATEFORMAT = "yyyy-MM-dd HH:mm:ss";
-	
+	public static final SimpleDateFormat DEFAULT_SIMPLE_DATEFORMAT= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 	public static final String DATE = "yyyy-MM-dd";
+	
+	/**
+	 * @param dateStr Mon May 14 17:57:57 CST 2018这种国际类型转换
+	 * @return
+	 */
+	public static String simpleDateFormat(String dateStr){
+		String result ="";
+		try {
+			SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+			SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");		
+			result=sdf2.format(sdf1.parse(dateStr));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	/**
 	 * 根据日期字符串，自动识别日期模式
