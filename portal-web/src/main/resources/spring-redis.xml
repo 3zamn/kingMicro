@@ -6,7 +6,7 @@
 			http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 单机模式 -->
-    <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+    <!-- <bean id="redisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <property name="hostName" value="${redis.host}"/>
         <property name="port" value="${redis.port}"/>
         <property name="password" value="${redis.password}"/>
@@ -19,9 +19,9 @@
         <property name="maxIdle" value="${redis.maxIdle}"/>
         <property name="maxTotal" value="${redis.maxTotal}"/>
         <property name="maxWaitMillis" value="${redis.maxWaitMillis}"/>
-    </bean>
+    </bean> -->
     <!-- 哨兵模式 -->
-     <!-- <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">  
         <property name="maxTotal" value="${redis.maxTotal}" />  
         <property name="maxIdle" value="${redis.maxIdle}" />  
         <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}" />  
@@ -67,7 +67,7 @@
         <constructor-arg name="sentinelConfig" ref="redisSentinelConfiguration"></constructor-arg>  
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>  
         <property name="database" value="${redis.database}" />
-    </bean> -->
+    </bean>
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="keySerializer">
