@@ -33,7 +33,7 @@
 	    <div id="jqGridPager"></div>
     </div>
     <div v-show="!showList" class="panel panel-default">
-		<div class="panel-heading">{{title}}</div>
+		<div class="panel-heading">{{title}} &nbsp;&nbsp;&nbsp;&nbsp;<input type="button"  style="padding-top: 7px;height: 35px;" class="btn btn-warning" @click="reload" value="返回" /></div>
 			<form class="form-horizontal">
 				<div class="form-group">
 					<div class="col-sm-2 control-label">异常流水号：</div>
@@ -86,12 +86,10 @@
 					 {{exception.exceptionMsg}}				
 					</div>
 				</div>
-		
-				<div class="form-group" align="center">
-					<div class="col-sm-2 control-label"></div>
-					<input type="button"
-						class="btn btn-warning" @click="reload" value="返回" />
+				<div class="form-group">			
 				</div>
+				<div class="form-group">		
+				</div>	
 			</form>
 		</div>
 </div>
