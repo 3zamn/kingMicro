@@ -35,26 +35,32 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Long> queryDetpIdList(Object parentId) {
-		return sysDeptDao.queryDetpIdList(parentId);
+	public List<Long> queryDeptIdList(Object parentId) {
+		return sysDeptDao.queryDeptIdList(parentId);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Long> queryDetpIdLists(List<Long> parentIds) {
-		return sysRoleDeptDao.queryDetpIdLists(parentIds);
+	public List<Long> queryDeptIdLists(List<Long> parentIds) {
+		return sysRoleDeptDao.queryDeptIdLists(parentIds);
 	}
 
+	/**  
+	 * 向下递归查询子节点及是否包括本节点
+	 */
 	@Override
 	@Transactional(readOnly = true)
-	public String getSubDeptIdList(Object deptId){
+	public String getDownDeptIdList(Object deptId,Boolean include){
 		//部门及子部门ID列表
 		List<Long> deptIdList = new ArrayList<>();
 		//获取子部门ID
-		List<Long> subIdList = queryDetpIdList(deptId);
+		List<Long> subIdList = queryDeptIdList(deptId);
 		getDeptTreeList(subIdList, deptIdList);
 		//添加本部门
-		deptIdList.add((Long)deptId);
+		if(include){
+			deptIdList.add((Long)deptId);
+		}
+		
 		return StringUtils.join(deptIdList, ",");
 	}
 
@@ -64,7 +70,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 	@Transactional(readOnly = true)
 	private void getDeptTreeList(List<Long> subIdList, List<Long> deptIdList){
 		for(Long deptId : subIdList){
-			List<Long> list = queryDetpIdList(deptId);
+			List<Long> list = queryDeptIdList(deptId);
 			if(!list.isEmpty()){
 				getDeptTreeList(list, deptIdList);
 			}
@@ -89,7 +95,38 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDept> implements SysD
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Long> queryDeptIdList(Object roleId) {
+	public List<Long> queryDeptIdListByRoleId(Object roleId) {
 		return sysRoleDeptDao.queryDeptIdList(roleId);
+	}
+
+	/**  
+	 * 获取顶级节点下所有部门ID
+	 */
+	@Transactional(readOnly = true)
+	public String getTopDeptIdList(Object deptId) {
+		Long topId=getDeptTreeList(deptId, 0L);
+		
+		return getDownDeptIdList(topId, true);
+	}
+	
+	/**
+	 * 向上递归获取顶节点
+	 */
+	@Transactional(readOnly = true)
+	public Long getDeptTreeList(Object deptId,Long topId){
+		Long parentId =queryParentDeptId(deptId);
+		if(parentId!=null){		
+			if(parentId!=0L){
+				topId=parentId;
+				getDeptTreeList(parentId, topId);
+			}	
+		}
+		return topId==0L?(Long)deptId:topId;
+	}
+
+	@Transactional(readOnly = true)
+	public Long queryParentDeptId(Object deptId) {
+
+		return sysDeptDao.queryParentDeptId(deptId);
 	}
 }

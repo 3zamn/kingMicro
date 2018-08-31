@@ -108,5 +108,12 @@
 			#{menuId}
 		</foreach>
 	</delete>
+
+	<select id="queryParamsByUserAndPerm" parameterType="map" resultType="string">
+		SELECT t.params FROM sys_menu t WHERE t.perms LIKE
+		concat('%',#{perms},'%') AND t.menu_id IN ( SELECT DISTINCT m.menu_id FROM
+		sys_role_menu m WHERE m.role_id IN ( SELECT u.role_id FROM
+		sys_user_role u WHERE u.user_id = #{userId} ))
+	</select>
 	
 </mapper>

@@ -7,6 +7,7 @@
         <result property="id" column="id" jdbcType="BIGINT"/>
         <result property="roleId" column="role_id" jdbcType="BIGINT"/>
         <result property="menuId" column="menu_id" jdbcType="BIGINT"/>
+        <result property="params" column="params" jdbcType="VARCHAR"/>
     </resultMap>
 
 	<insert id="save">
@@ -24,12 +25,24 @@
 		</foreach>
 	</insert>
 	
+	<update id="update" parameterType="map">
+		update sys_role_menu 
+		<set> 
+			<if test="params != null">`params` = #{params} </if>
+		</set>
+		where role_id = #{roleId} and menu_id = #{menuId} 
+	</update>
+	
 	<delete id="delete">
 		delete from sys_role_menu where role_id = #{value}
 	</delete>
 	
 	<select id="queryMenuIdList" resultType="long">
 		select menu_id from sys_role_menu where role_id = #{value}
+	</select>
+	
+	<select id="queryParamsList" resultType="com.king.dal.gen.model.smp.SysRoleMenu">
+		select * from sys_role_menu where role_id = #{value}
 	</select>
 
 </mapper>

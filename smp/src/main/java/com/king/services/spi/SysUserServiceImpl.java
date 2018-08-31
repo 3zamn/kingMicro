@@ -204,7 +204,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	@Override
 	@Transactional(readOnly = true)
 	public List<SysUser> queryByDeptIds(Object deptId) {
-		String deptIds=sysDeptService.getSubDeptIdList(deptId);
+		String deptIds=sysDeptService.getDownDeptIdList(deptId,true);
 		String[] list= deptIds.split(",");
 		return sysUserDao.queryByDeptIds(list);
 	}
@@ -212,7 +212,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	@Transactional(readOnly = true)
 	public List<SysUser> queryByRoleId(Object roleId) {
 		
-		return queryByRoleId(roleId);
+		return sysUserDao.queryByRoleId(roleId);
 	}
 	
 	@Override

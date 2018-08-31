@@ -20,6 +20,7 @@ import com.king.api.smp.SysRoleService;
 import com.king.common.annotation.DataFilter;
 import com.king.common.utils.Page;
 import com.king.common.utils.constant.Constant;
+import com.king.common.utils.pattern.StringToolkit;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.spring.SpringContextUtils;
@@ -73,24 +74,24 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	@Override
 	public void save(SysRole role) {
 		role.setCreateTime(new Date());
-		sysRoleDao.save(role);
-		
+		sysRoleDao.save(role);		
 		//保存角色与菜单关系
-		sysMenuService.saveOrUpdate_R_M(role.getRoleId(), role.getMenuIdList());
-
+		sysMenuService.saveOrUpdate_R_M(role.getRoleId(), role.getMenuIdList(),StringToolkit.getObjectString(role.getParamExt()));
 		//保存角色与部门关系
-		sysDeptService.saveOrUpdate_R_D(role.getRoleId(), role.getDeptIdList());
+		sysDeptService.saveOrUpdate_R_D(role.getRoleId(), role.getDeptIdList());	
+		//保存角色与用户关系
+		saveOrUpdate_U_R(role.getRoleId(), role.getUserIdList());
 	}
 
 	@Override
 	public void update(SysRole role,String token) {
-		sysRoleDao.update(role);
-		
+		sysRoleDao.update(role);	
 		//更新角色与菜单关系
-		sysMenuService.saveOrUpdate_R_M(role.getRoleId(), role.getMenuIdList());
-
-		//保存角色与部门关系
+		sysMenuService.saveOrUpdate_R_M(role.getRoleId(), role.getMenuIdList(),StringToolkit.getObjectString(role.getParamExt()));
+		//更新角色与部门关系
 		sysDeptService.saveOrUpdate_R_D(role.getRoleId(), role.getDeptIdList());
+		//保存角色与用户关系
+		saveOrUpdate_U_R(role.getRoleId(), role.getUserIdList());
 		// 刷新权限缓存
 		List<Long> userList = queryUserIdList(role.getRoleId());
 		for (Long userId : userList) {
@@ -113,6 +114,26 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
 	        	} 
 	      	}	
 		}	
+	}
+	
+	@Override
+	public void saveOrUpdate_U_R(Object roleId, List<Long> userIdList) {
+		try {
+			//先删除用户与角色关系
+			sysUserRoleDao.deleteByRoleId(roleId);
+			
+			//保存用户与角色关系
+			Map<String, Object> map = new HashMap<>();
+			map.put("roleId", roleId);
+			map.put("userIdList", userIdList);
+			if(!userIdList.isEmpty()){
+				sysUserRoleDao.saveUserList(map);
+				logger.info("角色修改成功");
+			}		
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
 	}
 
 	@Override

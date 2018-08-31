@@ -24,9 +24,12 @@
 	<select id="queryList" resultType="com.king.dal.gen.model.smp.SysUser">
 		select u.*, (select d.name from sys_dept d where d.dept_id = u.dept_id) deptName from sys_user u
 		<where>
-			<!-- <if test="username != null and username.trim() != ''">
-				and u.`username` like concat('%',#{username},'%')
-			</if> -->
+			<if test="roleId != null and roleId.trim() != ''">
+				and u.`user_id` in (select user_id from sys_user_role where role_id = #{roleId})
+			</if>
+			<if test="deptIds != null and deptIds.trim() != ''">
+				and u.`dept_id` in (select dept_id from sys_dept where dept_id = #{deptIds})
+			</if>
 			<if test="searchSql!= null and searchSql.trim() != ''">
 				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
 				${searchSql}
@@ -51,9 +54,12 @@
 	<select id="queryTotal" resultType="int">
 		select count(*) from sys_user u
 		<where>
-			<!-- <if test="username != null and username.trim() != ''">
-				and u.`username` like concat('%',#{username},'%')
-			</if> -->
+			<if test="roleId != null and roleId.trim() != ''">
+				and u.`user_id` in (select user_id from sys_user_role where role_id = #{roleId})
+			</if>
+			<if test="deptIds != null and deptIds.trim() != ''">
+				and u.`dept_id` in (select dept_id from sys_dept where dept_id = #{deptIds})
+			</if>
 			<if test="searchSql!= null and searchSql.trim() != ''">
 				<!-- `username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%') -->
 				${searchSql}
@@ -148,6 +154,10 @@
 		<foreach item="deptId" collection="array" open="(" separator="," close=")">
 			#{deptId}
 		</foreach>	
+	</select>
+	
+	<select id="queryByRoleId" resultType="com.king.dal.gen.model.smp.SysUser">
+		select u.*, (select d.name from sys_dept d where d.dept_id = u.dept_id) deptName from sys_user u where u.user_id IN (SELECT user_id FROM sys_user_role WHERE role_id=#{roleId}) 
 	</select>
 
 </mapper>

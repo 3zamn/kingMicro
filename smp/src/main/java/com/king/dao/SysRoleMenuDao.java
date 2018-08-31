@@ -17,4 +17,9 @@ public interface SysRoleMenuDao extends BaseDao<SysRoleMenu> {
 	 * 根据角色ID，获取菜单ID列表
 	 */
 	List<Long> queryMenuIdList(Object roleId);
+	
+	/**
+	 * 根据角色ID，获取扩展参数列表
+	 */
+	List<SysRoleMenu> queryParamsList(Object roleId);
 }

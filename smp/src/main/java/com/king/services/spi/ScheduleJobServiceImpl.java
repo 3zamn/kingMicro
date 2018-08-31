@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.king.api.smp.ScheduleJobService;
+import com.king.common.annotation.DynamicColFilter;
 import com.king.common.utils.Page;
 import com.king.common.utils.constant.Constant;
 import com.king.dal.gen.model.smp.ScheduleJob;
@@ -130,6 +131,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob>implemen
 	}
 	
 	@Transactional(readOnly = true)
+	@DynamicColFilter
 	public Page getPageScheduleJobLog(Map<String, Object> map) {
 		Page page = null;
 		if (map.get("limit") != null && map.get("page") != null) {

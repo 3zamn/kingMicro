@@ -24,5 +24,5 @@ public interface SysRoleDeptDao extends BaseDao<SysRoleDept> {
      * 查询子部门ID列表
      * @param parentIds  上级部门ID
      */
-    List<Long> queryDetpIdLists(@Param("parentIds")List<Long> parentIds);
+    List<Long> queryDeptIdLists(@Param("parentIds")List<Long> parentIds);
 }

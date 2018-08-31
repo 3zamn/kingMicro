@@ -36,6 +36,25 @@
 		delete from sys_user_role where user_id = #{value}
 	</delete>
 	
+	<insert id="saveUserList">
+		insert into sys_user_role
+		(
+			`user_id`, 
+			`role_id`
+		)
+		values
+		<foreach collection="userIdList" item="item" index="index" separator="," >
+		(
+			#{item}, 
+			#{roleId}
+		)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteByRoleId" >
+		delete from sys_user_role where role_id = #{roleId}
+	</delete>
+	
 	<select id="queryRoleIdList" resultType="long">
 		select role_id from sys_user_role where user_id = #{value}
 	</select>

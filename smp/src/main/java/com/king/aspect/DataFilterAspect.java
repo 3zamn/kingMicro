@@ -63,41 +63,52 @@ public class DataFilterAspect {
     }
 
     /**
-     * 获取数据过滤的SQL
+     * 数据权限过滤的SQL
      */
     private String getFilterSQL(SysUser user, JoinPoint point){
         MethodSignature signature = (MethodSignature) point.getSignature();
         com.king.common.annotation.DataFilter dataFilter = signature.getMethod().getAnnotation(com.king.common.annotation.DataFilter.class);
         //获取表的别名
+        StringBuilder filterSql = new StringBuilder();
         String tableAlias = dataFilter.tableAlias();
         if(StringUtils.isNotBlank(tableAlias)){
             tableAlias +=  ".";
         }
-        Set<Long> deptIds = new HashSet<>();
-        StringBuilder listSubDeptId = new StringBuilder();
-        List<Long> list= sysUserRoleDao.queryRoleIdList(user.getUserId());
-        for(Long roleId:list){
-        	List<Long> deptId=sysRoleDeptDao.queryDeptIdList(roleId);
-        	deptIds.addAll(deptId);
-        }
-        for(Long deptId:deptIds){
-        	 String subDeptIds = sysDeptService.getSubDeptIdList(deptId);
-        	 listSubDeptId.append(","+subDeptIds);
-        }
-        //获取子部门ID
-        StringBuilder filterSql = new StringBuilder();
-        if(listSubDeptId.length()>0){
-        	  filterSql.append("and (");
-              filterSql.append(tableAlias).append("dept_id in(").append(listSubDeptId.toString().replaceFirst(",", "")).append(")");
-              filterSql.append(")");
-        }else{
-        	//没有数据权限或没勾选数据权限
-        	 filterSql.append("and 1=0");
-        	//没有本部门数据权限，也能查询本人数据
-            if(dataFilter.user()){
-                filterSql.append(" or ").append(tableAlias).append("user_id=").append(user.getUserId());
-            }
-        }
+       if(dataFilter.top()){//获取父节点是0L的根节点、自顶向下整颗树
+    	   Long deptId= user.getDeptId();
+    	   String deptIds=sysDeptService.getTopDeptIdList(deptId);
+    	   if(deptIds!=null){
+    		   filterSql.append("and (");
+    		   filterSql.append(tableAlias).append("dept_id in(").append(deptIds).append("))");
+    	   }
+    	       	   
+       }else{//勾选数据权限
+    	   Set<Long> deptIds = new HashSet<>();
+           StringBuilder listSubDeptId = new StringBuilder();
+           List<Long> list= sysUserRoleDao.queryRoleIdList(user.getUserId());
+           for(Long roleId:list){
+           	List<Long> deptId=sysRoleDeptDao.queryDeptIdList(roleId);
+           	deptIds.addAll(deptId);
+           }
+           for(Long deptId:deptIds){
+           	 String subDeptIds = sysDeptService.getDownDeptIdList(deptId,true);
+           	 listSubDeptId.append(","+subDeptIds);
+           }
+           //获取子部门ID
+
+           if(listSubDeptId.length()>0){
+           	  filterSql.append("and (");
+                 filterSql.append(tableAlias).append("dept_id in(").append(listSubDeptId.toString().replaceFirst(",", "")).append(")");
+                 filterSql.append(")");
+           }else{
+           	//没有数据权限或没勾选数据权限
+           	 filterSql.append("and 1=0");
+           	//没有本部门数据权限，也能查询本人数据
+               if(dataFilter.user()){
+                   filterSql.append(" or ").append(tableAlias).append("user_id=").append(user.getUserId());
+               }
+           }
+       }
       
         return filterSql.toString();
     }

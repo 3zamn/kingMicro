@@ -3,17 +3,22 @@ package com.king.services.spi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysUserService;
 import com.king.common.utils.constant.Constant;
 import com.king.dal.gen.model.smp.SysMenu;
+import com.king.dal.gen.model.smp.SysRoleMenu;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysMenuDao;
 import com.king.dao.SysRoleMenuDao;
@@ -102,7 +107,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 		return subMenuList;
 	}
 
-	public void saveOrUpdate_R_M(Object roleId, List<Long> menuIdList) {
+	public void saveOrUpdate_R_M(Object roleId, List<Long> menuIdList,String paramExt) {
 		//先删除角色与菜单关系
 		sysRoleMenuDao.delete(roleId);
 		if(menuIdList.isEmpty()){
@@ -114,10 +119,56 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysM
 		map.put("roleId", roleId);
 		map.put("menuIdList", menuIdList);
 		sysRoleMenuDao.save(map);
+		if(StringUtils.isNotBlank(paramExt)){
+			JSONArray array = JSONArray.parseArray(paramExt);
+	    	 for (@SuppressWarnings("rawtypes")
+			Iterator iterator = array.iterator(); iterator.hasNext();) { 
+	    		 JSONObject j = (JSONObject) iterator.next();             
+	    		 Map<String, Object> m = new HashMap<>();
+	    		 m.put("roleId", roleId);
+	    		 m.put("menuId", j.getLong("menuId"));
+	    		 JSONObject params= new JSONObject();
+	    		 params.put("pagekey", "setcol");
+	    		 JSONArray pagevule=JSONArray.parseArray(j.getString("pagevule"));
+	    		 params.put("pagevule", pagevule);
+	    		 m.put("params", params.toString());           
+	             sysRoleMenuDao.update(m);
+	    	 } 
+		}
+		
+
 	}
 
 	@Transactional(readOnly = true)
 	public List<Long> queryMenuIdList(Object roleId) {
 		return sysRoleMenuDao.queryMenuIdList(roleId);
 	}
+
+	@Transactional(readOnly = true)
+	public JSONArray queryParamsList(Object roleId) {	
+		JSONArray array = new JSONArray();
+		List<SysRoleMenu> list = sysRoleMenuDao.queryParamsList(roleId);
+		for(SysRoleMenu R_M :list){
+			if(R_M.getParams()!=null){
+				JSONObject jsonObject = JSONObject.parseObject(R_M.getParams());
+				JSONObject j= new JSONObject();
+				j.put("menuId", R_M.getMenuId());
+				j.put("pagevule", jsonObject.get("pagevule"));
+				array.add(j);
+			}
+			
+		}
+		return array;
+	}
+
+	@Override
+	public JSONObject queryParamsByUserAndPerm(Object userId, String perms) {
+		Map<String, Object> map =new HashMap<>();
+		map.put("userId", userId);
+		map.put("perms", perms);		
+		String params = sysMenuDao.queryParamsByUserAndPerm(map);
+		return JSONObject.parseObject(params);
+	}
+	
+
 }

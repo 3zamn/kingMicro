@@ -28,6 +28,10 @@
         <result property="text" column="text" jdbcType="VARCHAR"/>
         <result property="sortNo" column="sort_no" jdbcType="INTEGER"/>    
     </resultMap>
+    
+    <sql id="Base_Column_List">
+    	id,name,code,value,text,type,parent_id,sort_no,editable,status,remark,create_by,create_time,update_by,update_time
+    </sql>
 
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysDic">
 		select * from sys_dic where id = #{value}

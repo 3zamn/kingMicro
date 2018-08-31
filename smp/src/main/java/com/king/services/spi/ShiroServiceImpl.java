@@ -32,18 +32,7 @@ public class ShiroServiceImpl implements ShiroService {
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	@Transactional(readOnly = true)
     public Set<String> getUserPermissions(Object userId,boolean cache,String token) {
-        List<String> permsList;
-
-        //系统管理员，拥有最高权限
-        if(userId.equals(Constant.SUPER_ADMIN)){
-            List<SysMenu> menuList = sysMenuDao.queryList(new HashMap<>());
-            permsList = new ArrayList<>(menuList.size());
-            for(SysMenu menu : menuList){
-                permsList.add(menu.getPerms());
-            }
-        }else{
-            permsList = sysUserDao.queryAllPerms(userId);
-        }
+           
         //用户权限列表
         Set<String> permsSet = new HashSet<>();
         if(cache){     	
@@ -51,6 +40,16 @@ public class ShiroServiceImpl implements ShiroService {
         	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
         	permsSet = (Set)redisUtils.sget(permKey);
         }else{
+        	 List<String> permsList;     	
+            if(userId.equals(Constant.SUPER_ADMIN)){//系统管理员，拥有最高权限
+                List<SysMenu> menuList = sysMenuDao.queryList(new HashMap<>());
+                permsList = new ArrayList<>(menuList.size());
+                for(SysMenu menu : menuList){
+                    permsList.add(menu.getPerms());
+                }
+            }else{
+                permsList = sysUserDao.queryAllPerms(userId);
+            }
         	 for(String perms : permsList){
                  if(StringUtils.isBlank(perms)){
                      continue;

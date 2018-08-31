@@ -1,6 +1,7 @@
 package com.king.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.king.dal.gen.dao.BaseDao;
 import com.king.dal.gen.model.smp.SysMenu;
@@ -28,4 +29,12 @@ public interface SysMenuDao extends BaseDao<SysMenu> {
 	 * 查询用户的权限列表
 	 */
 	List<SysMenu> queryUserList(Object userId);
+	
+	/**
+	 * 根据用户id、权限编码查询扩展该用户已授权的扩展参数
+	 * @param userId
+	 * @param perm
+	 * @return
+	 */
+	String queryParamsByUserAndPerm(Map<String, Object> map);
 }

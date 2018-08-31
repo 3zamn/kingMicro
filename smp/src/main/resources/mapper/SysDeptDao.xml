@@ -65,8 +65,12 @@
 		update sys_dept set del_flag = -1 where dept_id = #{value}
 	</update>
 	
-	<select id="queryDetpIdList" resultType="long">
+	<select id="queryDeptIdList" resultType="long">
 		select dept_id from sys_dept where parent_id = #{value} and del_flag = 0
+	</select>
+	
+	<select id="queryParentDeptId" resultType="long">
+		select parent_id  from sys_dept where dept_id = #{value} and del_flag = 0
 	</select>
 
 </mapper>
