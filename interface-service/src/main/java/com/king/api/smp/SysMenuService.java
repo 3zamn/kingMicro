@@ -3,6 +3,8 @@ package com.king.api.smp;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.king.dal.gen.model.smp.SysMenu;
 import com.king.dal.gen.service.BaseService;
 
@@ -45,10 +47,17 @@ public interface SysMenuService extends BaseService<SysMenu>{
 	/**
 	 * 保存或更新角色菜单相关连
 	 */
-	void saveOrUpdate_R_M(Object roleId, List<Long> menuIdList);
+	void saveOrUpdate_R_M(Object roleId, List<Long> menuIdList,String params);
 	
 	/**
 	 * 根据角色ID，获取菜单ID列表
 	 */
 	List<Long> queryMenuIdList(Object roleId);
+	
+	/**
+	 * 根据角色ID，获取扩展参数列表
+	 */
+	JSONArray queryParamsList(Object roleId);
+	
+	JSONObject queryParamsByUserAndPerm(Object userId,String perms);
 }

@@ -22,23 +22,30 @@ public interface SysDeptService extends BaseService<SysDept>{
 	/**
 	 * 根据角色ID，获取部门ID列表
 	 */
-	List<Long> queryDeptIdList(Object roleId);
+	List<Long> queryDeptIdListByRoleId(Object roleId);
 
 	/**
 	 * 查询子部门ID列表
 	 * @param parentId  上级部门ID
 	 */
-	List<Long> queryDetpIdList(Object parentId);
+	List<Long> queryDeptIdList(Object parentId);
 
 	/**
-	 * 获取子部门ID(包含本部门ID)，用于数据过滤
+	 * 向下获取子部门ID(是否包含本部门ID)，用于数据过滤
 	 */
-	String getSubDeptIdList(Object deptId);
+	String getDownDeptIdList(Object deptId,Boolean include);
+	
+	/**
+	 * 获取顶级节点下所有部门ID，用于数据过滤
+	 */
+	String getTopDeptIdList(Object deptId);
 	
 	/**
 	 * 查询子部门ID列表
 	 * @param parentIds  上级部门ID
 	 */
-	List<Long> queryDetpIdLists(List<Long> parentId);
+	List<Long> queryDeptIdLists(List<Long> parentId);
+	
+	Long queryParentDeptId(Object deptId);
 
 }

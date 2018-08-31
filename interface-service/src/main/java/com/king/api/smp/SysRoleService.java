@@ -14,9 +14,14 @@ import com.king.dal.gen.service.BaseService;
 public interface SysRoleService extends BaseService<SysRole>{
 	
 	/**
-	 * 保存或更新角色用户相关联
+	 * 保存或更新用户时更新角色用户相关联
 	 */
 	void saveOrUpdate_R_U(Object userId, List<Long> roleIdList);
+	
+	/**
+	 * 保存或更新角色时更新角色用户相关联
+	 */
+	void saveOrUpdate_U_R(Object userId, List<Long> roleIdList);
 	
 	/**
 	 * 根据用户ID，获取角色ID列表
