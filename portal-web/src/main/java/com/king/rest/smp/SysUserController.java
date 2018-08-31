@@ -62,7 +62,7 @@ public class SysUserController extends AbstractController {
 	@GetMapping("/list")
 	@RequiresPermissions("sys:user:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		Query query = new Query(params,SysUser.class.getSimpleName());
+		Query query = new Query(params,SysUser.class);
 		Page page = sysUserService.getPage(query);
 		return JsonResponse.success(page);
 	}
@@ -207,4 +207,20 @@ public class SysUserController extends AbstractController {
 		sysUserService.deleteBatch(userIds);		
 		return JsonResponse.success();
 	}
+	
+	/**
+	 * 根据roleid查询用户列表
+	 */
+	@ApiOperation(value = "角色授权用户列表",response=Response.class, notes = "权限编码（sys:users:role）")
+	@GetMapping("/list/{roleId}")
+	@RequiresPermissions("sys:users:role")
+	public JsonResponse usersByRole(@PathVariable("roleId") Object roleId,@RequestParam Map<String, Object> params){
+		params.put("roleId", roleId.equals("null")==true?null:roleId);
+		Query query = new Query(params,SysUser.class);
+		Page page = null;
+		page	=sysUserService.getPage(query);
+		return JsonResponse.success(page);
+	}
+	
+	
 }

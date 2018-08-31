@@ -28,7 +28,7 @@ import com.king.common.utils.spring.SpringContextUtils;
     private int limit;
 
     /**
-     * 分页列表
+     * 简单分页列表
      * @param params
      */
     public Query(Map<String, Object> params){
@@ -64,14 +64,16 @@ import com.king.common.utils.spring.SpringContextUtils;
     /**
      * 分页列表模糊、多列查询
      * @param params
-     * @param enttyName
+     * @param entityName
      */
-    public Query(Map<String, Object> params,String enttyName){
+    public Query(Map<String, Object> params,Class clazz){
+    	this.put("entity", clazz);
         this.putAll(params);
         Object mutlSql ="";//多列查询
         Object likeSql ="";//模糊查询
         Object betweenSql ="";//范围查询
         Object searchSql ="";
+        String entityName= clazz.getSimpleName();
         //多字段模糊查询
         if(params.get("keyParam")!=null && params.get("searchKey")!=null){
         	 String[] keyParam =params.get("keyParam").toString().replace("[","").replace("]", "").replace("\"", "").split(",");
@@ -80,13 +82,13 @@ import com.king.common.utils.spring.SpringContextUtils;
              		int i=0;
              		List<String> atts = new ArrayList<String>();
              		for(Object o:keyParam){
-             			if((SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).isExistAttribute(enttyName, o.toString())){
+             			if((SpringContextUtils.getBean("entityMapperResolver",EntityMapperResolver.class)).isExistAttribute(entityName, o.toString())){
              				atts.add(o.toString());				
              			}		
              		}
              		for(String attr:atts){
      					i=i+1;
-             			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attr);
+             			JSONObject json = (SpringContextUtils.getBean("entityMapperResolver",EntityMapperResolver.class)).getColumn(entityName, attr);
              			String column = json.getString("column"); 
          				if(column!=null && column!=""){   	
                  			if(i<atts.size()){
@@ -106,12 +108,12 @@ import com.king.common.utils.spring.SpringContextUtils;
 		Iterator<Map.Entry<String, Object>> it = params.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<String, Object> entry = it.next();
-			if((SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).isExistAttribute(enttyName, entry.getKey()))
+			if((SpringContextUtils.getBean("entityMapperResolver",EntityMapperResolver.class)).isExistAttribute(entityName, entry.getKey()))
 				if(entry.getValue()!=null && !entry.getValue().toString().trim().equals(""))
 					attributes.add(entry.getKey());
 		}	
 		for(String attribute:attributes){
-			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
+			JSONObject json = (SpringContextUtils.getBean("entityMapperResolver",EntityMapperResolver.class)).getColumn(entityName, attribute);
 			String column = json.getString("column");
 			if(column!=null && column!=""){   	
 				Object strobj = params.get(attribute);
@@ -134,7 +136,7 @@ import com.king.common.utils.spring.SpringContextUtils;
 		int j=0;
 		for(String attribute:between_ttr){//范围查询
 			j=j+1;		
-			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
+			JSONObject json = (SpringContextUtils.getBean("entityMapperResolver",EntityMapperResolver.class)).getColumn(entityName, attribute);
 			String column = json.getString("column");
 			Object strobj = params.get(attribute);
 			JSONObject jsonObject = JSONObject.parseObject(strobj.toString());
@@ -151,7 +153,7 @@ import com.king.common.utils.spring.SpringContextUtils;
 		int i=0;
 		for(String attribute:equal_ttr){//精确查询
 			i=i+1;		
-			JSONObject json = (SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, attribute);
+			JSONObject json = (SpringContextUtils.getBean("entityMapperResolver",EntityMapperResolver.class)).getColumn(entityName, attribute);
 			String column = json.getString("column");
 			String value =params.get(attribute).toString().trim();
 			if(i<equal_ttr.size()){
@@ -205,7 +207,7 @@ import com.king.common.utils.spring.SpringContextUtils;
           //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
             String sidx = StringToolkit.getObjectString(params.get("sidx"));
             String order = StringToolkit.getObjectString(params.get("order"));
-             sidx = sidx!=null?(SpringContextUtils.getBean("enttyMapperResolver",EntityMapperResolver.class)).getColumn(enttyName, sidx).getString("column"):null;
+             sidx = sidx!=null?(SpringContextUtils.getBean("entityMapperResolver",EntityMapperResolver.class)).getColumn(entityName, sidx).getString("column"):null;
             this.put("sidx", sidx);
             if(order!=null &&!order.trim().equalsIgnoreCase("desc") && !order.trim().equalsIgnoreCase("asc")){
            	 order="";

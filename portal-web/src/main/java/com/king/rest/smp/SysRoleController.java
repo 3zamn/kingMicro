@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONArray;
 import com.king.api.smp.SysDeptService;
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysRoleService;
@@ -61,7 +62,7 @@ public class SysRoleController extends AbstractController {
 		if(getUserId() != Constant.SUPER_ADMIN){
 			params.put("createUserId", getUserId());
 		}	
-		Query query = new Query(params,SysRole.class.getSimpleName());
+		Query query = new Query(params,SysRole.class);
 		Page page = sysRoleService.getPage(query);
 		return JsonResponse.success(page);
 	}
@@ -92,8 +93,12 @@ public class SysRoleController extends AbstractController {
 		List<Long> menuIdList = sysMenuService.queryMenuIdList(roleId);
 		role.setMenuIdList(menuIdList);
 		//查询角色对应的部门
-		List<Long> deptIdList = sysDeptService.queryDeptIdList(roleId);
+		List<Long> deptIdList = sysDeptService.queryDeptIdListByRoleId(roleId);
 		role.setDeptIdList(deptIdList);	
+		JSONArray params=sysMenuService.queryParamsList(roleId);
+		List<Long> userIdList = sysRoleService.queryUserIdList(roleId);
+		role.setParamExt(params);
+		role.setUserIdList(userIdList);
 		return JsonResponse.success(role);
 	}
 	

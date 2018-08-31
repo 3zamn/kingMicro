@@ -85,7 +85,7 @@ public class OssPdfController extends AbstractController {
 	@RequiresPermissions("oss:pdf:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
-		Query query = new Query(params, OssDoc2pdf.class.getSimpleName());
+		Query query = new Query(params, OssDoc2pdf.class);
 		Page page = ossDoc2pdfService.getPage(query);
 		return JsonResponse.success(page);
 	}

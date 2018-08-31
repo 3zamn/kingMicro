@@ -54,7 +54,7 @@ public class SysDicController extends AbstractController{
 	@RequiresPermissions("sys:dic:list")
 	public List<SysDic> list(@RequestParam Map<String, Object> params){
 		List<SysDic> dics = null;
-        Query query = new Query(params,SysDic.class.getSimpleName());
+        Query query = new Query(params,SysDic.class);
 		dics = sysDicService.queryList(query);
 		return dics;
 	}
@@ -83,7 +83,7 @@ public class SysDicController extends AbstractController{
 		Map<String, Object> params = new HashMap<>();
 		params.put("type", 0);
 		params.put("status", true);
-		 Query query = new Query(params,SysDic.class.getSimpleName());
+		 Query query = new Query(params,SysDic.class);
 		List<SysDic> menuList = sysDicService.queryList(query);
 		
 		//添加顶级菜单

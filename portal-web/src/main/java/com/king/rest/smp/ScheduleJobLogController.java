@@ -2,14 +2,11 @@ package com.king.rest.smp;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.ScheduleJobService;
+import com.king.api.smp.SysMenuService;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.exception.RRException;
@@ -28,8 +27,8 @@ import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.Response;
 import com.king.dal.gen.model.smp.ScheduleJobLog;
 import com.king.utils.Query;
+import com.king.utils.ShiroUtils;
 import com.king.utils.excel.ExcelUtil;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -45,6 +44,10 @@ import io.swagger.annotations.ApiOperation;
 public class ScheduleJobLogController {
 	@Autowired
 	private ScheduleJobService scheduleJobService;
+	@Autowired
+	private SysMenuService sysMenuService;
+	
+	
 	/**
 	 * 定时任务日志列表
 	 */
@@ -52,7 +55,8 @@ public class ScheduleJobLogController {
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:log")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		Query query = new Query(params,ScheduleJobLog.class.getSimpleName());	
+	//	JSONObject jsonObject = sysMenuService.queryParamsByUserAndPerm(ShiroUtils.getUserId(), "sys:schedule:log");
+		Query query = new Query(params,ScheduleJobLog.class);	
 		Page page = scheduleJobService.getPageScheduleJobLog(query);
 		return JsonResponse.success(page);
 	}
@@ -64,8 +68,7 @@ public class ScheduleJobLogController {
 	@GetMapping("/info/{logId}")
 	@RequiresPermissions("sys:scheduleLog:list")
 	public JsonResponse info(@PathVariable("logId") Object logId){
-		ScheduleJobLog log = scheduleJobService.queryScheduleJobLog(logId);
-		
+		ScheduleJobLog log = scheduleJobService.queryScheduleJobLog(logId);	
 		return JsonResponse.success(log);
 	}
 	
@@ -94,7 +97,7 @@ public class ScheduleJobLogController {
 	@GetMapping("/export")
 	@RequiresPermissions("sys:scheduleLog:export")
 	public void exportExcel(@RequestParam Map<String, Object> params,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Query query = new Query(params,ScheduleJobLog.class.getSimpleName());
+		Query query = new Query(params,ScheduleJobLog.class);
 		ExcelUtil<ScheduleJobLog> export = new ExcelUtil<>(ScheduleJobLog.class);
 		Method method=SpringContextUtils.getBean(ScheduleJobService.class).getClass().getMethod("queryScheduleJobLogList", Map.class);
 		export.exportExcel("定时任务日志", "定时任务日志", ScheduleJobService.class, method, query,response);

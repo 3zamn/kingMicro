@@ -46,7 +46,7 @@ public class ScheduleJobController {
 	@GetMapping("/list")
 	@RequiresPermissions("sys:schedule:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		Query query = new Query(params,ScheduleJob.class.getSimpleName());
+		Query query = new Query(params,ScheduleJob.class);
 		Page page = scheduleJobService.getPage(query);
 		return JsonResponse.success(page);
 	}

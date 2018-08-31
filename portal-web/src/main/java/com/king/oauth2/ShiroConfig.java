@@ -94,12 +94,12 @@ public class ShiroConfig {
     }
     
     //统一用spring中一个aop自动代理、使用cglib代理<aop:aspectj-autoproxy proxy-target-class="true" />。防止两次代理或冲突、shrio中不创建代理
-    @Bean
+   /* @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator proxyCreator = new DefaultAdvisorAutoProxyCreator();
         proxyCreator.setProxyTargetClass(true);
         return proxyCreator;
-    }
+    }*/
 
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {

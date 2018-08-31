@@ -84,7 +84,7 @@ public class ExcelUtil<T> {
 			File myfile = fi.getStoreLocation();
 			ExcelReaderUtil.read2007Excel(offset,rowReader, myfile);
 			long stopTime = System.currentTimeMillis();
-			System.out.println("write xlsx file time: " + (stopTime - startTime) / 1000 + "m");
+			logger.info("write xlsx file time: " + (stopTime - startTime) / 1000 + "m");
 		} catch (Exception e) {
 			logger.error("导入失败！"+e.getMessage());
 		}

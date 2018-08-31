@@ -48,7 +48,7 @@ public class SysConfigController extends AbstractController {
 	@GetMapping("/list")
 	@RequiresPermissions("sys:config:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
-		Query query = new Query(params,SysConfig.class.getSimpleName());
+		Query query = new Query(params,SysConfig.class);
 		Page page = sysConfigService.getPage(query);	
 		return JsonResponse.success(page);
 	}

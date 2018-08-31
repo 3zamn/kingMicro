@@ -68,7 +68,7 @@ public class OssFileController extends AbstractController{
 	@RequiresPermissions("oss:file:list")
 	public JsonResponse list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params,OssFile.class.getSimpleName());
+        Query query = new Query(params,OssFile.class);
 		Page page = ossFileService.getPage(query);
 		return JsonResponse.success(page);
 	}
