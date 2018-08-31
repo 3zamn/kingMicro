@@ -93,9 +93,10 @@
 </div>
 
 <!-- 授权用户 -->
-	<div id="userLayer"  class="grant-user" style="display: none; padding: 10px;">
+	<div id="userLayer"  class="grant-user" style="display: none; padding: 5px;">
 		<div class="grant-user-header">
-			<strong class="col-sm-2 control-label" style="color: #333;text-align: left;" >已选择：</strong>
+			<strong id="selected" class="col-sm-2 control-label" style="color: #333;text-align: left;" >已选择：
+			</strong>
 		<!-- 	<a class="btn btn-default" style="height: auto;">全部清空</a> -->
 		</div>
 
@@ -103,21 +104,30 @@
 		<div style="height: 35px;background-color:#eeeeee;margin-bottom: 5px">
 				<div style="color: gray;text-align: center;height: 100%;">人员</div>		
 		</div>
-		<input type="text" class="form-control" v-model=""  placeholder="按编码、名称筛选">
+		<input type="text" class="form-control" v-model=""  placeholder="按名称筛选">
 			<ul id="userTree" class="ztree"></ul>
 		</div>
 
 		<div class="grant-user-section">
 		<div style="height: 35px;background-color:#eeeeee;">
-				<input type="text" class="form-control"  style="width: 205px;" v-model="" @keyup.enter="" placeholder="按手机号、名称筛选">	
+		
+				<input type="text" class="form-control"  style="width: 205px;" v-model="q.key" @keyup.enter="query_user" placeholder="按手机号、名称筛选">	
 		</div>
 			
-			<div >		
-				<table id="jqGrid_user"></table>
-		    	<div id="jqGridPager_user"></div>
+			<div style="">		
+				<table id="jqGrid_user" ></table>
+		    	<div id="jqGridPager_user" ></div>
 	    	</div>
 		</div>
 
+	</div>
+	
+	<div id="colsInfo" style="display: none;">
+	
+		<form class="layui-form" id="colContent" style="margin: 15px;padding-left: 20px;" action="">
+			
+			
+		</form>
 	</div>
 
 	<script src="../../static/js/modules/sys/role.js"></script>

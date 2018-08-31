@@ -161,8 +161,8 @@ $(function () {
     $.get(baseURL + "sys/dept/info", function(r){
         var colunms = Dept.initColumn();
         var table = new TreeTable(Dept.id, baseURL + "sys/dept/list", colunms);
-       // debugger
-        table.setRootCodeValue(r.data);
+   //     debugger
+        table.setRootCodeValue(0);
         table.setExpandColumn(2);
         table.setIdField("deptId");
         table.setCodeField("deptId");

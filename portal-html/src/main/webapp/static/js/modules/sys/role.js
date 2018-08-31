@@ -53,8 +53,61 @@ var menu_setting = {
     check:{
         enable:true,
         nocheckInherit:true
+    },
+    callback: {
+        beforeClick: getCurrentNode,
+        onClick : zTreeOnClick
     }
 };
+
+function getCurrentNode(treeId, treeNode) {
+    curNode = treeNode;
+    zTreeOnClick(curNode);
+}
+
+//设置功能节点列表列
+var colParam = new Array();		
+function zTreeOnClick(treeNode){
+
+	var params=treeNode.params;
+	if(params !=null && JSON.parse(params).pagekey=="setcol" && JSON.parse(params).pagekey!=null){//判断扩展事件
+		var json=JSON.parse(params).pagevule;
+
+		 var data = {"menuId":treeNode.menuId,"pagevule":json}
+		 var colJson=JSON.stringify(data);
+		 colParam.push(data);
+	//	 debugger
+		$("#colContent").empty();
+		var colContent="";	
+		for (var i = 0, l = json.length; i < l; i++) {
+			var col='<span style="float: left; width: 50%;margin-bottom: 5px;"> <input  type="checkbox" value="'+json[i].name+ '"';
+			if(json[i].selected==true){
+				col=col+' checked="'+json[i].selected+'">'+ json[i].title+'</span>';
+			}else{
+				col=col+' >'+ json[i].title+'</span>';
+			}    	
+	    	 $("#colContent").append(col)
+		}
+
+		 layer.open({
+	         type: 1,
+	         offset: '50px',
+	         skin: 'layui-layer-molv',
+	         title: "自定义展示列",
+	         area: ['460px', '330px'],
+	         shade: 0,
+	         shadeClose: false,
+	         content: jQuery("#colsInfo"),
+	         btn: ['确定', '取消'],
+	         btn1: function (index) {
+	        		var data ="" ;
+
+	             layer.close(index);
+	         }
+	     });
+	}	
+}
+
 //授权用户树
 var user_ztree;
 
@@ -74,6 +127,39 @@ var dept_setting = {
         }
     }
 };
+
+
+var dept_select_user = {
+	    data: {
+	        simpleData: {
+	            enable: true,
+	            idKey: "deptId",
+	            pIdKey: "parentId",
+	            rootPId: -1
+	        },
+	        key: {
+	            url:"nourl"
+	        }
+	    },
+	    callback: {
+	        beforeClick: getCurrentNode_dept,
+	        onClick : zTreeOnClick_dept
+	    }
+	};
+
+function getCurrentNode_dept(treeId, treeNode) {
+    curNode = treeNode;
+    zTreeOnClick_dept(curNode);
+}
+
+function zTreeOnClick_dept(curNode) {
+	 var page = $("#jqGrid_user").jqGrid('getGridParam','page');
+	// debugger
+     $("#jqGrid_user").jqGrid('setGridParam',{
+         postData:{'deptIds': curNode.deptId},
+         page:page
+     }).trigger("reloadGrid");
+}
 
 //数据树
 var data_ztree;
@@ -110,6 +196,8 @@ var vm = new Vue({
         title:null,
         role:{
             deptId:null,
+            userIdList:[],
+            paramExt:null,
             deptName:null
         }
     },
@@ -126,19 +214,22 @@ var vm = new Vue({
             vm.getDept();
 
             vm.getDataTree();
-            vm.getUser();
+            vm.getUser(null);
         },
         update: function () {
             var roleId = getSelectedRow();
+            var rowData = $("#jqGrid").jqGrid('getRowData',roleId);          
             if(roleId == null){
                 return ;
             }
-
+            //扩展参数--动态列设置
+            vm.role.paramExt=rowData.paramExt;
+            vm.role.userIdList = rowData.userIdList;
             vm.showList = false;
             vm.title = "修改";
             vm.getDataTree();
             vm.getMenuTree(roleId);
-
+            vm.getUser(roleId);
             vm.getDept();
         },
         del: function () {
@@ -201,8 +292,15 @@ var vm = new Vue({
             for(var i=0; i<nodes.length; i++) {
                 deptIdList.push(nodes[i].deptId);
             }
+            //获取节点动态列
+            var colList = new Array();
+            for(var i=0; i<nodes.length; i++) {
+            	if(nodes[i].params!=null && JSON.parse(nodes[i].params).pagekey=="setcol"){
+            		colList.push(nodes[i].params);
+            	}          	
+            }
             vm.role.deptIdList = deptIdList;
-
+            vm.role.paramExt=colParam;
             var url = vm.role.roleId == null ? "sys/role/save" : "sys/role/update";
             $.ajax({
                 type: "POST",
@@ -245,7 +343,7 @@ var vm = new Vue({
             $.get(baseURL + "sys/dept/list", function(r){
                 dept_ztree = $.fn.zTree.init($("#deptTree"), dept_setting, r);
                 //加载授权用户树
-                user_ztree =$.fn.zTree.init($("#userTree"), dept_setting, r);
+                user_ztree =$.fn.zTree.init($("#userTree"), dept_select_user, r);
                 user_ztree.expandAll(true);
                 var node = dept_ztree.getNodeByParam("deptId", vm.role.deptId);
                 if(node != null){
@@ -255,15 +353,15 @@ var vm = new Vue({
                 }
             })
         },
-        getUser:function(){
+        getUser:function(roleId){
         	 $("#jqGrid_user").jqGrid({
-        	        url: baseURL + 'sys/user/list',
+        	        url: baseURL + 'sys/user/list/'+roleId,
         	        datatype: "json",
         	        colModel: [			
         				{ label: '用户ID', name: 'userId',  width: 45, key: true ,hidden:true},
-        				{ label: '用户名', name: 'username', width: 75 },
-        	            { label: '所属部门', name: 'deptName', width: 75 },	
-        				{ label: '手机号', name: 'mobile', width: 100 }
+        				{ label: '用户名', name: 'username', width: 55 },
+        	            { label: '所属部门', name: 'deptName', width: 55 },	
+        				{ label: '手机号', name: 'mobile', width: 55 }
         				
         	        ],
         	        viewrecords: true,
@@ -298,17 +396,23 @@ var vm = new Vue({
                 offset: '50px',
                 skin: 'layui-layer-molv',
                 title: "授权用户",
-                area: ['860px', '450px'],
+                area: ['880px', '450px'],
                 shade: 0,
                 shadeClose: false,
                 content: jQuery("#userLayer"),
                 btn: ['确定', '取消'],
                 btn1: function (index) {
-                   /* var node = dept_ztree.getSelectedNodes();
-                    //选择上级部门
-                    vm.role.deptId = node[0].deptId;
-                    vm.role.deptName = node[0].name;*/
+                //	 debugger
+                	 $("#selected").empty();
+                	 var col="";
+                	 var userIds = $("#jqGrid_user").jqGrid('getGridParam','selarrrow');
+                	 for(var i=0;i<userIds.length;i++){
+                		 var rowData = $("#jqGrid_user").jqGrid('getRowData',userIds[i]);           		 
+                		  col +='<span style="float: left;margin-left: 5px;">'+rowData.username +'&nbsp;' +'</span>';           			       	    	
+                	 }
+                	 $("#selected").append(col)
 
+                	 vm.role.userIdList=userIds;
                     layer.close(index);
                 }
             });
@@ -341,6 +445,21 @@ var vm = new Vue({
                 postData:{'roleName': vm.q.roleName},
                 page:page
             }).trigger("reloadGrid");
-        }
+        },
+        query_user: function () {
+            vm.reload_user();
+        },
+        reload_user: function () {
+        	var keyParam = new Array();		
+			keyParam.push('username');
+			keyParam.push('mobile');
+			var jsonString = JSON.stringify(keyParam);
+            vm.showList = true;
+            var page = $("#jqGrid_user").jqGrid('getGridParam','page');
+            $("#jqGrid_user").jqGrid('setGridParam',{
+                postData:{'searchKey': vm.q.key,'keyParam':jsonString},
+                page:page
+            }).trigger("reloadGrid");
+        },
     }
 });

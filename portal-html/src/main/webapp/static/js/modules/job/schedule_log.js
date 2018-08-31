@@ -87,7 +87,7 @@ var vm = new Vue({
 		},
 		exportExcel: function () {
 			var token = localStorage.getItem("token");
-			 var url= baseURL + "sys/scheduleLog/export?jobId=" + vm.q.jobId+"&token="+token+"&limit="+5000000+"&page="+1;
+			 var url= baseURL + "sys/scheduleLog/export?jobId=" + vm.q.jobId+"&token="+token+"&limit="+500000+"&page="+1;
 			location.href=encodeURI(url)//转码下以免被高版本tomcat过滤特殊字符报错
 		},
 		showError: function(logId) {
