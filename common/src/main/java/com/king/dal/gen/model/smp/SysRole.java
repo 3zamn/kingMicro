@@ -55,13 +55,19 @@ public class SysRole implements Serializable {
 	@ApiModelProperty("部门名称")
 	private String deptName;
 	
+	@ApiModelProperty("授权的菜单")
 	private List<Long> menuIdList;
 
+	@ApiModelProperty("数据权限")
 	private List<Long> deptIdList;
 	
+	@ApiModelProperty("授权用户")
 	private List<Long> userIdList;
 	
-	private String users;
+	//扩展参数
+	@ApiModelProperty("扩展参数")
+	private Object paramExt;
+	
 	/**
 	 * 创建时间
 	 */
@@ -164,12 +170,13 @@ public class SysRole implements Serializable {
 		this.userIdList = userIdList;
 	}
 
-	public String getUsers() {
-		return users;
+
+	public Object getParamExt() {
+		return paramExt;
 	}
 
-	public void setUsers(String users) {
-		this.users = users;
+	public void setParamExt(Object paramExt) {
+		this.paramExt = paramExt;
 	}
 	
 	

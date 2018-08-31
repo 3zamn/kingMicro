@@ -32,6 +32,12 @@ public class SysRoleMenu implements Serializable {
 	 */
 	@ApiModelProperty("菜单ID")
 	private Long menuId;
+	
+	/**
+	 * 扩展参数，如：动态参数
+	 */
+	@ApiModelProperty("扩展参数(多个参数分号分隔，如动态列,name:列显示名,value:列：{'name1':'value1','name2':'value2'}")
+	private String params;
 
 	/**
 	 * 设置：
@@ -80,5 +86,15 @@ public class SysRoleMenu implements Serializable {
 	public Long getMenuId() {
 		return menuId;
 	}
+
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+	
+	
 	
 }

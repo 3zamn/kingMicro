@@ -67,7 +67,7 @@ public class ScheduleJobLog implements Serializable {
 	 * 失败信息
 	 */
 	@ApiModelProperty("失败信息")
-	@PropertyExt
+//	@PropertyExt
 	private String error;
 	
 	/**

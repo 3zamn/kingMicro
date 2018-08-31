@@ -14,7 +14,7 @@ import com.king.common.utils.redis.RedisUtils;
  * @emai 396885563@qq.com
  * @data2018年1月11日
  */
-@Component("enttyMapperResolver")
+@Component("entityMapperResolver")
 public  class EntityMapperResolver {
 	 @Autowired
 	    private  RedisUtils redisUtils;
