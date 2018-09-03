@@ -29,7 +29,7 @@
 	<!-- druid数据源配置 -->
 	<bean name="dataSource_smp" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- <property name="name" value="${hostname}" /> -->
-		<property name="url" value="jdbc:mysql://localhost:3306/king_smp?useSSL=false" />
+		<property name="url" value="jdbc:mysql://192.168.4.11:3306/king_smp?useSSL=false" />
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="username" value="root" />
 		<property name="password" value="123456" />
@@ -73,7 +73,7 @@
 	<!-- druid数据源配置 -->
 	<bean name="dataSource_swt_crm" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- <property name="name" value="${hostname}" /> -->
-		<property name="url" value="jdbc:mysql://localhost:3306/swt_crm?useSSL=false" />
+		<property name="url" value="jdbc:mysql://192.168.4.11:3306/swt_crm?useSSL=false" />
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="username" value="root" />
 		<property name="password" value="123456" />
