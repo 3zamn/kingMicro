@@ -127,6 +127,7 @@ public class SysUserController extends AbstractController {
 	 */
 	@Log("修改密码")
 	@ApiOperation(value = "修改密码",response=Response.class)
+	@RequiresPermissions("sys:user:password")
 	@PostMapping("/password")
 	public JsonResponse password(String password, String newPassword){
 		Assert.isBlank(newPassword, "新密码不为能空");
@@ -180,6 +181,7 @@ public class SysUserController extends AbstractController {
 	public JsonResponse update(@RequestBody(required = false) SysUser user){
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
 		if(user.getUserId() == Constant.SUPER_ADMIN){
+			//return JsonResponse.error("演示环境不能修改系统管理员!");
 			if(user.getStatus()==false){
 				return JsonResponse.error("系统管理员不能禁用!");
 			}

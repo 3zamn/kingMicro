@@ -3,6 +3,7 @@ package com.king.rest.smp;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -62,7 +63,8 @@ public class SysLoginController extends AbstractController {
 	@Autowired
 	private RedisUtils redisUtils;
 	private Logger logger = LoggerFactory.getLogger(getClass());
-
+	Map<String, Integer> session = new HashMap<>();
+	
 	/**
 	 * 验证码
 	 */
@@ -148,8 +150,17 @@ public class SysLoginController extends AbstractController {
 		if(errorValue!=null) {//登录成功清除错误次数
 			redisUtils.delete(errorKey);
 		}
-		//生成token，并保存到redis
-		JsonResponse r = sysUserService.createToken(user.getUserId(),ip,userAgent);
+		String sessionId =HttpContextUtils.getHttpServletRequest().getSession().getId();
+		session.put(sessionId, session.get(sessionId)==null?0:(session.get(sessionId)+1));
+		JsonResponse r =new JsonResponse();
+		if(session.get(sessionId)<1){
+			r= sysUserService.createToken(user.getUserId(),ip,userAgent);
+			session.remove(sessionId);
+		}else{//防止连续点击登录
+			r.put("msg", "请不要重复点击登录");
+			r.put("code",500);
+		}
+			
 		return r;
 	}
 
