@@ -57,54 +57,25 @@
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/icepdf-viewer.jar</systemPath>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/org.redisson/redisson -->
 		<!-- 测试 -->
 	<!-- 	<dependency>
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson</artifactId>
 			<version>3.7.5</version>
 		</dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
-		<!-- <dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-framework</artifactId>
-			<version>4.0.1</version>
-		</dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-recipes -->
-		<!-- <dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-recipes</artifactId>
-			<version>4.0.1</version>
-		</dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.apache.curator/curator-client -->
-		<!-- <dependency>
-			<groupId>org.apache.curator</groupId>
-			<artifactId>curator-client</artifactId>
-			<exclusions>		
-				<exclusion>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.zookeeper</groupId>
-		    		<artifactId>zookeeper</artifactId>
-				</exclusion>
-			</exclusions>
-			<version>4.0.1</version>
-		</dependency> -->
-		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+		
 		<dependency>
 		    <groupId>org.apache.poi</groupId>
 		    <artifactId>poi</artifactId>
 		    <version>3.17</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+ 
 		<dependency>
 		    <groupId>org.apache.poi</groupId>
 		    <artifactId>poi-ooxml</artifactId>
 		    <version>3.17</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/xerces/xercesImpl -->
+ 
 		<dependency>
 		    <groupId>xerces</groupId>
 		    <artifactId>xercesImpl</artifactId>
@@ -130,7 +101,7 @@
 			<artifactId>interface-service</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jodconverter/jodconverter-core -->
+ 
 		<dependency>
 			<groupId>org.jodconverter</groupId>
 			<artifactId>jodconverter-core</artifactId>
@@ -141,7 +112,7 @@
 			<artifactId>jodconverter-local</artifactId>
 			<version>4.2.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+ 
 		<dependency>
 			<groupId>com.itextpdf</groupId>
 			<artifactId>itextpdf</artifactId>
@@ -152,7 +123,7 @@
 			<artifactId>itext-asian</artifactId>
 			<version>5.2.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.zxing/core -->
+ 
 		<!-- 二维码生成/解析 -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
