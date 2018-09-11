@@ -110,13 +110,11 @@ app或第三方应用端：API模块用jwt的token做安全校验
 
 一：加入两种分布式事务解决方案：1.最大一致性（rocketmq异步事务）、最终一致性（TCC）
 
-三：邮件管理模块
+二：邮件管理模块
 
-五：加入api网关服务监控模块（kong、openresty或使用orange）
+三：集成fastdhf分布式文件管理。
 
-六：集成fastdhf分布式文件管理。
-
-七：添加docker支持
+四：添加docker支持
 
 
     目标：
