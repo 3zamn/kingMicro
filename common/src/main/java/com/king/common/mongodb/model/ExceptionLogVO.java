@@ -1,4 +1,4 @@
-package com.king.common.mongodb.log.model;
+package com.king.common.mongodb.model;
 
 import java.io.Serializable;
 import java.util.Date;

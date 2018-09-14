@@ -30,10 +30,10 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.king.common.annotation.Log;
-import com.king.common.mongodb.log.model.ExceptionLogVO;
-import com.king.common.mongodb.log.model.SysLogVO;
-import com.king.common.mongodb.log.repo.ExceptionLogRepo;
-import com.king.common.mongodb.log.repo.SysLogRepo;
+import com.king.common.mongodb.model.ExceptionLogVO;
+import com.king.common.mongodb.model.SysLogVO;
+import com.king.common.mongodb.repo.ExceptionLogRepo;
+import com.king.common.mongodb.repo.SysLogRepo;
 import com.king.common.utils.exception.ExceptionUtils;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.pattern.StringToolkit;
@@ -85,8 +85,8 @@ public class SysLogAspect {
 		String username = null;
 		String seriNO=null;
 		try {
-			if (ShiroUtils.getSubject().getPrincipal() != null) {
-				username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
+			if (ShiroUtils.isLogin()) {
+				username = ShiroUtils.getUserEntity().getUsername();
 			}
 			if (e.toString().contains("RRException")) {//自定义异常
 				if (e.getMessage().contains("服务调用时") && e.getMessage().contains("请联系管理员")) {// 由rpc异常返回
@@ -146,8 +146,8 @@ public class SysLogAspect {
 			logger.error(e.getMessage());
 		}
 		result=point.proceed();
-		if (ShiroUtils.getSubject().getPrincipal() != null) {
-			username = ((SysUser) ShiroUtils.getSubject().getPrincipal()).getUsername();
+		if (ShiroUtils.isLogin()) {
+			username = ShiroUtils.getUserEntity().getUsername();
 		}
 		 try {//校验返回数据是否json格式。	
 			 JSONObject.parseObject(StringToolkit.getObjectString(JSONObject.toJSON(result)));

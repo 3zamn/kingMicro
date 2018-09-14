@@ -1,8 +1,8 @@
-package com.king.common.mongodb.log.repo;
+package com.king.common.mongodb.repo;
 
 import org.springframework.stereotype.Repository;
 
-import com.king.common.mongodb.log.model.SysLogVO;
+import com.king.common.mongodb.model.SysLogVO;
 import com.king.common.mongodb.mongo.BaseMongoRepositoryImpl;
 
 /**
