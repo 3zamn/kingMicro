@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.king.common.mongodb.log.model.ExceptionLogVO;
-import com.king.common.mongodb.log.model.SysLogVO;
-import com.king.common.mongodb.log.repo.ExceptionLogRepo;
-import com.king.common.mongodb.log.repo.SysLogRepo;
+import com.king.common.mongodb.model.ExceptionLogVO;
+import com.king.common.mongodb.model.SysLogVO;
+import com.king.common.mongodb.repo.ExceptionLogRepo;
+import com.king.common.mongodb.repo.SysLogRepo;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
 import com.king.common.utils.date.DateUtils;

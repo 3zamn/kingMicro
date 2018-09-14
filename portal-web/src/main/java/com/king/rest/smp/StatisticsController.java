@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.king.common.mongodb.log.model.SysLogVO;
-import com.king.common.mongodb.log.repo.ExceptionLogRepo;
+import com.king.common.mongodb.model.SysLogVO;
+import com.king.common.mongodb.repo.ExceptionLogRepo;
 import com.king.common.utils.JsonResponse;
 import com.king.dal.gen.model.Response;
 import com.mongodb.BasicDBObject;

@@ -151,7 +151,9 @@ public class SysLoginController extends AbstractController {
 			redisUtils.delete(errorKey);
 		}
 		String sessionId =HttpContextUtils.getHttpServletRequest().getSession().getId();
+	//	logger.info("sessionId:"+sessionId);
 		session.put(sessionId, session.get(sessionId)==null?0:(session.get(sessionId)+1));
+	//	logger.info("次数:"+session.get(sessionId));
 		JsonResponse r =new JsonResponse();
 		if(session.get(sessionId)<1){
 			r= sysUserService.createToken(user.getUserId(),ip,userAgent);
