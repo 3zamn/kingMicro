@@ -106,6 +106,7 @@ app或第三方应用端：API模块用jwt的token做安全校验
  
 
 <a href="https://github.com/3zamn/kingMicro/blob/master/ABtest.md">性能压测结果</a>
+<a href="http://chenhx.cn:81/#/dashboard/home">Sentinel 控制台</a>
 
 开发计划：
 
@@ -118,7 +119,7 @@ app或第三方应用端：API模块用jwt的token做安全校验
 四：添加docker支持
 
 
-    目标：
+    实现目标：
     实现一套完整的以dubbo为基础的微服务套件：
     1. 丰富dubbo服务管理、监控、警告（整合dubbo admin、monitor/扩展添加图形化监控、警告功能等，借鉴dubbokeeper）
     2.使用sentinel 对服务的限流、熔断、降级、链路追踪等服务层防护 
