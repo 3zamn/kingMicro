@@ -156,6 +156,11 @@ import com.king.common.utils.spring.SpringContextUtils;
 			JSONObject json = (SpringContextUtils.getBean("entityMapperResolver",EntityMapperResolver.class)).getColumn(entityName, attribute);
 			String column = json.getString("column");
 			String value =params.get(attribute).toString().trim();
+			if(value.equals("true")){
+				value=1+"";
+			}else if(value.equals("false")){
+				value=0+"";
+			}
 			if(i<equal_ttr.size()){
  				mutlSql +=column +" = "+"'"+SQLFilter.filterSqlInject(value)+"'" +" and ";
  			}else {
