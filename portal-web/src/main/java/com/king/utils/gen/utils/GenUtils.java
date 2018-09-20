@@ -133,7 +133,7 @@ public class GenUtils {
 			
 			try {
 				//添加到zip
-				zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), config.getString("package"))));  
+				zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity, config.getString("package"))));  
 				IOUtils.write(sw.toString(), zip, "UTF-8");
 				IOUtils.closeQuietly(sw);
 				zip.closeEntry();
@@ -196,8 +196,9 @@ public class GenUtils {
 	/**
 	 * 获取文件名
 	 */
-	public static String getFileName(String template, String className, String packageName){
+	public static String getFileName(String template, TableEntity tableEntity, String packageName){
 		String packagePath = "main" + File.separator + "java" + File.separator;
+		String className=tableEntity.getClassName();
 		if(StringUtils.isNotBlank(packageName)){
 			packagePath += packageName.replace(".", File.separator) + File.separator;
 		}
@@ -228,11 +229,11 @@ public class GenUtils {
 		
 		if(template.contains("list.html.vm")){
 			return "main" + File.separator + "webapp" + File.separator + "WEB-INF" + File.separator + "views"
-					+ File.separator + "modules"+ File.separator + className.toLowerCase() + ".html";
+					+ File.separator + "modules"+ File.separator + tableEntity.getTableName() + ".html";
 		}
 		
 		if(template.contains("list.js.vm")){
-			return "main" + File.separator + "webapp" + File.separator + "statics" + File.separator + "js" + File.separator + "modules" + File.separator + className.toLowerCase() + ".js";
+			return "main" + File.separator + "webapp" + File.separator + "statics" + File.separator + "js" + File.separator + "modules" + File.separator + tableEntity.getTableName() + ".js";
 		}
 		
 		return null;

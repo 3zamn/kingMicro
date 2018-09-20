@@ -19,10 +19,9 @@
 <script src="../../static/plugins/ztree/jquery.ztree.all.min.js"></script>
 <script src="../../static/js/common.js"></script>
 
-#set($save='<a v-if="hasPermission("'+${permUrl}+':save")" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>')
-#set($update='<a v-if="hasPermission("'+${permUrl}+':update")" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>')
-#set($delete='<a v-if="hasPermission("'+${permUrl}+':delete")" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>')
-$header
+#set($save="<a v-if=""hasPermission('${permUrl}:save')"" class=""btn btn-primary"" @click=""add""><i class=""fa fa-plus""></i>&nbsp;新增</a>")
+#set($update="<a v-if=""hasPermission('${permUrl}:update')"" class=""btn btn-primary"" @click=""update""><i class=""fa fa-pencil-square-o""></i>&nbsp;修改</a>")
+#set($delete="<a v-if=""hasPermission('${permUrl}:delete')"" class=""btn btn-primary"" @click=""del""><i class=""fa fa-trash-o""></i>&nbsp;删除</a>")
 </head>
 <body>
 <div id="rrapp" v-cloak>
@@ -67,6 +66,6 @@ $header
 	</div>
 </div>
 
-<script src="${request.contextPath}/statics/js/modules/${requestUrl}.js?_${.now?long}"></script>
+<script src="../../static/js/modules/${module}/${tableName}.js"></script>
 </body>
 </html>
