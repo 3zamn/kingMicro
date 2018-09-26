@@ -23,8 +23,10 @@
       并发：400 ；平均响应时间：677ms ；tps：600
       并发：500 ；平均响应时间：852ms ；tps：590
       并发：600 ；平均响应时间：1021ms；tps：590
-  
-
+      
+ 可根据业务需要水平扩展。 
+ 
+压测结果图：如下
 ![50并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/f6e0b8e9bedf0129f55b38593e15958.png) 
 ![50并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/aa5ade7dd167cc3ac52b8944793205f.png) 
 ![100并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/ca8dfc0e5a95c77499a373b1f9fa4c5.png) 
@@ -33,11 +35,19 @@
 ![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/f03c78daefce0e35524fffc5a7e95fd.png)
 ![300并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/3058e33052f016c6cb13d9f161531fb.png) 
 
+下面简单对nginx、tomcat、dubbo rpc性能压测
+ nginx 静态页面500并发无业务数据库关联压测结果图：如下
+![500并发](https://github.com/3zamn/ABTestImage/blob/master/nginx%E9%9D%99%E6%80%81%E9%A1%B5%E5%8E%8B%E6%B5%8B500%E5%B9%B6%E5%8F%91.jpg) 
+![500并发](https://github.com/3zamn/ABTestImage/blob/master/nginx%E9%9D%99%E6%80%81%E9%A1%B5%E5%8E%8B%E6%B5%8B500%E5%B9%B6%E5%8F%911.jpg) 
+ tomcat单体应用300并发无业务数据库关联压测结果图：如下
+![300并发](https://github.com/3zamn/ABTestImage/blob/master/2%E6%A0%B8CPU_%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E6%97%A0%E5%85%B3%E8%81%94%E6%95%B0%E6%8D%AE%E5%BA%93300%E5%B9%B6%E5%8F%91.png) 
+![300并发](https://github.com/3zamn/ABTestImage/blob/master/2%E6%A0%B8CPU_%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E6%97%A0%E5%85%B3%E8%81%94%E6%95%B0%E6%8D%AE%E5%BA%93300%E5%B9%B6%E5%8F%911.png)  
+ dubbo rpc 300并发无业务数据库关联压测结果图：如下
+![300并发](https://github.com/3zamn/ABTestImage/blob/master/2%E6%A0%B8CPU_dubbo%E6%97%A0%E5%85%B3%E8%81%94%E6%95%B0%E6%8D%AE%E5%BA%93300%E5%B9%B6%E5%8F%91.png) 
+![300并发](https://github.com/3zamn/ABTestImage/blob/master/2%E6%A0%B8CPU_dubbo%E6%97%A0%E5%85%B3%E8%81%94%E6%95%B0%E6%8D%AE%E5%BA%93300%E5%B9%B6%E5%8F%911.png)  
  
  
- 
- 
-可根据业务需要水平扩展。
+
 
 
     
