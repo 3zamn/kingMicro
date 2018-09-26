@@ -70,7 +70,6 @@ net.ipv4.tcp_fin_timeout 修改系統默认的 TIMEOUT 时间
 
 ---------------------
 
-本文来自 tomas_wade 的CSDN 博客 ，全文地址请点击：https://blog.csdn.net/tomas_wade/article/details/38059255?utm_source=copy 
 	
 tomcat简单调优：
 
