@@ -46,8 +46,27 @@
 ![300并发](https://github.com/3zamn/ABTestImage/blob/master/2%E6%A0%B8CPU_dubbo%E6%97%A0%E5%85%B3%E8%81%94%E6%95%B0%E6%8D%AE%E5%BA%93300%E5%B9%B6%E5%8F%91.png) 
 ![300并发](https://github.com/3zamn/ABTestImage/blob/master/2%E6%A0%B8CPU_dubbo%E6%97%A0%E5%85%B3%E8%81%94%E6%95%B0%E6%8D%AE%E5%BA%93300%E5%B9%B6%E5%8F%911.png)  
  
- 
+ 结果总结：在分别对nginx、tomcat、dubbo已经调优后得出上面结果。常见的调优、对nginx.config修改worker_rlimit_nofile、worker_connections值及添加fastcgi缓存等。
+        
+      修改系统的打开文件数 vim /etc/security/limits.conf 最后添加 
+      * soft nofile 655350
+      * hard nofile 655350 
+      
+      马上生效命令： ulimit -n 65535
+      查看：ulimit -a    
+tomcat简单调优：
 
+      <Connector port="8088" protocol="HTTP/1.1"
+			   maxThreads="2000" minProcessors="10"
+			   maxProcessors="500"
+               acceptCount="2000"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+dubbo简单调优只要针对几个参数：
 
+        dubbo.provider.timeout=300000  //超时
+        dubbo.threads=2000  //线程设置
+        dubbo.payload=209715200  //默认8M。有效载荷即数据包大小、如果传输文件需调大
+        更多调优参数请参考dubbo相关文档
 
     
