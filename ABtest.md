@@ -72,13 +72,20 @@ net.ipv4.tcp_fin_timeout 修改系統默认的 TIMEOUT 时间
 
 	
 tomcat简单调优：
-
+	
+	 线程适当调大，修改server.xml文件
       <Connector port="8088" protocol="HTTP/1.1"
 			   maxThreads="2000" minProcessors="10"
 			   maxProcessors="500"
                acceptCount="2000"
                connectionTimeout="20000"
                redirectPort="8443" />
+	       
+	内存适当调大，修改catalina.sh文件cygwin=false darwin=false前面添加
+	JAVA_OPTS="-server -Xms1024m -Xmx1024m -Xss256K -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=1024m"
+	建议：-Xms和-Xms设置一样大小、避免高并发环境下GC时分配内存出现卡顿等性能不稳问题；
+	注意：Metaspace是jdk8以上的参数已代替PermGen 
+
 dubbo简单调优只要针对几个参数：
 
         dubbo.provider.timeout=300000  //超时
