@@ -32,7 +32,7 @@
 ![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/1dede3a3d25d203668913a6bd9a4560.png)
 ![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/f03c78daefce0e35524fffc5a7e95fd.png)
 ![300并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/3058e33052f016c6cb13d9f161531fb.png) 
-![300并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/33e0336cc386e27ef1ac0998ec426da.png) 
+
  
  
  
