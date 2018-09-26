@@ -86,7 +86,7 @@ tomcat简单调优：
 	建议：-Xms和-Xms设置一样大小、避免高并发环境下GC时分配内存出现卡顿等性能不稳问题；
 	注意：Metaspace是jdk8以上的参数已代替PermGen 
 
-dubbo简单调优只要针对几个参数：
+dubbo简单调优，针对几个参数：
 
         dubbo.provider.timeout=300000  //超时
         dubbo.threads=2000  //线程设置
