@@ -48,12 +48,19 @@
  
  结果总结：在分别对nginx、tomcat、dubbo已经调优后得出上面结果。常见的调优、对nginx.config修改worker_rlimit_nofile、worker_connections值及添加fastcgi缓存等。
         
-      修改系统的打开文件数 vim /etc/security/limits.conf 最后添加 
+      修改系统的打开文件数（tcp链接会打开文件句柄） vim /etc/security/limits.conf 最后添加 
       * soft nofile 655350
       * hard nofile 655350 
       
       马上生效命令： ulimit -n 65535
-      查看：ulimit -a    
+      查看：ulimit -a  
+      
+      优化tcp链接的回收时间、TCP TIME_WAIT。修改/etc/sysctl.conf文件，加入以下内容：
+      net.ipv4.tcp_syncookies = 1
+      net.ipv4.tcp_tw_reuse = 1
+      net.ipv4.tcp_tw_recycle = 1
+      net.ipv4.tcp_fin_timeout = 30
+	
 tomcat简单调优：
 
       <Connector port="8088" protocol="HTTP/1.1"
