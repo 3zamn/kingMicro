@@ -7,7 +7,12 @@
 	 http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 	
 	<!-- 提供方应用信息，用于计算依赖关系 -->
-	<dubbo:application name="${serverName}" />
+	<dubbo:application name="${serverName}" >
+	<!-- qos端口 -->
+	<dubbo:parameter key="qos.port"  value="${dubbo.qos.port}" />
+	<!-- 默认情况下，dubbo 接收任何主机发起的命令 -->
+	<dubbo:parameter key="qos.accept.foreign.ip"  value="${dubbo.qos.accept.foreign.ip}"/>
+	</dubbo:application>
 	<!-- 	使用simple或zookeeper注册中心 -->
 	<dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
 	<!-- 用dubbo协议在30880端口暴露服务 -->
