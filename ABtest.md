@@ -8,7 +8,7 @@
              mysql、redis、tomcat、nginx、mongodb、zookeeper全部部署上面环境的单节点
     压测接口：/portal-web/sys/user/info
   
-    接口业务处理过程：查询当前用户信息。经过shiro权限认证、调用到redis（权限、token）、mysql（查询user单表）、mongobd（保存日志）
+    接口业务处理过程：查询当前用户信息。经过shiro权限认证、调用到redis查询（权限、token）、mysql（查询user表、关联查dept表）、mongobd（保存日志）
                       
     压力机：局域网内使用本地电脑
   
