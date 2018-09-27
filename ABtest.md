@@ -5,7 +5,7 @@
     压测系统部署环境配置：centos7、2核CPU Intel(R) Xeon(R) CPU E5-2640 v2 @ 2.00GHz、8G内存
   
     系统部署：smp.jar、oss.jar、portal-web（部署在tomcat）、portal-html（nginx代理）。
-             mysql、redis、tomcat、nginx、mongodb、zookeeper全部部署上面环境的单节点
+             mysql、redis、tomcat、nginx、mongodb、zookeeper,除mysql单独部署在一台机(2核4G内存)，其他都部署上面环境的单节点
     压测接口：/portal-web/sys/user/info
   
     接口业务处理过程：查询当前用户信息。经过shiro权限认证、调用到redis查询（权限、token）、mysql（查询user表、关联查dept表）、mongobd（保存日志）
