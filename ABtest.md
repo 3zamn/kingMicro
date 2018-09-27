@@ -33,7 +33,7 @@
 ![100并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/3700b986cab3e8ba6dc14bae402e714.png)
 ![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/1dede3a3d25d203668913a6bd9a4560.png)
 ![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/f03c78daefce0e35524fffc5a7e95fd.png)
-![300并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/3058e33052f016c6cb13d9f161531fb.png) 
+
 
 下面简单对nginx、tomcat、dubbo rpc性能压测
  nginx 静态页面500并发无业务数据库关联压测结果图：如下
