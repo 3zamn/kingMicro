@@ -28,7 +28,12 @@ public class ${className} implements Serializable {
 	@Id
 #end
 #if(${pk.attrname}!=${column.attrname} && ${column.isNullable}=="NO")
+	
+#if($column.attrType=="String")
 	@NotBlank(message="$column.comments不能为空")
+#else
+	@NotNull(message="$column.comments不能为空")
+#end
 #end
 	@ApiModelProperty("$column.comments")
 	private $column.attrType $column.attrname;

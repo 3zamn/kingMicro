@@ -22,7 +22,12 @@
 		</property>
 	</bean>
 	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
-	<dubbo:application name="${serverName}" />
+	<dubbo:application name="${serverName}" >
+	<!-- qos端口 -->
+	<dubbo:parameter key="qos.port"  value="${dubbo.qos.port}" />
+	<!-- 默认情况下，dubbo 接收任何主机发起的命令 -->
+	<dubbo:parameter key="qos.accept.foreign.ip"  value="${dubbo.qos.accept.foreign.ip}"/>
+	</dubbo:application>
 
 	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" />
 

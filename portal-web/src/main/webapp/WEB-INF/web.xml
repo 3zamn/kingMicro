@@ -11,7 +11,7 @@
 				classpath:/spring-dubbo.xml	
 				classpath:/spring-redis.xml
 				classpath:/spring-mongodb.xml
-				classpath:/generator.xml
+				classpath:/gen/generator.xml
 			</param-value>
 		
 	</context-param>
