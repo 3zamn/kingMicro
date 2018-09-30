@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysRoleService;
 import com.king.api.smp.SysUserService;
+import com.king.common.annotation.DuplicateFilter;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
@@ -165,6 +166,7 @@ public class SysUserController extends AbstractController {
 	@ApiOperation(value = "保存用户",response=Response.class, notes = "权限编码（sys:user:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:user:save")
+	@DuplicateFilter(check=true)
 	public JsonResponse save(@RequestBody(required = false) SysUser user){
 		ValidatorUtils.validateEntity(user, AddGroup.class);	
 		sysUserService.save(user);	

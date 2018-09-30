@@ -16,6 +16,7 @@ import com.king.utils.AbstractController;
 import com.king.dal.gen.model.Response;
 import ${package}.common.utils.Page;
 import ${package}.common.annotation.Log;
+import ${package}.common.annotation.DuplicateFilter;
 import ${package}.dal.gen.model.${module}.${className};
 import ${package}.api.${module}.${className}Service;
 import com.king.utils.Query;
@@ -72,6 +73,7 @@ public class ${className}Controller extends AbstractController{
 	@Log("${comments}保存")
 	@ApiOperation(value = "保存",response=Response.class,notes = "权限编码（${permUrl}:save）")
 	@PostMapping("/save")
+	@DuplicateFilter(check=true)
 	@RequiresPermissions("${permUrl}:save")
 	public JsonResponse save(@RequestBody ${className} ${classname}){
 		ValidatorUtils.validateEntity(${classname});

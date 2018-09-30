@@ -19,6 +19,7 @@ import com.king.api.smp.SysDeptService;
 import com.king.api.smp.SysMenuService;
 import com.king.api.smp.SysRoleService;
 import com.king.api.smp.SysUserService;
+import com.king.common.annotation.DuplicateFilter;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
@@ -109,6 +110,7 @@ public class SysRoleController extends AbstractController {
 	@ApiOperation(value = "保存角色",response=Response.class, notes = "权限编码（sys:role:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:role:save")
+	@DuplicateFilter(check=true)
 	public JsonResponse save(@RequestBody(required = false) SysRole role){
 		ValidatorUtils.validateEntity(role);	
 		sysRoleService.save(role);	

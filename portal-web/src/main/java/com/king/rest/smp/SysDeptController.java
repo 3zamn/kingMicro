@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysDeptService;
+import com.king.common.annotation.DuplicateFilter;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
@@ -110,6 +111,7 @@ public class SysDeptController extends AbstractController {
 	@ApiOperation(value = "保存部门",response=Response.class, notes = "权限编码（sys:dept:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dept:save")
+	@DuplicateFilter(check=true)
 	public JsonResponse save(@RequestBody(required = false) SysDept dept){
 		ValidatorUtils.validateEntity(dept, AddGroup.class);
 		sysDeptService.save(dept);	

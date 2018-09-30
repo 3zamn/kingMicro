@@ -1,5 +1,7 @@
 package com.king.utils;
 
+import java.util.Date;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
@@ -10,6 +12,7 @@ import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
+import com.king.common.utils.security.SecurityUtil;
 import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysConfig;
 import com.king.dal.gen.model.smp.SysUser;
@@ -59,8 +62,11 @@ public class ShiroUtils {
 	public static void setSessionAttribute(Object key, Object value) {
 		getSession().setAttribute(key, value);
 		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
-		String sessionId = RedisKeys.getKaptchaKey(getSession().getId().toString());
-		redisUtils.set(sessionId, value,Constant.HALF_HOUR);
+		String kapthaKey = RedisKeys.getKaptchaKey(getSession().getId().toString());
+		redisUtils.set(kapthaKey, value,Constant.HALF_HOUR);
+		String sessionId =HttpContextUtils.getHttpServletRequest().getSession().getId();	
+		String rawKey =RedisKeys.getReqId(SecurityUtil.encryptSHA(sessionId+ value));	
+		redisUtils.set(rawKey, value,Constant.HALF_HOUR);
 	}
 
 	public static Object getSessionAttribute(Object key) {

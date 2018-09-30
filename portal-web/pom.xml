@@ -12,9 +12,31 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+			 <exclusions>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-expression</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-aop</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>				
+			 </exclusions>
 			<version>5.0.7.RELEASE</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->	
+				
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-web</artifactId>
@@ -67,6 +89,12 @@
 		<dependency>
 		    <groupId>org.apache.poi</groupId>
 		    <artifactId>poi</artifactId>
+		     <exclusions>
+				<exclusion>
+				      <groupId>commons-codec</groupId>
+				      <artifactId>commons-codec</artifactId>
+				</exclusion>	
+			</exclusions>
 		    <version>3.17</version>
 		</dependency>
  
@@ -105,11 +133,25 @@
 		<dependency>
 			<groupId>org.jodconverter</groupId>
 			<artifactId>jodconverter-core</artifactId>
+			<exclusions>
+				<exclusion>
+					  <groupId>commons-io</groupId>
+      				  <artifactId>commons-io</artifactId>
+				</exclusion>
+				<exclusion>
+				      <groupId>org.apache.commons</groupId>
+				      <artifactId>commons-lang3</artifactId>
+				</exclusion>	
+				<exclusion>
+				      <groupId>com.google.code.gson</groupId>
+				      <artifactId>gson</artifactId>
+				</exclusion>				
+			</exclusions>
 			<version>4.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jodconverter</groupId>
-			<artifactId>jodconverter-local</artifactId>
+			<artifactId>jodconverter-local</artifactId>		
 			<version>4.2.0</version>
 		</dependency>
  
@@ -145,6 +187,10 @@
 			<artifactId>qiniu-java-sdk</artifactId>
 			<version>[7.2.0, 7.2.99]</version>
 			 <exclusions>
+			 	<exclusion>
+				      <groupId>com.google.code.gson</groupId>
+				      <artifactId>gson</artifactId>
+				</exclusion>		 	
 				<exclusion>
 					  <groupId>org.apache.httpcomponents</groupId>
             		  <artifactId>httpclient</artifactId>
@@ -157,6 +203,22 @@
 			<version>2.5.0</version>
 			 <exclusions>
 				<exclusion>
+					  <groupId>commons-logging</groupId>
+      				  <artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+				      <groupId>commons-codec</groupId>
+				      <artifactId>commons-codec</artifactId>
+				</exclusion>	
+				<exclusion>
+				      <groupId>commons-collections</groupId>
+				      <artifactId>commons-collections</artifactId>
+				</exclusion>
+				<exclusion>
+				      <groupId>commons-lang</groupId>
+				      <artifactId>commons-lang</artifactId>
+				</exclusion>
+				<exclusion>
 					  <groupId>org.apache.httpcomponents</groupId>
             		  <artifactId>httpclient</artifactId>
 				</exclusion>				
@@ -167,6 +229,22 @@
 			<artifactId>cos_api</artifactId>
 			<version>4.4</version>
 			 <exclusions>
+				 <exclusion>
+					  <groupId>commons-logging</groupId>
+      				  <artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+				      <groupId>commons-codec</groupId>
+				      <artifactId>commons-codec</artifactId>
+				</exclusion>	
+				<exclusion>
+				      <groupId>commons-collections</groupId>
+				      <artifactId>commons-collections</artifactId>
+				</exclusion>
+				<exclusion>
+				      <groupId>commons-lang</groupId>
+				      <artifactId>commons-lang</artifactId>
+				</exclusion>
 				<exclusion>
 					  <groupId>org.apache.httpcomponents</groupId>
             		  <artifactId>httpclient</artifactId>
@@ -177,23 +255,49 @@
 				</exclusion>				
 			</exclusions>
 		</dependency>
-		<!-- 百度orc api -->
-		<!-- <dependency>
-		    <groupId>com.baidu.aip</groupId>
-		    <artifactId>java-sdk</artifactId>
-		    <version>4.3.2</version>
-		</dependency> -->
-				
+			
 		<!-- 代码生成器所需jar -->
 		<dependency>
 			<artifactId>velocity</artifactId>
 			<groupId>org.apache.velocity</groupId>
+			 <exclusions>
+				<exclusion>
+				      <groupId>commons-collections</groupId>
+				      <artifactId>commons-collections</artifactId>
+				</exclusion>
+				<exclusion>
+				      <groupId>commons-lang</groupId>
+				      <artifactId>commons-lang</artifactId>
+				</exclusion>
+				<exclusion>
+					  <groupId>oro</groupId>
+            		  <artifactId>oro</artifactId>
+				</exclusion>					
+			</exclusions>
 			<version>1.7</version>
 		</dependency>
 		<!-- javamelody服务器性能监控 -->
 		<dependency>
 			<groupId>net.bull.javamelody</groupId>
 			<artifactId>javamelody-core</artifactId>
+			 <exclusions>
+				 <exclusion>
+					  <groupId>commons-logging</groupId>
+      				  <artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+				      <groupId>commons-codec</groupId>
+				      <artifactId>commons-codec</artifactId>
+				</exclusion>	
+				<exclusion>
+				      <groupId>commons-collections</groupId>
+				      <artifactId>commons-collections</artifactId>
+				</exclusion>
+				<exclusion>
+				      <groupId>commons-lang</groupId>
+				      <artifactId>commons-lang</artifactId>
+				</exclusion>			
+			</exclusions>
 			<version>1.70.0</version>
 		</dependency>
 
@@ -213,6 +317,64 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.7.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-spring-web</artifactId>
+			<version>2.7.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+      				<artifactId>guava</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-webmvc</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-databind</artifactId>
+				</exclusion>			
+			</exclusions>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.plugin</groupId>
+			<artifactId>spring-plugin-core</artifactId>
+			<version>1.2.0.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-aop</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>	
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -288,18 +450,6 @@
 				<exclusion>
 					<artifactId>spring-context</artifactId>
 					<groupId>org.springframework</groupId>
-				</exclusion>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>jcl-over-slf4j</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>

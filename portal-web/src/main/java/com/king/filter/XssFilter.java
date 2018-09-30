@@ -12,7 +12,7 @@ import com.king.utils.XssHttpServletRequestWrapper;
 import java.io.IOException;
 
 /**
- *  XSS过滤
+ *  XSS攻击过滤
  * @author King chen
  * @date 2017年12月25日
  */

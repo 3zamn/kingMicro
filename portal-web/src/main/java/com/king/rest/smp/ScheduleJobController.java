@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.ScheduleJobService;
+import com.king.common.annotation.DuplicateFilter;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
@@ -71,11 +72,10 @@ public class ScheduleJobController {
 	@ApiOperation(value = "保存定时任务",response=Response.class, notes = "权限编码（sys:schedule:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:schedule:save")
+	@DuplicateFilter(check=true)
 	public JsonResponse save(@RequestBody(required = false) ScheduleJob scheduleJob){
-		ValidatorUtils.validateEntity(scheduleJob);
-		
-		scheduleJobService.save(scheduleJob);
-		
+		ValidatorUtils.validateEntity(scheduleJob);	
+		scheduleJobService.save(scheduleJob);	
 		return JsonResponse.success();
 	}
 	
@@ -87,10 +87,8 @@ public class ScheduleJobController {
 	@PostMapping("/update")
 	@RequiresPermissions("sys:schedule:update")
 	public JsonResponse update(@RequestBody(required = false) ScheduleJob scheduleJob){
-		ValidatorUtils.validateEntity(scheduleJob);
-				
+		ValidatorUtils.validateEntity(scheduleJob);				
 		scheduleJobService.update(scheduleJob);
-		
 		return JsonResponse.success();
 	}
 	

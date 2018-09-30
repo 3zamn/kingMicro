@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysConfigService;
 import com.king.api.smp.SysUserService;
+import com.king.common.annotation.DuplicateFilter;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.Page;
@@ -73,6 +74,7 @@ public class SysConfigController extends AbstractController {
 	@ApiOperation(value = "保存配置",response=Response.class, notes = "权限编码（sys:config:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:config:save")
+	@DuplicateFilter(check=true)
 	public JsonResponse save(@RequestBody(required = false) SysConfig config){
 		ValidatorUtils.validateEntity(config);
 		sysConfigService.save(config);		

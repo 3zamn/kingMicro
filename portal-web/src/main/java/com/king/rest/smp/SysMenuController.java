@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.king.api.smp.ShiroService;
 import com.king.api.smp.SysDicService;
 import com.king.api.smp.SysMenuService;
+import com.king.common.annotation.DuplicateFilter;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
@@ -113,6 +114,7 @@ public class SysMenuController extends AbstractController {
 	@ApiOperation(value = "保存菜单",response=Response.class, notes = "权限编码（sys:menu:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:menu:save")
+	@DuplicateFilter(check=true)
 	public JsonResponse save(@RequestBody(required = false) SysMenu menu){
 		//数据校验
 		verifyForm(menu);		

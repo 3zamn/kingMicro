@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.king.api.smp.SysDicService;
+import com.king.common.annotation.DuplicateFilter;
 import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
@@ -116,6 +117,7 @@ public class SysDicController extends AbstractController{
 	@ApiOperation(value = "保存",response=Response.class,notes = "权限编码（sysdic:save）")
 	@PostMapping("/save")
 	@RequiresPermissions("sys:dic:save")
+	@DuplicateFilter(check=true)
 	public JsonResponse save(@RequestBody(required = false) SysDic sysDic){
 		sysDic.setCreateBy(getUser().getUsername());
 		sysDic.setCreateTime(new Date());

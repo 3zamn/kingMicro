@@ -3,6 +3,7 @@ package com.king.rest.smp;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,6 +32,7 @@ import com.king.common.utils.network.NetUtils;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.redis.TokenGenerator;
+import com.king.common.utils.security.SecurityUtil;
 import com.king.common.utils.security.crypto.Sha256Hash;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
@@ -63,7 +65,7 @@ public class SysLoginController extends AbstractController {
 	@Autowired
 	private RedisUtils redisUtils;
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	Map<String, Integer> session = new HashMap<>();
+
 	
 	/**
 	 * 验证码
@@ -98,12 +100,10 @@ public class SysLoginController extends AbstractController {
 		if(captcha==null || !captcha.equalsIgnoreCase(kaptcha)){
 			return JsonResponse.error(405,"验证码不正确");
 		}
-		//用户信息
 		SysUser user = sysUserService.queryByUserName(username);
 		String PW=user!=null?new Sha256Hash(password, user.getSalt()).toHex():null;
-		//账号不存在、密码错误
 		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
-		// 获取IP地址
+		// 获取IP地址,如果出现登录卡顿请去掉
 		String ip =IPUtils.getIpAddr(request);
 		String userAgent=NetUtils.getUserAgent(request.getHeader("User-Agent"));
 		String errorIPKey= RedisKeys.getErrorIPKey(ip, username);
@@ -150,18 +150,18 @@ public class SysLoginController extends AbstractController {
 		if(errorValue!=null) {//登录成功清除错误次数
 			redisUtils.delete(errorKey);
 		}
-		String sessionId =HttpContextUtils.getHttpServletRequest().getSession().getId();
-	//	logger.info("sessionId:"+sessionId);
-		session.put(sessionId, session.get(sessionId)==null?0:(session.get(sessionId)+1));
-	//	logger.info("次数:"+session.get(sessionId));
 		JsonResponse r =new JsonResponse();
-		if(session.get(sessionId)<1){
-			r= sysUserService.createToken(user.getUserId(),ip,userAgent);
-			session.remove(sessionId);
-		}else{//防止连续点击登录
+		String sessionId =HttpContextUtils.getHttpServletRequest().getSession().getId();		
+		String rawKey =RedisKeys.getReqId(SecurityUtil.encryptSHA(sessionId+ kaptcha));	
+		Boolean exsit =redisUtils.luaScript_Setnx(rawKey,rawKey,rawKey);
+		if (exsit) {
 			r.put("msg", "请不要重复点击登录");
 			r.put("code",500);
+		}else{
+			r= sysUserService.createToken(user.getUserId(),ip,userAgent);
 		}
+
+
 			
 		return r;
 	}

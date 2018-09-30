@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.king.common.mongodb.model.SysLogVO;
 import com.king.common.mongodb.repo.ExceptionLogRepo;
@@ -29,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
  * @data 2018年7月27日
  */
 
-@Controller
+@RestController
 @Api(value = "数据统计", description = "数据统计")
 @RequestMapping("/sys/statistics")
 public class StatisticsController {
@@ -42,7 +43,6 @@ public class StatisticsController {
 	 * 在线用户统计
 	 */
 	@ApiOperation(value = "在线用户统计",response=Response.class, notes = "权限编码（sys:statistics:showUser）")
-	@ResponseBody
 	@GetMapping("/showUser")
 //	@RequiresPermissions("sys:statistics:showUser")
 	public JsonResponse exceptionList(@RequestParam Map<String, Object> params){
