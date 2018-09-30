@@ -157,11 +157,4 @@
 		<property name="basePackage" value="com.king.dao" />
 	</bean>
 
-	<!-- 没有必要在 Spring 的 XML 配置文件中注册所有的映射器。相反,你可以使用一个 MapperScannerConfigurer 
-		, 它 将 会 查 找 类 路 径 下 的 映 射 器 并 自 动 将 它 们 创 建 成 MapperFactoryBean。 如果你使 用了一个 
-		以上的 DataSource ,那 么自动 装配可 能会失效 -->
-	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage"
-			value="com.king.dao" />
-	</bean> -->
 </beans>
