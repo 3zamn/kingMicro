@@ -52,4 +52,8 @@ public class RedisKeys {
     public static String getLoginKey(String key){
         return "login:"+ key;
     }
+    
+    public static String getReqId(String key){
+        return "reqId:" + key;
+    }
 }

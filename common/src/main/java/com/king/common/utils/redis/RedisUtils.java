@@ -1,18 +1,29 @@
 package com.king.common.utils.redis;
 
-import com.google.gson.Gson;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.data.redis.core.*;
-import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.stereotype.Component;
+
+import com.google.gson.Gson;
 
 /**
  * Redis工具类
@@ -40,6 +51,19 @@ public class RedisUtils {
     /**  不设置过期时长 */
     public final static long NOT_EXPIRE = -1;
     private final static Gson gson = new Gson();
+    
+	@SuppressWarnings("unchecked")
+	public boolean setnx(String k, String v) {
+		Boolean result = (Boolean) redisTemplate.execute(new RedisCallback<Boolean>() {
+			public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
+				RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
+				byte[] key = serializer.serialize(k);
+				byte[] name = serializer.serialize(v);
+				return connection.setNX(key, name);
+			}
+		});
+		return result;
+	}
 
     @SuppressWarnings("unchecked")
 	public  String getset(String key, Object value, long expire){
@@ -169,6 +193,23 @@ public class RedisUtils {
     	return objects;*/
     	return  redisTemplate.keys(hashKey+"*");
    }
+    
+    /**
+     * lua脚本方式执行setnx
+     * 待优化
+     * @param args
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+	public Boolean luaScript_Setnx(String... args) {
+    	String SCRIPT_LOCK ="if redis.call('setnx', KEYS[1], KEYS[1]) == 1 then redis.call('del', KEYS[1]) return 1 else redis.call('del', KEYS[1]) return 0 end";
+		List<String> keys = new ArrayList<>();
+        keys.add(args[0]);
+        keys.add(args[1]);
+        keys.add(args[1]);
+        RedisScript<Boolean> luaScript = new DefaultRedisScript<>(SCRIPT_LOCK, Boolean.class);
+        return  (Boolean)redisTemplate.execute(luaScript, keys,args[0],args[1],args[2]);
+	}
     
     /**
      * Object转成JSON数据

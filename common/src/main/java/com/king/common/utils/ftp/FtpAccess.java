@@ -46,11 +46,11 @@ public class FtpAccess {
 				}
 			} catch (Exception e) {
 				// 修正ftp连接地址,增强容错性
-				if (!"10.200.5.201".equals(ftpInfo.ftpServer)) {
-					ftpInfo.ftpServer = "10.200.5.201";
+				if (!"127.0.0.1".equals(ftpInfo.ftpServer)) {
+					ftpInfo.ftpServer = "127.0.0.1";
 					ftpInfo.ftpPort = 21;
-					ftpInfo.ftpUser = "cytest";
-					ftpInfo.ftpPwd = "cytest";
+					ftpInfo.ftpUser = "test";
+					ftpInfo.ftpPwd = "test";
 					ftpInfo.curSerPath = "orison";
 					// 再次连接
 					ftp.connect(ftpInfo.ftpServer, ftpInfo.ftpPort);
@@ -337,7 +337,7 @@ public class FtpAccess {
 
 	public static void main(String[] args) {
 		FtpInfo fi = new FtpInfo();
-		fi.ftpServer = "10.200.5.201";
+		fi.ftpServer = "127.0.0.1";
 		fi.ftpPort = 21;
 		fi.curSerPath = "/home/cytest/orison/analysis/ftp/logfiles";
 		fi.ftpUser = "cytest";

@@ -19,13 +19,13 @@ public class FtpDownload {
     public static void main(String[] agrs) {
         try {
             int blockCount = 5;//分5个线程下载
-            String ip = "10.200.5.201";
+            String ip = "127.0.0.1";
             int port = 21;
             String username = "cytest";
             String password = "cytest";
-            String remotePath = "/home/cytest/orison/analysis/";
-            String remoteFileName = "20090322.tar";
-            String localPath = "D:/20090322.tar";
+            String remotePath = "/home/";
+            String remoteFileName = "test.tar";
+            String localPath = "D:/test.tar";
             FtpDownload ftpDownload = new FtpDownload(ip, port, username, password, remotePath, remoteFileName, localPath);
             long size = ftpDownload.size();//获得远程文件的大小
             if (size == 0) {
