@@ -18,6 +18,7 @@ var vm = new Vue({
     data:{
         showList: true,
         title: null,
+        reqId:null,
         menu:{
             parentName:null,
             parentId:0,
@@ -41,6 +42,9 @@ var vm = new Vue({
             vm.title = "新增";
             vm.menu = {parentName:null,parentId:0,type:1,orderNum:0};
             vm.getMenu();
+            $.get(baseURL + "sys/gen/reqId", function(r){
+				vm.reqId = r.data;
+			});
         },
         update: function () {
             var menuId = getMenuId();
@@ -88,6 +92,9 @@ var vm = new Vue({
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
+                headers: {
+			        "reqId": vm.reqId
+			    },
                 contentType: "application/json",
                 data: JSON.stringify(vm.menu),
                 success: function(r){

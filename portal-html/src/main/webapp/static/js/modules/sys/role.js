@@ -194,6 +194,7 @@ var vm = new Vue({
         },
         showList: true,
         title:null,
+        reqId:null,
         role:{
             deptId:null,
             userIdList:[],
@@ -210,11 +211,12 @@ var vm = new Vue({
             vm.title = "新增";
             vm.role = {deptName:null, deptId:null};
             vm.getMenuTree(null);
-
             vm.getDept();
-
             vm.getDataTree();
             vm.getUser(null);
+            $.get(baseURL + "sys/gen/reqId", function(r){
+				vm.reqId = r.data;
+			});
         },
         update: function () {
             var roleId = getSelectedRow();
@@ -305,6 +307,9 @@ var vm = new Vue({
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
+                headers: {
+			        "reqId": vm.reqId
+			    },
                 contentType: "application/json",
                 data: JSON.stringify(vm.role),
                 success: function(r){

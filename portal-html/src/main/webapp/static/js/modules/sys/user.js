@@ -71,6 +71,7 @@ var vm = new Vue({
         },
         showList: true,
         title:null,
+        reqId:null,
         roleList:{},
         position: '',
         dicSelect:{},
@@ -97,6 +98,9 @@ var vm = new Vue({
             this.getRoleList();
             vm.getDic();
             vm.getDept();
+            $.get(baseURL + "sys/gen/reqId", function(r){
+				vm.reqId = r.data;
+			});
         },
         getDic: function () {//下拉选项字典查询
 			 $.get(baseURL + "sys/dic/query/"+"position", function(r){
@@ -161,6 +165,9 @@ var vm = new Vue({
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
+                headers: {
+			        "reqId": vm.reqId
+			    },
                 contentType: "application/json",
                 data: JSON.stringify(vm.user),
                 success: function(r){

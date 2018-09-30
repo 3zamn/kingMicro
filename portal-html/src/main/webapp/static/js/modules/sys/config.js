@@ -48,6 +48,7 @@ var vm = new Vue({
 		},
 		showList: true,
 		title: null,
+		reqId:null,
 		config: {}
 	},
 	methods: {
@@ -58,6 +59,9 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.config = {};
+			$.get(baseURL + "sys/gen/reqId", function(r){
+				vm.reqId = r.data;
+			});
 		},
 		update: function () {
 			var id = getSelectedRow();
@@ -104,6 +108,9 @@ var vm = new Vue({
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
+			    headers: {
+			        "reqId": vm.reqId
+			    },
                 contentType: "application/json",
 			    data: JSON.stringify(vm.config),
 			    success: function(r){

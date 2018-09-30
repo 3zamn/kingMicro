@@ -18,6 +18,7 @@ var vm = new Vue({
     data:{
         showList: true,
         title: null,
+        reqId:null,
         sysDic:{
             parentName:null,
             parentId:0,
@@ -46,6 +47,9 @@ var vm = new Vue({
             vm.title = "新增";
             vm.sysDic = {parentName:null,parentId:0,status:1,sortNo:0,type:1};
             vm.getDirectory();
+            $.get(baseURL + "sys/gen/reqId", function(r){
+				vm.reqId = r.data;
+			});
         },
         update: function () {
             var id = getDicId();
@@ -93,6 +97,9 @@ var vm = new Vue({
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
+                headers: {
+			        "reqId": vm.reqId
+			    },
                 contentType: "application/json",
                 data: JSON.stringify(vm.sysDic),
                 success: function(r){
