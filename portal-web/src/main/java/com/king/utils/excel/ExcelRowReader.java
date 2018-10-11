@@ -16,7 +16,7 @@ import com.king.common.utils.spring.SpringContextUtils;
  *  Excel读取业务处理
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月23日
+ * @date 2018年8月23日
  * @param <T>
  */
 public class ExcelRowReader<T> implements IExcelRowReader {

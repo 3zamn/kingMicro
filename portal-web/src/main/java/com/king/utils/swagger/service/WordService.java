@@ -10,7 +10,7 @@ import com.king.utils.swagger.entity.Info;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月10日
+ * @date 2018年8月10日
  */
 public interface WordService {
     List<Body> bodyList();

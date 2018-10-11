@@ -30,7 +30,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * 支持多个sheet
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月23日
+ * @date 2018年8月23日
  */
 public class Excel2007Reader extends DefaultHandler {
 	

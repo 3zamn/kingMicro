@@ -23,7 +23,7 @@ import test.redis.IdGenerator;
  * 模拟高并发线程安全问题
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月11日
+ * @date 2018年5月11日
  */
 @RunWith(SpringJUnit4ClassRunner.class)  
 @WebAppConfiguration

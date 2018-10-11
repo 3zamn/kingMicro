@@ -4,7 +4,7 @@ package test.xml.base;
  * 每次解析的范围
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月16日
+ * @date 2018年8月16日
  */
 public class Range {
 	private int from =0;

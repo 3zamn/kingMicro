@@ -17,7 +17,7 @@ import com.king.common.utils.spring.SpringContextUtils;
  *  查询参数
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年2月27日
+ * @date 2018年2月27日
  */
 
  public class Query extends LinkedHashMap<String, Object> {

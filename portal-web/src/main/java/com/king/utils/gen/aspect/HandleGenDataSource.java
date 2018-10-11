@@ -4,7 +4,7 @@ package com.king.utils.gen.aspect;
  * 数据源线程级别处理
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月8日
+ * @date 2018年4月8日
  */
 public class HandleGenDataSource {
 	  private static final ThreadLocal<String> local_data = new ThreadLocal<>();

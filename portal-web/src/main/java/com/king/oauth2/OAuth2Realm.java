@@ -29,13 +29,14 @@ import com.king.utils.ShiroUtils;
  * shiro认证
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 @Component
 public class OAuth2Realm extends AuthorizingRealm {
 	@Autowired
 	private TokenGenerator tokenGenerator;
-	
+	@Autowired
+	private RedisUtils redisUtils;
     @Autowired
     private ShiroService shiroService;
 
@@ -56,7 +57,6 @@ public class OAuth2Realm extends AuthorizingRealm {
         Set<String> permsSet = shiroService.getUserPermissions(userId,true,ShiroUtils.getUserEntity().getToken());
         //刷新失效时间
     	String permKey =RedisKeys.getPermsKey(userId,ShiroUtils.getUserEntity().getToken());
-    	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
     	redisUtils.expire(permKey, Constant.PERMS_EXPIRE);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
@@ -66,28 +66,28 @@ public class OAuth2Realm extends AuthorizingRealm {
     /**
      * 认证(登录时调用)
      */
-    @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        String accessToken = (String) token.getPrincipal();
-        //根据accessToken，查询用户信息
-        SysUserToken userToken = null;
-        //token失效
-        userToken= tokenGenerator.get(accessToken);
-	   	 if(userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()){
-	            throw new IncorrectCredentialsException("token失效，请重新登录");
-	        }else{
-	        	tokenGenerator.saveOrUpdate(userToken); 
-	        }
-        
-        //查询用户信息
-        SysUser user = shiroService.queryUser(userToken.getUserId());
-        user.setToken(accessToken);
-        //账号锁定
-        if(user.getStatus() == false){
-            throw new LockedAccountException("账号已被锁定,请联系管理员");
-        }
+	@Override
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+		String accessToken = (String) token.getPrincipal();
+		// 根据accessToken，查询用户信息
+		SysUserToken userToken = null;
+		userToken = tokenGenerator.get(accessToken);
+		if (userToken == null || userToken.getExpireTime().getTime() < System.currentTimeMillis()) {
+			throw new IncorrectCredentialsException("token失效，请重新登录");
+		} else {
+			tokenGenerator.saveOrUpdate(userToken);
+		}
+		//获取user并更新过期时间
+		SysUser user = (SysUser)redisUtils.opsForGetValue(RedisKeys.getUser(userToken.getUserId()+""),Constant.HALF_HOUR);
+		if (user == null)
+			user = shiroService.queryUser(userToken.getUserId());		
+		user.setToken(accessToken);
+		// 账号锁定
+		if (user.getStatus() == false) {
+			throw new LockedAccountException("账号已被锁定,请联系管理员");
+		}
 
-        SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, accessToken, getName());
-        return info;
-    }
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, accessToken, getName());
+		return info;
+	}
 }

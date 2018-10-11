@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
  * 第三方应用登录授权
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月23日
+ * @date 2018年4月23日
  */
 //@RestController
 //@RequestMapping("/app")

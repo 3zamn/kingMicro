@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * 
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月25日
+ * @date 2018年7月25日
  */
 public class Consumer implements Runnable {
     

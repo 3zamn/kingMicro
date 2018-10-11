@@ -20,7 +20,7 @@ import com.qiniu.util.Auth;
  * 七牛云存储
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月23日
+ * @date 2018年5月23日
  */
 public class QiniuCloudStorageService extends CloudStorageService {
     private UploadManager uploadManager;//上传管理

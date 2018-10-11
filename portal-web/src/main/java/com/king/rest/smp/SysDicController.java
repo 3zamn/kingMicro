@@ -75,7 +75,6 @@ public class SysDicController extends AbstractController{
 	/**
 	 * 字典目录(添加、修改字典)
 	 */
-	@Log("字典目录")
 	@ApiOperation(value = "字典目录选择",response=Response.class, notes = "权限编码（sys:dic:select）")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:dic:select")
@@ -101,7 +100,6 @@ public class SysDicController extends AbstractController{
 	/**
 	 * 信息
 	 */
-	@Log("数据字典信息")
     @ApiOperation(value = "查询信息",response=Response.class,notes = "权限编码（sysdic:info）")
 	@GetMapping("/info/{id}")
 	@RequiresPermissions("sys:dic:info")

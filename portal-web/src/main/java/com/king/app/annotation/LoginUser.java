@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * 登录用户信息
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月23日
+ * @date 2018年4月23日
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)

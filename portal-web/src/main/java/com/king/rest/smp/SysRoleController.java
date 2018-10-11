@@ -71,7 +71,6 @@ public class SysRoleController extends AbstractController {
 	/**
 	 * 角色选择
 	 */
-	@Log("角色选择")
 	@ApiOperation(value = "角色选择",response=Response.class, notes = "权限编码（sys:role:select）")
 	@GetMapping("/select")
 	@RequiresPermissions("sys:role:select")
@@ -84,7 +83,6 @@ public class SysRoleController extends AbstractController {
 	/**
 	 * 角色信息
 	 */
-	@Log("角色信息")
 	@ApiOperation(value = "角色信息",response=Response.class, notes = "权限编码（sys:role:info）")
 	@GetMapping("/info/{roleId}")
 	@RequiresPermissions("sys:role:info")
@@ -133,7 +131,6 @@ public class SysRoleController extends AbstractController {
 	/**
 	 * 授权的用户
 	 */
-	@Log("查询授权的用户")
 	@ApiOperation(value = "查询授权的用户",response=Response.class, notes = "权限编码（sys:role:grantUsers）")
 	@PostMapping("/grantUsers")
 	@RequiresPermissions("sys:role:grantUsers")

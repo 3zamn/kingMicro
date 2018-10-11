@@ -9,7 +9,7 @@ import test.xml.base.Range;
  * 每次读取定量长度
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月16日
+ * @date 2018年8月16日
  */
 public class Strkit {
 	

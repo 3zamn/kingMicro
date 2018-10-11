@@ -13,7 +13,7 @@ import org.icepdf.core.util.GraphicsRenderingHints;
  * pdf 转高清图片
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月17日
+ * @date 2018年7月17日
  */
 public class IcePdf {
     public static void pdf2Pic(String pdfPath, String path){

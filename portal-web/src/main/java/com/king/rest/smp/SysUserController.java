@@ -72,7 +72,6 @@ public class SysUserController extends AbstractController {
 	 * 在线用户列表
 	 * 在线用户不多、暂时内存中分页
 	 */
-	@Log(" 当前在线用户列表")
 	@ApiOperation(value = " 当前在线用户列表",response=Response.class, notes = "权限编码（sys:users:online）")
 	@GetMapping("/online")
 	@RequiresPermissions("sys:users:online")
@@ -116,7 +115,6 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 获取登录的用户信息
 	 */
-	@Log("当前登录信息")
 	@ApiOperation(value = "登录信息",response=Response.class)
 	@GetMapping("/info")
 	public JsonResponse info(){
@@ -147,7 +145,6 @@ public class SysUserController extends AbstractController {
 	/**
 	 * 用户信息
 	 */
-	@Log("用户信息详情")
 	@ApiOperation(value = "用户信息",response=Response.class, notes = "权限编码（sys:user:info）")
 	@GetMapping("/info/{userId}")
 	@RequiresPermissions("sys:user:info")

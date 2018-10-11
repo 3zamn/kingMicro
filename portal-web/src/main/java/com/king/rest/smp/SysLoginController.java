@@ -71,7 +71,6 @@ public class SysLoginController extends AbstractController {
 	 * 验证码
 	 */
 	@SuppressWarnings("deprecation")
-	//	@Log("获取验证码")
 	@ApiOperation(value = "获取验证码")
 	@GetMapping("captcha.jpg")
 	public void captcha(HttpServletResponse response)throws ServletException, IOException {
@@ -160,9 +159,7 @@ public class SysLoginController extends AbstractController {
 		}else{
 			r= sysUserService.createToken(user.getUserId(),ip,userAgent);
 		}
-
-
-			
+		
 		return r;
 	}
 

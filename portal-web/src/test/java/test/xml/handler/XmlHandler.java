@@ -7,7 +7,7 @@ import java.util.Map;
  * 解析完后续业务接口
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月16日
+ * @date 2018年8月16日
  */
 public interface XmlHandler {
 	

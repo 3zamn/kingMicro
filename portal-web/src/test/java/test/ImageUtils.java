@@ -32,7 +32,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  *  图片加水印/二维码/文字或去水印
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月23日
+ * @date 2018年7月23日
  */
 public class ImageUtils {
 	  private static List<File> fileList = new ArrayList<File>(); 

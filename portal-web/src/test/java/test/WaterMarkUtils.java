@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  * 图片加文字水印
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月20日
+ * @date 2018年7月20日
  */
 public class WaterMarkUtils {
 

@@ -10,7 +10,7 @@ import com.king.app.entity.AppUser;
  * 用户service
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月23日
+ * @date 2018年4月23日
  */
 public interface UserService {
 

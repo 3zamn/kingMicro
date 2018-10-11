@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 生产者线程
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月25日
+ * @date 2018年7月25日
  */
 public class Producer implements Runnable {
     

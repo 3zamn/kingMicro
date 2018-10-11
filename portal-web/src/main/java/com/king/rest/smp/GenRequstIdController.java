@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
  * 产生唯一reqId、用于校验表单重复提交
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年9月29日
+ * @date 2018年9月29日
  */
 
 @RestController

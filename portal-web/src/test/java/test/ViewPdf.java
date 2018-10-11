@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * pdf在线预览
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月18日
+ * @date 2018年7月18日
  */
 public class ViewPdf {
 	static Logger logger = LoggerFactory.getLogger(ViewPdf.class);

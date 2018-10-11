@@ -28,7 +28,7 @@ import com.king.utils.XssHttpServletRequestWrapper;
  * 帮朋友抓取热卖店铺
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月31日
+ * @date 2018年7月31日
  */
 @RestController
 public class CrawingController {

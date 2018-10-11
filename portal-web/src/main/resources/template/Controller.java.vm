@@ -58,7 +58,6 @@ public class ${className}Controller extends AbstractController{
 	/**
 	 * 信息
 	 */
-	@Log("${comments}查询信息")
     @ApiOperation(value = "查询信息",response=Response.class,notes = "权限编码（${permUrl}:info）")
 	@GetMapping("/info/{${pk.attrname}}")
 	@RequiresPermissions("${permUrl}:info")
@@ -73,8 +72,8 @@ public class ${className}Controller extends AbstractController{
 	@Log("${comments}保存")
 	@ApiOperation(value = "保存",response=Response.class,notes = "权限编码（${permUrl}:save）")
 	@PostMapping("/save")
-	@DuplicateFilter(check=true)
 	@RequiresPermissions("${permUrl}:save")
+	@DuplicateFilter(check=true)
 	public JsonResponse save(@RequestBody ${className} ${classname}){
 		ValidatorUtils.validateEntity(${classname});
 		${classname}Service.save(${classname});	

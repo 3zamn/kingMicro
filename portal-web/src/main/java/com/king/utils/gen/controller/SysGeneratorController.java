@@ -32,7 +32,7 @@ import com.king.utils.XssHttpServletRequestWrapper;
  * 代码生成器
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年3月12日
+ * @date 2018年3月12日
  */
 @RestController
 @RequestMapping("/generator")

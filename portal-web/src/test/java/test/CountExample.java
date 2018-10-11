@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 模拟高并发线程安全问题
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月11日
+ * @date 2018年5月11日
  */
 public class CountExample {
   // 请求总数

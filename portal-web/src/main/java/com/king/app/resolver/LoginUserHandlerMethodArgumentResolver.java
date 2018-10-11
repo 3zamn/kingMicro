@@ -18,7 +18,7 @@ import com.king.app.service.UserService;
  * 有@LoginUser注解的方法参数，注入当前登录用户
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月23日
+ * @date 2018年4月23日
  */
 @Component
 public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {

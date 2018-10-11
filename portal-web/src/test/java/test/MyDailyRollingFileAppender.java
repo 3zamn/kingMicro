@@ -25,7 +25,7 @@ import org.apache.log4j.spi.LoggingEvent;
  *（2）如果一天的文件过大，可以按配置的大小将一天的文件进行切分
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月16日
+ * @date 2018年7月16日
  */
 public class MyDailyRollingFileAppender extends FileAppender
 {

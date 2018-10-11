@@ -21,7 +21,7 @@ import io.jsonwebtoken.Claims;
  *  权限(Token)验证
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月23日
+ * @date 2018年4月23日
  */
 @Component
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {

@@ -11,7 +11,7 @@ import com.king.dal.gen.model.oss.CloudStorageConfig;
  * 文件上传Factory
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月23日
+ * @date 2018年5月23日
  */
 public final class OSSFactory {
     private static SysConfigService sysConfigService;

@@ -24,7 +24,7 @@ import com.king.utils.RedisShiroSession;
  * Shiro配置
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 @Configuration
 public class ShiroConfig {

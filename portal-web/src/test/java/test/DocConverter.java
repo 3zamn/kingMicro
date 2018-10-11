@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * office、png转pdf
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月18日
+ * @date 2018年7月18日
  */
 public class DocConverter {  
 	

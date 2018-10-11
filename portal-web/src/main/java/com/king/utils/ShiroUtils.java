@@ -50,8 +50,10 @@ public class ShiroUtils {
 	public static SysUser getUserEntity() {
 		SysUser sysUser =(SysUser)SecurityUtils.getSubject().getPrincipal();
 		//安全考虑忽略敏感信息
-		sysUser.setSalt(null);
-		sysUser.setPassword(null);
+		if(sysUser!=null){
+			sysUser.setSalt(null);
+			sysUser.setPassword(null);
+		}
 		return sysUser;
 	}
 

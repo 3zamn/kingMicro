@@ -19,7 +19,7 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
  * 高性能导出数百万级别大数据
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月15日
+ * @date 2018年8月15日
  */
 public class ImportBigDB {
 	public static void main(String[] args) throws Exception {

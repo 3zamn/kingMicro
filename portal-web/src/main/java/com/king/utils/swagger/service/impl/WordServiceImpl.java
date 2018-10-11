@@ -36,7 +36,7 @@ import com.king.utils.swagger.service.WordService;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月10日
+ * @date 2018年8月10日
  */
 @Service
 public class WordServiceImpl implements WordService {

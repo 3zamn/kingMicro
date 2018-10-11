@@ -32,7 +32,7 @@ import com.king.utils.gen.entity.TableEntity;
  * 代码生成器   工具类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年3月12日
+ * @date 2018年3月12日
  */
 public class GenUtils {
 

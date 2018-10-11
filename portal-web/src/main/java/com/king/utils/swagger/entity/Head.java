@@ -6,7 +6,7 @@ import java.util.List;
  * 接口头(类)-名称、描述
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月14日
+ * @date 2018年8月14日
  */
 public class Head {
 	private String name;

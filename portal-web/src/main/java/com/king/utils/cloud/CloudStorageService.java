@@ -13,7 +13,7 @@ import com.king.dal.gen.model.oss.CloudStorageConfig;
  * 云存储(支持七牛、阿里云、腾讯云、又拍云)
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月23日
+ * @date 2018年5月23日
  */
 public abstract class CloudStorageService {
     /** 云存储配置信息 */

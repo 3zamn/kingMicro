@@ -15,7 +15,7 @@ import com.king.common.utils.pattern.StringToolkit;
  * 切换数据源
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月8日
+ * @date 2018年4月8日
  */
 @Aspect
 @Component

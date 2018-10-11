@@ -31,7 +31,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
  *  二维码生成和读取工具
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月23日
+ * @date 2018年7月23日
  */
 public class QrCodeUtil {
     

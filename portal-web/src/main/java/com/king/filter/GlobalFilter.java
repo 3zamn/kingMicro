@@ -24,7 +24,7 @@ import com.king.utils.ShiroUtils;
  * 全局过滤器
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年3月7日
+ * @date 2018年3月7日
  */
 @WebFilter(filterName = "globalFilter", urlPatterns = "/*")
 public class GlobalFilter implements Filter {

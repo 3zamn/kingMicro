@@ -20,7 +20,7 @@ import net.sf.json.JSONObject;
  * 腾讯云存储
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月23日
+ * @date 2018年5月23日
  */
 public class QcloudCloudStorageService extends CloudStorageService {
     private COSClient client;

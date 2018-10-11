@@ -4,7 +4,7 @@ package com.king.utils.cloud;
  * OCR工具类-利用百度api
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月2日
+ * @date 2018年8月2日
  */
 public class OCRUtils {
 	public static final String general_text="https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic";//通用文字识别

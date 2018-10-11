@@ -5,7 +5,7 @@ package com.king.utils.swagger.entity;
  * 请求实体
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月10日
+ * @date 2018年8月10日
  */
 public class Request {
 

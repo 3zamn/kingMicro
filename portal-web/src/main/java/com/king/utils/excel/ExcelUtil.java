@@ -51,7 +51,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月3日
+ * @date 2018年8月3日
  * @param <T>
  */
 public class ExcelUtil<T> {

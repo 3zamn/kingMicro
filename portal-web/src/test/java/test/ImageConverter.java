@@ -20,7 +20,7 @@ import javax.net.ssl.HttpsURLConnection;
  * 文档图片去水印处理 --本地图片文件/文件夹或网络图片
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月20日
+ * @date 2018年7月20日
  */
 public class ImageConverter { 
     private static List<File> fileList = new ArrayList<File>(); 

@@ -17,7 +17,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  *  JWT工具类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月23日
+ * @date 2018年4月23日
  */
 @Component
 public class JwtUtils {

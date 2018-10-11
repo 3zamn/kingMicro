@@ -11,7 +11,7 @@ import com.king.dal.gen.model.oss.CloudStorageConfig;
  * 阿里云存储
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月23日
+ * @date 2018年5月23日
  */
 public class AliyunCloudStorageService extends CloudStorageService {
     private OSSClient client;

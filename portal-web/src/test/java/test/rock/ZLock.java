@@ -13,7 +13,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;*/
  * zookeeper实现分布式锁
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月26日
+ * @date 2018年7月26日
  */
 public class ZLock {
 

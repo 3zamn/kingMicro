@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
  * 定义需要解析的实体属性
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月16日
+ * @date 2018年8月16日
  */
 @Retention(RetentionPolicy.RUNTIME) 
 @Target(ElementType.FIELD) 

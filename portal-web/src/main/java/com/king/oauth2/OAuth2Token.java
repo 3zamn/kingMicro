@@ -7,7 +7,7 @@ import org.apache.shiro.authc.AuthenticationToken;
  * token
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 public class OAuth2Token implements AuthenticationToken {
 

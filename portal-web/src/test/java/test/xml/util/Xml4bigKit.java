@@ -25,7 +25,7 @@ import test.xml.handler.XmlHandler;
  * 大文件逐步读取--避免内存溢出
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月16日
+ * @date 2018年8月16日
  */
 public class Xml4bigKit {
 	

@@ -4,7 +4,7 @@ package com.king.utils.gen.entity;
  *  列的属性
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年3月12日
+ * @date 2018年3月12日
  */
 public class ColumnEntity {
 	//列名

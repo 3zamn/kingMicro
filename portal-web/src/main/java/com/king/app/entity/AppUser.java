@@ -7,7 +7,7 @@ import java.util.Date;
  * 用户实体
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月23日
+ * @date 2018年4月23日
  */
 public class AppUser implements Serializable {
 	private static final long serialVersionUID = 1L;

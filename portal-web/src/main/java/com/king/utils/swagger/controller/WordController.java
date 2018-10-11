@@ -24,7 +24,7 @@ import java.util.List;
  * 将响应内容json转换doc
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月10日
+ * @date 2018年8月10日
  */
 @RestController
 public class WordController {

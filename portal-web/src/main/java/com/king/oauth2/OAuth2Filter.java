@@ -22,7 +22,7 @@ import com.king.common.utils.JsonResponse;
  * oauth2过滤器
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 public class OAuth2Filter extends AuthenticatingFilter {
 	 Logger logger = LoggerFactory.getLogger(getClass());
