@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * swagger返回数据格式定义
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月25日
+ * @date 2018年5月25日
  */
 @ApiModel("返回数据格式")
 public class Response  implements Serializable {

@@ -14,7 +14,7 @@ import com.king.common.utils.file.xml.annotation.Column;
  * 根据Element解析生成实体
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月16日
+ * @date 2018年8月16日
  */
 public  class XmlBase {
 	

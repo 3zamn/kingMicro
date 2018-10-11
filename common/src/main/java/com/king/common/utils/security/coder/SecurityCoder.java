@@ -7,7 +7,7 @@ import java.security.Security;
  * 
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public abstract class SecurityCoder {
     private static Byte ADDFLAG = 0;

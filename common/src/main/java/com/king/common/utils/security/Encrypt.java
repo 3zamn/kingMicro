@@ -28,7 +28,7 @@ import javax.crypto.Cipher;
  * 反转公私密钥rsa加密
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年7月5日
+ * @date 2018年7月5日
  */
 public class Encrypt {
 

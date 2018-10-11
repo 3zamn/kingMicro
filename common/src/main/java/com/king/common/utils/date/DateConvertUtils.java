@@ -9,7 +9,7 @@ import java.util.Date;
  * 新历转农历
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月24日
+ * @date 2018年5月24日
  */
 public class DateConvertUtils {  
     private int year;  

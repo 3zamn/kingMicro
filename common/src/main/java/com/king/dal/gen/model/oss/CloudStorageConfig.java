@@ -17,7 +17,7 @@ import com.king.common.utils.validator.group.QiniuGroup;
  * 云存储配置信息
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月23日
+ * @date 2018年5月23日
  */
 public class CloudStorageConfig implements Serializable {
     private static final long serialVersionUID = 1L;

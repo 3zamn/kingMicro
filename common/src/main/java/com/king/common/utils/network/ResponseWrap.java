@@ -38,7 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月11日
+ * @date 2018年5月11日
  */
 public class ResponseWrap {
     private Logger logger = LoggerFactory.getLogger(ResponseWrap.class);

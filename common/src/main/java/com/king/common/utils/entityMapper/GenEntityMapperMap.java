@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
  * 表与实体映射解析--存本地map
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 public class GenEntityMapperMap implements EntityResolver{  
 	 @Override

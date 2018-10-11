@@ -64,6 +64,34 @@ public class RedisUtils {
 		});
 		return result;
 	}
+	
+	/**
+	 * 如果expire为null则不更新过期时间
+	 * @param key
+	 * @param expire
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public Object opsForGetValue(Object key,Long expire){	
+		if(expire!=null){
+			redisTemplate.expire(key, expire, TimeUnit.SECONDS);
+		}
+		return redisTemplate.opsForValue().get(key);	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void opsForSetValue(Object key ,Object value,long expire){
+		redisTemplate.opsForValue().set(key, value,expire,TimeUnit.SECONDS);	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Object opsForGetAndSetValue(Object key,Object value, long expire) {
+		Object oldvalue = redisTemplate.opsForValue().getAndSet(key, value);
+		 if(expire != NOT_EXPIRE){
+	            redisTemplate.expire(key, expire, TimeUnit.SECONDS);
+	        }
+		 return oldvalue;
+	}
 
     @SuppressWarnings("unchecked")
 	public  String getset(String key, Object value, long expire){
@@ -184,7 +212,7 @@ public class RedisUtils {
      */
     @SuppressWarnings("unchecked")
 	public Set<String> likeKey(String hashKey){
-      	 //用scan代理keys查询
+      	 //用scan代替keys查询
     /*	Set<String> objects = new HashSet<>();
     	Cursor<Object> curosr = setOperations.scan(hashKey, ScanOptions.NONE);
         while(curosr.hasNext()){

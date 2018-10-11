@@ -12,7 +12,7 @@ import com.king.common.utils.redis.RedisUtils;
  * redis实体映射
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年2月26日
+ * @date 2018年2月26日
  */
 @Component
 public class EntityMapperRedis {

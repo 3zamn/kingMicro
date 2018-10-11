@@ -32,7 +32,7 @@ import com.king.common.utils.pattern.StringToolkit;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月27日
+ * @date 2018年6月27日
  */
 public class BeanUtils {
 

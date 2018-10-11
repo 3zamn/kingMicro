@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月27日
+ * @date 2018年6月27日
  */
 public class ParserUtil {
     private static final Logger log = LoggerFactory.getLogger(ParserUtil.class);

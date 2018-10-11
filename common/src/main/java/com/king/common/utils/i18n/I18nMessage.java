@@ -8,7 +8,7 @@ import java.util.MissingResourceException;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月20日
+ * @date 2018年4月20日
  */
 public class I18nMessage {
 	public static final String PUBLIC_RESOURCE_NAME = "public";

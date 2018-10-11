@@ -8,7 +8,7 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
  * 获取数据源
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月8日
+ * @date 2018年4月8日
  */
 public class ChooseDataSource extends AbstractRoutingDataSource {
 	 private Logger logger = LoggerFactory.getLogger(getClass());

@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public class Hex {
 

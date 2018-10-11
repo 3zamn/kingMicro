@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * 
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年9月19日
+ * @date 2018年9月19日
  */
 //@Configuration
 public class MQConsumerConfig {

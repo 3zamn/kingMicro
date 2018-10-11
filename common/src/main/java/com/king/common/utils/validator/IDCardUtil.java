@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
  * 身份证验证辅助类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public final class IDCardUtil {
 	private IDCardUtil() {

@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * 运算工具类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public final strictfp class MathUtil {
 	private MathUtil() {

@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 系统用户Token
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 @ApiModel("系统用户Token")
 public class SysUserToken implements Serializable {

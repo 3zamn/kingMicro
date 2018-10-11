@@ -14,7 +14,7 @@ import com.king.common.utils.security.coder.SHACoder;
  * 数据加密辅助类(默认编码UTF-8)
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public final class SecurityUtil {
 	private SecurityUtil() {

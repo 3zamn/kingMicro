@@ -4,7 +4,7 @@ package com.king.common.utils.validator;
  * 人民币字符串辅助类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public final class RMBUtil {
 	private RMBUtil() {

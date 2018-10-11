@@ -12,7 +12,7 @@ import com.king.dal.gen.dao.BaseDao;
  * service基础实现类,
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年3月5日
+ * @date 2018年3月5日
  * @param <T>
  */
 

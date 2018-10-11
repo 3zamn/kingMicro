@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
  *  MongodbDB基础数据操作仓库接口
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月19日
+ * @date 2018年4月19日
  * @param <T>
  * @param <ID>
  */

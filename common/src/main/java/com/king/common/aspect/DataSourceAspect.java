@@ -20,7 +20,7 @@ import com.king.common.dataSource.HandleDataSource;
  * 切换数据源--读写分离
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月8日
+ * @date 2018年4月8日
  */
 @Aspect
 @Order(1)

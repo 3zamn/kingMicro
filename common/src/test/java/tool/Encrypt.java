@@ -12,7 +12,7 @@ import com.king.common.utils.security.crypto.Sha256Hash;
  * Sha256加盐加密
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月28日
+ * @date 2018年6月28日
  */
 public class Encrypt {
 	private static final String salt="YzcmCZNvbXocrsz9dm8e";//盐值

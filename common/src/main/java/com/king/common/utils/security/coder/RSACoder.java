@@ -21,7 +21,7 @@ import javax.crypto.Cipher;
  * RSA安全编码组件
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public abstract class RSACoder extends SecurityCoder {
 

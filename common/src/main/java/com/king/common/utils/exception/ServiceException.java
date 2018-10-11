@@ -3,7 +3,7 @@ package com.king.common.utils.exception;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月19日
+ * @date 2018年4月19日
  */
 public class ServiceException extends RuntimeException {
 	

@@ -18,7 +18,7 @@ import com.king.dal.gen.model.smp.SysUserToken;
  * 生成token
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 @Component
 public class TokenGenerator {

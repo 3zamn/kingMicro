@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * RedisAtomicLong并发环境下存在线程安全问题、谨慎用；increment是线程安全的
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月15日
+ * @date 2018年5月15日
  */
 @Component
 public class IdGenerator {

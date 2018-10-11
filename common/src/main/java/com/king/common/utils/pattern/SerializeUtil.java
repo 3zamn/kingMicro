@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
  *  序列化辅助类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public final class SerializeUtil {
     private SerializeUtil() {

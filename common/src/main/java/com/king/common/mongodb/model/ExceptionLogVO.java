@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 对应MongoDB集合名称，与类名一致
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月19日
+ * @date 2018年4月19日
  */
 @Document(collection = "ExceptionLogVO")
 public class ExceptionLogVO implements Serializable{

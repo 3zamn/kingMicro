@@ -17,7 +17,7 @@ import com.king.common.utils.security.crypto.Sha256Hash;
  * 反转公私密钥rsa加密
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月27日
+ * @date 2018年6月27日
  */
 public class PropertyPlaceholderConfigurerExt extends PropertyPlaceholderConfigurer {
 	public static final String DEFAULT_PUBLIC_KEY_STRING = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALGtnK0rEYVKYuyOQk4nqfBktAqSNkNqO3YKSDKBXWCMxhgBnD1c1jFJ3L3ZBrWFcpGd9jQVL8MO7ZQRFJVc/0ECAwEAAQ==";

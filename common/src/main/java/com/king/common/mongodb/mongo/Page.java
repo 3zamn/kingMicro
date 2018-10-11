@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
  * 自定义MongoDB分页，实现Pageable接口
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月19日
+ * @date 2018年6月19日
  */
 public class Page implements Pageable{
 	//每页记录数

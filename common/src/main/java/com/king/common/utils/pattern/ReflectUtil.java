@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
  * 反射工具类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月19日
+ * @date 2018年4月19日
  */
 public class ReflectUtil {
 	@SuppressWarnings("unchecked")

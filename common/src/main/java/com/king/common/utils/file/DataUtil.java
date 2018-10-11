@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
  * 常见的辅助类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public final class DataUtil {
 	private DataUtil() {

@@ -23,7 +23,7 @@ import com.king.common.utils.pattern.ReflectUtil;
  * Mongodb 基础数据操作仓库实现类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月19日
+ * @date 2018年4月19日
  * @param <T>
  * @param <ID>
  */

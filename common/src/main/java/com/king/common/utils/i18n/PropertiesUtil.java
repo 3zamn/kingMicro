@@ -16,7 +16,7 @@ import com.king.common.utils.security.SecurityUtil;
  * Parsing The Configuration File
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public final class PropertiesUtil extends PropertyPlaceholderConfigurer {
     private static final byte[] KEY = {9, -1, 0, 5, 39, 8, 6, 19};

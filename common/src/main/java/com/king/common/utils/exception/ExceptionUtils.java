@@ -8,7 +8,7 @@ import com.king.common.utils.thread.SensibleClone;
  * 异常输出工具类
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月13日
+ * @date 2018年7月13日
  */
 public class ExceptionUtils {
 	static class ThrowableCreatedElsewhere extends Throwable {

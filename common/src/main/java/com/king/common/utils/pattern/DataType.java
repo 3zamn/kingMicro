@@ -3,7 +3,7 @@ package com.king.common.utils.pattern;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public interface DataType {
 	static final String STRING = "java.lang.String";

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月20日
+ * @date 2018年4月20日
  */
 public class PatternToolkit {
 	private static Logger log = LoggerFactory.getLogger(PatternToolkit.class);

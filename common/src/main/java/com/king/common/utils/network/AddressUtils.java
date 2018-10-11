@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * 获取地址类
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年7月27日
+ * @date 2018年7月27日
  */
 public class AddressUtils
 {

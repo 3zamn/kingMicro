@@ -20,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
  * 文件压缩
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月20日
+ * @date 2018年4月20日
  */
 public class ZipUtils {
 	public static final String JAR_END = ".jar";

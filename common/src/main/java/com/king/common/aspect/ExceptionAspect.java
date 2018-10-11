@@ -29,7 +29,7 @@ import com.king.common.utils.pattern.StringToolkit;
  * 在线程级别保存应用编码、交易流水号、操作用户编码
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年3月30日
+ * @date 2018年3月30日
  */
 @Aspect
 @Order(5)

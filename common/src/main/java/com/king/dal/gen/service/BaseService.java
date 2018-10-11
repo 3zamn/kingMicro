@@ -9,7 +9,7 @@ import com.king.common.utils.Page;
  * service基础接口
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年3月5日
+ * @date 2018年3月5日
  * @param <T>
  */
 public interface BaseService<T> {

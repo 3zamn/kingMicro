@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  *  动态列展示、导出Excel
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月5日
+ * @date 2018年6月5日
  */
 @Target(value = { FIELD, METHOD, ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)

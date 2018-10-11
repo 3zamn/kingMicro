@@ -11,7 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
  * HMAC加密组件
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public abstract class HmacCoder extends SecurityCoder {
 

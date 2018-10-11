@@ -17,7 +17,7 @@ import com.king.common.utils.exception.RRException;
  * 类型转换辅助工具类
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月1日
+ * @date 2018年6月1日
  */
 public final class TypeParseUtil {
 	private TypeParseUtil() {

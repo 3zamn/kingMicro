@@ -56,4 +56,8 @@ public class RedisKeys {
     public static String getReqId(String key){
         return "reqId:" + key;
     }
+    
+    public static String getUser(String userId){
+        return "user:" + userId;
+    }
 }

@@ -15,7 +15,7 @@ import com.king.common.utils.security.crypto.Sha256Hash;
  * 配置文件密码加密处理
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月27日
+ * @date 2018年6月27日
  */
 public class PropertyPlaceholderConfigurerExt extends PropertyPlaceholderConfigurer {
 	private static final String key="YzcmCZNvbXocrsz9dm8e";

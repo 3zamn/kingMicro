@@ -3,7 +3,7 @@ package com.king.common.utils.date;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月20日
+ * @date 2018年4月20日
  */
 public enum DatePattern {
 	_YYYYMMDD ("yyyy-MM-dd"),

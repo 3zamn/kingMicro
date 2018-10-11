@@ -15,7 +15,7 @@ public class Constant {
 	
 	public static final long SHIRO_SESSION_EXPIRE =30 * 60 * 1000;//半小时
 	
-	public static final long PERMS_EXPIRE =48 *60 * 60;//权限48小时后权限失效，需重新登录
+	public static final long PERMS_EXPIRE =24 *60 * 60;//权限24小时后权限失效，需重新登录
 	
 	public static final long SERIALNO_EXPIRE =30;//秒
 	public static final long LOGIN_IP_COUNT =30;//同一个IP同一个帐号
@@ -51,7 +51,7 @@ public class Constant {
      * 字典类型
      * @author King chen
      * @emai 396885563@qq.com
-     * @data2018年5月10日
+     * @date 2018年5月10日
      */
     public enum DicType {
         /**

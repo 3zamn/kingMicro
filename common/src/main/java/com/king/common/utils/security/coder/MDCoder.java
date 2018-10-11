@@ -7,7 +7,7 @@ import java.security.MessageDigest;
  * MD加密组件
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月4日
+ * @date 2018年6月4日
  */
 public abstract class MDCoder extends SecurityCoder {
 

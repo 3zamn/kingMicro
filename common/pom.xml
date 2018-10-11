@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.7.25</slf4j.version>
 		<slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
-		<sentinel.version>0.1.2</sentinel.version>
+		<sentinel.version>0.2.0</sentinel.version>
 		<protostuff.version>1.6.0</protostuff.version>
 	</properties>
 
@@ -242,11 +242,11 @@
 		    <version>2.1.0</version>
 		</dependency>
 		
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>com.caucho</groupId>
 			<artifactId>hessian</artifactId>
 			<version>4.0.51</version>
-		</dependency>
+		</dependency> -->
 		
 		<!--juel表达式支持 -->
 		<dependency>
@@ -327,7 +327,7 @@
             		<artifactId>netty</artifactId>
 				</exclusion>				
 			</exclusions>
-			<version>2.6.2</version>
+			<version>2.6.4</version>
 		</dependency>
 		
 		<!-- 整合sentinel -->

@@ -19,7 +19,7 @@ import org.apache.oro.text.regex.Perl5Matcher;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年4月20日
+ * @date 2018年4月20日
  */
 public class FtpAccess {
 	private static final Logger log = Logger.getLogger(FtpAccess.class);
