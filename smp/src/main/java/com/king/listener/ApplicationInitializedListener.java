@@ -12,7 +12,7 @@ import com.king.common.utils.entityMapper.GenEntityMapper;
  * 
  * @author king chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 @Component
 public class ApplicationInitializedListener {

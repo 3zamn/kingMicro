@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 测试
  * @author King chen
  * @emai 396885563@qq.com
- * @data 2018年8月15日
+ * @date 2018年8月15日
  */
 @Component("testTask")
 public class TestTask {

@@ -29,7 +29,6 @@ import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.redis.TokenGenerator;
 import com.king.common.utils.security.crypto.Sha256Hash;
-import com.king.common.utils.spring.SpringContextUtils;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.dal.gen.service.BaseServiceImpl;
@@ -55,7 +54,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	private ShiroService shiroService;
 	@Autowired
 	private SysDeptService sysDeptService;
-
+	@Autowired
+	private RedisUtils redisUtils;
 	
 	@Transactional(readOnly = true)
 	public List<String> queryAllPerms(Object userId) {
@@ -112,7 +112,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 			user.setPassword(new Sha256Hash(user.getPassword(), user.getSalt()).toHex());
 		}
 		sysUserDao.update(user);	
-		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
+		if(redisUtils.opsForGetValue(RedisKeys.getUser(user.getUserId()+""),null)!=null)
+			redisUtils.opsForSetValue(RedisKeys.getUser(user.getUserId()+""), user, Constant.HALF_HOUR);
 		//保存用户与角色关系/不能修改当前用户角色
 		SysUserToken sysUserToken = tokenGenerator.get(user.getToken());
 		if(sysUserToken!=null && !sysUserToken.getUserId().equals(user.getUserId())){
@@ -170,9 +171,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 		tokenEntity.setAddress(AddressUtils.getRealAddressByIP(ip));
 		tokenEntity.setUserAgent(userAgent);
 		tokenGenerator.saveOrUpdate(tokenEntity);
+		//缓存用户信息
+		redisUtils.opsForSetValue(RedisKeys.getUser(userId+""), sysUser, Constant.HALF_HOUR);
 		//缓存权限
 		String permKey =RedisKeys.getPermsKey(userId,token);
-    	RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
     	redisUtils.delete(permKey);
     	Set<String> perms=shiroService.getUserPermissions(userId, false,token);
     	Iterator<String> it = perms.iterator();  
@@ -189,7 +191,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 	@Override
 	public void logout(SysUserToken token) {
 		String permsKey = RedisKeys.getPermsKey(token.getUserId(),token.getToken());
-		RedisUtils redisUtils=SpringContextUtils.getBean(RedisUtils.class);
 		redisUtils.delete(permsKey);
 		tokenGenerator.delete(token.getToken());
 	}

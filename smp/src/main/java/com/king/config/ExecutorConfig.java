@@ -9,7 +9,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  * spring线程池
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年5月16日
+ * @date 2018年5月16日
  */
 //@Configuration
 //@PropertySource("classpath:task.properties")

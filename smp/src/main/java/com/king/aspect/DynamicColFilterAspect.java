@@ -21,7 +21,7 @@ import com.king.dal.gen.model.smp.SysUser;
  * 列表页动态列数据过滤
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年6月5日
+ * @date 2018年6月5日
  */
 @Aspect
 @Component
