@@ -8,7 +8,7 @@ import java.lang.reflect.Array;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年2月28日
+ * @date 2018年2月28日
  * @param <T>
  */
 public class ProtoStructDecoder<T extends StructBase>

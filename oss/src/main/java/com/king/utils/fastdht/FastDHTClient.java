@@ -12,7 +12,7 @@ import com.king.utils.fastdfs.MyException;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年2月28日
+ * @date 2018年2月28日
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class FastDHTClient {

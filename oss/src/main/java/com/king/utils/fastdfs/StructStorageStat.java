@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年2月28日
+ * @date 2018年2月28日
  */
 public class StructStorageStat extends StructBase
 {

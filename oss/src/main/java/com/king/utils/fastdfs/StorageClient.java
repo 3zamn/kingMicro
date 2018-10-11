@@ -15,7 +15,7 @@ import com.king.common.utils.security.coder.Base64;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年2月28日
+ * @date 2018年2月28日
  */
 public class StorageClient
 {

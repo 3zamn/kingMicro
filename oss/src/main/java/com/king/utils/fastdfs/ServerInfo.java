@@ -8,7 +8,7 @@ import java.net.Socket;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年2月28日
+ * @date 2018年2月28日
  */
 public class ServerInfo
 {

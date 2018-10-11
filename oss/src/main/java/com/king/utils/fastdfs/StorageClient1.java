@@ -6,7 +6,7 @@ import java.io.IOException;
 /**
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年2月28日
+ * @date 2018年2月28日
  */
 @SuppressWarnings("static-access")
 public class StorageClient1 extends StorageClient
