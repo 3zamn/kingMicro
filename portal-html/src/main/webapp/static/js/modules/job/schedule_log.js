@@ -41,6 +41,32 @@ $(function () {
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
+    
+ /*   new AjaxUpload('#upload', {
+        action: baseURL + 'sys/scheduleLog/upload?token=' + token,
+        name: 'file',
+        autoSubmit:true,
+        responseType:"json",
+        onSubmit:function(file, extension){
+            if(vm.config.type == null){
+                alert("云存储配置未配置");
+                return false;
+            }
+            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
+                alert('只支持jpg、png、gif格式的图片！');
+                return false;
+            }
+        },
+        onComplete : function(file, r){
+        	 if(r.code == 200){
+                 alert('上传成功', function(){
+                     vm.reload();
+                 });
+             }else{
+                 alert(r.msg);
+             }
+        }
+    });*/
 });
 
 
