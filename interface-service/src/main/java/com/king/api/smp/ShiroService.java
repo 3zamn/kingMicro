@@ -9,7 +9,7 @@ import com.king.dal.gen.model.smp.SysUser;
  * shiro相关接口
  * @author King chen
  * @emai 396885563@qq.com
- * @data2018年1月11日
+ * @date 2018年1月11日
  */
 public interface ShiroService {
     /**
