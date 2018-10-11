@@ -16,15 +16,20 @@
     并发50、100、200、300、400、500、600
   
     压测十分钟结果：
-      并发：50  ；平均响应时间：75ms  ；tps：665
-      并发：100 ；平均响应时间：146ms ；tps：678
-      并发：200 ；平均响应时间：287ms ；tps：688
-      并发：300 ；平均响应时间：417ms ；tps：701
-      并发：400 ；平均响应时间：543ms ；tps：725
-      并发：500 ；平均响应时间：693ms ；tps：713
+      并发：50  ；平均响应时间：63ms  ；tps：785
+      并发：100 ；平均响应时间：119ms ；tps：831
+      并发：200 ；平均响应时间：239ms ；tps：830
+      并发：300 ；平均响应时间：351ms ；tps：845
+      并发：400 ；平均响应时间：464ms ；tps：852
+      并发：500 ；平均响应时间：577ms ；tps：857
       并发：600 ；平均响应时间：824ms ；tps：718
       
-      总体性能表现较佳、tps稳定在700以上！
+      总体性能表现较佳、tps稳定在850左右！
+      
+    无关联到mysql数据库、业务查询使用redis、压测十分钟结果：
+      并发：200  ；平均响应时间：123ms  ；tps：1603   
+      
+      综上结果分析、性能瓶颈还是在mysql数据库这块有优化空间。
 
 【峰值QPS和机器计算公式】
 
@@ -49,7 +54,8 @@
 ![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/200_2.png)
 ![300并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/300_1.png)
 ![300并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/300_2.png)
-
+![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/200%E6%97%A0%E6%95%B0%E6%8D%AE%E5%BA%93_1.png)
+![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/200%E6%97%A0%E6%95%B0%E6%8D%AE%E5%BA%93_2.png)
 
 下面简单对nginx、tomcat、dubbo rpc性能压测
  nginx 静态页面500并发无业务数据库关联压测结果图：如下
