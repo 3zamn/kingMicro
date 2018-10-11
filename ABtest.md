@@ -16,14 +16,20 @@
     并发50、100、200、300、400、500、600
   
     压测十分钟结果：
-      并发：50  ；平均响应时间：93ms  ；tps：545
-      并发：100 ；平均响应时间：180ms ；tps：560
-      并发：200 ；平均响应时间：355ms ；tps：570
-      并发：300 ；平均响应时间：509ms ；tps：590
-      并发：400 ；平均响应时间：677ms ；tps：600
-      并发：500 ；平均响应时间：852ms ；tps：590
-      并发：600 ；平均响应时间：1021ms；tps：590
+      并发：50  ；平均响应时间：63ms  ；tps：785
+      并发：100 ；平均响应时间：119ms ；tps：831
+      并发：200 ；平均响应时间：239ms ；tps：830
+      并发：300 ；平均响应时间：351ms ；tps：845
+      并发：400 ；平均响应时间：464ms ；tps：852
+      并发：500 ；平均响应时间：577ms ；tps：857
+      并发：600 ；平均响应时间：691ms ；tps：857
       
+      总体性能表现较佳、tps稳定在850左右！
+      
+    无关联到mysql数据库、业务查询使用redis、压测十分钟结果：
+      并发：200  ；平均响应时间：123ms  ；tps：1603   
+      
+      综上结果分析、性能瓶颈还是在mysql数据库这块有优化空间。
 
 【峰值QPS和机器计算公式】
 
@@ -40,13 +46,16 @@
 
  
 压测结果图：如下
-![50并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/f6e0b8e9bedf0129f55b38593e15958.png) 
-![50并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/aa5ade7dd167cc3ac52b8944793205f.png) 
-![100并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/ca8dfc0e5a95c77499a373b1f9fa4c5.png) 
-![100并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/3700b986cab3e8ba6dc14bae402e714.png)
-![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/1dede3a3d25d203668913a6bd9a4560.png)
-![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/f03c78daefce0e35524fffc5a7e95fd.png)
-
+![50并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/50_1.png) 
+![50并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/50_2.png) 
+![100并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/100_1.png) 
+![100并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/100_2.png)
+![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/200_1.png)
+![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/200_2.png)
+![300并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/300_1.png)
+![300并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/300_2.png)
+![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/200%E6%97%A0%E6%95%B0%E6%8D%AE%E5%BA%93_1.png)
+![200并发](https://github.com/3zamn/ABTestImage/blob/master/kingMicro/200%E6%97%A0%E6%95%B0%E6%8D%AE%E5%BA%93_2.png)
 
 下面简单对nginx、tomcat、dubbo rpc性能压测
  nginx 静态页面500并发无业务数据库关联压测结果图：如下
