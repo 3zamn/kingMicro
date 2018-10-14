@@ -104,12 +104,11 @@ app或第三方应用端：API模块用jwt的token做安全校验
     解密：java -cp crypt.ja com.Decrypt 密文
 
  
-<a href="http://chenhx.cn:81/#/dashboard/home" target="view_window">Sentinel 控制台</a><br>
+<a href="http://chenhx.cn:81/#/dashboard/home" target="view_window">服务治理Sentinel平台</a><br>
+<a href="http://chenhx.cn:10800/#/monitor/dashboard" target="view_window">链路追踪监测Skywaking平台</a><br>
 <a href="https://github.com/3zamn/kingMicro/blob/master/ABtest.md" target="view_window">性能压测结果</a>
 
 开发计划：
-
-一：加入两种分布式事务解决方案：1.最大一致性（rocketmq异步事务）、最终一致性（TCC）
 
 二：邮件管理模块
 
@@ -121,9 +120,10 @@ app或第三方应用端：API模块用jwt的token做安全校验
     实现目标：
     实现一套完整的以dubbo为基础的微服务套件：
     1. 丰富dubbo服务管理、监控、警告（整合dubbo admin、monitor/扩展添加图形化监控、警告功能等，借鉴dubbokeeper）
-    2.使用sentinel 对服务的限流、熔断、降级、链路追踪等服务层防护 
-    3.扩展使用orange网关、实现应用接入层流量管理、监控、路由、URL重定向、鉴权等系统上流防护
-    4.使用nacos或apollo实现配置中心
+    2.使用sentinel 对服务的限流、熔断、降级、服务治理等服务层防护 
+    3.使用skywaking 对调用链路追踪、监测、告警等
+    4.扩展使用orange网关、实现应用接入层流量管理、监控、路由、URL重定向、鉴权等系统上流防护
+    5.使用nacos或apollo实现配置中心
    
    
     生命有限！少写重复代码！
