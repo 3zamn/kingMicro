@@ -1,4 +1,3 @@
-# kingMicro
 ![整体架构图](https://github.com/3zamn/kingMicro/blob/master/20181016154817.jpg) 
 # kingMicro 是一套实现分布式、完全前后端分离基础框架。
 
