@@ -116,6 +116,7 @@ app或第三方应用端：API模块用jwt的token做安全校验
 
 四：添加docker支持
 
+![整体架构图](https://github.com/3zamn/kingMicro/blob/master/20181019154819.png) 
 
     实现目标：
     实现一套完整的以dubbo为基础的微服务套件：
