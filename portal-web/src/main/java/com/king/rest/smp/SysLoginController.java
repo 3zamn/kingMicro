@@ -3,8 +3,6 @@ package com.king.rest.smp;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.king.api.smp.SysUserService;
@@ -29,6 +28,7 @@ import com.king.common.annotation.Log;
 import com.king.common.utils.JsonResponse;
 import com.king.common.utils.constant.Constant;
 import com.king.common.utils.network.NetUtils;
+import com.king.common.utils.pattern.StringToolkit;
 import com.king.common.utils.redis.RedisKeys;
 import com.king.common.utils.redis.RedisUtils;
 import com.king.common.utils.redis.TokenGenerator;
@@ -37,6 +37,7 @@ import com.king.common.utils.security.crypto.Sha256Hash;
 import com.king.dal.gen.model.smp.SysUser;
 import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.utils.AbstractController;
+import com.king.utils.GatewayUtils;
 import com.king.utils.HttpContextUtils;
 import com.king.utils.IPUtils;
 import com.king.utils.ShiroUtils;
@@ -158,6 +159,8 @@ public class SysLoginController extends AbstractController {
 			r.put("code",500);
 		}else{
 			r= sysUserService.createToken(user.getUserId(),ip,userAgent);
+			/*token同步到网关-后面优化网关直接从redis中取token*/
+			new GatewayUtils().post_key_auth(JSONObject.parseObject(StringToolkit.getObjectString(r.get("data"))).getString("token"));
 		}
 		
 		return r;

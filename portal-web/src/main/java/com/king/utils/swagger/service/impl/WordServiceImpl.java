@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.king.api.smp.SysConfigService;
+import com.king.common.utils.constant.Constant;
 import com.king.common.utils.exception.RRException;
 import com.king.common.utils.pattern.StringToolkit;
 import com.king.utils.ShiroUtils;
@@ -50,10 +51,10 @@ public class WordServiceImpl implements WordService {
     
     @Override
 	public Info getinfo() {
-    	if(StringUtils.isBlank(sysConfigService.getValue("SWAGGER_ENABLE")) || !sysConfigService.getValue("SWAGGER_ENABLE").equals("true")){
+    	if(StringUtils.isBlank(sysConfigService.getValue(Constant.SWAGGER_ENABLE)) || !sysConfigService.getValue(Constant.SWAGGER_ENABLE).equals("true")){
       		return null;//未启用
       	}
-    	String swaggerUrl = sysConfigService.getValue("SWAGGER_URL");
+    	String swaggerUrl = sysConfigService.getValue(Constant.SWAGGER_URL);
 		@SuppressWarnings("unchecked")
 		Map<String, Object> map = restTemplate.getForObject(swaggerUrl, Map.class);
 		@SuppressWarnings("unchecked")
@@ -75,10 +76,10 @@ public class WordServiceImpl implements WordService {
     @SuppressWarnings({ "rawtypes", "unchecked" })
   	@Override
       public List<Head> headList() {
-      	if(StringUtils.isBlank(sysConfigService.getValue("SWAGGER_ENABLE")) || !sysConfigService.getValue("SWAGGER_ENABLE").equals("true")){
+      	if(StringUtils.isBlank(sysConfigService.getValue(Constant.SWAGGER_ENABLE)) || !sysConfigService.getValue(Constant.SWAGGER_ENABLE).equals("true")){
       		return null;//未启用
       	}
-		String swaggerUrl = sysConfigService.getValue("SWAGGER_URL");
+		String swaggerUrl = sysConfigService.getValue(Constant.SWAGGER_URL);
 		Map<String, Object> map = restTemplate.getForObject(swaggerUrl, Map.class);
 		List<Head> list = new LinkedList();
 		// 解析tags
@@ -95,10 +96,10 @@ public class WordServiceImpl implements WordService {
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public List<Body> bodyList() {
-    	if(StringUtils.isBlank(sysConfigService.getValue("SWAGGER_ENABLE")) || !sysConfigService.getValue("SWAGGER_ENABLE").equals("true")){
+    	if(StringUtils.isBlank(sysConfigService.getValue(Constant.SWAGGER_ENABLE)) || !sysConfigService.getValue(Constant.SWAGGER_ENABLE).equals("true")){
     		return null;//未启用
     	}
-    	String swaggerUrl =sysConfigService.getValue("SWAGGER_URL");
+    	String swaggerUrl =sysConfigService.getValue(Constant.SWAGGER_URL);
         Map<String, Object> map = restTemplate.getForObject(swaggerUrl, Map.class);
         List<Body> list = new LinkedList();
         String host=StringUtils.substringBefore(swaggerUrl, ":")+"://"+String.valueOf(map.get("host"))+String.valueOf(map.get("basePath"));

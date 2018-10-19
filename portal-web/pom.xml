@@ -298,7 +298,7 @@
 				      <artifactId>commons-lang</artifactId>
 				</exclusion>			
 			</exclusions>
-			<version>1.70.0</version>
+			<version>1.74.0</version>
 		</dependency>
 
 		<dependency>

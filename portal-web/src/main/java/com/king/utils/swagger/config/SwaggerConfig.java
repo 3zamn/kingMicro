@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import com.king.api.smp.SysConfigService;
+import com.king.common.utils.constant.Constant;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -27,17 +29,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {	
-/*	@Value("#{new Boolean('${king.swagger.status}')}")
-	public boolean enableSwagger;
-	@Value("#{new Boolean('${king.redis.open}')}")
-	//	@Value("${king.redis.open}") 
-		private Boolean redisOpen;
-		@Value("#{new Boolean('${king.shiro.redis}')}")
-	 //   @Value("${king.shiro.redis}")
-	    private	Boolean shiroRedis;
-		@Value("#{new Boolean('${king.swagger.status}')}")
-	 //   @Value("${king.swagger.status}")
-	    private	Boolean swagger;*/
+
 	@Autowired
 	private SysConfigService sysConfigService;
 	
@@ -52,7 +44,7 @@ public class SwaggerConfig {
      */
     @Bean
     public Docket smpApi(){  
-    	String enableSwagger =sysConfigService.getValue("SWAGGER_ENABLE");
+    	String enableSwagger =sysConfigService.getValue(Constant.SWAGGER_ENABLE);
         ParameterBuilder tokenPar = new ParameterBuilder();  
         List<Parameter> pars = new ArrayList<Parameter>();  
         tokenPar.name("token").description("令牌").modelRef(new ModelRef("string")).parameterType("header").required(true).build();  
