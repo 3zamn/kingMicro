@@ -9,18 +9,49 @@ public class Constant {
 	/** 超级管理员ID */
 	public static final long SUPER_ADMIN = 1;
 
-	/*token失效时长*/
-	public static final long TOKEN_EXPIRE =30 * 60 *1000;//半小时失效
-	public static final long HALF_HOUR =1800;//半小时
+	/**
+	 * token失效时长
+	 */
+	public static final long TOKEN_EXPIRE =30 * 60 *1000;
+	/**
+	 * 半小时
+	 */
+	public static final long HALF_HOUR =1800;
+	/**
+	 * shiro的session半小时失效
+	 */
+	public static final long SHIRO_SESSION_EXPIRE =30 * 60 * 1000;
 	
-	public static final long SHIRO_SESSION_EXPIRE =30 * 60 * 1000;//半小时
+	/**
+	 * 权限24小时后权限失效，需重新登录
+	 */
+	public static final long PERMS_EXPIRE =24 *60 * 60;
+	/**
+	 * 同一个IP同一个帐号错误次数
+	 */
+	public static final long LOGIN_IP_COUNT =30;
+	/**
+	 * 同一个帐号错误次数
+	 */
+	public static final long LOGIN_COUNT =100;
+	/**
+	 * 云盘配置
+	 */
+	public final static String CLOUD_STORAGE_CONFIG = "CLOUD_STORAGE_CONFIG";
+	/**
+	 * swagger状态
+	 */
+	public final static String SWAGGER_ENABLE = "SWAGGER_ENABLE";
 	
-	public static final long PERMS_EXPIRE =24 *60 * 60;//权限24小时后权限失效，需重新登录
+	/**
+	 * swagger的api地址
+	 */
+	public final static String SWAGGER_URL = "SWAGGER_URL"; 
 	
-	public static final long SERIALNO_EXPIRE =30;//秒
-	public static final long LOGIN_IP_COUNT =30;//同一个IP同一个帐号
-	public static final long LOGIN_COUNT =100;//同一个帐号
-	public final static String CLOUD_STORAGE_CONFIG = "CLOUD_STORAGE_CONFIG";//云盘配置
+	/**
+	 * 网关配置
+	 */
+	public final static String GATEWAY_CONFIG = "GATEWAY_CONFIG"; 
 	
     public enum MenuType {
         /**
