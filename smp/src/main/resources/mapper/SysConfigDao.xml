@@ -12,31 +12,36 @@
 	<select id="queryObject" resultType="com.king.dal.gen.model.smp.SysConfig">
 		select * from sys_config where id = #{id}
 	</select>
-	
-	<select id="queryList" parameterType="map" resultType="com.king.dal.gen.model.smp.SysConfig">
-		select * from sys_config where status = 1 
-		<if test="key != null and key.trim() != ''">
-			and `key` like concat('%',#{key},'%') 
-		</if>
+
+	<select id="queryList" parameterType="map"
+		resultType="com.king.dal.gen.model.smp.SysConfig">
+		select * from sys_config
+		<where>
+			<if test="key != null and key.trim() != ''">
+				and `key` like concat('%',#{key},'%')
+			</if>			
+		</where>
 		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
+				limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
 	<select id="queryTotal" parameterType="map" resultType="int">
-		select count(*) from sys_config where status = 1 
-		<if test="key != null and key.trim() != ''">
-			and `key` like concat('%',#{key},'%')
-		</if>
+		select count(*) from sys_config
+		<where>
+			<if test="key != null and key.trim() != ''">
+				and `key` like concat('%',#{key},'%')
+			</if>
+		</where>
 	</select>
 	
 	<insert id="save" parameterType="com.king.dal.gen.model.smp.SysConfig">
-		insert into sys_config(`key`, `value`, remark)
-			values(#{key},#{value},#{remark})
+		insert into sys_config(`key`, `value`,`status`, remark)
+			values(#{key},#{value},#{status},#{remark})
 	</insert>
 	
 	<update id="update" parameterType="com.king.dal.gen.model.smp.SysConfig">
-		update sys_config set `key` = #{key}, `value` = #{value}, remark = #{remark} 
+		update sys_config set `key` = #{key}, `value` = #{value}, `status` = #{status}, remark = #{remark} 
 			 where id = #{id}
 	</update>
 	
