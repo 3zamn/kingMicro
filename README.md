@@ -115,8 +115,8 @@ app或第三方应用端：API模块用jwt的token做安全校验
     1. 丰富dubbo服务管理、监控、警告（整合dubbo admin、monitor/扩展添加图形化监控、警告功能等，借鉴dubbokeeper）
     2.使用sentinel 对服务的限流、熔断、降级、服务治理等服务层防护 
     3.使用skywaking 对调用链路追踪、监测、告警等
-    4.扩展使用orange网关、实现应用接入层流量管理、监控、路由、URL重定向、鉴权等系统上流防护
-    5.使用diamond或apollo实现配置中心
+    4.开发基于openresty的网关、借鉴kong的设计及功能实现，实现应用接入层流量管理、监控、路由、URL重定向、鉴权等系统上流防护
+    5.使用disconfig或apollo实现配置中心
    
    
     生命有限！少写重复代码！
