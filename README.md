@@ -33,7 +33,7 @@ smp:打包成jar（建议用maven打包）、在java环境运行jar包即可。�
 
 权限安全：shiro
 
-分布式调度rpc：dubbo2.6.0+zookeeper
+分布式调度rpc：dubbo2.6.6+zookeeper
 
 nosql：spring-data-redis,高可用哨兵模式;mongodb存储操作日志、异常信息
 
@@ -108,14 +108,6 @@ app或第三方应用端：API模块用jwt的token做安全校验
 <a href="http://chenhx.cn:10800/#/monitor/dashboard" target="view_window">链路追踪Skywaking平台</a><br>
 <a href="https://github.com/3zamn/kingMicro/blob/master/ABtest.md" target="view_window">性能压测结果</a>
 
-开发计划：
-
-二：邮件管理模块
-
-三：集成fastdhf分布式文件管理。
-
-四：添加docker支持
-
 ![整体架构图](https://github.com/3zamn/kingMicro/blob/master/20181019154819.png) 
 
     实现目标：
@@ -123,8 +115,8 @@ app或第三方应用端：API模块用jwt的token做安全校验
     1. 丰富dubbo服务管理、监控、警告（整合dubbo admin、monitor/扩展添加图形化监控、警告功能等，借鉴dubbokeeper）
     2.使用sentinel 对服务的限流、熔断、降级、服务治理等服务层防护 
     3.使用skywaking 对调用链路追踪、监测、告警等
-    4.扩展使用orange网关、实现应用接入层流量管理、监控、路由、URL重定向、鉴权等系统上流防护
-    5.使用nacos或apollo实现配置中心
+    4.开发基于openresty的网关、借鉴kong的设计及功能实现，实现应用接入层流量管理、监控、路由、URL重定向、鉴权等系统上流防护
+    5.使用disconfig或apollo实现配置中心
    
    
     生命有限！少写重复代码！
