@@ -65,6 +65,7 @@ public class CrawingController {
 	 		
 	 			//  String regex= " href=\"/item/.*?\" ";
 	 			String host_new="<div class=\"goods-list new-list fl clearfix\">";//热销、新款爆款
+	 			String shop_list="<div class=\"goods-list shop-list clearfix\">";//单个店铺商品列表
 	 			String search="<i class=\"isRecommd isRecommd_1\"></i>";//搜索商品
 	 	        String regex= " href=\"/item/.*?\" ";
 	 	        String begin=" href=\"";
@@ -74,26 +75,59 @@ public class CrawingController {
 	 	      
 	 			pw = new PrintWriter(new FileWriter(tempPath),true);
 	 			boolean start=false;
+	 			boolean is_shop_list =false;
 	 			int i=1;
+	 			String str_temp="";
 	 			while((line=br.readLine())!=null){
 	 				if(start==false){
-	 					if(line.contains(host_new) || line.contains(search)){
+	 					if(line.contains(host_new) || line.contains(search) || line.contains(shop_list)){
+	 						if(line.contains(shop_list))
+	 							is_shop_list=true;
 	 						start=true;
 	 					}
 	 				}else{
-	 					Matcher matcher=pattern.matcher(line);
-	 					
-	 					while(matcher.find()){
-	 						String str=matcher.group();
-	 						str=str.replace(begin, "https://www.vvic.com");
-	 						str=str.replace(end, "");
-	 						if(!str.contains("{=item.item_id}")){
-	 							if(i<=80){//只取80条记录
-	 								i=i+1;
-	 								pw.println(str);							
-	 							}				
-	 						}						
-	 					}
+	 					if(is_shop_list){
+	 						
+	 						Matcher matcher=pattern.matcher(line);	 					
+		 					while(matcher.find()){
+		 						String str=matcher.group();
+		 						str=str.replace(begin, "https://www.vvic.com");
+		 						str=str.replace(end, "");
+		 						if(!str.contains("{=item.item_id}")){
+		 							if(i<=80){//只取80条记录
+		 								i=i+1;
+		 								str_temp=str;		
+		 							}				
+		 						}						
+		 					}
+								String regex_shop="<div class=\"fr sales\"><span class=\"num\">.*?</span>";
+								Pattern pattern_shop=Pattern.compile(regex_shop);
+								Matcher matcher_shop=pattern_shop.matcher(line);	
+								if(matcher_shop.find()){
+									String str_shop=matcher_shop.group();
+									String sales= str_shop.replace("<div class=\"fr sales\"><span class=\"num\">", "");
+									sales=sales.replace("</span>", "");
+									int sale_count= Integer.valueOf(sales);
+									if(sale_count>0){
+										System.out.println(sale_count);
+			 							pw.println(str_temp);		
+									}
+									
+								}
+	 					}else{
+	 						Matcher matcher=pattern.matcher(line);	 					
+		 					while(matcher.find()){
+		 						String str=matcher.group();
+		 						str=str.replace(begin, "https://www.vvic.com");
+		 						str=str.replace(end, "");
+		 						if(!str.contains("{=item.item_id}")){
+		 							if(i<=80){//只取80条记录
+		 								i=i+1;
+		 								pw.println(str);							
+		 							}				
+		 						}						
+		 					}
+	 					}					
 	 				}									
 	 			}       
 	 			start=false;
