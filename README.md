@@ -37,7 +37,7 @@ smp:打包成jar（建议用maven打包）、在java环境运行jar包即可。�
 
 nosql：spring-data-redis,高可用哨兵模式;mongodb存储操作日志、异常信息
 
-数据库：mysql、(已实现动态切面读写分离)
+数据库：mysql
 
 api文档生成：springfox+swagger2
 
@@ -61,7 +61,7 @@ app或第三方应用端：API模块用jwt的token做安全校验
 
 1.友好的代码结构及注释，便于阅读及二次开发
 
-2.按业务垂直切分，分布式部署，可水平扩展、弹性增加节点。
+2.按业务垂直切分，分布式部署，弹性增加节点、可水平扩展。
 
 3.实现系统的分布式部署、通过dubbo、zookeeper进行rpc调度服务
 
@@ -79,13 +79,15 @@ app或第三方应用端：API模块用jwt的token做安全校验
 
 10.引入Hibernate Validator校验框架，轻松实现后端校验
 
-10.使用自定义注解、aop等实现列表动态列。满足不同用户可自定义列展示列表信息。
+11.使用自定义注解、aop等实现列表动态列。满足不同用户可自定义列展示列表信息
 
-12.引入云存储服务，已支持：七牛云、阿里云、腾讯云及本地分布式文件存储fastdfs、fastdhf等。提供office在线转换高清质量的pdf（使用libreoffice转换）、及可选生成高清图片，同时可灵活设置文字水印、二维码水印。支持在线预览pdf、下载等功能。
+12.aop切面、根据Transactional事务注解动态实现读写分离
 
-13.引入springfox+swagger2支持API接口生成、管理,导出api离线文档（帮助说明模块）
+13.引入云存储服务，已支持：七牛云、阿里云、腾讯云及本地分布式文件存储fastdfs、fastdhf等。提供office在线转换高清质量的pdf（使用libreoffice转换）、及可选生成高清图片，同时可灵活设置文字水印、二维码水印。支持在线预览pdf、下载等功能。
 
-14.封装了大数据Excel导入、导出组件（本地测试200万条数据导出耗时100秒左右、500万条记录导入耗时850秒左右），2007版本及以上的采用分段解析xml文件（07版+Excel底层实现是xml格式,解压后可看到）方式读取Excel文件、导出使用SXSSF方式写入文件，避免读写大数据时内存溢出。使用例子：
+14.引入springfox+swagger2支持API接口生成、管理,导出api离线文档（帮助说明模块）
+
+15.封装了大数据Excel导入、导出组件（本地测试200万条数据导出耗时100秒左右、500万条记录导入耗时850秒左右），2007版本及以上的采用分段解析xml文件（07版+Excel底层实现是xml格式,解压后可看到）方式读取Excel文件、导出使用SXSSF方式写入文件，避免读写大数据时内存溢出。使用例子：
 
     导入：
     LinkedHashMap<Field, Object> map= new LinkedHashMap<>();//可自定义校验
@@ -110,7 +112,6 @@ app或第三方应用端：API模块用jwt的token做安全校验
 
 ![整体架构图](https://github.com/3zamn/kingMicro/blob/master/20181019154819.png) 
 
-    实现目标：
     实现一套完整的以dubbo为基础的微服务套件：
     1. 丰富dubbo服务管理、监控、警告（整合dubbo admin、monitor/扩展添加图形化监控、警告功能等，借鉴dubbokeeper）
     2.使用sentinel 对服务的限流、熔断、降级、服务治理等服务层防护 
