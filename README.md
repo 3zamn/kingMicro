@@ -1,5 +1,5 @@
-![整体架构图](https://github.com/3zamn/kingMicro/blob/master/20181016154817.jpg) 
-# kingMicro 是一套实现分布式、完全前后端分离基础框架。
+![整体架构图](https://github.com/3zamn/ABTestImage/blob/master/20181030104142.jpg) 
+# kingMicro 以dubbo为核心的微服务套件。包括服务治理、API网关、降级熔断及服务层流量防护、分布式链路追踪...
 
 项目目录结构：
 
