@@ -30,7 +30,7 @@ $.ajaxSetup({
     },
     complete: function(xhr) {
 
-        if(xhr.responseJSON.code == 401){
+        if(xhr.responseJSON ==null || xhr.responseJSON.code == 401){
             parent.location.href = clientURL + 'login.html';
         }
     }
