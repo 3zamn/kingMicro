@@ -157,13 +157,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.1.3.Final</version>
 		</dependency>
-
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<version>1.6.1</version>
-		</dependency>
-			
+		
 		<!-- mysql jdbc驱动 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -305,7 +299,7 @@
          <version>2.0.8.RELEASE</version>
 	     </dependency> 
 	         
-	       <!-- dubbo2.6.2不再使用zkclient、改用curator -->
+	       <!-- dubbo2.6.2+不再使用zkclient、改用curator -->
 		<dependency>
 		    <groupId>org.apache.curator</groupId>
 		    <artifactId>curator-recipes</artifactId>
