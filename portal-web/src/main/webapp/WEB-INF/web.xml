@@ -12,9 +12,9 @@
 				classpath:/spring-redis.xml
 				classpath:/spring-mongodb.xml
 				classpath:/gen/generator.xml
-			</param-value>
-		
+			</param-value>	
 	</context-param>
+	
 	<context-param>  
         <param-name>log4jConfigLocation</param-name>  
         <param-value>classpath:log4j.properties</param-value>  

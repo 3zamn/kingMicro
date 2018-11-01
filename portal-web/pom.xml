@@ -230,20 +230,16 @@
 			<version>4.4</version>
 			 <exclusions>
 				 <exclusion>
-					  <groupId>commons-logging</groupId>
-      				  <artifactId>commons-logging</artifactId>
+					  <groupId>org.slf4j</groupId>
+            		  <artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
 				<exclusion>
 				      <groupId>commons-codec</groupId>
 				      <artifactId>commons-codec</artifactId>
 				</exclusion>	
 				<exclusion>
-				      <groupId>commons-collections</groupId>
-				      <artifactId>commons-collections</artifactId>
-				</exclusion>
-				<exclusion>
-				      <groupId>commons-lang</groupId>
-				      <artifactId>commons-lang</artifactId>
+					<groupId>org.apache.httpcomponents</groupId>
+					<artifactId>httpmime</artifactId>
 				</exclusion>
 				<exclusion>
 					  <groupId>org.apache.httpcomponents</groupId>

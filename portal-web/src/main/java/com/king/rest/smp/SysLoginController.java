@@ -160,7 +160,7 @@ public class SysLoginController extends AbstractController {
 		}else{
 			r= sysUserService.createToken(user.getUserId(),ip,userAgent);
 			/*token同步到网关-后面优化网关直接从redis中取token*/
-			new GatewayUtils().post_key_auth(JSONObject.parseObject(StringToolkit.getObjectString(r.get("data"))).getString("token"));
+			//new GatewayUtils().post_key_auth(JSONObject.parseObject(StringToolkit.getObjectString(r.get("data"))).getString("token"));
 		}
 		
 		return r;

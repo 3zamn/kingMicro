@@ -14,8 +14,4 @@ public class HttpContextUtils {
 		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 	}
 	
-	public static HttpServletResponse  getHttpServletResponse() {
-
-		return  ((ServletWebRequest)RequestContextHolder.getRequestAttributes()).getResponse();
-	}
 }

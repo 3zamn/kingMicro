@@ -50,7 +50,6 @@ public class DuplicateAspect {
 	 * 校验reqId合法性
 	 * @param point
 	 */
-	@SuppressWarnings("unchecked")
 	@Around("aspect()")
 	public Object Around(ProceedingJoinPoint point) {
 		Object result = null;
