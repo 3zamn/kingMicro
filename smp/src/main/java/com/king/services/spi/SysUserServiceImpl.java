@@ -34,6 +34,7 @@ import com.king.dal.gen.model.smp.SysUserToken;
 import com.king.dal.gen.service.BaseServiceImpl;
 import com.king.dao.SysUserDao;
 
+
 /**
  * 系统用户
  * @author King chen
