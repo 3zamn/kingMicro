@@ -109,8 +109,9 @@ app或第三方应用端：API模块用jwt的token做安全校验
 <a href="http://chenhx.cn:81/#/dashboard/home" target="view_window">服务治理Sentinel平台</a><br>
 <a href="http://chenhx.cn:10800/#/monitor/dashboard" target="view_window">链路追踪Skywaking平台</a><br>
 <a href="https://github.com/3zamn/kingMicro/blob/master/ABtest.md" target="view_window">性能压测结果</a>
-
+整体架构图：
 ![整体架构图](https://github.com/3zamn/kingMicro/blob/master/20181019154819.png) 
+API网关接入：
 ![API gateway](https://github.com/3zamn/ABTestImage/blob/master/API%20Gateway20181102095515.jpg) 
 
 
