@@ -106,8 +106,8 @@ app或第三方应用端：API模块用jwt的token做安全校验
     解密：java -cp crypt.ja com.Decrypt 密文
 
  
-<a href="http://chenhx.cn:81/#/dashboard/home" target="view_window">服务治理Sentinel平台</a><br>
-<a href="http://chenhx.cn:10800/#/monitor/dashboard" target="view_window">链路追踪Skywaking平台</a>(用户、密码:admin)<br>
+<a href="https://github.com/3zamn/kingMicro2.0">kingMicro2.0版本</a><br>
+<a href="https://github.com/3zamn/king">API网关</a><br>
 <a href="https://github.com/3zamn/kingMicro/blob/master/ABtest.md" target="view_window">性能压测结果</a>
 
 整体架构图：
