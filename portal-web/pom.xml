@@ -34,7 +34,7 @@
 					<groupId>org.springframework</groupId>
 				</exclusion>				
 			 </exclusions>
-			<version>5.0.7.RELEASE</version>
+			<version>5.3.18</version>
 		</dependency>
 				
 		<dependency>
